@@ -16,7 +16,6 @@ if win32:
             "/Ob2",
             "/fp:fast",
             "/MT",
-            "/DBT_NO_PROFILE=1",
             "/DWIN32",
         ],
         CPPPATH = [
@@ -26,10 +25,6 @@ if win32:
             "win32/lib",
         ],
         LIBS = [
-            'SDL',
-            'opengl32',
-            'glu32',
-            'glut32',
             'libjack',
         ],
         )
@@ -38,17 +33,15 @@ else:
         ENV = os.environ,
         CXXFLAGS = [
             "-g",
-            "-DBT_NO_PROFILE=1",
         ],
         LIBS = [
             'stdc++',
-            'GL',
-            'GLU',
-            'glut',
         ],
         )
-    env.ParseConfig("pkg-config sdl --cflags --libs")
+    #env.ParseConfig("pkg-config sdl --cflags --libs")
     env.ParseConfig("pkg-config jack --cflags --libs")
+    env.ParseConfig("pkg-config gtkmm-2.4 --cflags --libs")
+    env.ParseConfig("pkg-config sigc++-2.0 --cflags --libs")
 
 env.Program('jacker',
     ['main.cpp',

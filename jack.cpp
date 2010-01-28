@@ -4,7 +4,7 @@
 #include <assert.h>
 
 namespace Jack {
-    
+
 //=============================================================================
     
 static bool handle_status(int status)

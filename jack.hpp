@@ -28,7 +28,7 @@ public:
          unsigned long flags,
          unsigned long buffer_size);
     
-    ~Port();
+    virtual ~Port();
 
 protected:
     virtual void update_buffer(jack_nframes_t nframes) = 0;

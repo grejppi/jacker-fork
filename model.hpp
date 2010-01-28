@@ -1,7 +1,7 @@
 
 #include <map>
 
-namespace jacker {
+namespace Jacker {
 
 enum {
     FRAMES_PER_BAR = 7680,
@@ -49,4 +49,4 @@ struct Model {
     int end_cue;
 };
 
-} // namespace jacker
+} // namespace Jacker

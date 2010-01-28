@@ -1,7 +1,9 @@
 
 #include "jack.hpp"
 
+#include <gtkmm.h>
 #include <assert.h>
+#include <stdio.h>
 
 #ifdef max
 #undef max
@@ -29,19 +31,34 @@ public:
 } // namespace Jacker
 
 int main(int argc, char **argv) {
+    Gtk::Main kit(argc, argv);
     
     Jacker::Client client;
     
-    if (!client.init())
-        return 0;
+    printf("init client...\n");
+    if (client.init()) {
+        
+        Glib::RefPtr<Gtk::Builder> builder = 
+            Gtk::Builder::create_from_file("jacker.glade");
+        
+        Gtk::Window* window = 0;
+        builder->get_widget("main", window);
+        
+        window->show_all();
+        
+        printf("activate client...\n");
+        client.activate();
+        
+        kit.run(*window);
+            
+        printf("deactivate...\n");
+        client.deactivate();
+        
+        printf("shutdown...\n");
+        client.shutdown();
+    }
     
-    client.activate();
-    
-    sleep(10);
-    
-    client.deactivate();
-
-    client.shutdown();
+    printf("bye.\n");
     
     return 0;
 }
