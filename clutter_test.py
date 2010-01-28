@@ -15,6 +15,36 @@ timeline = clutter.Timeline(duration=1000)
 labelalpha = clutter.Alpha(timeline,clutter.EASE_IN_OUT_SINE)
 show_behaviour = clutter.BehaviourOpacity(0x00,255,alpha=labelalpha)
 
+# data format:
+# - events stored, no tables
+
+# how a pattern could display data:
+# note-octave: C#5
+# 8-bit hex: FF
+# 16-bit hex: FFFF
+# 2-number decimal: 99
+# 4-number decimal: 9999
+# vertically connected envelope points
+# horizontal slider bar
+
+# different way of editing values:
+# - one renderer for the entire table
+# - one renderer for the cell that's being edited
+# - configurable highlighting of bars & beats
+
+# mapping schemes:
+# - customizable sheet formats
+#   - data format
+#   - view modes
+# - translation sheet -> midi
+
+# sequencer:
+# - multiple tracks
+# - each track can be assigned to a midi port
+# - midi in recording?! (how do we translate back?)
+# - bpm, tpb
+
+
 y = 0
 for i in range(4096):
     label = clutter.Text()
