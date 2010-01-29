@@ -27,38 +27,74 @@ public:
     virtual void on_process(Jack::NFrames size) {
     }
 };
-    
-} // namespace Jacker
 
-int main(int argc, char **argv) {
-    Gtk::Main kit(argc, argv);
-    
+class PatternColumns : public Gtk::TreeModelColumnRecord {
+public:
+    Gtk::TreeModelColumn<int> dummy_column;
+
+    PatternColumns() {
+        add(dummy_column);
+    }
+};
+
+class App {
+public:
+    Gtk::Main kit;
     Jacker::Client client;
+
+    Glib::RefPtr<Gtk::Builder> builder;
+    Glib::RefPtr<Gtk::ListStore> list_store;
+    PatternColumns pattern_columns;
+
+    Gtk::TreeView *pattern_view;
+
+    App(int argc, char **argv)
+        : kit(argc,argv) {
+        pattern_view = NULL;
+    }
     
-    printf("init client...\n");
-    if (client.init()) {
+    ~App() {
+    }
+    
+    void init_ui() {
+        list_store = Gtk::ListStore::create(pattern_columns);
+        for (int i = 0; i < 4096; ++i) {
+            Gtk::TreeModel::iterator iter = list_store->append();
+            //Gtk::TreeModel::Row row = *iter;
+        }
         
-        Glib::RefPtr<Gtk::Builder> builder = 
-            Gtk::Builder::create_from_file("jacker.glade");
+        builder->get_widget("patternview", pattern_view);
+        
+        pattern_view->set_model(list_store);
+        pattern_view->append_column("0", pattern_columns.dummy_column);
+    }
+
+    void run() {
+        //~ if (!client.init())
+            //~ return;
+        builder = Gtk::Builder::create_from_file("jacker.glade");
         
         Gtk::Window* window = 0;
         builder->get_widget("main", window);
         
+        init_ui();
+        
         window->show_all();
         
-        printf("activate client...\n");
-        client.activate();
+        //~ client.activate();
         
         kit.run(*window);
             
-        printf("deactivate...\n");
-        client.deactivate();
-        
-        printf("shutdown...\n");
-        client.shutdown();
+        //~ client.deactivate();
+        //~ client.shutdown();
     }
+};
     
-    printf("bye.\n");
+} // namespace Jacker
+
+int main(int argc, char **argv) {
+    Jacker::App app(argc, argv);
+    app.run();
     
     return 0;
 }
