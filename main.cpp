@@ -16,7 +16,7 @@ public:
     Jack::MIDIPort *midi_omni_out;
 
     Client()
-        : Jack::Client("jacker") {
+      : Jack::Client("jacker") {
         midi_omni_out = new Jack::MIDIPort(*this, "omni", Jack::MIDIPort::IsOutput);
     }
     
@@ -30,10 +30,50 @@ public:
 
 class PatternColumns : public Gtk::TreeModelColumnRecord {
 public:
-    Gtk::TreeModelColumn<int> dummy_column;
+    Gtk::TreeModelColumn<int> rowid;
+
+    struct Command {
+        Gtk::TreeModelColumn<int> cc;
+        Gtk::TreeModelColumn<int> value;
+    };
+
+    struct Channel {
+        enum {
+            COMMAND_COUNT = 2,
+        };
+        
+        Gtk::TreeModelColumn<int> note;
+        Gtk::TreeModelColumn<int> volume;
+        Command commands[COMMAND_COUNT];
+    };
+    
+    typedef std::vector<Channel> ChannelList;
+    
+    ChannelList channels;
+    
+    void configure_treeview(Gtk::TreeView *treeview) {
+        treeview->append_column("Row", rowid);
+        for (ChannelList::iterator i = channels.begin(); i != channels.end(); ++i) {
+            treeview->append_column("Note", i->note);
+            treeview->append_column("Volume", i->volume);
+            for (int j = 0; j < Channel::COMMAND_COUNT; ++j) {
+                treeview->append_column("CC", i->commands[j].cc);
+                treeview->append_column("Value", i->commands[j].value);
+            }
+        }        
+    }
 
     PatternColumns() {
-        add(dummy_column);
+        channels.resize(8);
+        add(rowid);
+        for (ChannelList::iterator i = channels.begin(); i != channels.end(); ++i) {
+            add(i->note);
+            add(i->volume);
+            for (int j = 0; j < Channel::COMMAND_COUNT; ++j) {
+                add(i->commands[j].cc);
+                add(i->commands[j].value);
+            }
+        }
     }
 };
 
@@ -58,9 +98,12 @@ public:
     
     void init_ui() {
         list_store = Gtk::ListStore::create(pattern_columns);
+        
+        // TODO: put values in through a callback
         for (int i = 0; i < 4096; ++i) {
             Gtk::TreeModel::iterator iter = list_store->append();
-            //Gtk::TreeModel::Row row = *iter;
+            Gtk::TreeModel::Row row = *iter;
+            row[pattern_columns.rowid] = i;
         }
         
         builder->get_widget("patternview", pattern_view);
@@ -71,6 +114,8 @@ public:
         // write custom cell renderer for representing ints as hex/note values
         // use set_cell_data_func of TreeViewColumn to feed directly from
         // the source data.
+        pattern_columns.configure_treeview(pattern_view);
+        
     }
 
     void run() {
