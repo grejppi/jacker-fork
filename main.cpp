@@ -53,13 +53,17 @@ public:
     
     void configure_treeview(Gtk::TreeView *treeview) {
         treeview->append_column("Row", rowid);
+        
         for (ChannelList::iterator i = channels.begin(); i != channels.end(); ++i) {
-            treeview->append_column("Note", i->note);
-            treeview->append_column("Volume", i->volume);
+            Gtk::TreeView::Column *column = Gtk::manage(
+                new Gtk::TreeView::Column("Channel"));
+            column->pack_start(i->note, false);
+            column->pack_start(i->volume, false);
             for (int j = 0; j < Channel::COMMAND_COUNT; ++j) {
-                treeview->append_column("CC", i->commands[j].cc);
-                treeview->append_column("Value", i->commands[j].value);
+                column->pack_start(i->commands[j].cc, false);
+                column->pack_start(i->commands[j].value, false);
             }
+            treeview->append_column(*column);
         }        
     }
 
