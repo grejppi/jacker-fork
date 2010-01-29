@@ -66,7 +66,11 @@ public:
         builder->get_widget("patternview", pattern_view);
         
         pattern_view->set_model(list_store);
-        pattern_view->append_column("0", pattern_columns.dummy_column);
+        
+        // TODO: create columns (with sub-columns?)
+        // write custom cell renderer for representing ints as hex/note values
+        // use set_cell_data_func of TreeViewColumn to feed directly from
+        // the source data.
     }
 
     void run() {
