@@ -1,13 +1,13 @@
 
 #include "jack.hpp"
 
-#include <gtkmm.h>
-#include <assert.h>
-#include <stdio.h>
-
 #ifdef max
 #undef max
 #endif
+
+#include <gtkmm.h>
+#include <assert.h>
+#include <stdio.h>
 
 namespace Jacker {
 
