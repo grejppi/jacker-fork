@@ -3,53 +3,109 @@
 #include <map>
 #include <string>
 #include <list>
+#include <vector>
 
 namespace Jacker {
     
 //=============================================================================
 
 template<typename Event_T>
-struct EventCollection {
+class EventCollection : public std::multimap<int,Event_T> {
+public:
+    typedef std::multimap<int,Event_T> map;
     typedef Event_T Event;
-    typedef std::multimap<int,Event> EventMap;
+    typedef EventCollection<Event> BaseClass;
     
-    // map of time -> event
-    EventMap events;
+    void add_event(const Event &event) {
+        insert(typename map::value_type(event.key(),event));
+    }
+};
+
+//=============================================================================
+
+#define NOTE(N,OCTAVE) ((12*(OCTAVE))+(Note ## N))
+
+enum {
+    NoteC = 0,
+    NoteCs = 1,
+    NoteD = 2,
+    NoteDs = 3,
+    NoteE = 4,
+    NoteF = 5,
+    NoteFs = 6,
+    NoteG = 7,
+    NoteGs = 8,
+    NoteA = 9,
+    NoteAs = 10,
+    NoteB = 11,
+};
+
+enum {
+    ValueNone = -1,
+};
+
+enum {
+    ParamNote = 0,
+    ParamVolume,
+    ParamCCIndex0,
+    ParamCCValue0,
+    ParamCCIndex1,
+    ParamCCValue1,
+    
+    ParamCount,
 };
 
 //=============================================================================
 
 struct PatternEvent {
-    enum {
-        COMMAND_COUNT = 2,
-    };
-    
-    struct Command {
-        int cc;
-        int value;
-        
-        Command();
-    };
-    
+    // time index
     int frame;
+    // index of channel
     int channel;
-    int note;
-    int volume;
-    Command commands[COMMAND_COUNT];
+    // index of parameter
+    int param;
+    // value of parameter
+    int value;
     
     PatternEvent();
+    PatternEvent(int frame, int channel, int param, int value);
+    bool is_valid() const;
+    int key() const;
 };
 
 //=============================================================================
 
 struct Pattern : EventCollection<PatternEvent> {
+    
+    struct Row : std::vector<Event *> {
+        typedef std::vector<Event *> vector;
+        
+        void resize(int channel_count);
+        Event *get_event(int channel, int param);
+        void set_event(Event &event);
+    };
+    
     // name of pattern (non-unique)
     std::string name;
     
+    Pattern();
+    
+    void add_event(const Event &event);
+    void add_event(int frame, int channel, int param, int value);
+    
+    void set_length(int length);
+    int get_length() const;
+    
+    void set_channel_count(int count);
+    int get_channel_count() const;
+
+    void collect_events(int frame, iterator &iter, Row &row);
+
+protected:
     // length in frames
     int length;
-    
-    Pattern();
+    // number of channels
+    int channel_count;
 };
 
 //=============================================================================
@@ -57,6 +113,8 @@ struct Pattern : EventCollection<PatternEvent> {
 struct TrackEvent {
     int frame;
     Pattern *pattern;
+    
+    int key() const;
 };
 
 struct Track : EventCollection<TrackEvent> {

@@ -68,6 +68,15 @@ else:
         ENV = os.environ,
         CXXFLAGS = [
             "-g",
+            "-DDEBUG",
+            "-fno-strict-aliasing",
+            "-fwrapv",
+            "-Wall",
+            "-Wno-deprecated",
+            '-march=core2', #x86_64: we need to take this out
+            '-mfpmath=sse',
+            '-msse',
+            '-ffast-math',
         ],
         LIBS = [
             'stdc++',
