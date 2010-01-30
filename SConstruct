@@ -80,4 +80,6 @@ else:
 
 env.Program('jacker',
     ['main.cpp',
-    'jack.cpp'])
+     'jack.cpp',
+     'model.cpp',
+     'patternview.cpp'])

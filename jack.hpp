@@ -3,6 +3,10 @@
 #include <jack/jack.h>
 #include <jack/midiport.h>
 
+#ifdef max
+#undef max
+#endif
+
 #include <string>
 #include <list>
 

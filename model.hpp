@@ -1,42 +1,70 @@
+#pragma once
 
 #include <map>
+#include <string>
+#include <list>
 
 namespace Jacker {
+    
+//=============================================================================
 
-enum {
-    FRAMES_PER_BAR = 7680,
-};
-
-template<OwnerT>
-struct EventMap {
-    typedef std::multimap<int,OwnerT::Event> EventMap;
+template<typename Event_T>
+struct EventCollection {
+    typedef Event_T Event;
+    typedef std::multimap<int,Event> EventMap;
     
     // map of time -> event
     EventMap events;
 };
-    
-struct Pattern : EventMap<Pattern> {
-    struct Event {
-        int frame;
-        MIDIMessage midi_message;
+
+//=============================================================================
+
+struct PatternEvent {
+    enum {
+        COMMAND_COUNT = 2,
     };
     
+    struct Command {
+        int cc;
+        int value;
+        
+        Command();
+    };
+    
+    int frame;
+    int channel;
+    int note;
+    int volume;
+    Command commands[COMMAND_COUNT];
+    
+    PatternEvent();
+};
+
+//=============================================================================
+
+struct Pattern : EventCollection<PatternEvent> {
     // name of pattern (non-unique)
     std::string name;
     
-    // loop cue in frames
-    int loop_cue;
+    // length in frames
+    int length;
+    
+    Pattern();
 };
 
-struct Track : EventMap<Pattern> {
-    struct Event {
-        int frame;
-        Pattern *pattern;
-    };
-    
+//=============================================================================
+
+struct TrackEvent {
+    int frame;
+    Pattern *pattern;
+};
+
+struct Track : EventCollection<TrackEvent> {
     // name of track (non-unique)
     std::string name;
 };
+
+//=============================================================================
 
 struct Model {
     // list of all patterns
@@ -47,6 +75,11 @@ struct Model {
     
     // end cue in frames
     int end_cue;
+    
+    Model();
+    Pattern &new_pattern();
 };
+
+//=============================================================================
 
 } // namespace Jacker
