@@ -522,6 +522,8 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     int channel, param, item;
     layout.get_cell_location(x, y0, start_frame, channel, param, item);
     layout.get_cell_location(x, y1, end_frame, channel, param, item);
+    if (end_frame > frame_count)
+        end_frame = frame_count;
     
     render_cursor.set_row(start_frame);
     
