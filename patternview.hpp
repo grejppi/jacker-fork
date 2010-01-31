@@ -17,6 +17,7 @@ public:
     class Cursor {
     public:
         Cursor();
+        void start();
         void next_row();
         void next_channel();
         void next_param();

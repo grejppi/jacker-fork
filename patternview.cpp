@@ -22,6 +22,11 @@ PatternView::Cursor::Cursor() {
     row_margin = 0;
 }
 
+void PatternView::Cursor::start() {
+    x = start_x;
+    y = start_y;
+}
+
 void PatternView::Cursor::next_row() {
     x = start_x;
     y += row_height + row_margin;
@@ -277,8 +282,10 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     int channel_count = pattern->get_channel_count();
     
     Cursor render_cursor;
+    render_cursor.set_start_pos(5,5);
     render_cursor.set_cell_margin(5);
     render_cursor.set_channel_margin(10);
+    render_cursor.start();
     
     for (int frame = 0; frame < frame_count; ++frame) {
         // collect events from pattern
