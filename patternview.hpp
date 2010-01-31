@@ -21,8 +21,9 @@ public:
     virtual ~CellRenderer() {}
     virtual void render_background(PatternView &view, PatternCursor &cursor);
     virtual void render_cell(PatternView &view, PatternCursor &cursor, 
-                             Pattern::Event *event);
+                             Pattern::Event *event, bool draw_cursor);
     virtual int get_width(const PatternLayout &layout);
+    virtual int get_item(const PatternLayout &layout, int x);
 };
 
 //=============================================================================
@@ -30,8 +31,9 @@ public:
 class CellRendererNote : public CellRenderer {
 public:
     virtual void render_cell(PatternView &view, PatternCursor &cursor, 
-                             Pattern::Event *event);
+                             Pattern::Event *event, bool draw_cursor);
     virtual int get_width(const PatternLayout &layout);
+    virtual int get_item(const PatternLayout &layout, int x);
 };
 
 //=============================================================================
@@ -39,8 +41,9 @@ public:
 class CellRendererByte : public CellRenderer {
 public:
     virtual void render_cell(PatternView &view, PatternCursor &cursor, 
-                             Pattern::Event *event);
+                             Pattern::Event *event, bool draw_cursor);
     virtual int get_width(const PatternLayout &layout);
+    virtual int get_item(const PatternLayout &layout, int x);
 };
 
 //=============================================================================
@@ -62,8 +65,10 @@ public:
     void set_row_margin(int margin);
     int get_row_margin() const;
     void get_cell_size(int param, int &w, int &h) const;
-    void get_cell_pos(int row, int channel, int param, 
+    void get_cell_pos(int row, int channel, int param,
                       int &x, int &y) const;
+    bool get_cell_location(int x, int y, int &row, int &channel,
+        int &param, int &item) const;
     int get_channel_width() const;
     int get_param_offset(int param) const;
     void set_text_size(int width, int height);
@@ -93,7 +98,7 @@ protected:
 
 class PatternCursor {
 public:
-    PatternCursor(const PatternLayout &layout);
+    PatternCursor();
     void origin();
     void next_row();
     void next_channel();
@@ -102,18 +107,27 @@ public:
     int get_row() const;
     int get_channel() const;
     int get_param() const;
+    int get_item() const;
+
+    void set_row(int row);
+    void set_channel(int channel);
+    void set_param(int param);
+    void set_item(int item);
 
     // true if param is the last param in a channel
     bool is_last_param() const;
 
     void get_pos(int &x, int &y) const;
+    void set_pos(int x, int y);
     void get_cell_size(int &w, int &h) const;
 
     const PatternLayout &get_layout() const;
+    void set_layout(const PatternLayout &layout);
+    
+    // true if cursor shares row/channel/param with other cursor
+    bool is_at(const PatternCursor &other) const;
 
 protected:
-    void update_position();
-
     PatternLayout layout;
     // index of current row
     int row;
@@ -121,8 +135,8 @@ protected:
     int channel;
     // index of current parameter
     int param;
-    // x and position
-    int x, y;
+    // index of parameter item
+    int item;
 };
 
 //=============================================================================
@@ -136,8 +150,12 @@ public:
 
     virtual void on_realize();
     virtual bool on_expose_event(GdkEventExpose* event);
+    virtual bool on_motion_notify_event(GdkEventMotion *event);
+
+    void invalidate_cursor();
 
     Glib::RefPtr<Gdk::GC> gc;
+    Glib::RefPtr<Gdk::GC> xor_gc;
     Glib::RefPtr<Gdk::Colormap> cm;
     Glib::RefPtr<Pango::Layout> pango_layout;
     Glib::RefPtr<Gdk::Window> window;
@@ -156,6 +174,8 @@ public:
     
     CellRendererNote note_renderer;
     CellRendererByte byte_renderer;
+    
+    PatternCursor cursor;
 protected:
     class Model *model;
     class Pattern *pattern;
