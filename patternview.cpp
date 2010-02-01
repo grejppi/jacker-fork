@@ -632,12 +632,11 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     
     Gdk::Rectangle area(&event->area);
     
-    int x = 0;
     int y0 = area.get_y();
     int y1 = y0 + area.get_height();
     int x0 = area.get_x();
     int x1 = x0 + area.get_width();
-    int channel, param, item;
+    int param, item;
     layout.get_cell_location(x0, y0, start_frame, start_channel, param, item);
     layout.get_cell_location(x1, y1, end_frame, end_channel, param, item);
     end_frame++;
