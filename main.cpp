@@ -61,11 +61,11 @@ public:
         Pattern &pattern = model.new_pattern();
         pattern.name = "test";
         pattern.set_length(64);
-        pattern.set_channel_count(16);
+        pattern.set_channel_count(4);
         
         for (int i = 0; i < 64; i += 8) {
             pattern.add_event(i,0,ParamNote,NOTE(C,4));
-            pattern.add_event(i,8,ParamNote,NOTE(C,4));
+            pattern.add_event(i,3,ParamNote,NOTE(C,4));
         }
         for (int i = 0; i < 64; i += 4) {
             pattern.add_event(i,1,ParamVolume,0x7f);

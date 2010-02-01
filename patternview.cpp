@@ -627,17 +627,25 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     int start_frame = 0;
     int end_frame = frame_count;
     
+    int start_channel = 0;
+    int end_channel = channel_count;
+    
     Gdk::Rectangle area(&event->area);
     
     int x = 0;
     int y0 = area.get_y();
     int y1 = y0 + area.get_height();
+    int x0 = area.get_x();
+    int x1 = x0 + area.get_width();
     int channel, param, item;
-    layout.get_cell_location(x, y0, start_frame, channel, param, item);
-    layout.get_cell_location(x, y1, end_frame, channel, param, item);
+    layout.get_cell_location(x0, y0, start_frame, start_channel, param, item);
+    layout.get_cell_location(x1, y1, end_frame, end_channel, param, item);
     end_frame++;
     if (end_frame > frame_count)
         end_frame = frame_count;
+    end_channel++;
+    if (end_channel > channel_count)
+        end_channel = channel_count;
     
     render_cursor.set_row(start_frame);
     
@@ -647,8 +655,10 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
         // collect events from pattern
         pattern->collect_events(frame, iter, row);
         
+        render_cursor.set_channel(start_channel);
+        
         // now render all channels
-        for (int channel = 0; channel < channel_count; ++channel) {
+        for (int channel = start_channel; channel < end_channel; ++channel) {
             // and all params in one channel
             for (int param = 0; param < layout.get_cell_count(); ++param) {
                 CellRenderer *renderer = layout.get_cell_renderer(param);
