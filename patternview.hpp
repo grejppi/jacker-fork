@@ -121,14 +121,14 @@ public:
     void set_pos(int x, int y);
     void get_cell_size(int &w, int &h) const;
 
-    const PatternLayout &get_layout() const;
-    void set_layout(const PatternLayout &layout);
+    PatternLayout *get_layout() const;
+    void set_layout(PatternLayout &layout);
     
     // true if cursor shares row/channel/param with other cursor
     bool is_at(const PatternCursor &other) const;
 
 protected:
-    PatternLayout layout;
+    PatternLayout *layout;
     // index of current row
     int row;
     // index of current channel
@@ -157,6 +157,7 @@ public:
     virtual bool on_key_release_event(GdkEventKey* event);
 
     void invalidate_cursor();
+    void set_cursor(const PatternCursor &cursor);
 
     Glib::RefPtr<Gdk::GC> gc;
     Glib::RefPtr<Gdk::GC> xor_gc;
@@ -179,10 +180,10 @@ public:
     CellRendererNote note_renderer;
     CellRendererByte byte_renderer;
     
-    PatternCursor cursor;
 protected:
     class Model *model;
     class Pattern *pattern;
+    PatternCursor cursor;
 };
 
 //=============================================================================

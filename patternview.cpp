@@ -26,7 +26,7 @@ void CellRenderer::render_background(PatternView &view,
     cursor.get_pos(x,y);
     cursor.get_cell_size(w,h);
     if (!cursor.is_last_param()) {
-        w += cursor.get_layout().get_cell_margin();
+        w += cursor.get_layout()->get_cell_margin();
     }
     view.window->draw_rectangle(view.gc, true, x, y, w, h);
 }
@@ -97,7 +97,7 @@ void CellRendererNote::render_cell(PatternView &view, PatternCursor &cursor,
     
     if (draw_cursor) {
         int w,h;
-        cursor.get_layout().get_text_size(w,h);
+        cursor.get_layout()->get_text_size(w,h);
         int item = cursor.get_item();
         if (item == 0)
             w *= 2;
@@ -157,7 +157,7 @@ void CellRendererByte::render_cell(PatternView &view, PatternCursor &cursor,
 
     if (draw_cursor) {
         int w,h;
-        cursor.get_layout().get_text_size(w,h);
+        cursor.get_layout()->get_text_size(w,h);
         int item = cursor.get_item();
         x += w * item;
         view.window->draw_rectangle(view.xor_gc, true, x, y, w, h);
@@ -327,13 +327,15 @@ PatternCursor::PatternCursor() {
     channel = 0;
     param = 0;
     item = 0;
+    layout = NULL;
 }
 
-void PatternCursor::set_layout(const PatternLayout &layout) {
-    this->layout = layout;
+void PatternCursor::set_layout(PatternLayout &layout) {
+    this->layout = &layout;
 }
 
-const PatternLayout &PatternCursor::get_layout() const {
+PatternLayout *PatternCursor::get_layout() const {
+    assert(layout);
     return layout;
 }
 
@@ -363,7 +365,7 @@ void PatternCursor::next_param() {
 }
 
 bool PatternCursor::is_last_param() const {
-    return param == get_layout().get_cell_count()-1;
+    return param == get_layout()->get_cell_count()-1;
 }
 
 int PatternCursor::get_row() const {
@@ -379,15 +381,18 @@ int PatternCursor::get_param() const {
 }
 
 void PatternCursor::get_pos(int &x, int &y) const {
-    layout.get_cell_pos(row, channel, param, x, y);
+    assert(layout);
+    layout->get_cell_pos(row, channel, param, x, y);
 }
 
 void PatternCursor::set_pos(int x, int y) {
-    layout.get_cell_location(x, y, row, channel, param, item);
+    assert(layout);
+    layout->get_cell_location(x, y, row, channel, param, item);
 }
 
 void PatternCursor::get_cell_size(int &w, int &h) const {
-    layout.get_cell_size(param, w, h);
+    assert(layout);
+    layout->get_cell_size(param, w, h);
 }
 
 int PatternCursor::get_item() const {
@@ -424,9 +429,9 @@ bool PatternCursor::is_at(const PatternCursor &other) const {
 
 //=============================================================================
 
-PatternView::PatternView(BaseObjectType* cobject, 
-             const Glib::RefPtr<Gtk::Builder>& builder)
-    : Gtk::Widget(cobject) {
+PatternView::PatternView(BaseObjectType* cobject,
+                         const Glib::RefPtr<Gtk::Builder>& builder)
+  : Gtk::Widget(cobject) {
     model = NULL;
     pattern = NULL;
     frames_per_beat = 4;
@@ -570,14 +575,9 @@ void PatternView::invalidate_cursor() {
     window->invalidate_rect(rect, true);
 }
 
-bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
-    return true;
-}
-
-bool PatternView::on_button_press_event(GdkEventButton* event) {
-    grab_focus();
+void PatternView::set_cursor(const PatternCursor &new_cursor) {
     invalidate_cursor();
-    cursor.set_pos(event->x, event->y);
+    cursor = new_cursor;
     // sanity checks
     if (cursor.get_channel() >= pattern->get_channel_count()) {
         cursor.set_channel(pattern->get_channel_count()-1);
@@ -589,6 +589,17 @@ bool PatternView::on_button_press_event(GdkEventButton* event) {
         cursor.set_item(0);
     }
     invalidate_cursor();
+}
+
+bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
+    return true;
+}
+
+bool PatternView::on_button_press_event(GdkEventButton* event) {
+    grab_focus();
+    PatternCursor new_cursor(cursor);
+    new_cursor.set_pos(event->x, event->y);
+    set_cursor(new_cursor);
     return false;
 }
 
