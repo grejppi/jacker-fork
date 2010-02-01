@@ -527,6 +527,8 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     
     render_cursor.set_row(start_frame);
     
+    bool focus = has_focus();
+    
     for (int frame = start_frame; frame < end_frame; ++frame) {
         // collect events from pattern
         pattern->collect_events(frame, iter, row);
@@ -538,7 +540,7 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
                 CellRenderer *renderer = layout.get_cell_renderer(param);
                 if (renderer) {
                     bool draw_cursor = false;
-                    if (cursor.is_at(render_cursor)) {
+                    if (focus && cursor.is_at(render_cursor)) {
                         render_cursor.set_item(cursor.get_item());
                         draw_cursor = true;
                     }
@@ -569,6 +571,11 @@ void PatternView::invalidate_cursor() {
 }
 
 bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
+    return true;
+}
+
+bool PatternView::on_button_press_event(GdkEventButton* event) {
+    grab_focus();
     invalidate_cursor();
     cursor.set_pos(event->x, event->y);
     // sanity checks
@@ -582,9 +589,21 @@ bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
         cursor.set_item(0);
     }
     invalidate_cursor();
-    
-    return true;
+    return false;
 }
+
+bool PatternView::on_button_release_event(GdkEventButton* event) {
+    return false;
+}
+
+bool PatternView::on_key_press_event(GdkEventKey* event) {
+    return false;
+}
+
+bool PatternView::on_key_release_event(GdkEventKey* event) {
+    return false;
+}
+
 
 //=============================================================================
 

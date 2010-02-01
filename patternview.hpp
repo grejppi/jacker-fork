@@ -151,6 +151,10 @@ public:
     virtual void on_realize();
     virtual bool on_expose_event(GdkEventExpose* event);
     virtual bool on_motion_notify_event(GdkEventMotion *event);
+    virtual bool on_button_press_event(GdkEventButton* event);
+    virtual bool on_button_release_event(GdkEventButton* event);
+    virtual bool on_key_press_event(GdkEventKey* event);
+    virtual bool on_key_release_event(GdkEventKey* event);
 
     void invalidate_cursor();
 
