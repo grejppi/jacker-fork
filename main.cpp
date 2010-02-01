@@ -50,6 +50,14 @@ public:
         builder->get_widget_derived("pattern_view", pattern_view);
         assert(pattern_view);
         
+        Gtk::HScrollbar *pattern_hscroll;
+        builder->get_widget("pattern_hscroll", pattern_hscroll);
+        Gtk::VScrollbar *pattern_vscroll;
+        builder->get_widget("pattern_vscroll", pattern_vscroll);
+        pattern_view->set_scroll_adjustments(
+            pattern_hscroll->get_adjustment(), 
+            pattern_vscroll->get_adjustment());
+        
         Pattern &pattern = model.new_pattern();
         pattern.name = "test";
         pattern.set_length(64);

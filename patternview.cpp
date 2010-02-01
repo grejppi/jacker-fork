@@ -17,6 +17,16 @@ TODO:
 - implement 
 */
 
+extern "C" {
+void
+_gtk_marshal_VOID__OBJECT_OBJECT (GClosure     *closure,
+                                  GValue       *return_value,
+                                  guint         n_param_values,
+                                  const GValue *param_values,
+                                  gpointer      invocation_hint,
+                                  gpointer      marshal_data);
+} // extern "C"
+
 namespace Jacker {
 
 //=============================================================================
@@ -449,11 +459,29 @@ PatternView::PatternView(BaseObjectType* cobject,
     pattern = NULL;
     frames_per_beat = 4;
     beats_per_bar = 4;
+    hadjustment = 0;
+    vadjustment = 0;
+}
+
+void PatternView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
+                                         Gtk::Adjustment *vadjustment) {
+    this->hadjustment = hadjustment;
+    this->vadjustment = vadjustment;
+    if (hadjustment) {
+        hadjustment->signal_value_changed().connect(sigc::mem_fun(*this,
+            &PatternView::on_adjustment_value_changed));
+    }
+    if (vadjustment) {
+        vadjustment->signal_value_changed().connect(sigc::mem_fun(*this,
+            &PatternView::on_adjustment_value_changed));
+    }
 }
 
 void PatternView::select_pattern(Model &model, Pattern &pattern) {
     this->model = &model;
     this->pattern = &pattern;
+    
+    update_adjustments();
 }
 
 void PatternView::on_realize() {
@@ -492,7 +520,7 @@ void PatternView::on_realize() {
 
     // setup pattern layout
     layout.set_text_size(text_width, text_height);
-    layout.set_origin(5,5);
+    layout.set_origin(0,0);
     layout.set_cell_margin(5);
     layout.set_channel_margin(10);
     layout.set_row_height(text_height);
@@ -505,7 +533,74 @@ void PatternView::on_realize() {
     layout.set_cell_renderer(ParamCCValue1, &byte_renderer);
     
     cursor.set_layout(layout);
+ 
+    update_adjustments();
+}
+
+void PatternView::on_adjustment_value_changed() {
+    int origin_x, origin_y;
+    layout.get_origin(origin_x, origin_y);
     
+    int x_scroll_value = origin_x;
+    int y_scroll_value = origin_y;
+    
+    if (hadjustment) {
+        int channel_width = layout.get_channel_width()+layout.get_channel_margin();
+        x_scroll_value =
+            int(hadjustment->get_value()+0.5)*channel_width;
+    }
+    if (vadjustment) {
+        y_scroll_value = 
+            int(vadjustment->get_value()+0.5)*layout.get_row_height();
+    }
+    
+    layout.set_origin(-x_scroll_value, -y_scroll_value);
+    window->invalidate(true);
+}
+
+void PatternView::update_adjustments() {
+    if (!pattern)
+        return;
+    
+    Gtk::Allocation allocation = get_allocation();
+    
+    if (hadjustment) {
+        int channel_width = layout.get_channel_width()+layout.get_channel_margin();
+        if (!channel_width)
+            return;
+        double page_size = allocation.get_width() / channel_width;
+        
+        hadjustment->configure(0, // value
+                               0, // lower
+                               pattern->get_channel_count(), // upper
+                               1, // step increment
+                               4, // page increment
+                               page_size); // page size
+    }
+    
+    if (vadjustment) {
+        if (!layout.get_row_height())
+            return;
+        double page_size = allocation.get_height() / layout.get_row_height();
+        
+        vadjustment->configure(0, // value
+                               0, // lower
+                               pattern->get_length(), // upper
+                               1, // step increment
+                               8,  // page increment
+                               page_size); // page size
+    }
+}
+
+void PatternView::on_size_allocate(Gtk::Allocation& allocation) {
+    set_allocation(allocation);
+    
+    if (window) {
+        window->move_resize(allocation.get_x(), allocation.get_y(),
+            allocation.get_width(), allocation.get_height());
+    }
+    
+    update_adjustments();
 }
 
 bool PatternView::on_expose_event(GdkEventExpose* event) {
@@ -540,6 +635,7 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     int channel, param, item;
     layout.get_cell_location(x, y0, start_frame, channel, param, item);
     layout.get_cell_location(x, y1, end_frame, channel, param, item);
+    end_frame++;
     if (end_frame > frame_count)
         end_frame = frame_count;
     

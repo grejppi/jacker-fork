@@ -155,6 +155,7 @@ public:
     virtual bool on_button_release_event(GdkEventButton* event);
     virtual bool on_key_press_event(GdkEventKey* event);
     virtual bool on_key_release_event(GdkEventKey* event);
+    virtual void on_size_allocate(Gtk::Allocation& allocation);
 
     void invalidate_cursor();
     void set_cursor(const PatternCursor &cursor);
@@ -180,9 +181,17 @@ public:
     CellRendererNote note_renderer;
     CellRendererByte byte_renderer;
     
+    void set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
+                                Gtk::Adjustment *vadjustment);
+                                
+    void on_adjustment_value_changed();
 protected:
+    void update_adjustments();
+
     class Model *model;
     class Pattern *pattern;
+    Gtk::Adjustment *hadjustment;
+    Gtk::Adjustment *vadjustment;
     PatternCursor cursor;
 };
 
