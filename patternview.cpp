@@ -3,11 +3,11 @@
 
 #include <cassert>
 #include <cmath>
+#include <algorithm>
 
 /*
 TODO:
 
-- implement selection: cursor start -> cursor end
 - implement basic navigation
 - roll position on channel/row begin/end
 - implement editing values
@@ -47,8 +47,9 @@ void CellRenderer::render_background(PatternView &view,
         view.gc->set_foreground(view.colors[color_base+ColorRowBar]);
     } else if (!(row % view.frames_per_beat)) {
         view.gc->set_foreground(view.colors[color_base+ColorRowBeat]);
-    }
-    else {
+    } else if (selected) {
+        view.gc->set_foreground(view.colors[color_base+ColorBackground]);
+    } else {
         return; // nothing to draw
     }
     
@@ -287,13 +288,17 @@ int PatternLayout::get_row_height() const {
     return row_height;
 }
 
-void PatternLayout::get_cell_size(int param, int &w, int &h) const {
+void PatternLayout::get_cell_size(int param, int &w, int &h, 
+                                  bool include_margin) const {
     w = 0;
     h = row_height;
     
     CellRenderer *renderer = renderers[param];
     if (renderer)
         w = renderer->get_width(*this);
+    if (include_margin && ((size_t)param < (renderers.size()-1))) {
+        w += get_cell_margin();
+    }
 }
 
 int PatternLayout::get_param_offset(int param) const {
@@ -434,9 +439,9 @@ void PatternCursor::set_pos(int x, int y) {
     layout->get_cell_location(x, y, row, channel, param, item);
 }
 
-void PatternCursor::get_cell_size(int &w, int &h) const {
+void PatternCursor::get_cell_size(int &w, int &h, bool include_margin) const {
     assert(layout);
-    layout->get_cell_size(param, w, h);
+    layout->get_cell_size(param, w, h, include_margin);
 }
 
 int PatternCursor::get_item() const {
@@ -495,14 +500,10 @@ bool PatternSelection::get_active() const {
 }
 
 static bool test_range(int value, int r0, int r1) {
-    if (r1 == r0)
-        return false;
     if (r1 < r0) {
-        int _temp = r0;
-        r0 = r1;
-        r1 = _temp;
+        std::swap(r0,r1);
     }
-    return (value >= r0) && (value < r1);
+    return (value >= r0) && (value <= r1);
 }
 
 bool PatternSelection::in_range(const PatternCursor &cursor) const {
@@ -520,6 +521,46 @@ void PatternSelection::set_layout(PatternLayout &layout) {
     p1.set_layout(layout);
 }
 
+void PatternSelection::sort() {
+    if (p1.row < p0.row)
+        std::swap(p0.row, p1.row);
+    if (p1.channel < p0.channel) {
+        std::swap(p0.channel, p1.channel);
+        std::swap(p0.param, p1.param);
+        std::swap(p0.item, p1.item);
+    } else if (p0.channel == p1.channel) {
+        if (p1.param < p0.param) {
+            std::swap(p0.param, p1.param);
+        } else if (p1.param == p0.param) {
+            if (p1.item < p0.item) {
+                std::swap(p0.item, p1.item);
+            }
+        }
+    }
+}
+
+bool PatternSelection::get_rect(int &x, int &y, int &width, int &height) const {
+    if (!get_active())
+        return false;
+    
+    PatternSelection sel(*this);
+    sel.sort();
+    
+    int x0, y0;
+    sel.p0.get_pos(x0, y0);
+    int x1, y1;
+    sel.p1.get_pos(x1, y1);
+    int cw,ch;
+    sel.p1.get_cell_size(cw,ch,true);
+    x1 += cw;
+    y1 += ch;
+    x = x0;
+    y = y0;
+    width = x1 - x0;
+    height = y1 - y0;
+    return true;
+}
+
 //=============================================================================
 
 PatternView::PatternView(BaseObjectType* cobject,
@@ -531,6 +572,7 @@ PatternView::PatternView(BaseObjectType* cobject,
     beats_per_bar = 4;
     hadjustment = 0;
     vadjustment = 0;
+    interact_mode = InteractNone;
       
     colors.resize(ColorCount);
     colors[ColorBlack].set("#000000");
@@ -634,9 +676,6 @@ void PatternView::on_realize() {
     
     cursor.set_layout(layout);
     selection.set_layout(layout);
-    
-    selection.p0.set_pos(100,100);
-    selection.p1.set_pos(300,200);
  
     update_adjustments();
 }
@@ -813,6 +852,14 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     return true;
 }
 
+void PatternView::invalidate_selection() {
+    int x,y,w,h;
+    if (!selection.get_rect(x,y,w,h))
+        return;
+    Gdk::Rectangle rect(x,y,w,h);
+    window->invalidate_rect(rect, true);
+}
+
 void PatternView::invalidate_cursor() {
     int width = 0;
     int height = 0;
@@ -826,33 +873,57 @@ void PatternView::invalidate_cursor() {
     window->invalidate_rect(rect, true);
 }
 
+void PatternView::clip_cursor(PatternCursor &c) {
+    // sanity checks/fixes
+    if (c.get_row() >= pattern->get_length()) {
+        c.set_row(pattern->get_length()-1);
+    }
+    if (c.get_channel() >= pattern->get_channel_count()) {
+        c.set_channel(pattern->get_channel_count()-1);
+        c.set_last_item();
+    }
+    else if (c.get_param() >= layout.get_cell_count()) {
+        c.set_last_item();
+    }
+}
+
+void PatternView::set_cursor(int x, int y) {
+    PatternCursor new_cursor(cursor);
+    new_cursor.set_pos(x,y);
+    set_cursor(new_cursor);
+}
+
 void PatternView::set_cursor(const PatternCursor &new_cursor) {
     invalidate_cursor();
     cursor = new_cursor;
-    // sanity checks
-    if (cursor.get_channel() >= pattern->get_channel_count()) {
-        cursor.set_channel(pattern->get_channel_count()-1);
-        cursor.set_last_item();
-    }
-    else if (cursor.get_param() >= layout.get_cell_count()) {
-        cursor.set_last_item();
-    }
     invalidate_cursor();
 }
 
 bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
+    if (interact_mode == InteractSelect) {
+        invalidate_selection();
+        selection.set_active(true);
+        selection.p1.set_pos(event->x, event->y);
+        invalidate_selection();
+    }
     return true;
 }
 
 bool PatternView::on_button_press_event(GdkEventButton* event) {
     grab_focus();
-    PatternCursor new_cursor(cursor);
-    new_cursor.set_pos(event->x, event->y);
-    set_cursor(new_cursor);
+    
+    set_cursor(event->x, event->y);
+    
+    invalidate_selection();
+    interact_mode = InteractSelect;
+    selection.p0.set_pos(event->x, event->y);
+    selection.p1 = selection.p0;
+    selection.set_active(false);
     return false;
 }
 
 bool PatternView::on_button_release_event(GdkEventButton* event) {
+    interact_mode = InteractNone;
     return false;
 }
 

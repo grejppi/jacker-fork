@@ -71,7 +71,7 @@ public:
     int get_channel_margin() const;
     void set_row_margin(int margin);
     int get_row_margin() const;
-    void get_cell_size(int param, int &w, int &h) const;
+    void get_cell_size(int param, int &w, int &h, bool include_margin=false) const;
     void get_cell_pos(int row, int channel, int param,
                       int &x, int &y) const;
     bool get_cell_location(int x, int y, int &row, int &channel,
@@ -130,7 +130,7 @@ public:
 
     void get_pos(int &x, int &y) const;
     void set_pos(int x, int y);
-    void get_cell_size(int &w, int &h) const;
+    void get_cell_size(int &w, int &h, bool include_margin=false) const;
 
     PatternLayout *get_layout() const;
     void set_layout(PatternLayout &layout);
@@ -162,11 +162,16 @@ public:
 
     void set_layout(PatternLayout &layout);
 
+    bool get_rect(int &x, int &y, int &width, int &height) const;
+
+    void sort();
+
     PatternCursor p0;
     PatternCursor p1;
 protected:
     
     bool active;
+    
 };
 
 //=============================================================================
@@ -176,6 +181,11 @@ public:
     enum {
         CharBegin = 32,
         CharEnd = 128,
+    };
+    
+    enum InteractMode {
+        InteractNone = 0,
+        InteractSelect = 1,
     };
     
     PatternView(BaseObjectType* cobject, 
@@ -193,7 +203,10 @@ public:
     virtual void on_size_allocate(Gtk::Allocation& allocation);
 
     void invalidate_cursor();
+    void invalidate_selection();
+    void clip_cursor(PatternCursor &c);
     void set_cursor(const PatternCursor &cursor);
+    void set_cursor(int x, int y);
 
     Glib::RefPtr<Gdk::GC> gc;
     Glib::RefPtr<Gdk::GC> xor_gc;
@@ -222,6 +235,8 @@ public:
     void on_adjustment_value_changed();
 protected:
     void update_adjustments();
+        
+    InteractMode interact_mode;
 
     class Model *model;
     class Pattern *pattern;
