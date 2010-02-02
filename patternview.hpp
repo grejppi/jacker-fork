@@ -24,6 +24,7 @@ public:
                              Pattern::Event *event, bool draw_cursor);
     virtual int get_width(const PatternLayout &layout);
     virtual int get_item(const PatternLayout &layout, int x);
+    virtual int get_item_count();
 };
 
 //=============================================================================
@@ -34,6 +35,7 @@ public:
                              Pattern::Event *event, bool draw_cursor);
     virtual int get_width(const PatternLayout &layout);
     virtual int get_item(const PatternLayout &layout, int x);
+    virtual int get_item_count();
 };
 
 //=============================================================================
@@ -44,6 +46,7 @@ public:
                              Pattern::Event *event, bool draw_cursor);
     virtual int get_width(const PatternLayout &layout);
     virtual int get_item(const PatternLayout &layout, int x);
+    virtual int get_item_count();
 };
 
 //=============================================================================
@@ -113,6 +116,8 @@ public:
     void set_channel(int channel);
     void set_param(int param);
     void set_item(int item);
+
+    void set_last_item();
 
     // true if param is the last param in a channel
     bool is_last_param() const;

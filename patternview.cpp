@@ -17,16 +17,6 @@ TODO:
 - implement 
 */
 
-extern "C" {
-void
-_gtk_marshal_VOID__OBJECT_OBJECT (GClosure     *closure,
-                                  GValue       *return_value,
-                                  guint         n_param_values,
-                                  const GValue *param_values,
-                                  gpointer      invocation_hint,
-                                  gpointer      marshal_data);
-} // extern "C"
-
 namespace Jacker {
 
 //=============================================================================
@@ -64,6 +54,10 @@ int CellRenderer::get_width(const PatternLayout &layout) {
 }
 
 int CellRenderer::get_item(const PatternLayout &layout, int x) {
+    return 0;
+}
+
+int CellRenderer::get_item_count() {
     return 0;
 }
 
@@ -146,6 +140,10 @@ int CellRendererNote::get_item(const PatternLayout &layout, int x) {
         return 1;
 }
 
+int CellRendererNote::get_item_count() {
+    return 2;
+}
+
 //=============================================================================
 
 static int sprint_byte(char *buffer, int value) {
@@ -198,6 +196,10 @@ int CellRendererByte::get_item(const PatternLayout &layout, int x) {
     layout.get_text_size(w,h);
     int pos = x / w;
     return std::min(pos, 1);
+}
+
+int CellRendererByte::get_item_count() {
+    return 2;
 }
 
 //=============================================================================
@@ -313,9 +315,9 @@ bool PatternLayout::get_cell_location(int x, int y, int &row, int &channel,
     row = y / (row_height + row_margin);
     x -= origin_x;
     channel = x / (channel_width + channel_margin);
-    param = 0;
-    item = 0;
     x -= channel * (channel_width + channel_margin);
+    param = renderers.size()-1;
+    item = ((renderers[param])?(renderers[param]->get_item_count()-1):0);
     for (size_t i = 0; i < renderers.size(); ++i) {
         CellRenderer *renderer = renderers[i];
         if (renderer) {
@@ -329,7 +331,7 @@ bool PatternLayout::get_cell_location(int x, int y, int &row, int &channel,
         }
         if (i < (renderers.size()-1))
             x -= cell_margin;
-    }    
+    }
     return false;
 }
 
@@ -436,6 +438,15 @@ void PatternCursor::set_param(int param) {
 
 void PatternCursor::set_item(int item) {
     this->item = item;
+}
+
+void PatternCursor::set_last_item() {
+    param = layout->get_cell_count()-1;
+    item = 0;
+    CellRenderer *renderer = layout->get_cell_renderer(param);
+    if (renderer) {
+        item = renderer->get_item_count()-1;
+    }
 }
 
 // true if cursor shares row/channel/param with other cursor
@@ -699,12 +710,10 @@ void PatternView::set_cursor(const PatternCursor &new_cursor) {
     // sanity checks
     if (cursor.get_channel() >= pattern->get_channel_count()) {
         cursor.set_channel(pattern->get_channel_count()-1);
-        cursor.set_param(layout.get_cell_count()-1);
-        cursor.set_item(0);
+        cursor.set_last_item();
     }
     else if (cursor.get_param() >= layout.get_cell_count()) {
-        cursor.set_param(layout.get_cell_count()-1);
-        cursor.set_item(0);
+        cursor.set_last_item();
     }
     invalidate_cursor();
 }
