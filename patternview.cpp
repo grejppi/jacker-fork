@@ -105,6 +105,8 @@ static const char *note_strings[] = {
 static int sprint_note(char *buffer, int value) {
     if (value == ValueNone) {
         sprintf(buffer, "...");
+    } else if (value == NoteOff) {
+        sprintf(buffer, "===");
     } else {
         int note = value % 12;
         int octave = value / 12;
@@ -140,7 +142,7 @@ void CellRendererNote::render_cell(PatternView &view, PatternCursor &cursor,
         cursor.get_layout()->get_text_size(w,h);
         int item = cursor.get_item();
         if (item == 0)
-            w *= 2;
+            w *= 3;
         else if (item == 1)
             x += 2 * w;
         view.window->draw_rectangle(view.xor_gc, true, x, y, w, h);

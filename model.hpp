@@ -42,6 +42,8 @@ enum {
 
 enum {
     ValueNone = -1,
+    
+    NoteOff = 255,
 };
 
 enum {
