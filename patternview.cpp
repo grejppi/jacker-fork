@@ -519,15 +519,22 @@ void PatternView::on_realize() {
     pango_layout->get_pixel_size(text_width, text_height);
     
     for (int i = CharBegin; i < CharEnd; ++i) {
-        Glib::RefPtr<Pango::Layout> charlayout = Pango::Layout::create(get_pango_context());
-        charlayout->set_font_description(font_desc);
-        charlayout->set_width(-1);
+        Glib::RefPtr<Gdk::Pixmap> pixmap = Gdk::Pixmap::create(
+            window, text_width, text_height);
         
         char buffer[4];
         sprintf(buffer, "%c", (char)i);
-        charlayout->set_text(buffer);
+        pango_layout->set_text(buffer);
         
-        chars.push_back(charlayout);
+        Glib::RefPtr<Gdk::GC> pm_gc = Gdk::GC::create(pixmap);
+        pm_gc->set_colormap(cm);
+        pm_gc->set_foreground(bgcolor);
+        pixmap->draw_rectangle(pm_gc, true, 0, 0, text_width, text_height);
+        
+        pm_gc->set_foreground(fgcolor);
+        pixmap->draw_layout(pm_gc, 0, 0, pango_layout);
+        
+        chars.push_back(pixmap);
     }
     
     // create xor gc for drawing the cursor
@@ -629,13 +636,27 @@ void PatternView::draw_text(int x, int y, const char *text) {
     const char *s = text;
     int w,h;
     layout.get_text_size(w,h);
+    gc->set_function(Gdk::AND);
     while (*s) {
         if ((*s) >= CharBegin && (*s) < CharEnd) {
-            window->draw_layout(gc, x, y, chars[(*s)-CharBegin]);
+            // PIXBUF_ALPHA_BILEVEL
+            /*
+            chars[(*s)-CharBegin]->render_to_drawable_alpha(
+                window, 0, 0, x, y, w, h,
+                Gdk::PIXBUF_ALPHA_FULL, 0, Gdk::RGB_DITHER_NONE, 0, 0);
+            */
+            /*
+            chars[(*s)-CharBegin]->render_to_drawable(
+                window, gc, 0, 0, x, y, w, h,
+                Gdk::RGB_DITHER_NONE, 0, 0);
+            */
+            window->draw_drawable(gc, chars[(*s)-CharBegin], 0, 0,
+                x, y, w, h);
         }
         x += w;
         s++;
     }
+    gc->set_function(Gdk::COPY);
 }
 
 bool PatternView::on_expose_event(GdkEventExpose* event) {
