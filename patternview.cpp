@@ -9,7 +9,6 @@
 TODO:
 
 - implement basic navigation
-- roll position on channel/row begin/end
 - implement editing values
 - implement pattern resize
 - implement 
@@ -30,6 +29,13 @@ enum {
     ColorCount,
 };
 
+// scancodes for both octaves of the piano, starting at C-0
+static const guint16 piano_scancodes[] = {
+//  C     C#    D     D#    E     F     F#    G     G#    A     A#    B
+    0x34, 0x27, 0x35, 0x28, 0x36, 0x37, 0x2a, 0x38, 0x2b, 0x39, 0x2c, 0x3a, // -0
+    0x18, 0x0b, 0x19, 0x0c, 0x1a, 0x1b, 0x0e, 0x1c, 0x0f, 0x1d, 0x10, 0x1e, // -1
+    0x1f, 0x12, 0x20, 0x13, 0x21,                                           // -2
+};
 
 //=============================================================================
 
@@ -484,6 +490,60 @@ bool PatternCursor::is_at(const PatternCursor &other) const {
     return true;
 }
 
+void PatternCursor::navigate_row(int delta) {
+    row += delta;
+}
+
+bool PatternCursor::is_last_item() const {
+    assert(layout);
+    CellRenderer *renderer = layout->get_cell_renderer(param);
+    if (!renderer)
+        return true;
+    return (item >= (renderer->get_item_count()-1));
+}
+
+void PatternCursor::navigate_column(int delta) {
+    assert(layout);
+    if (delta > 0) {
+        while (delta) {
+            if (is_last_item()) {
+                if (is_last_param()) {
+                    channel++;
+                    param = 0;
+                } else {
+                    param++;
+                }
+                item = 0;
+            } else {
+                item++;
+            }
+            delta--;
+        }
+    } else if (delta < 0) {
+        while (delta) {
+            if (!item) {
+                if (!param) {
+                    if (!channel) {
+                        return; // can't go more left
+                    } else {
+                        channel--;
+                    }
+                    param = layout->get_cell_count()-1;
+                } else {
+                    param--;
+                }
+                CellRenderer *renderer = layout->get_cell_renderer(param);
+                if (renderer)
+                    item = renderer->get_item_count()-1;
+                else
+                    item = 0;
+            } else {
+                item--;
+            }
+            delta++;
+        }
+    }
+}
 
 //=============================================================================
 
@@ -753,17 +813,6 @@ void PatternView::draw_text(int x, int y, const char *text) {
     gc->set_function(Gdk::AND);
     while (*s) {
         if ((*s) >= CharBegin && (*s) < CharEnd) {
-            // PIXBUF_ALPHA_BILEVEL
-            /*
-            chars[(*s)-CharBegin]->render_to_drawable_alpha(
-                window, 0, 0, x, y, w, h,
-                Gdk::PIXBUF_ALPHA_FULL, 0, Gdk::RGB_DITHER_NONE, 0, 0);
-            */
-            /*
-            chars[(*s)-CharBegin]->render_to_drawable(
-                window, gc, 0, 0, x, y, w, h,
-                Gdk::RGB_DITHER_NONE, 0, 0);
-            */
             window->draw_drawable(gc, chars[(*s)-CharBegin], 0, 0,
                 x, y, w, h);
         }
@@ -875,10 +924,14 @@ void PatternView::invalidate_cursor() {
 
 void PatternView::clip_cursor(PatternCursor &c) {
     // sanity checks/fixes
-    if (c.get_row() >= pattern->get_length()) {
+    if (c.get_row() < 0) {
+        c.set_row(0);
+    } else if (c.get_row() >= pattern->get_length()) {
         c.set_row(pattern->get_length()-1);
     }
-    if (c.get_channel() >= pattern->get_channel_count()) {
+    if (c.get_channel() < 0) {
+        c.set_channel(0);
+    } else if (c.get_channel() >= pattern->get_channel_count()) {
         c.set_channel(pattern->get_channel_count()-1);
         c.set_last_item();
     }
@@ -896,7 +949,20 @@ void PatternView::set_cursor(int x, int y) {
 void PatternView::set_cursor(const PatternCursor &new_cursor) {
     invalidate_cursor();
     cursor = new_cursor;
+    clip_cursor(cursor);
     invalidate_cursor();
+    show_cursor();
+}
+
+void PatternView::show_cursor() {
+    if (hadjustment) {
+        int channel = cursor.get_channel();
+        hadjustment->clamp_page(channel,channel+1);
+    }
+    if (vadjustment) {
+        int row = cursor.get_row();
+        vadjustment->clamp_page(row,row);
+    }
 }
 
 bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
@@ -904,9 +970,21 @@ bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
         invalidate_selection();
         selection.set_active(true);
         selection.p1.set_pos(event->x, event->y);
+        clip_cursor(selection.p1);
         invalidate_selection();
     }
     return true;
+}
+
+void PatternView::navigate(int delta_x, int delta_y) {
+    PatternCursor new_cursor(cursor);
+    if (delta_x) {
+        new_cursor.navigate_column(delta_x);
+    }
+    if (delta_y) {
+        new_cursor.navigate_row(delta_y);
+    }
+    set_cursor(new_cursor);
 }
 
 bool PatternView::on_button_press_event(GdkEventButton* event) {
@@ -917,6 +995,7 @@ bool PatternView::on_button_press_event(GdkEventButton* event) {
     invalidate_selection();
     interact_mode = InteractSelect;
     selection.p0.set_pos(event->x, event->y);
+    clip_cursor(selection.p0);
     selection.p1 = selection.p0;
     selection.set_active(false);
     return false;
@@ -928,7 +1007,18 @@ bool PatternView::on_button_release_event(GdkEventButton* event) {
 }
 
 bool PatternView::on_key_press_event(GdkEventKey* event) {
-    return false;
+    bool shift_down = event->state & Gdk::SHIFT_MASK;
+    bool ctrl_down = event->state & Gdk::CONTROL_MASK;
+    bool alt_down = event->state & Gdk::MOD1_MASK;
+    bool super_down = event->state & (Gdk::SUPER_MASK|Gdk::MOD4_MASK);
+    
+    switch (event->keyval) {
+        case GDK_Left: navigate(-1,0); break;
+        case GDK_Right: navigate(1,0); break;
+        case GDK_Up: navigate(0,-1); break;
+        case GDK_Down: navigate(0,1); break;
+    }
+    return true;
 }
 
 bool PatternView::on_key_release_event(GdkEventKey* event) {

@@ -124,6 +124,9 @@ public:
     void set_item(int item);
 
     void set_last_item();
+    bool is_last_item() const;
+    void navigate_row(int delta);
+    void navigate_column(int delta);
 
     // true if param is the last param in a channel
     bool is_last_param() const;
@@ -202,9 +205,6 @@ public:
     virtual bool on_key_release_event(GdkEventKey* event);
     virtual void on_size_allocate(Gtk::Allocation& allocation);
 
-    void invalidate_cursor();
-    void invalidate_selection();
-    void clip_cursor(PatternCursor &c);
     void set_cursor(const PatternCursor &cursor);
     void set_cursor(int x, int y);
 
@@ -227,13 +227,19 @@ public:
     CellRendererNote note_renderer;
     CellRendererByte byte_renderer;
     
-    void draw_text(int x, int y, const char *text);
-    
     void set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                 Gtk::Adjustment *vadjustment);
                                 
     void on_adjustment_value_changed();
+    void draw_text(int x, int y, const char *text);
+    void navigate(int delta_x, int delta_y);
+    
+    void show_cursor();
+    
 protected:
+    void invalidate_cursor();
+    void invalidate_selection();
+    void clip_cursor(PatternCursor &c);
     void update_adjustments();
         
     InteractMode interact_mode;
