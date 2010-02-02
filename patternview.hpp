@@ -148,6 +148,11 @@ protected:
 
 class PatternView : public Gtk::Widget {
 public:
+    enum {
+        CharBegin = 32,
+        CharEnd = 128,
+    };
+    
     PatternView(BaseObjectType* cobject, 
                 const Glib::RefPtr<Gtk::Builder>& builder);
 
@@ -170,6 +175,7 @@ public:
     Glib::RefPtr<Gdk::Colormap> cm;
     Glib::RefPtr<Pango::Layout> pango_layout;
     Glib::RefPtr<Gdk::Window> window;
+    std::vector< Glib::RefPtr<Gdk::Pixmap> > chars;
     
     Gdk::Color bgcolor;
     Gdk::Color fgcolor;

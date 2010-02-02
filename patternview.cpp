@@ -528,6 +528,22 @@ void PatternView::on_realize() {
     pango_layout->set_text("W");
     int text_width, text_height;
     pango_layout->get_pixel_size(text_width, text_height);
+    
+    for (int i = CharBegin; i < CharEnd; ++i) {
+        Glib::RefPtr<Gdk::Pixmap> pixmap = Gdk::Pixmap::create(
+            window, text_width, text_height);
+        Glib::RefPtr<Gdk::GC> pm_gc = Gdk::GC::create(pixmap);
+        pm_gc->set_colormap(cm);
+        
+        char buffer[4];
+        sprintf(buffer, "%c", i);
+        pango_layout->set_text(buffer);
+        
+        pm_gc->set_foreground(fgcolor);
+        pixmap->draw_layout(pm_gc, 0, 0, pango_layout);
+        
+        chars.push_back(pixmap);
+    }
 
     // setup pattern layout
     layout.set_text_size(text_width, text_height);
@@ -687,6 +703,8 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
         }
         render_cursor.next_row();
     }
+    
+    //window->draw_drawable(gc, chars['A'-CharBegin], 0, 0, 0, 0);
 
     return true;
 }
