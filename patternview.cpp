@@ -7,8 +7,6 @@
 /*
 TODO:
 
-- implement scrolling
-- check horizontal clip borders and clip on channel boundaries
 - implement selection: cursor start -> cursor end
 - implement basic navigation
 - roll position on channel/row begin/end
