@@ -106,11 +106,10 @@ void CellRendererNote::render_cell(PatternView &view, PatternCursor &cursor,
     render_background(view, cursor);
     
     view.gc->set_foreground(view.fgcolor);
-    view.pango_layout->set_text(text);
     
     int x, y;
     cursor.get_pos(x,y);
-    view.window->draw_layout(view.gc, x, y, view.pango_layout);
+    view.draw_text(x, y, text);
     
     if (draw_cursor) {
         int w,h;
@@ -170,11 +169,10 @@ void CellRendererByte::render_cell(PatternView &view, PatternCursor &cursor,
     render_background(view, cursor);
     
     view.gc->set_foreground(view.fgcolor);
-    view.pango_layout->set_text(text);
     
     int x, y;
     cursor.get_pos(x,y);
-    view.window->draw_layout(view.gc, x, y, view.pango_layout);
+    view.draw_text(x, y, text);
 
     if (draw_cursor) {
         int w,h;
@@ -502,7 +500,7 @@ void PatternView::on_realize() {
     
     // create drawing resources
     gc = Gdk::GC::create(window);
-    cm = Gdk::Colormap::get_system();
+    cm = gc->get_colormap();
     
     bgcolor.set("#ffffff"); cm->alloc_color(bgcolor);
     fgcolor.set("#000000"); cm->alloc_color(fgcolor);
@@ -514,6 +512,23 @@ void PatternView::on_realize() {
     pango_layout = Pango::Layout::create(get_pango_context());
     pango_layout->set_font_description(font_desc);
     pango_layout->set_width(-1);
+        
+    // measure width of a single character
+    pango_layout->set_text("W");
+    int text_width, text_height;
+    pango_layout->get_pixel_size(text_width, text_height);
+    
+    for (int i = CharBegin; i < CharEnd; ++i) {
+        Glib::RefPtr<Pango::Layout> charlayout = Pango::Layout::create(get_pango_context());
+        charlayout->set_font_description(font_desc);
+        charlayout->set_width(-1);
+        
+        char buffer[4];
+        sprintf(buffer, "%c", (char)i);
+        charlayout->set_text(buffer);
+        
+        chars.push_back(charlayout);
+    }
     
     // create xor gc for drawing the cursor
     xor_gc = Gdk::GC::create(window);
@@ -523,27 +538,7 @@ void PatternView::on_realize() {
     xor_gc->set_function(Gdk::XOR);
     xor_gc->set_foreground(xor_color);
     xor_gc->set_background(xor_color);
-    
-    // measure width of a single character
-    pango_layout->set_text("W");
-    int text_width, text_height;
-    pango_layout->get_pixel_size(text_width, text_height);
-    
-    for (int i = CharBegin; i < CharEnd; ++i) {
-        Glib::RefPtr<Gdk::Pixmap> pixmap = Gdk::Pixmap::create(
-            window, text_width, text_height);
-        Glib::RefPtr<Gdk::GC> pm_gc = Gdk::GC::create(pixmap);
-        pm_gc->set_colormap(cm);
-        
-        char buffer[4];
-        sprintf(buffer, "%c", i);
-        pango_layout->set_text(buffer);
-        
-        pm_gc->set_foreground(fgcolor);
-        pixmap->draw_layout(pm_gc, 0, 0, pango_layout);
-        
-        chars.push_back(pixmap);
-    }
+
 
     // setup pattern layout
     layout.set_text_size(text_width, text_height);
@@ -630,6 +625,19 @@ void PatternView::on_size_allocate(Gtk::Allocation& allocation) {
     update_adjustments();
 }
 
+void PatternView::draw_text(int x, int y, const char *text) {
+    const char *s = text;
+    int w,h;
+    layout.get_text_size(w,h);
+    while (*s) {
+        if ((*s) >= CharBegin && (*s) < CharEnd) {
+            window->draw_layout(gc, x, y, chars[(*s)-CharBegin]);
+        }
+        x += w;
+        s++;
+    }
+}
+
 bool PatternView::on_expose_event(GdkEventExpose* event) {
     int width = 0;
     int height = 0;
@@ -704,8 +712,6 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
         render_cursor.next_row();
     }
     
-    //window->draw_drawable(gc, chars['A'-CharBegin], 0, 0, 0, 0);
-
     return true;
 }
 

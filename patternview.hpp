@@ -175,7 +175,7 @@ public:
     Glib::RefPtr<Gdk::Colormap> cm;
     Glib::RefPtr<Pango::Layout> pango_layout;
     Glib::RefPtr<Gdk::Window> window;
-    std::vector< Glib::RefPtr<Gdk::Pixmap> > chars;
+    std::vector< Glib::RefPtr<Pango::Layout> > chars;
     
     Gdk::Color bgcolor;
     Gdk::Color fgcolor;
@@ -191,6 +191,8 @@ public:
     
     CellRendererNote note_renderer;
     CellRendererByte byte_renderer;
+    
+    void draw_text(int x, int y, const char *text);
     
     void set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                 Gtk::Adjustment *vadjustment);
