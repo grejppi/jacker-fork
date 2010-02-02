@@ -19,9 +19,11 @@ class PatternLayout;
 class CellRenderer {
 public:
     virtual ~CellRenderer() {}
-    virtual void render_background(PatternView &view, PatternCursor &cursor);
+    virtual void render_background(PatternView &view, PatternCursor &cursor, 
+                                   bool selected);
     virtual void render_cell(PatternView &view, PatternCursor &cursor, 
-                             Pattern::Event *event, bool draw_cursor);
+                             Pattern::Event *event, bool draw_cursor, 
+                             bool selected);
     virtual int get_width(const PatternLayout &layout);
     virtual int get_item(const PatternLayout &layout, int x);
     virtual int get_item_count();
@@ -32,7 +34,8 @@ public:
 class CellRendererNote : public CellRenderer {
 public:
     virtual void render_cell(PatternView &view, PatternCursor &cursor, 
-                             Pattern::Event *event, bool draw_cursor);
+                             Pattern::Event *event, bool draw_cursor, 
+                             bool selected);
     virtual int get_width(const PatternLayout &layout);
     virtual int get_item(const PatternLayout &layout, int x);
     virtual int get_item_count();
@@ -43,7 +46,8 @@ public:
 class CellRendererByte : public CellRenderer {
 public:
     virtual void render_cell(PatternView &view, PatternCursor &cursor, 
-                             Pattern::Event *event, bool draw_cursor);
+                             Pattern::Event *event, bool draw_cursor, 
+                             bool selected);
     virtual int get_width(const PatternLayout &layout);
     virtual int get_item(const PatternLayout &layout, int x);
     virtual int get_item_count();
@@ -100,6 +104,7 @@ protected:
 //=============================================================================
 
 class PatternCursor {
+friend class PatternSelection;
 public:
     PatternCursor();
     void origin();
@@ -111,6 +116,7 @@ public:
     int get_channel() const;
     int get_param() const;
     int get_item() const;
+    int get_column() const;
 
     void set_row(int row);
     void set_channel(int channel);
@@ -146,6 +152,25 @@ protected:
 
 //=============================================================================
 
+class PatternSelection {
+public:
+    PatternSelection();
+    bool in_range(const PatternCursor &cursor) const;
+
+    void set_active(bool active);
+    bool get_active() const;
+
+    void set_layout(PatternLayout &layout);
+
+    PatternCursor p0;
+    PatternCursor p1;
+protected:
+    
+    bool active;
+};
+
+//=============================================================================
+
 class PatternView : public Gtk::Widget {
 public:
     enum {
@@ -177,10 +202,7 @@ public:
     Glib::RefPtr<Gdk::Window> window;
     std::vector< Glib::RefPtr<Gdk::Pixmap> > chars;
     
-    Gdk::Color bgcolor;
-    Gdk::Color fgcolor;
-    Gdk::Color row_color_bar;
-    Gdk::Color row_color_beat;
+    std::vector<Gdk::Color> colors;
     
     PatternLayout layout;
     
@@ -206,6 +228,7 @@ protected:
     Gtk::Adjustment *hadjustment;
     Gtk::Adjustment *vadjustment;
     PatternCursor cursor;
+    PatternSelection selection;
 };
 
 //=============================================================================

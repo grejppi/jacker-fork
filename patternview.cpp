@@ -17,17 +17,36 @@ TODO:
 
 namespace Jacker {
 
+enum {
+    ColorBlack = 0,
+    ColorWhite,
+    ColorBackground,
+    ColorRowBar,
+    ColorRowBeat,
+    ColorSelBackground,
+    ColorSelRowBar,
+    ColorSelRowBeat,
+    
+    ColorCount,
+};
+
+
 //=============================================================================
 
 void CellRenderer::render_background(PatternView &view, 
-                                     PatternCursor &cursor) {
+                                     PatternCursor &cursor,
+                                     bool selected) {
     int row = cursor.get_row();
     int frames_per_bar = view.frames_per_beat * view.beats_per_bar;
     
+    int color_base = 0;
+    if (selected) {
+        color_base = ColorSelBackground - ColorBackground;
+    }
     if (!(row % frames_per_bar)) {
-        view.gc->set_foreground(view.row_color_bar);
+        view.gc->set_foreground(view.colors[color_base+ColorRowBar]);
     } else if (!(row % view.frames_per_beat)) {
-        view.gc->set_foreground(view.row_color_beat);
+        view.gc->set_foreground(view.colors[color_base+ColorRowBeat]);
     }
     else {
         return; // nothing to draw
@@ -43,7 +62,7 @@ void CellRenderer::render_background(PatternView &view,
 }
 
 void CellRenderer::render_cell(PatternView &view, PatternCursor &cursor, 
-                               Pattern::Event *event, bool draw_cursor) {
+                               Pattern::Event *event, bool draw_cursor, bool selected) {
 
 }
 
@@ -90,7 +109,7 @@ static int sprint_note(char *buffer, int value) {
 }
 
 void CellRendererNote::render_cell(PatternView &view, PatternCursor &cursor, 
-                                   Pattern::Event *event, bool draw_cursor) {
+                                   Pattern::Event *event, bool draw_cursor, bool selected) {
                                        
     char text[16];
     
@@ -101,9 +120,9 @@ void CellRendererNote::render_cell(PatternView &view, PatternCursor &cursor,
     
     chars = sprint_note(text, value);
     
-    render_background(view, cursor);
+    render_background(view, cursor, selected);
     
-    view.gc->set_foreground(view.fgcolor);
+    view.gc->set_foreground(view.colors[ColorBlack]);
     
     int x, y;
     cursor.get_pos(x,y);
@@ -153,8 +172,7 @@ static int sprint_byte(char *buffer, int value) {
 }
 
 void CellRendererByte::render_cell(PatternView &view, PatternCursor &cursor, 
-                                   Pattern::Event *event, bool draw_cursor) {
-                                       
+                                   Pattern::Event *event, bool draw_cursor, bool selected) {
     char text[16];
     
     int chars = 0;
@@ -164,9 +182,9 @@ void CellRendererByte::render_cell(PatternView &view, PatternCursor &cursor,
     
     chars = sprint_byte(text, value);
     
-    render_background(view, cursor);
+    render_background(view, cursor, selected);
     
-    view.gc->set_foreground(view.fgcolor);
+    view.gc->set_foreground(view.colors[ColorBlack]);
     
     int x, y;
     cursor.get_pos(x,y);
@@ -401,6 +419,11 @@ int PatternCursor::get_param() const {
     return param;
 }
 
+int PatternCursor::get_column() const {
+    assert(layout);
+    return channel * layout->get_cell_count() + param;
+}
+
 void PatternCursor::get_pos(int &x, int &y) const {
     assert(layout);
     layout->get_cell_pos(row, channel, param, x, y);
@@ -459,6 +482,46 @@ bool PatternCursor::is_at(const PatternCursor &other) const {
 
 //=============================================================================
 
+PatternSelection::PatternSelection() {
+    active = false;
+}
+
+void PatternSelection::set_active(bool active) {
+    this->active = active;
+}
+
+bool PatternSelection::get_active() const {
+    return active;
+}
+
+static bool test_range(int value, int r0, int r1) {
+    if (r1 == r0)
+        return false;
+    if (r1 < r0) {
+        int _temp = r0;
+        r0 = r1;
+        r1 = _temp;
+    }
+    return (value >= r0) && (value < r1);
+}
+
+bool PatternSelection::in_range(const PatternCursor &cursor) const {
+    if (!active)
+        return false;
+    if (!test_range(cursor.get_row(), p0.get_row(), p1.get_row()))
+        return false;
+    if (!test_range(cursor.get_column(), p0.get_column(), p1.get_column()))
+        return false;
+    return true;
+}
+
+void PatternSelection::set_layout(PatternLayout &layout) {
+    p0.set_layout(layout);
+    p1.set_layout(layout);
+}
+
+//=============================================================================
+
 PatternView::PatternView(BaseObjectType* cobject,
                          const Glib::RefPtr<Gtk::Builder>& builder)
   : Gtk::Widget(cobject) {
@@ -468,6 +531,16 @@ PatternView::PatternView(BaseObjectType* cobject,
     beats_per_bar = 4;
     hadjustment = 0;
     vadjustment = 0;
+      
+    colors.resize(ColorCount);
+    colors[ColorBlack].set("#000000");
+    colors[ColorWhite].set("#FFFFFF");
+    colors[ColorBackground].set("#e0e0e0");
+    colors[ColorRowBar].set("#c0c0c0");
+    colors[ColorRowBeat].set("#d0d0d0");
+    colors[ColorSelBackground].set("#00a0ff");
+    colors[ColorSelRowBar].set("#20c0ff");
+    colors[ColorSelRowBeat].set("#40e0ff");
 }
 
 void PatternView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
@@ -500,10 +573,10 @@ void PatternView::on_realize() {
     gc = Gdk::GC::create(window);
     cm = gc->get_colormap();
     
-    bgcolor.set("#ffffff"); cm->alloc_color(bgcolor);
-    fgcolor.set("#000000"); cm->alloc_color(fgcolor);
-    row_color_bar.set("#c0c0c0"); cm->alloc_color(row_color_bar);
-    row_color_beat.set("#e0e0e0"); cm->alloc_color(row_color_beat);
+    for (std::vector<Gdk::Color>::iterator i = colors.begin(); 
+         i != colors.end(); ++i) {
+        cm->alloc_color(*i);
+    }
     
     Pango::FontDescription font_desc("monospace 8");
     
@@ -526,10 +599,10 @@ void PatternView::on_realize() {
         
         Glib::RefPtr<Gdk::GC> pm_gc = Gdk::GC::create(pixmap);
         pm_gc->set_colormap(cm);
-        pm_gc->set_foreground(bgcolor);
+        pm_gc->set_foreground(colors[ColorWhite]);
         pixmap->draw_rectangle(pm_gc, true, 0, 0, text_width, text_height);
         
-        pm_gc->set_foreground(fgcolor);
+        pm_gc->set_foreground(colors[ColorBlack]);
         pixmap->draw_layout(pm_gc, 0, 0, pango_layout);
         
         chars.push_back(pixmap);
@@ -560,6 +633,10 @@ void PatternView::on_realize() {
     layout.set_cell_renderer(ParamCCValue1, &byte_renderer);
     
     cursor.set_layout(layout);
+    selection.set_layout(layout);
+    
+    selection.p0.set_pos(100,100);
+    selection.p1.set_pos(300,200);
  
     update_adjustments();
 }
@@ -663,7 +740,7 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     window->get_size(width, height);
     
     // clear screen
-    gc->set_foreground(bgcolor);
+    gc->set_foreground(colors[ColorBackground]);
     window->draw_rectangle(gc, true, 0, 0, width, height);
     
     // build temporary row
@@ -721,8 +798,10 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
                         render_cursor.set_item(cursor.get_item());
                         draw_cursor = true;
                     }
+                    bool selected = selection.in_range(render_cursor);
                     renderer->render_cell(*this,
-                        render_cursor, row.get_event(channel, param), draw_cursor);
+                        render_cursor, row.get_event(channel, param), draw_cursor,
+                        selected);
                 }
                 render_cursor.next_param();
             }
