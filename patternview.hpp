@@ -202,8 +202,6 @@ public:
     int get_cell_margin() const;
     void set_channel_margin(int margin);
     int get_channel_margin() const;
-    void set_row_margin(int margin);
-    int get_row_margin() const;
     void get_cell_size(int param, int &w, int &h, bool include_margin=false) const;
     void get_cell_pos(int row, int channel, int param,
                       int &x, int &y) const;
@@ -241,8 +239,6 @@ protected:
     int cell_margin;
     // margin between channels
     int channel_margin;
-    // margin between rows
-    int row_margin;
     // how wide is a pattern character
     int text_width;
     // how high is a pattern character

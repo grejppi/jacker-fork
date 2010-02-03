@@ -504,7 +504,6 @@ PatternView::PatternView(BaseObjectType* cobject,
     origin_x = origin_y = 0;
     cell_margin = 0;
     channel_margin = 0;
-    row_margin = 0;
     text_width = 0;
     text_height = 0;
     renderers.resize(ParamCount);
@@ -936,20 +935,12 @@ void PatternView::set_channel_margin(int margin) {
     channel_margin = margin;
 }
 
-void PatternView::set_row_margin(int margin) {
-    row_margin = margin;
-}
-
 int PatternView::get_cell_margin() const {
     return cell_margin;
 }
 
 int PatternView::get_channel_margin() const {
     return channel_margin;
-}
-
-int PatternView::get_row_margin() const {
-    return row_margin;
 }
 
 void PatternView::set_row_height(int height) {
@@ -991,7 +982,7 @@ int PatternView::get_channel_width() const {
 
 void PatternView::get_cell_pos(int row, int channel, int param,
                                        int &x, int &y) const {
-    y = origin_y + row * (row_height + row_margin);
+    y = origin_y + row * row_height;
     x = origin_x + channel * (get_channel_width() + channel_margin) +
         get_param_offset(param);
     
@@ -1003,7 +994,7 @@ bool PatternView::get_cell_location(int x, int y, int &row, int &channel,
     assert(row_height);
     assert(channel_width);
     y -= origin_y;
-    row = y / (row_height + row_margin);
+    row = y / row_height;
     x -= origin_x;
     channel = x / (channel_width + channel_margin);
     x -= channel * (channel_width + channel_margin);
