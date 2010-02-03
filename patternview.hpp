@@ -209,6 +209,7 @@ public:
     void draw_text(int x, int y, const char *text);
     void navigate(int delta_x, int delta_y);
     
+    
     void show_cursor();
     
     int get_frames_per_bar() const;
