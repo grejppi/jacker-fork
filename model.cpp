@@ -5,6 +5,22 @@ namespace Jacker {
 
 //=============================================================================
 
+Param::Param() {
+    min_value = ValueNone;
+    max_value = ValueNone;
+    def_value = ValueNone;
+    no_value = ValueNone;
+}
+
+Param::Param(int min_value, int max_value, int def_value, int no_value) {
+    this->min_value = min_value;
+    this->max_value = max_value;
+    this->def_value = def_value;
+    this->no_value = no_value;
+}
+    
+//=============================================================================
+
 PatternEvent::PatternEvent() {
     frame = ValueNone;
     channel = ValueNone;
@@ -33,6 +49,19 @@ bool PatternEvent::is_valid() const {
 
 int PatternEvent::key() const {
     return frame;
+}
+
+void PatternEvent::sanitize_value() {
+    if (value == ValueNone)
+        return;
+    if (param == ParamNote) {
+        if (value == NoteOff)
+            return;
+    }
+    if (value < 0)
+        value = 0;
+    else if (value > 127)
+        value = 127;
 }
 
 //=============================================================================

@@ -54,6 +54,9 @@ public:
     virtual int get_width();
     virtual int get_item(int x);
     virtual int get_item_count();
+    
+    virtual bool on_key_press_event(GdkEventKey* event_key, 
+                                    Pattern::Event &event, int item);        
 };
 
 //=============================================================================

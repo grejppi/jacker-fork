@@ -31,10 +31,17 @@ enum {
 
 // scancodes for both octaves of the piano, starting at C-0
 static const guint16 piano_scancodes[] = {
+#if defined(WIN32)
+//  C     C#    D     D#    E     F     F#    G     G#    A     A#    B
+    0x59, 0x53, 0x58, 0x44, 0x43, 0x56, 0x47, 0x42, 0x48, 0x4e, 0x4a, 0x4d, // -0
+    0x51, 0x32, 0x57, 0x33, 0x45, 0x52, 0x35, 0x54, 0x36, 0x5a, 0x37, 0x55, // -1
+    0x49, 0x39, 0x4f, 0x30, 0x50,                                           // -2
+#else // linux
 //  C     C#    D     D#    E     F     F#    G     G#    A     A#    B
     0x34, 0x27, 0x35, 0x28, 0x36, 0x37, 0x2a, 0x38, 0x2b, 0x39, 0x2c, 0x3a, // -0
     0x18, 0x0b, 0x19, 0x0c, 0x1a, 0x1b, 0x0e, 0x1c, 0x0f, 0x1d, 0x10, 0x1e, // -1
     0x1f, 0x12, 0x20, 0x13, 0x21,                                           // -2
+#endif
 };
 
 //=============================================================================
@@ -189,6 +196,32 @@ int CellRendererNote::get_item(int x) {
 
 int CellRendererNote::get_item_count() {
     return ItemCount;
+}
+
+bool CellRendererNote::on_key_press_event(GdkEventKey* event_key, 
+     Pattern::Event &event, int item) {
+    if (item == ItemNote) {
+        if (event_key->keyval == GDK_1) {
+            event.value = NoteOff;
+            return true;
+        }
+        size_t count = sizeof(piano_scancodes) / sizeof(guint16);
+        for (size_t i = 0; i < count; ++i) {
+            if (event_key->hardware_keycode == piano_scancodes[i]) {
+                event.value = i;
+                return true;
+            }
+        }
+        
+    } else if ((item == ItemOctave) && event.is_valid()) {
+        int note = event.value % 12;
+        if ((event_key->keyval >= GDK_0) && (event_key->keyval <= GDK_9)) {
+            int octave = event_key->keyval - GDK_0;
+            event.value = 12*octave + note;
+            return true;
+        }
+    }
+    return CellRenderer::on_key_press_event(event_key, event, item);
 }
 
 //=============================================================================
@@ -950,6 +983,7 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
                     evt = i->second;
                 if (renderer->on_key_press_event(event, evt, 
                                                  cursor.get_item())) {
+                    evt.sanitize_value();
                     if (evt.is_valid())
                         pattern->add_event(evt);
                     else if (i != pattern->end())

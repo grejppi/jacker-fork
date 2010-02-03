@@ -22,7 +22,8 @@ if win32:
             "/vd2",
         ],
         LINKFLAGS = [
-            "/SUBSYSTEM:WINDOWS",
+            #"/SUBSYSTEM:WINDOWS",
+            "/SUBSYSTEM:CONSOLE",
         ],
         CPPPATH = [
             "win32/include",

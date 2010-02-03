@@ -59,6 +59,19 @@ enum {
 
 //=============================================================================
 
+// describes a parameter
+struct Param {
+    int min_value;
+    int max_value;
+    int def_value;
+    int no_value;
+    
+    Param();
+    Param(int min_value, int max_value, int default_value, int no_value);
+};
+
+//=============================================================================
+
 struct PatternEvent {
     // time index
     int frame;
@@ -73,6 +86,7 @@ struct PatternEvent {
     PatternEvent(int frame, int channel, int param, int value);
     bool is_valid() const;
     int key() const;
+    void sanitize_value();
 };
 
 //=============================================================================
