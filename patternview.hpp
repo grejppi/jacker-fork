@@ -12,32 +12,37 @@ namespace Jacker {
 
 class PatternCursor;
 class PatternView;
-class PatternLayout;
 
 //=============================================================================
 
 class CellRenderer {
 public:
+    CellRenderer();
     virtual ~CellRenderer() {}
-    virtual void render_background(PatternView &view, PatternCursor &cursor, 
+    virtual void render_background(PatternCursor &cursor, 
                                    bool selected);
-    virtual void render_cell(PatternView &view, PatternCursor &cursor, 
+    virtual void render_cell(PatternCursor &cursor, 
                              Pattern::Event *event, bool draw_cursor, 
                              bool selected);
-    virtual int get_width(const PatternLayout &layout);
-    virtual int get_item(const PatternLayout &layout, int x);
+    virtual int get_width();
+    virtual int get_item(int x);
     virtual int get_item_count();
+        
+    void set_view(PatternView &view);
+    PatternView *get_view() const;
+protected:
+    PatternView *view;
 };
 
 //=============================================================================
 
 class CellRendererNote : public CellRenderer {
 public:
-    virtual void render_cell(PatternView &view, PatternCursor &cursor, 
+    virtual void render_cell(PatternCursor &cursor, 
                              Pattern::Event *event, bool draw_cursor, 
                              bool selected);
-    virtual int get_width(const PatternLayout &layout);
-    virtual int get_item(const PatternLayout &layout, int x);
+    virtual int get_width();
+    virtual int get_item(int x);
     virtual int get_item_count();
 };
 
@@ -45,60 +50,12 @@ public:
 
 class CellRendererByte : public CellRenderer {
 public:
-    virtual void render_cell(PatternView &view, PatternCursor &cursor, 
+    virtual void render_cell(PatternCursor &cursor, 
                              Pattern::Event *event, bool draw_cursor, 
                              bool selected);
-    virtual int get_width(const PatternLayout &layout);
-    virtual int get_item(const PatternLayout &layout, int x);
+    virtual int get_width();
+    virtual int get_item(int x);
     virtual int get_item_count();
-};
-
-//=============================================================================
-
-class PatternLayout {
-public:
-    PatternLayout();
-    void set_row_height(int height);
-    int get_row_height() const;
-    void set_cell_renderer(int param, CellRenderer *renderer);
-    CellRenderer *get_cell_renderer(int param) const;
-    int get_cell_count() const;
-    void set_origin(int x, int y);
-    void get_origin(int &x, int &y);
-    void set_cell_margin(int margin);
-    int get_cell_margin() const;
-    void set_channel_margin(int margin);
-    int get_channel_margin() const;
-    void set_row_margin(int margin);
-    int get_row_margin() const;
-    void get_cell_size(int param, int &w, int &h, bool include_margin=false) const;
-    void get_cell_pos(int row, int channel, int param,
-                      int &x, int &y) const;
-    bool get_cell_location(int x, int y, int &row, int &channel,
-        int &param, int &item) const;
-    int get_channel_width() const;
-    int get_param_offset(int param) const;
-    void set_text_size(int width, int height);
-    void get_text_size(int &width, int &height) const;
-protected:
-    typedef std::vector<CellRenderer *> CellRendererArray;
-
-    // height of active row
-    int row_height;
-    // cell renderers indexed by param
-    CellRendererArray renderers;
-    // start x and y position
-    int origin_x, origin_y;
-    // margin between cells
-    int cell_margin;
-    // margin between channels
-    int channel_margin;
-    // margin between rows
-    int row_margin;
-    // how wide is a pattern character
-    int text_width;
-    // how high is a pattern character
-    int text_height;
 };
 
 //=============================================================================
@@ -135,14 +92,14 @@ public:
     void set_pos(int x, int y);
     void get_cell_size(int &w, int &h, bool include_margin=false) const;
 
-    PatternLayout *get_layout() const;
-    void set_layout(PatternLayout &layout);
+    PatternView *get_view() const;
+    void set_view(PatternView &view);
     
     // true if cursor shares row/channel/param with other cursor
     bool is_at(const PatternCursor &other) const;
 
 protected:
-    PatternLayout *layout;
+    PatternView *view;
     // index of current row
     int row;
     // index of current channel
@@ -163,7 +120,7 @@ public:
     void set_active(bool active);
     bool get_active() const;
 
-    void set_layout(PatternLayout &layout);
+    void set_view(PatternView &view);
 
     bool get_rect(int &x, int &y, int &width, int &height) const;
 
@@ -216,9 +173,7 @@ public:
     std::vector< Glib::RefPtr<Gdk::Pixmap> > chars;
     
     std::vector<Gdk::Color> colors;
-    
-    PatternLayout layout;
-    
+
     // how many frames are in one beat
     int frames_per_beat;
     // how many beats are in one bar
@@ -236,6 +191,29 @@ public:
     
     void show_cursor();
     
+    void set_row_height(int height);
+    int get_row_height() const;
+    void set_cell_renderer(int param, CellRenderer *renderer);
+    CellRenderer *get_cell_renderer(int param) const;
+    int get_cell_count() const;
+    void set_origin(int x, int y);
+    void get_origin(int &x, int &y);
+    void set_cell_margin(int margin);
+    int get_cell_margin() const;
+    void set_channel_margin(int margin);
+    int get_channel_margin() const;
+    void set_row_margin(int margin);
+    int get_row_margin() const;
+    void get_cell_size(int param, int &w, int &h, bool include_margin=false) const;
+    void get_cell_pos(int row, int channel, int param,
+                      int &x, int &y) const;
+    bool get_cell_location(int x, int y, int &row, int &channel,
+        int &param, int &item) const;
+    int get_channel_width() const;
+    int get_param_offset(int param) const;
+    void set_text_size(int width, int height);
+    void get_text_size(int &width, int &height) const;
+    
 protected:
     void invalidate_cursor();
     void invalidate_selection();
@@ -250,6 +228,25 @@ protected:
     Gtk::Adjustment *vadjustment;
     PatternCursor cursor;
     PatternSelection selection;
+
+    typedef std::vector<CellRenderer *> CellRendererArray;
+
+    // height of active row
+    int row_height;
+    // cell renderers indexed by param
+    CellRendererArray renderers;
+    // start x and y position
+    int origin_x, origin_y;
+    // margin between cells
+    int cell_margin;
+    // margin between channels
+    int channel_margin;
+    // margin between rows
+    int row_margin;
+    // how wide is a pattern character
+    int text_width;
+    // how high is a pattern character
+    int text_height;
 };
 
 //=============================================================================

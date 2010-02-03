@@ -39,22 +39,33 @@ static const guint16 piano_scancodes[] = {
 
 //=============================================================================
 
-void CellRenderer::render_background(PatternView &view, 
-                                     PatternCursor &cursor,
+CellRenderer::CellRenderer() {
+    view = NULL;
+}
+
+void CellRenderer::set_view(PatternView &view) {
+    this->view = &view;
+}
+
+PatternView *CellRenderer::get_view() const {
+    return view;
+}
+
+void CellRenderer::render_background(PatternCursor &cursor,
                                      bool selected) {
     int row = cursor.get_row();
-    int frames_per_bar = view.frames_per_beat * view.beats_per_bar;
+    int frames_per_bar = view->frames_per_beat * view->beats_per_bar;
     
     int color_base = 0;
     if (selected) {
         color_base = ColorSelBackground - ColorBackground;
     }
     if (!(row % frames_per_bar)) {
-        view.gc->set_foreground(view.colors[color_base+ColorRowBar]);
-    } else if (!(row % view.frames_per_beat)) {
-        view.gc->set_foreground(view.colors[color_base+ColorRowBeat]);
+        view->gc->set_foreground(view->colors[color_base+ColorRowBar]);
+    } else if (!(row % view->frames_per_beat)) {
+        view->gc->set_foreground(view->colors[color_base+ColorRowBeat]);
     } else if (selected) {
-        view.gc->set_foreground(view.colors[color_base+ColorBackground]);
+        view->gc->set_foreground(view->colors[color_base+ColorBackground]);
     } else {
         return; // nothing to draw
     }
@@ -63,21 +74,21 @@ void CellRenderer::render_background(PatternView &view,
     cursor.get_pos(x,y);
     cursor.get_cell_size(w,h);
     if (!cursor.is_last_param()) {
-        w += cursor.get_layout()->get_cell_margin();
+        w += view->get_cell_margin();
     }
-    view.window->draw_rectangle(view.gc, true, x, y, w, h);
+    view->window->draw_rectangle(view->gc, true, x, y, w, h);
 }
 
-void CellRenderer::render_cell(PatternView &view, PatternCursor &cursor, 
-                               Pattern::Event *event, bool draw_cursor, bool selected) {
+void CellRenderer::render_cell(PatternCursor &cursor, Pattern::Event *event, 
+                               bool draw_cursor, bool selected) {
 
 }
 
-int CellRenderer::get_width(const PatternLayout &layout) {
+int CellRenderer::get_width() {
     return 0;
 }
 
-int CellRenderer::get_item(const PatternLayout &layout, int x) {
+int CellRenderer::get_item(int x) {
     return 0;
 }
 
@@ -117,8 +128,8 @@ static int sprint_note(char *buffer, int value) {
     return 3;
 }
 
-void CellRendererNote::render_cell(PatternView &view, PatternCursor &cursor, 
-                                   Pattern::Event *event, bool draw_cursor, bool selected) {
+void CellRendererNote::render_cell(PatternCursor &cursor, Pattern::Event *event, 
+                                   bool draw_cursor, bool selected) {
                                        
     char text[16];
     
@@ -129,35 +140,35 @@ void CellRendererNote::render_cell(PatternView &view, PatternCursor &cursor,
     
     chars = sprint_note(text, value);
     
-    render_background(view, cursor, selected);
+    render_background(cursor, selected);
     
-    view.gc->set_foreground(view.colors[ColorBlack]);
+    view->gc->set_foreground(view->colors[ColorBlack]);
     
     int x, y;
     cursor.get_pos(x,y);
-    view.draw_text(x, y, text);
+    view->draw_text(x, y, text);
     
     if (draw_cursor) {
         int w,h;
-        cursor.get_layout()->get_text_size(w,h);
+        view->get_text_size(w,h);
         int item = cursor.get_item();
         if (item == 0)
             w *= 3;
         else if (item == 1)
             x += 2 * w;
-        view.window->draw_rectangle(view.xor_gc, true, x, y, w, h);
+        view->window->draw_rectangle(view->xor_gc, true, x, y, w, h);
     }
 }
 
-int CellRendererNote::get_width(const PatternLayout &layout) {
+int CellRendererNote::get_width() {
     int w,h;
-    layout.get_text_size(w,h);
+    view->get_text_size(w,h);
     return 3 * w;
 }
 
-int CellRendererNote::get_item(const PatternLayout &layout, int x) {
+int CellRendererNote::get_item(int x) {
     int w,h;
-    layout.get_text_size(w,h);
+    view->get_text_size(w,h);
     int pos = x / w;
     if (pos < 2)
         return 0;
@@ -180,8 +191,8 @@ static int sprint_byte(char *buffer, int value) {
     return 2;
 }
 
-void CellRendererByte::render_cell(PatternView &view, PatternCursor &cursor, 
-                                   Pattern::Event *event, bool draw_cursor, bool selected) {
+void CellRendererByte::render_cell(PatternCursor &cursor, Pattern::Event *event, 
+                                   bool draw_cursor, bool selected) {
     char text[16];
     
     int chars = 0;
@@ -191,32 +202,32 @@ void CellRendererByte::render_cell(PatternView &view, PatternCursor &cursor,
     
     chars = sprint_byte(text, value);
     
-    render_background(view, cursor, selected);
+    render_background(cursor, selected);
     
-    view.gc->set_foreground(view.colors[ColorBlack]);
+    view->gc->set_foreground(view->colors[ColorBlack]);
     
     int x, y;
     cursor.get_pos(x,y);
-    view.draw_text(x, y, text);
+    view->draw_text(x, y, text);
 
     if (draw_cursor) {
         int w,h;
-        cursor.get_layout()->get_text_size(w,h);
+        view->get_text_size(w,h);
         int item = cursor.get_item();
         x += w * item;
-        view.window->draw_rectangle(view.xor_gc, true, x, y, w, h);
+        view->window->draw_rectangle(view->xor_gc, true, x, y, w, h);
     }
 }
 
-int CellRendererByte::get_width(const PatternLayout &layout) {
+int CellRendererByte::get_width() {
     int w,h;
-    layout.get_text_size(w,h);
+    view->get_text_size(w,h);
     return 2 * w;
 }
 
-int CellRendererByte::get_item(const PatternLayout &layout, int x) {
+int CellRendererByte::get_item(int x) {
     int w,h;
-    layout.get_text_size(w,h);
+    view->get_text_size(w,h);
     int pos = x / w;
     return std::min(pos, 1);
 }
@@ -226,169 +237,22 @@ int CellRendererByte::get_item_count() {
 }
 
 //=============================================================================
-    
-PatternLayout::PatternLayout() {
-    row_height = 0;
-    origin_x = origin_y = 0;
-    cell_margin = 0;
-    channel_margin = 0;
-    row_margin = 0;
-    text_width = 0;
-    text_height = 0;
-    renderers.resize(ParamCount);
-    for (size_t i = 0; i < renderers.size(); ++i) {
-        renderers[i] = NULL;
-    }
-}
-
-void PatternLayout::set_cell_renderer(int param, CellRenderer *renderer) {
-    renderers[param] = renderer;
-}
-
-CellRenderer *PatternLayout::get_cell_renderer(
-    int param) const {
-    return renderers[param];
-}
-
-int PatternLayout::get_cell_count() const {
-    return renderers.size();
-}
-
-void PatternLayout::set_origin(int x, int y) {
-    origin_x = x;
-    origin_y = y;
-}
-
-void PatternLayout::get_origin(int &x, int &y) {
-    x = origin_x;
-    y = origin_y;
-}
-
-void PatternLayout::set_cell_margin(int margin) {
-    cell_margin = margin;
-}
-
-void PatternLayout::set_channel_margin(int margin) {
-    channel_margin = margin;
-}
-
-void PatternLayout::set_row_margin(int margin) {
-    row_margin = margin;
-}
-
-int PatternLayout::get_cell_margin() const {
-    return cell_margin;
-}
-
-int PatternLayout::get_channel_margin() const {
-    return channel_margin;
-}
-
-int PatternLayout::get_row_margin() const {
-    return row_margin;
-}
-
-void PatternLayout::set_row_height(int height) {
-    row_height = height;
-}
-
-int PatternLayout::get_row_height() const {
-    return row_height;
-}
-
-void PatternLayout::get_cell_size(int param, int &w, int &h, 
-                                  bool include_margin) const {
-    w = 0;
-    h = row_height;
-    
-    CellRenderer *renderer = renderers[param];
-    if (renderer)
-        w = renderer->get_width(*this);
-    if (include_margin && ((size_t)param < (renderers.size()-1))) {
-        w += get_cell_margin();
-    }
-}
-
-int PatternLayout::get_param_offset(int param) const {
-    int x = 0;
-    for (size_t i = 0; i < (size_t)param; ++i) {
-        CellRenderer *renderer = renderers[i];
-        if (renderer)
-            x += renderer->get_width(*this);
-        if (i < (renderers.size()-1))
-            x += cell_margin;
-    }
-    return x;
-}
-
-int PatternLayout::get_channel_width() const {
-    return get_param_offset(renderers.size());
-}
-
-void PatternLayout::get_cell_pos(int row, int channel, int param,
-                                       int &x, int &y) const {
-    y = origin_y + row * (row_height + row_margin);
-    x = origin_x + channel * (get_channel_width() + channel_margin) +
-        get_param_offset(param);
-    
-}
-
-bool PatternLayout::get_cell_location(int x, int y, int &row, int &channel,
-    int &param, int &item) const {
-    int channel_width = get_channel_width();
-    assert(row_height);
-    assert(channel_width);
-    y -= origin_y;
-    row = y / (row_height + row_margin);
-    x -= origin_x;
-    channel = x / (channel_width + channel_margin);
-    x -= channel * (channel_width + channel_margin);
-    param = renderers.size()-1;
-    item = ((renderers[param])?(renderers[param]->get_item_count()-1):0);
-    for (size_t i = 0; i < renderers.size(); ++i) {
-        CellRenderer *renderer = renderers[i];
-        if (renderer) {
-            int width = renderer->get_width(*this);
-            if (x < width) {
-                param = i;
-                item = renderer->get_item(*this,x);
-                break;
-            }
-            x -= width;
-        }
-        if (i < (renderers.size()-1))
-            x -= cell_margin;
-    }
-    return false;
-}
-
-void PatternLayout::set_text_size(int width, int height) {
-    text_width = width;
-    text_height = height;
-}
-
-void PatternLayout::get_text_size(int &width, int &height) const {
-    width = text_width;
-    height = text_height;
-}
-
-//=============================================================================
 
 PatternCursor::PatternCursor() {
     row = 0;
     channel = 0;
     param = 0;
     item = 0;
-    layout = NULL;
+    view = NULL;
 }
 
-void PatternCursor::set_layout(PatternLayout &layout) {
-    this->layout = &layout;
+void PatternCursor::set_view(PatternView &view) {
+    this->view = &view;
 }
 
-PatternLayout *PatternCursor::get_layout() const {
-    assert(layout);
-    return layout;
+PatternView *PatternCursor::get_view() const {
+    assert(view);
+    return view;
 }
 
 void PatternCursor::origin() {
@@ -417,7 +281,8 @@ void PatternCursor::next_param() {
 }
 
 bool PatternCursor::is_last_param() const {
-    return param == get_layout()->get_cell_count()-1;
+    assert(view);
+    return param == view->get_cell_count()-1;
 }
 
 int PatternCursor::get_row() const {
@@ -433,23 +298,23 @@ int PatternCursor::get_param() const {
 }
 
 int PatternCursor::get_column() const {
-    assert(layout);
-    return channel * layout->get_cell_count() + param;
+    assert(view);
+    return channel * view->get_cell_count() + param;
 }
 
 void PatternCursor::get_pos(int &x, int &y) const {
-    assert(layout);
-    layout->get_cell_pos(row, channel, param, x, y);
+    assert(view);
+    view->get_cell_pos(row, channel, param, x, y);
 }
 
 void PatternCursor::set_pos(int x, int y) {
-    assert(layout);
-    layout->get_cell_location(x, y, row, channel, param, item);
+    assert(view);
+    view->get_cell_location(x, y, row, channel, param, item);
 }
 
 void PatternCursor::get_cell_size(int &w, int &h, bool include_margin) const {
-    assert(layout);
-    layout->get_cell_size(param, w, h, include_margin);
+    assert(view);
+    view->get_cell_size(param, w, h, include_margin);
 }
 
 int PatternCursor::get_item() const {
@@ -473,9 +338,9 @@ void PatternCursor::set_item(int item) {
 }
 
 void PatternCursor::set_last_item() {
-    param = layout->get_cell_count()-1;
+    param = view->get_cell_count()-1;
     item = 0;
-    CellRenderer *renderer = layout->get_cell_renderer(param);
+    CellRenderer *renderer = view->get_cell_renderer(param);
     if (renderer) {
         item = renderer->get_item_count()-1;
     }
@@ -497,15 +362,15 @@ void PatternCursor::navigate_row(int delta) {
 }
 
 bool PatternCursor::is_last_item() const {
-    assert(layout);
-    CellRenderer *renderer = layout->get_cell_renderer(param);
+    assert(view);
+    CellRenderer *renderer = view->get_cell_renderer(param);
     if (!renderer)
         return true;
     return (item >= (renderer->get_item_count()-1));
 }
 
 void PatternCursor::navigate_column(int delta) {
-    assert(layout);
+    assert(view);
     if (delta > 0) {
         while (delta) {
             if (is_last_item()) {
@@ -530,11 +395,11 @@ void PatternCursor::navigate_column(int delta) {
                     } else {
                         channel--;
                     }
-                    param = layout->get_cell_count()-1;
+                    param = view->get_cell_count()-1;
                 } else {
                     param--;
                 }
-                CellRenderer *renderer = layout->get_cell_renderer(param);
+                CellRenderer *renderer = view->get_cell_renderer(param);
                 if (renderer)
                     item = renderer->get_item_count()-1;
                 else
@@ -578,9 +443,9 @@ bool PatternSelection::in_range(const PatternCursor &cursor) const {
     return true;
 }
 
-void PatternSelection::set_layout(PatternLayout &layout) {
-    p0.set_layout(layout);
-    p1.set_layout(layout);
+void PatternSelection::set_view(PatternView &view) {
+    p0.set_view(view);
+    p1.set_view(view);
 }
 
 void PatternSelection::sort() {
@@ -635,6 +500,17 @@ PatternView::PatternView(BaseObjectType* cobject,
     hadjustment = 0;
     vadjustment = 0;
     interact_mode = InteractNone;
+    row_height = 0;
+    origin_x = origin_y = 0;
+    cell_margin = 0;
+    channel_margin = 0;
+    row_margin = 0;
+    text_width = 0;
+    text_height = 0;
+    renderers.resize(ParamCount);
+    for (size_t i = 0; i < renderers.size(); ++i) {
+        renderers[i] = NULL;
+    }
       
     colors.resize(ColorCount);
     colors[ColorBlack].set("#000000");
@@ -723,43 +599,43 @@ void PatternView::on_realize() {
 
 
     // setup pattern layout
-    layout.set_text_size(text_width, text_height);
-    layout.set_origin(0,0);
-    layout.set_cell_margin(5);
-    layout.set_channel_margin(10);
-    layout.set_row_height(text_height);
+    set_text_size(text_width, text_height);
+    set_origin(0,0);
+    set_cell_margin(5);
+    set_channel_margin(10);
+    set_row_height(text_height);
     
-    layout.set_cell_renderer(ParamNote, &note_renderer);
-    layout.set_cell_renderer(ParamVolume, &byte_renderer);
-    layout.set_cell_renderer(ParamCCIndex0, &byte_renderer);
-    layout.set_cell_renderer(ParamCCValue0, &byte_renderer);
-    layout.set_cell_renderer(ParamCCIndex1, &byte_renderer);
-    layout.set_cell_renderer(ParamCCValue1, &byte_renderer);
+    set_cell_renderer(ParamNote, &note_renderer);
+    set_cell_renderer(ParamVolume, &byte_renderer);
+    set_cell_renderer(ParamCCIndex0, &byte_renderer);
+    set_cell_renderer(ParamCCValue0, &byte_renderer);
+    set_cell_renderer(ParamCCIndex1, &byte_renderer);
+    set_cell_renderer(ParamCCValue1, &byte_renderer);
     
-    cursor.set_layout(layout);
-    selection.set_layout(layout);
+    cursor.set_view(*this);
+    selection.set_view(*this);
  
     update_adjustments();
 }
 
 void PatternView::on_adjustment_value_changed() {
     int origin_x, origin_y;
-    layout.get_origin(origin_x, origin_y);
+    get_origin(origin_x, origin_y);
     
     int x_scroll_value = origin_x;
     int y_scroll_value = origin_y;
     
     if (hadjustment) {
-        int channel_width = layout.get_channel_width()+layout.get_channel_margin();
+        int channel_width = get_channel_width()+get_channel_margin();
         x_scroll_value =
             int(hadjustment->get_value()+0.5)*channel_width;
     }
     if (vadjustment) {
         y_scroll_value = 
-            int(vadjustment->get_value()+0.5)*layout.get_row_height();
+            int(vadjustment->get_value()+0.5)*get_row_height();
     }
     
-    layout.set_origin(-x_scroll_value, -y_scroll_value);
+    set_origin(-x_scroll_value, -y_scroll_value);
     window->invalidate(true);
 }
 
@@ -770,7 +646,7 @@ void PatternView::update_adjustments() {
     Gtk::Allocation allocation = get_allocation();
     
     if (hadjustment) {
-        int channel_width = layout.get_channel_width()+layout.get_channel_margin();
+        int channel_width = get_channel_width()+get_channel_margin();
         if (!channel_width)
             return;
         double page_size = allocation.get_width() / channel_width;
@@ -784,9 +660,9 @@ void PatternView::update_adjustments() {
     }
     
     if (vadjustment) {
-        if (!layout.get_row_height())
+        if (!get_row_height())
             return;
-        double page_size = allocation.get_height() / layout.get_row_height();
+        double page_size = allocation.get_height() / get_row_height();
         
         vadjustment->configure(0, // value
                                0, // lower
@@ -811,7 +687,7 @@ void PatternView::on_size_allocate(Gtk::Allocation& allocation) {
 void PatternView::draw_text(int x, int y, const char *text) {
     const char *s = text;
     int w,h;
-    layout.get_text_size(w,h);
+    get_text_size(w,h);
     gc->set_function(Gdk::AND);
     while (*s) {
         if ((*s) >= CharBegin && (*s) < CharEnd) {
@@ -842,7 +718,7 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     int channel_count = pattern->get_channel_count();
     
     PatternCursor render_cursor;
-    render_cursor.set_layout(layout);
+    render_cursor.set_view(*this);
     render_cursor.origin();
     
     int start_frame = 0;
@@ -858,8 +734,8 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     int x0 = area.get_x();
     int x1 = x0 + area.get_width();
     int param, item;
-    layout.get_cell_location(x0, y0, start_frame, start_channel, param, item);
-    layout.get_cell_location(x1, y1, end_frame, end_channel, param, item);
+    get_cell_location(x0, y0, start_frame, start_channel, param, item);
+    get_cell_location(x1, y1, end_frame, end_channel, param, item);
     end_frame++;
     if (end_frame > frame_count)
         end_frame = frame_count;
@@ -880,8 +756,8 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
         // now render all channels
         for (int channel = start_channel; channel < end_channel; ++channel) {
             // and all params in one channel
-            for (int param = 0; param < layout.get_cell_count(); ++param) {
-                CellRenderer *renderer = layout.get_cell_renderer(param);
+            for (int param = 0; param < get_cell_count(); ++param) {
+                CellRenderer *renderer = get_cell_renderer(param);
                 if (renderer) {
                     bool draw_cursor = false;
                     if (focus && cursor.is_at(render_cursor)) {
@@ -889,9 +765,8 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
                         draw_cursor = true;
                     }
                     bool selected = selection.in_range(render_cursor);
-                    renderer->render_cell(*this,
-                        render_cursor, row.get_event(channel, param), draw_cursor,
-                        selected);
+                    renderer->render_cell(render_cursor, 
+                        row.get_event(channel, param), draw_cursor, selected);
                 }
                 render_cursor.next_param();
             }
@@ -919,7 +794,7 @@ void PatternView::invalidate_cursor() {
     int x,y;
     cursor.get_pos(x,y);
     
-    Gdk::Rectangle rect(0,y,width,layout.get_row_height());
+    Gdk::Rectangle rect(0,y,width,get_row_height());
     
     window->invalidate_rect(rect, true);
 }
@@ -937,7 +812,7 @@ void PatternView::clip_cursor(PatternCursor &c) {
         c.set_channel(pattern->get_channel_count()-1);
         c.set_last_item();
     }
-    else if (c.get_param() >= layout.get_cell_count()) {
+    else if (c.get_param() >= get_cell_count()) {
         c.set_last_item();
     }
 }
@@ -1009,10 +884,12 @@ bool PatternView::on_button_release_event(GdkEventButton* event) {
 }
 
 bool PatternView::on_key_press_event(GdkEventKey* event) {
+    /*
     bool shift_down = event->state & Gdk::SHIFT_MASK;
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     bool alt_down = event->state & Gdk::MOD1_MASK;
     bool super_down = event->state & (Gdk::SUPER_MASK|Gdk::MOD4_MASK);
+    */
     
     switch (event->keyval) {
         case GDK_Left: navigate(-1,0); break;
@@ -1027,6 +904,137 @@ bool PatternView::on_key_release_event(GdkEventKey* event) {
     return false;
 }
 
+void PatternView::set_cell_renderer(int param, CellRenderer *renderer) {
+    renderers[param] = renderer;
+    renderer->set_view(*this);
+}
+
+CellRenderer *PatternView::get_cell_renderer(
+    int param) const {
+    return renderers[param];
+}
+
+int PatternView::get_cell_count() const {
+    return renderers.size();
+}
+
+void PatternView::set_origin(int x, int y) {
+    origin_x = x;
+    origin_y = y;
+}
+
+void PatternView::get_origin(int &x, int &y) {
+    x = origin_x;
+    y = origin_y;
+}
+
+void PatternView::set_cell_margin(int margin) {
+    cell_margin = margin;
+}
+
+void PatternView::set_channel_margin(int margin) {
+    channel_margin = margin;
+}
+
+void PatternView::set_row_margin(int margin) {
+    row_margin = margin;
+}
+
+int PatternView::get_cell_margin() const {
+    return cell_margin;
+}
+
+int PatternView::get_channel_margin() const {
+    return channel_margin;
+}
+
+int PatternView::get_row_margin() const {
+    return row_margin;
+}
+
+void PatternView::set_row_height(int height) {
+    row_height = height;
+}
+
+int PatternView::get_row_height() const {
+    return row_height;
+}
+
+void PatternView::get_cell_size(int param, int &w, int &h, 
+                                  bool include_margin) const {
+    w = 0;
+    h = row_height;
+    
+    CellRenderer *renderer = renderers[param];
+    if (renderer)
+        w = renderer->get_width();
+    if (include_margin && ((size_t)param < (renderers.size()-1))) {
+        w += get_cell_margin();
+    }
+}
+
+int PatternView::get_param_offset(int param) const {
+    int x = 0;
+    for (size_t i = 0; i < (size_t)param; ++i) {
+        CellRenderer *renderer = renderers[i];
+        if (renderer)
+            x += renderer->get_width();
+        if (i < (renderers.size()-1))
+            x += cell_margin;
+    }
+    return x;
+}
+
+int PatternView::get_channel_width() const {
+    return get_param_offset(renderers.size());
+}
+
+void PatternView::get_cell_pos(int row, int channel, int param,
+                                       int &x, int &y) const {
+    y = origin_y + row * (row_height + row_margin);
+    x = origin_x + channel * (get_channel_width() + channel_margin) +
+        get_param_offset(param);
+    
+}
+
+bool PatternView::get_cell_location(int x, int y, int &row, int &channel,
+    int &param, int &item) const {
+    int channel_width = get_channel_width();
+    assert(row_height);
+    assert(channel_width);
+    y -= origin_y;
+    row = y / (row_height + row_margin);
+    x -= origin_x;
+    channel = x / (channel_width + channel_margin);
+    x -= channel * (channel_width + channel_margin);
+    param = renderers.size()-1;
+    item = ((renderers[param])?(renderers[param]->get_item_count()-1):0);
+    for (size_t i = 0; i < renderers.size(); ++i) {
+        CellRenderer *renderer = renderers[i];
+        if (renderer) {
+            int width = renderer->get_width();
+            if (x < width) {
+                param = i;
+                item = renderer->get_item(x);
+                break;
+            }
+            x -= width;
+        }
+        if (i < (renderers.size()-1))
+            x -= cell_margin;
+    }
+    return false;
+}
+
+void PatternView::set_text_size(int width, int height) {
+    text_width = width;
+    text_height = height;
+}
+
+void PatternView::get_text_size(int &width, int &height) const {
+    width = text_width;
+    height = text_height;
+}
 
 //=============================================================================
 
