@@ -150,7 +150,7 @@ void CellRendererNote::render_cell(PatternCursor &cursor, Pattern::Event *event,
     
     if (draw_cursor) {
         int w,h;
-        view->get_text_size(w,h);
+        view->get_font_size(w,h);
         int item = cursor.get_item();
         if (item == 0)
             w *= 3;
@@ -162,13 +162,13 @@ void CellRendererNote::render_cell(PatternCursor &cursor, Pattern::Event *event,
 
 int CellRendererNote::get_width() {
     int w,h;
-    view->get_text_size(w,h);
+    view->get_font_size(w,h);
     return 3 * w;
 }
 
 int CellRendererNote::get_item(int x) {
     int w,h;
-    view->get_text_size(w,h);
+    view->get_font_size(w,h);
     int pos = x / w;
     if (pos < 2)
         return 0;
@@ -212,7 +212,7 @@ void CellRendererByte::render_cell(PatternCursor &cursor, Pattern::Event *event,
 
     if (draw_cursor) {
         int w,h;
-        view->get_text_size(w,h);
+        view->get_font_size(w,h);
         int item = cursor.get_item();
         x += w * item;
         view->window->draw_rectangle(view->xor_gc, true, x, y, w, h);
@@ -221,13 +221,13 @@ void CellRendererByte::render_cell(PatternCursor &cursor, Pattern::Event *event,
 
 int CellRendererByte::get_width() {
     int w,h;
-    view->get_text_size(w,h);
+    view->get_font_size(w,h);
     return 2 * w;
 }
 
 int CellRendererByte::get_item(int x) {
     int w,h;
-    view->get_text_size(w,h);
+    view->get_font_size(w,h);
     int pos = x / w;
     return std::min(pos, 1);
 }
@@ -504,8 +504,8 @@ PatternView::PatternView(BaseObjectType* cobject,
     origin_x = origin_y = 0;
     cell_margin = 0;
     channel_margin = 0;
-    text_width = 0;
-    text_height = 0;
+    font_width = 0;
+    font_height = 0;
     renderers.resize(ParamCount);
     for (size_t i = 0; i < renderers.size(); ++i) {
         renderers[i] = NULL;
@@ -565,12 +565,11 @@ void PatternView::on_realize() {
         
     // measure width of a single character
     pango_layout->set_text("W");
-    int text_width, text_height;
-    pango_layout->get_pixel_size(text_width, text_height);
+    pango_layout->get_pixel_size(font_width, font_height);
     
     for (int i = CharBegin; i < CharEnd; ++i) {
         Glib::RefPtr<Gdk::Pixmap> pixmap = Gdk::Pixmap::create(
-            window, text_width, text_height);
+            window, font_width, font_height);
         
         char buffer[4];
         sprintf(buffer, "%c", (char)i);
@@ -579,7 +578,7 @@ void PatternView::on_realize() {
         Glib::RefPtr<Gdk::GC> pm_gc = Gdk::GC::create(pixmap);
         pm_gc->set_colormap(cm);
         pm_gc->set_foreground(colors[ColorWhite]);
-        pixmap->draw_rectangle(pm_gc, true, 0, 0, text_width, text_height);
+        pixmap->draw_rectangle(pm_gc, true, 0, 0, font_width, font_height);
         
         pm_gc->set_foreground(colors[ColorBlack]);
         pixmap->draw_layout(pm_gc, 0, 0, pango_layout);
@@ -598,11 +597,10 @@ void PatternView::on_realize() {
 
 
     // setup pattern layout
-    set_text_size(text_width, text_height);
     set_origin(0,0);
     set_cell_margin(5);
     set_channel_margin(10);
-    set_row_height(text_height);
+    set_row_height(font_height);
     
     set_cell_renderer(ParamNote, &note_renderer);
     set_cell_renderer(ParamVolume, &byte_renderer);
@@ -686,7 +684,7 @@ void PatternView::on_size_allocate(Gtk::Allocation& allocation) {
 void PatternView::draw_text(int x, int y, const char *text) {
     const char *s = text;
     int w,h;
-    get_text_size(w,h);
+    get_font_size(w,h);
     gc->set_function(Gdk::AND);
     while (*s) {
         if ((*s) >= CharBegin && (*s) < CharEnd) {
@@ -1017,14 +1015,14 @@ bool PatternView::get_cell_location(int x, int y, int &row, int &channel,
     return false;
 }
 
-void PatternView::set_text_size(int width, int height) {
-    text_width = width;
-    text_height = height;
+void PatternView::set_font_size(int width, int height) {
+    font_width = width;
+    font_height = height;
 }
 
-void PatternView::get_text_size(int &width, int &height) const {
-    width = text_width;
-    height = text_height;
+void PatternView::get_font_size(int &width, int &height) const {
+    width = font_width;
+    height = font_height;
 }
 
 //=============================================================================

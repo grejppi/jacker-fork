@@ -209,8 +209,8 @@ public:
         int &param, int &item) const;
     int get_channel_width() const;
     int get_param_offset(int param) const;
-    void set_text_size(int width, int height);
-    void get_text_size(int &width, int &height) const;
+    void set_font_size(int width, int height);
+    void get_font_size(int &width, int &height) const;
     
 protected:
     void invalidate_cursor();
@@ -240,9 +240,9 @@ protected:
     // margin between channels
     int channel_margin;
     // how wide is a pattern character
-    int text_width;
+    int font_width;
     // how high is a pattern character
-    int text_height;
+    int font_height;
 };
 
 //=============================================================================
