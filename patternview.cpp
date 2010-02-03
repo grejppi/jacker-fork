@@ -97,10 +97,12 @@ int CellRenderer::get_item_count() {
 }
 
 bool CellRenderer::on_key_press_event(GdkEventKey* event_key, 
-                                      Pattern::Event &event) {
-    if (event_key->keyval == GDK_period) {
-        event.value = ValueNone;
-        return true;
+                                      Pattern::Event &event, int item) {
+    if (event.is_valid()) {
+        if (event_key->keyval == GDK_period) {
+            event.value = ValueNone;
+            return true;
+        }
     }
     return false;
 }
@@ -161,9 +163,9 @@ void CellRendererNote::render_cell(PatternCursor &cursor, Pattern::Event *event,
         int w,h;
         view->get_font_size(w,h);
         int item = cursor.get_item();
-        if (item == 0)
+        if (item == ItemNote)
             w *= 3;
-        else if (item == 1)
+        else if (item == ItemOctave)
             x += 2 * w;
         view->window->draw_rectangle(view->xor_gc, true, x, y, w, h);
     }
@@ -180,28 +182,37 @@ int CellRendererNote::get_item(int x) {
     view->get_font_size(w,h);
     int pos = x / w;
     if (pos < 2)
-        return 0;
+        return ItemNote;
     else
-        return 1;
+        return ItemOctave;
 }
 
 int CellRendererNote::get_item_count() {
-    return 2;
+    return ItemCount;
 }
 
 //=============================================================================
 
-static int sprint_byte(char *buffer, int value) {
+static int sprint_hex(char *buffer, int value, int length) {
     if (value == ValueNone) {
-        sprintf(buffer, "..");
+        char *s = buffer;
+        for (int i = 0; i < length; ++i)
+            *s++ = '.';
+        *s = '\0';
     } else {
-        sprintf(buffer, "%02X", value);
+        char format[8];
+        sprintf(format, "%%0%iX", length);
+        sprintf(buffer, format, value);
     }
     return 2;
 }
 
-void CellRendererByte::render_cell(PatternCursor &cursor, Pattern::Event *event, 
-                                   bool draw_cursor, bool selected) {
+CellRendererHex::CellRendererHex(int value_length) {
+    this->value_length = value_length;
+}
+
+void CellRendererHex::render_cell(PatternCursor &cursor, Pattern::Event *event, 
+                                  bool draw_cursor, bool selected) {
     char text[16];
     
     int chars = 0;
@@ -209,7 +220,7 @@ void CellRendererByte::render_cell(PatternCursor &cursor, Pattern::Event *event,
     if (event)
         value = event->value;
     
-    chars = sprint_byte(text, value);
+    chars = sprint_hex(text, value, value_length);
     
     render_background(cursor, selected);
     
@@ -228,22 +239,44 @@ void CellRendererByte::render_cell(PatternCursor &cursor, Pattern::Event *event,
     }
 }
 
-int CellRendererByte::get_width() {
+int CellRendererHex::get_width() {
     int w,h;
     view->get_font_size(w,h);
-    return 2 * w;
+    return value_length * w;
 }
 
-int CellRendererByte::get_item(int x) {
+int CellRendererHex::get_item(int x) {
     int w,h;
     view->get_font_size(w,h);
     int pos = x / w;
-    return std::min(pos, 1);
+    return std::min(pos, value_length-1);
 }
 
-int CellRendererByte::get_item_count() {
-    return 2;
+int CellRendererHex::get_item_count() {
+    return value_length;
 }
+
+bool CellRendererHex::on_key_press_event(GdkEventKey* event_key, 
+                                         Pattern::Event &event, int item) {
+    int bit = (value_length-1-item)*4;
+    int value = ValueNone;
+    if ((event_key->keyval >= GDK_0) && (event_key->keyval <= GDK_9)) {
+        value = event_key->keyval - GDK_0;
+    }
+    if ((event_key->keyval >= GDK_a) && (event_key->keyval <= GDK_f)) {
+        value = 0xA + (event_key->keyval - GDK_a);
+    }
+    if (value != ValueNone) {
+        if (event.is_valid())
+            event.value ^= event.value & (0xF<<bit); // mask out
+        else
+            event.value = 0;
+        event.value |= value<<bit;
+        return true;
+    }
+    return CellRenderer::on_key_press_event(event_key, event, item);
+}
+
 
 //=============================================================================
 
@@ -501,7 +534,7 @@ bool PatternSelection::get_rect(int &x, int &y, int &width, int &height) const {
 
 PatternView::PatternView(BaseObjectType* cobject,
                          const Glib::RefPtr<Gtk::Builder>& builder)
-  : Gtk::Widget(cobject) {
+  : Gtk::Widget(cobject), byte_renderer(2) {
     model = NULL;
     pattern = NULL;
     frames_per_beat = 4;
@@ -908,11 +941,15 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
             CellRenderer *renderer = get_cell_renderer(cursor.get_param());
             if (renderer) {
                 Pattern::Event evt;
+                evt.frame = cursor.get_row();
+                evt.channel = cursor.get_channel();
+                evt.param = cursor.get_param();
                 Pattern::iterator i = pattern->get_event(cursor.get_row(),
                     cursor.get_channel(), cursor.get_param());
                 if (i != pattern->end())
                     evt = i->second;
-                if (renderer->on_key_press_event(event, evt)) {
+                if (renderer->on_key_press_event(event, evt, 
+                                                 cursor.get_item())) {
                     if (evt.is_valid())
                         pattern->add_event(evt);
                     else if (i != pattern->end())

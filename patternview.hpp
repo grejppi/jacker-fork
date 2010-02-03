@@ -29,7 +29,7 @@ public:
     virtual int get_item_count();
         
     virtual bool on_key_press_event(GdkEventKey* event_key, 
-                                    Pattern::Event &event);
+                                    Pattern::Event &event, int item);
         
     void set_view(PatternView &view);
     PatternView *get_view() const;
@@ -41,6 +41,13 @@ protected:
 
 class CellRendererNote : public CellRenderer {
 public:
+    enum {
+        ItemNote = 0,
+        ItemOctave,
+        
+        ItemCount
+    };
+    
     virtual void render_cell(PatternCursor &cursor, 
                              Pattern::Event *event, bool draw_cursor, 
                              bool selected);
@@ -51,14 +58,21 @@ public:
 
 //=============================================================================
 
-class CellRendererByte : public CellRenderer {
+class CellRendererHex : public CellRenderer {
 public:
+    CellRendererHex(int value_length);
+
+    int value_length;
+    
     virtual void render_cell(PatternCursor &cursor, 
                              Pattern::Event *event, bool draw_cursor, 
                              bool selected);
     virtual int get_width();
     virtual int get_item(int x);
     virtual int get_item_count();
+    
+    virtual bool on_key_press_event(GdkEventKey* event_key, 
+                                    Pattern::Event &event, int item);    
 };
 
 //=============================================================================
@@ -183,7 +197,7 @@ public:
     int beats_per_bar;
     
     CellRendererNote note_renderer;
-    CellRendererByte byte_renderer;
+    CellRendererHex byte_renderer;
     
     void set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                 Gtk::Adjustment *vadjustment);
