@@ -108,6 +108,7 @@ bool CellRenderer::on_key_press_event(GdkEventKey* event_key,
     if (event.is_valid()) {
         if (event_key->keyval == GDK_period) {
             event.value = ValueNone;
+            view->navigate(0,1);
             return true;
         }
     }
@@ -203,12 +204,14 @@ bool CellRendererNote::on_key_press_event(GdkEventKey* event_key,
     if (item == ItemNote) {
         if (event_key->keyval == GDK_1) {
             event.value = NoteOff;
+            view->navigate(0,1);
             return true;
         }
         size_t count = sizeof(piano_scancodes) / sizeof(guint16);
         for (size_t i = 0; i < count; ++i) {
             if (event_key->hardware_keycode == piano_scancodes[i]) {
                 event.value = i;
+                view->navigate(0,1);
                 return true;
             }
         }
@@ -218,6 +221,7 @@ bool CellRendererNote::on_key_press_event(GdkEventKey* event_key,
         if ((event_key->keyval >= GDK_0) && (event_key->keyval <= GDK_9)) {
             int octave = event_key->keyval - GDK_0;
             event.value = 12*octave + note;
+            view->navigate(0,1);
             return true;
         }
     }
@@ -305,6 +309,11 @@ bool CellRendererHex::on_key_press_event(GdkEventKey* event_key,
         else
             event.value = 0;
         event.value |= value<<bit;
+        if (item < (value_length-1))
+            view->navigate(1,0);
+        else {
+            view->navigate(-item,1);
+        }
         return true;
     }
     return CellRenderer::on_key_press_event(event_key, event, item);
