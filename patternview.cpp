@@ -8,8 +8,6 @@
 /*
 TODO:
 
-- implement basic navigation
-- implement editing values
 - implement pattern resize
 - implement 
 */

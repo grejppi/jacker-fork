@@ -8,6 +8,7 @@
 
 #include "model.hpp"
 #include "patternview.hpp"
+#include "seqview.hpp"
 
 namespace Jacker {
 
@@ -37,10 +38,12 @@ public:
     Glib::RefPtr<Gtk::Builder> builder;
 
     PatternView *pattern_view;
+    SeqView *seq_view;
 
     App(int argc, char **argv)
         : kit(argc,argv) {
         pattern_view = NULL;
+        seq_view = NULL;
     }
     
     ~App() {
@@ -73,6 +76,17 @@ public:
         }
         
         pattern_view->select_pattern(model, pattern);
+        
+        builder->get_widget_derived("seq_view", seq_view);
+        assert(seq_view);
+        
+        Gtk::HScrollbar *seq_hscroll;
+        builder->get_widget("seq_hscroll", seq_hscroll);
+        Gtk::VScrollbar *seq_vscroll;
+        builder->get_widget("seq_vscroll", seq_vscroll);
+        seq_view->set_scroll_adjustments(
+            seq_hscroll->get_adjustment(), 
+            seq_vscroll->get_adjustment());
     }
 
     void run() {

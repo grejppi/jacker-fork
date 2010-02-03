@@ -92,4 +92,5 @@ env.Program('jacker',
     ['main.cpp',
      'jack.cpp',
      'model.cpp',
+     'seqview.cpp',
      'patternview.cpp'])
