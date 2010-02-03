@@ -28,6 +28,9 @@ public:
     virtual int get_item(int x);
     virtual int get_item_count();
         
+    virtual bool on_key_press_event(GdkEventKey* event_key, 
+                                    Pattern::Event &event);
+        
     void set_view(PatternView &view);
     PatternView *get_view() const;
 protected:
@@ -191,6 +194,7 @@ public:
     
     void show_cursor();
     
+    int get_frames_per_bar() const;
     void set_row_height(int height);
     int get_row_height() const;
     void set_cell_renderer(int param, CellRenderer *renderer);

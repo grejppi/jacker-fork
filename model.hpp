@@ -102,7 +102,8 @@ struct Pattern : EventCollection<PatternEvent> {
     int get_channel_count() const;
 
     void collect_events(int frame, iterator &iter, Row &row);
-
+    iterator get_event(int frame, int channel, int param);
+    
 protected:
     // length in frames
     int length;

@@ -67,7 +67,13 @@ void Pattern::add_event(const Event &event) {
     assert(event.frame < length);
     assert(event.channel < channel_count);
     assert(event.param < ParamCount);
-    BaseClass::add_event(event);
+    iterator iter = get_event(event.frame, event.channel, event.param);
+    if (iter != end()) {
+        // replace event
+        iter->second.value = event.value;
+    } else {
+        BaseClass::add_event(event);
+    }
 }
 
 void Pattern::add_event(int frame, int channel, int param, int value) {
@@ -102,6 +108,19 @@ void Pattern::collect_events(int frame, iterator &iter, Row &row) {
         row.set_event(event);
         iter++;
     }
+}
+
+Pattern::iterator Pattern::get_event(int frame, int channel, int param) {
+    iterator iter = lower_bound(frame);
+    if (iter == end())
+        return iter;
+    while ((iter != end()) && (iter->second.frame == frame)) {
+        if ((iter->second.channel == channel) && (iter->second.param == param)) {
+            return iter;
+        }
+        iter++;
+    }
+    return end();
 }
 
 //=============================================================================

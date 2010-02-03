@@ -96,6 +96,15 @@ int CellRenderer::get_item_count() {
     return 0;
 }
 
+bool CellRenderer::on_key_press_event(GdkEventKey* event_key, 
+                                      Pattern::Event &event) {
+    if (event_key->keyval == GDK_period) {
+        event.value = ValueNone;
+        return true;
+    }
+    return false;
+}
+
 //=============================================================================
 
 static const char *note_strings[] = {
@@ -835,7 +844,7 @@ void PatternView::show_cursor() {
     }
     if (vadjustment) {
         int row = cursor.get_row();
-        vadjustment->clamp_page(row,row);
+        vadjustment->clamp_page(row,row+1);
     }
 }
 
@@ -893,6 +902,25 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
         case GDK_Right: navigate(1,0); break;
         case GDK_Up: navigate(0,-1); break;
         case GDK_Down: navigate(0,1); break;
+        case GDK_Page_Up: navigate(0,-get_frames_per_bar()); break;
+        case GDK_Page_Down: navigate(0,get_frames_per_bar()); break;
+        default: {
+            CellRenderer *renderer = get_cell_renderer(cursor.get_param());
+            if (renderer) {
+                Pattern::Event evt;
+                Pattern::iterator i = pattern->get_event(cursor.get_row(),
+                    cursor.get_channel(), cursor.get_param());
+                if (i != pattern->end())
+                    evt = i->second;
+                if (renderer->on_key_press_event(event, evt)) {
+                    if (evt.is_valid())
+                        pattern->add_event(evt);
+                    else if (i != pattern->end())
+                        pattern->erase(i);
+                    invalidate_cursor();
+                }
+            }
+        } break;
     }
     return true;
 }
@@ -1023,6 +1051,10 @@ void PatternView::set_font_size(int width, int height) {
 void PatternView::get_font_size(int &width, int &height) const {
     width = font_width;
     height = font_height;
+}
+
+int PatternView::get_frames_per_bar() const {
+    return frames_per_beat * beats_per_bar;
 }
 
 //=============================================================================
