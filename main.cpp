@@ -87,6 +87,8 @@ public:
         seq_view->set_scroll_adjustments(
             seq_hscroll->get_adjustment(), 
             seq_vscroll->get_adjustment());
+        
+        seq_view->set_model(model);
     }
 
     void run() {
