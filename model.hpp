@@ -141,7 +141,7 @@ struct TrackEvent {
     int key() const;
 };
 
-class Track : public EventCollection< std::multimap<int,TrackEvent> > {
+class Track : public EventCollection< std::map<int,TrackEvent> > {
     friend class Model;
 public:
     // name of track (non-unique)
@@ -152,18 +152,24 @@ public:
     void add_event(const Event &event);
     void add_event(int frame, Pattern &pattern);
 
+    iterator get_event(int frame);
+
 protected:
     Track();
 };
 
 //=============================================================================
 
+typedef std::list<Pattern*> PatternList;
+typedef std::vector<Track*> TrackArray;
+typedef std::vector<Track::iterator> TrackIterArray;
+
 struct Model {
     // list of all patterns
-    std::list<Pattern*> patterns;
+    PatternList patterns;
     
     // list of all tracks
-    std::list<Track*> tracks;
+    TrackArray tracks;
     
     // end cue in frames
     int end_cue;
@@ -171,6 +177,9 @@ struct Model {
     Model();
     Pattern &new_pattern();
     Track &new_track();
+    
+    int get_track_count() const;
+    Track &get_track(int track);
 };
 
 //=============================================================================

@@ -7,6 +7,19 @@
 
 namespace Jacker {
 
+enum {
+    ColorBlack = 0,
+    ColorWhite,
+    ColorBackground,
+    ColorRowBar,
+    ColorRowBeat,
+    ColorSelBackground,
+    ColorSelRowBar,
+    ColorSelRowBeat,
+
+    ColorCount,
+};
+
 //=============================================================================
 
 SeqCursor::SeqCursor() {
@@ -39,12 +52,27 @@ int SeqCursor::get_frame() const {
     return frame;
 }
 
+void SeqCursor::get_pos(int &x, int &y) const {
+    assert(view);
+    view->get_event_pos(frame, track, x, y);
+}
+
 //=============================================================================
 
 SeqView::SeqView(BaseObjectType* cobject, 
                  const Glib::RefPtr<Gtk::Builder>& builder)
     : Gtk::Widget(cobject) {
     model = NULL;
+    origin_x = origin_y = 0;
+    colors.resize(ColorCount);
+    colors[ColorBlack].set("#000000");
+    colors[ColorWhite].set("#FFFFFF");
+    colors[ColorBackground].set("#e0e0e0");
+    colors[ColorRowBar].set("#c0c0c0");
+    colors[ColorRowBeat].set("#d0d0d0");
+    colors[ColorSelBackground].set("#00a0ff");
+    colors[ColorSelRowBar].set("#20c0ff");
+    colors[ColorSelRowBeat].set("#40e0ff");        
 }
 
 void SeqView::set_model(class Model &model) {
@@ -55,10 +83,86 @@ void SeqView::on_realize() {
     Gtk::Widget::on_realize();
     
     window = get_window();    
+    // create drawing resources
+    gc = Gdk::GC::create(window);
+    cm = gc->get_colormap();
+    
+    for (std::vector<Gdk::Color>::iterator i = colors.begin(); 
+         i != colors.end(); ++i) {
+        cm->alloc_color(*i);
+    }
+    
+    Pango::FontDescription font_desc("sans 8");
+    
+    pango_layout = Pango::Layout::create(get_pango_context());
+    pango_layout->set_font_description(font_desc);
+    pango_layout->set_width(-1);
+    
+    // create xor gc for drawing the cursor
+    xor_gc = Gdk::GC::create(window);
+    Glib::RefPtr<Gdk::Colormap> xor_cm = xor_gc->get_colormap();
+    Gdk::Color xor_color;
+    xor_color.set("#ffffff"); xor_cm->alloc_color(xor_color);
+    xor_gc->set_function(Gdk::XOR);
+    xor_gc->set_foreground(xor_color);
+    xor_gc->set_background(xor_color);
     
 }
 
+void SeqView::set_origin(int x, int y) {
+    this->origin_x = origin_x;
+    this->origin_y = origin_y;
+}
+
+void SeqView::get_origin(int &x, int &y) {
+    x = origin_x;
+    y = origin_y;
+}
+
+void SeqView::get_event_pos(int frame, int track,
+                            int &x, int &y) const {
+    x = origin_x + frame;
+    y = origin_y + track*TrackHeight;
+}
+
+
+void SeqView::get_event_size(int length, int &w, int &h) const {
+    w = length;
+    h = TrackHeight;
+}
+
+void SeqView::render_event(SeqCursor &cursor, Track::Event &event) {
+    int x,y,w,h;
+    cursor.get_pos(x,y);
+    get_event_size(event.pattern->get_length(), w, h);
+    gc->set_foreground(colors[ColorBlack]);
+    window->draw_rectangle(gc, true, 0, 0, w, h);    
+}
+
 bool SeqView::on_expose_event(GdkEventExpose* event) {
+    int width = 0;
+    int height = 0;
+    window->get_size(width, height);
+    
+    // clear screen
+    gc->set_foreground(colors[ColorBackground]);
+    window->draw_rectangle(gc, true, 0, 0, width, height);
+    
+    SeqCursor render_cursor;
+    render_cursor.set_view(*this);
+    
+    for (int track_index = 0; track_index < model->get_track_count(); 
+         ++track_index) {
+             
+        render_cursor.set_track(track_index);
+        Track &track = model->get_track(track_index);
+        for (Track::iterator iter = track.begin(); iter != track.end(); ++iter) {
+            Track::Event &evt = iter->second;
+            render_cursor.set_frame(evt.frame);
+            render_event(render_cursor, evt);
+        }
+    }
+    
     return true;
 }
 

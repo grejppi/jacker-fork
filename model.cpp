@@ -182,6 +182,10 @@ void Track::add_event(int frame, Pattern &pattern) {
     add_event(Event(frame, pattern));
 }
 
+Track::iterator Track::get_event(int frame) {
+    return BaseClass::find(frame);
+}
+
 //=============================================================================
 
 Model::Model() {
@@ -198,6 +202,14 @@ Track &Model::new_track() {
     Track *track = new Track();
     tracks.push_back(track);
     return *track;
+}
+
+int Model::get_track_count() const {
+    return tracks.size();
+}
+
+Track &Model::get_track(int track) {
+    return *tracks[track];
 }
 
 //=============================================================================

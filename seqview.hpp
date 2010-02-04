@@ -27,6 +27,12 @@ public:
     void set_frame(int frame);
     int get_frame() const;
 
+    void origin();
+    void next_track();
+    void next_frame();
+
+    void get_pos(int &x, int &y) const;
+
 protected:
     // pointer to the view
     SeqView *view;
@@ -41,6 +47,10 @@ protected:
 
 class SeqView : public Gtk::Widget {
 public:
+    enum {
+        TrackHeight = 22,
+    };
+    
     SeqView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
 
@@ -59,8 +69,23 @@ public:
                                 Gtk::Adjustment *vadjustment);
 
     Glib::RefPtr<Gdk::Window> window;
-
+    Glib::RefPtr<Gdk::GC> gc;
+    Glib::RefPtr<Gdk::GC> xor_gc;
+    Glib::RefPtr<Gdk::Colormap> cm;
+    Glib::RefPtr<Pango::Layout> pango_layout;
+    std::vector<Gdk::Color> colors;
+    
+    void set_origin(int x, int y);
+    void get_origin(int &x, int &y);    
+    void get_event_pos(int frame, int track,
+                       int &x, int &y) const;
+    void get_event_size(int length, int &w, int &h) const;
 protected:
+    void render_event(SeqCursor &cursor, Track::Event &event);
+
+    // start x and y position
+    int origin_x, origin_y;
+
     Model *model;
 };
     
