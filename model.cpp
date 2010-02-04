@@ -168,10 +168,14 @@ int TrackEvent::key() const {
     return frame;
 }
 
+int TrackEvent::get_last_frame() const {
+    return frame + pattern->get_length() - 1;
+}
+
 //=============================================================================
 
-Track::Track() {
-    order = 0;
+Track::Track() : messages(64) {
+    order = -1;
 }
 
 void Track::add_event(const Event &event) {
@@ -184,6 +188,37 @@ void Track::add_event(int frame, Pattern &pattern) {
 
 Track::iterator Track::get_event(int frame) {
     return BaseClass::find(frame);
+}
+
+//=============================================================================
+
+TrackEventRef::TrackEventRef() {
+    track = NULL;
+}
+
+TrackEventRef::TrackEventRef(Track &track, Track::iterator iter) {
+    this->track = &track;
+    this->iter = iter;
+}
+
+bool TrackEventRef::operator ==(const TrackEventRef &other) const {
+    if (track != other.track)
+        return false;
+    if (iter != other.iter)
+        return false;
+    return true;
+}
+
+bool TrackEventRef::operator !=(const TrackEventRef &other) const {
+    return !(*this == other);
+}
+
+bool TrackEventRef::operator <(const TrackEventRef &other) const {
+    if (track->order < other.track->order)
+        return true;
+    if (iter->second.frame < other.iter->second.frame)
+        return true;
+    return false;
 }
 
 //=============================================================================
@@ -201,7 +236,17 @@ Pattern &Model::new_pattern() {
 Track &Model::new_track() {
     Track *track = new Track();
     tracks.push_back(track);
+    renumber_tracks();
     return *track;
+}
+
+void Model::renumber_tracks() {
+    TrackArray::iterator iter;
+    int index = 0;
+    for (iter = tracks.begin(); iter != tracks.end(); ++iter) {
+        (*iter)->order = index;
+        index++;
+    }
 }
 
 int Model::get_track_count() const {

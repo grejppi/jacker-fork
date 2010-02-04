@@ -8,6 +8,8 @@
 
 #include "model.hpp"
 
+#include <set>
+
 namespace Jacker {
 
 class SeqView;
@@ -52,7 +54,7 @@ public:
         TrackHeight = 22,
     };
     
-    typedef std::list<Track::Event *> EventList;
+    typedef std::set<TrackEventRef> EventSet;
     
     SeqView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
@@ -85,8 +87,15 @@ public:
     void get_event_size(int length, int &w, int &h) const;
     void get_event_location(int x, int y, int &frame, int &track) const;
     
+    void get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h);
+    bool find_event(const SeqCursor &cursor, TrackEventRef &ref);
+    
+    void clear_selection();
+    void select_event(const TrackEventRef &ref);
+    bool is_event_selected(const TrackEventRef &ref);
 protected:
-    void render_event(SeqCursor &cursor, Track::Event &event);
+    void invalidate_selection();
+    void render_event(const TrackEventRef &ref);
 
     // start x and y position
     int origin_x, origin_y;
@@ -94,7 +103,8 @@ protected:
     int zoomlevel;
 
     Model *model;
-    EventList selection;
+    EventSet selection;
+    SeqCursor cursor;
 };
     
 //=============================================================================

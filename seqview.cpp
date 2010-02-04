@@ -69,6 +69,7 @@ SeqView::SeqView(BaseObjectType* cobject,
     : Gtk::Widget(cobject) {
     model = NULL;
     zoomlevel = 1;
+    cursor.set_view(*this);
     origin_x = origin_y = 0;
     colors.resize(ColorCount);
     colors[ColorBlack].set("#000000");
@@ -142,12 +143,30 @@ void SeqView::get_event_location(int x, int y, int &frame, int &track) const {
     track = (y - origin_y)/TrackHeight;
 }
 
-void SeqView::render_event(SeqCursor &cursor, Track::Event &event) {
+bool SeqView::find_event(const SeqCursor &cur, TrackEventRef &ref) {
+    if (cur.get_track() >= model->get_track_count())
+        return false;
+    Track *track = &model->get_track(cur.get_track());
+    Track::iterator iter = track->upper_bound(cur.get_frame());
+    if (iter == track->begin())
+        return false;
+    iter--;
+    if (iter->second.get_last_frame() < cur.get_frame())
+        return false;
+    ref.track = track;
+    ref.iter = iter;
+    return true;
+}
+
+void SeqView::render_event(const TrackEventRef &ref) {
     int x,y,w,h;
-    cursor.get_pos(x,y);
-    get_event_size(event.pattern->get_length(), w, h);
+    get_event_rect(ref, x, y, w, h);
     gc->set_foreground(colors[ColorBlack]);
-    window->draw_rectangle(gc, false, 0, 0, w-1, h-1);    
+    bool selected = is_event_selected(ref);
+    if (selected)
+        window->draw_rectangle(gc, true, x, y, w, h);
+    else
+        window->draw_rectangle(gc, false, x, y, w-1, h-1);
 }
 
 bool SeqView::on_expose_event(GdkEventExpose* event) {
@@ -159,33 +178,45 @@ bool SeqView::on_expose_event(GdkEventExpose* event) {
     gc->set_foreground(colors[ColorBackground]);
     window->draw_rectangle(gc, true, 0, 0, width, height);
     
-    SeqCursor render_cursor;
-    render_cursor.set_view(*this);
-    
-    for (int track_index = 0; track_index < model->get_track_count(); 
-         ++track_index) {
-             
-        render_cursor.set_track(track_index);
-        Track &track = model->get_track(track_index);
+    TrackArray::iterator track_iter;
+    for (track_iter = model->tracks.begin(); 
+         track_iter != model->tracks.end(); ++track_iter) {
+        Track &track = *(*track_iter);
         for (Track::iterator iter = track.begin(); iter != track.end(); ++iter) {
-            Track::Event &evt = iter->second;
-            render_cursor.set_frame(evt.frame);
-            render_event(render_cursor, evt);
+            render_event(TrackEventRef(track,iter));
         }
     }
     
     return true;
 }
 
+bool SeqView::is_event_selected(const TrackEventRef &ref) {
+    return (selection.find(ref) != selection.end());
+}
+
 bool SeqView::on_motion_notify_event(GdkEventMotion *event) {
     return false;
 }
 
+void SeqView::clear_selection() {
+    invalidate_selection();
+    selection.clear();
+}
+
+void SeqView::select_event(const TrackEventRef &ref) {
+    selection.insert(ref);
+    invalidate_selection();
+}
+
 bool SeqView::on_button_press_event(GdkEventButton* event) {
     grab_focus();
-    SeqCursor cursor;
-    cursor.set_view(*this);
-    cursor.set_pos(event->x, event->y);
+    SeqCursor cur(cursor);
+    cur.set_pos(event->x, event->y);
+    TrackEventRef ref;
+    clear_selection();
+    if (find_event(cur, ref)) {
+        select_event(ref);
+    }
     return false;
 }
 
@@ -208,6 +239,24 @@ void SeqView::on_size_allocate(Gtk::Allocation& allocation) {
         window->move_resize(allocation.get_x(), allocation.get_y(),
             allocation.get_width(), allocation.get_height());
     }    
+}
+
+void SeqView::get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h) {
+    Track::Event &event = ref.iter->second;
+    get_event_pos(event.frame, ref.track->order, x, y);
+    get_event_size(event.pattern->get_length(), w, h);
+}
+
+void SeqView::invalidate_selection() {
+    window->invalidate(true);
+    return;
+    EventSet::iterator iter;
+    for (iter = selection.begin(); iter != selection.end(); ++iter) {
+        int x,y,w,h;
+        get_event_rect(*iter, x, y, w, h);
+        Gdk::Rectangle rect(x,y,w,h);
+        window->invalidate_rect(rect, true);
+    }
 }
 
 void SeqView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 

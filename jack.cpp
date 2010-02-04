@@ -206,7 +206,7 @@ bool MIDIPort::get_event(MIDIEvent &event, NFrames index) {
     return (jack_midi_event_get(&event, buffer, index) == 0);
 }
 
-bool MIDIPort::get_event(MIDIMessage &msg, NFrames *time, NFrames index) {
+bool MIDIPort::get_event(MIDI::Message &msg, NFrames *time, NFrames index) {
     MIDIEvent event;
     if (get_event(event, index) && (event.size <= 3)) {
         if (time)
@@ -231,7 +231,7 @@ bool MIDIPort::write_event(NFrames time, MIDIData *data, size_t size) {
     return (jack_midi_event_write(buffer, time, data, size) == 0);
 }
 
-bool MIDIPort::write_event(NFrames time, const MIDIMessage &msg) {
+bool MIDIPort::write_event(NFrames time, const MIDI::Message &msg) {
     return write_event(time, (MIDIData*)&msg.data, 3);
 }
 

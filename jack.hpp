@@ -10,6 +10,8 @@
 #include <string>
 #include <list>
 
+#include "midi.hpp"
+
 namespace Jack {
 
 typedef jack_nframes_t NFrames;
@@ -66,41 +68,6 @@ protected:
 
 //=============================================================================
 
-struct MIDIMessage {
-	union {
-		struct {
-			union {
-				struct {
-					unsigned char channel:4;
-					unsigned char command:4;
-				};
-				unsigned char status;
-			};
-			unsigned char data1;
-			unsigned char data2;
-			unsigned char rest;
-		};
-		long data;
-		unsigned char bytes[4];
-	};
-    
-	MIDIMessage() {
-        data = 0; 
-    }
-
-	bool operator ==(const MIDIMessage &other) const {
-        if (data != other.data)
-            return false;
-        return true;
-    }
-    
-	bool operator !=(const MIDIMessage &other) const {
-        return !(*this == other);
-    }
-};
-
-//=============================================================================
-
 typedef jack_midi_event_t MIDIEvent;
 typedef jack_midi_data_t MIDIData;
 
@@ -114,14 +81,14 @@ public:
 
     NFrames get_event_count();
     bool get_event(MIDIEvent &event, NFrames index);
-    bool get_event(MIDIMessage &msg, NFrames *time, NFrames index);
+    bool get_event(MIDI::Message &msg, NFrames *time, NFrames index);
 
     // midi output methods
 
     void clear_buffer();
     size_t max_event_size();
     bool write_event(NFrames time, MIDIData *data, size_t size);
-    bool write_event(NFrames time, const MIDIMessage &msg);
+    bool write_event(NFrames time, const MIDI::Message &msg);
     NFrames get_lost_event_count();
     MIDIData *reserve_events(NFrames time, size_t size);
 

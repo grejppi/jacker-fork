@@ -5,6 +5,9 @@
 #include <list>
 #include <vector>
 
+#include "ring_buffer.hpp"
+#include "midi.hpp"
+
 namespace Jacker {
     
 class Model;
@@ -139,6 +142,7 @@ struct TrackEvent {
     TrackEvent(int frame, Pattern &pattern);
     
     int key() const;
+    int get_last_frame() const;
 };
 
 class Track : public EventCollection< std::map<int,TrackEvent> > {
@@ -154,15 +158,30 @@ public:
 
     iterator get_event(int frame);
 
+    RingBuffer<MIDI::Message> messages;
+
 protected:
     Track();
 };
 
 //=============================================================================
 
+struct TrackEventRef {
+    Track *track;
+    Track::iterator iter;
+    
+    TrackEventRef();
+    TrackEventRef(Track &track, Track::iterator iter);
+    
+    bool operator ==(const TrackEventRef &other) const;
+    bool operator !=(const TrackEventRef &other) const;
+    bool operator <(const TrackEventRef &other) const;
+};
+
+//=============================================================================
+
 typedef std::list<Pattern*> PatternList;
 typedef std::vector<Track*> TrackArray;
-typedef std::vector<Track::iterator> TrackIterArray;
 
 struct Model {
     // list of all patterns
@@ -177,6 +196,7 @@ struct Model {
     Model();
     Pattern &new_pattern();
     Track &new_track();
+    void renumber_tracks();
     
     int get_track_count() const;
     Track &get_track(int track);

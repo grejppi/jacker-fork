@@ -10,29 +10,14 @@
 #include "patternview.hpp"
 #include "seqview.hpp"
 
+#define USE_JACK_CLIENT
+
 namespace Jacker {
 
-class Client : public Jack::Client {
-public:
-    Jack::MIDIPort *midi_omni_out;
-
-    Client()
-      : Jack::Client("jacker") {
-        midi_omni_out = new Jack::MIDIPort(*this, "omni", Jack::MIDIPort::IsOutput);
-    }
-    
-    ~Client() {
-        delete midi_omni_out;
-    }
-
-    virtual void on_process(Jack::NFrames size) {
-    }
-};
-
-class App {
+class App : public Jack::Client {
 public:
     Gtk::Main kit;
-    Jacker::Client client;
+    Jack::MIDIPort *midi_omni_out;
     Model model;
 
     Glib::RefPtr<Gtk::Builder> builder;
@@ -40,13 +25,21 @@ public:
     PatternView *pattern_view;
     SeqView *seq_view;
 
+    sigc::connection mix_timer;
+    int write_frame;
+    int read_samples;
+
     App(int argc, char **argv)
-        : kit(argc,argv) {
+        : Jack::Client("jacker"),kit(argc,argv) {
+        midi_omni_out = new Jack::MIDIPort(*this, "omni", Jack::MIDIPort::IsOutput);
         pattern_view = NULL;
         seq_view = NULL;
+        write_frame = 0;
+        read_samples = 0;
     }
     
     ~App() {
+        delete midi_omni_out;
     }
     
     void init_ui() {
@@ -68,18 +61,46 @@ public:
         
         for (int i = 0; i < 64; i += 8) {
             pattern.add_event(i,0,ParamNote,NOTE(C,4));
-            pattern.add_event(i,3,ParamNote,NOTE(C,4));
-        }
-        for (int i = 0; i < 64; i += 4) {
-            pattern.add_event(i,1,ParamVolume,0x7f);
-            pattern.add_event(i,1,ParamNote,NOTE(Ds,6));
+            pattern.add_event(i,3,ParamNote,NOTE(G,3));
         }
         
-        Track &track = model.new_track();
-        track.name = "test 1";
-        track.order = 0;
+        int i = 0;
         
-        track.add_event(0,pattern);
+        while (i < 64) {
+            switch(i%12) {
+                case 0:
+                {
+                    pattern.add_event(i,1,ParamVolume,0x7f);
+                    pattern.add_event(i,1,ParamNote,NOTE(F,6));
+                } break;
+                case 6:
+                {
+                    pattern.add_event(i,1,ParamVolume,0x7f);
+                    pattern.add_event(i,1,ParamNote,NOTE(Ds,6));
+                } break;
+                case 2:
+                case 8:
+                {
+                    pattern.add_event(i,1,ParamVolume,0x7f);
+                    pattern.add_event(i,1,ParamNote,NOTE(G,6));
+                } break;
+                case 4:
+                case 10:
+                {
+                    pattern.add_event(i,1,ParamVolume,0x7f);
+                    pattern.add_event(i,1,ParamNote,NOTE(C,7));
+                } break;
+                default: break;
+            }
+            i++;
+        }
+        
+        for (int i = 0; i < 5; ++i) {
+            Track &track = model.new_track();
+            track.name = "test";
+            track.add_event(i*pattern.get_length(),pattern);
+            //track.add_event((i+2)*pattern.get_length(),pattern);
+        }
         
         pattern_view->select_pattern(model, pattern);
         
@@ -95,11 +116,16 @@ public:
             seq_vscroll->get_adjustment());
         
         seq_view->set_model(model);
+        
+        sigc::slot<bool> mix_timer_slot = sigc::bind(
+            sigc::mem_fun(*this, &App::mix), 0);
+        mix_timer = Glib::signal_timeout().connect(mix_timer_slot,
+            100);
     }
 
     void run() {
-        //~ if (!client.init())
-            //~ return;
+        if (!init())
+            return;
         builder = Gtk::Builder::create_from_file("jacker.glade");
         
         Gtk::Window* window = 0;
@@ -109,13 +135,64 @@ public:
         
         window->show_all();
         
-        //~ client.activate();
+        activate();
         
         kit.run(*window);
+        
+        mix_timer.disconnect();
             
-        //~ client.deactivate();
-        //~ client.shutdown();
+        deactivate();
+        shutdown();
     }
+    
+    void mix_track(Track &track) {
+        Track::iterator iter = track.upper_bound(write_frame);
+        if (iter == track.begin())
+            return;
+        iter--;
+        Track::Event &event = iter->second;
+        if (event.get_last_frame() < write_frame)
+            return; // already ended
+        Pattern &pattern = *event.pattern;
+        Pattern::iterator row_iter = pattern.begin();
+        Pattern::Row row;
+        pattern.collect_events(write_frame - event.frame, row_iter, row);
+        
+        for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
+            Pattern::Event *evt = row.get_event(channel, ParamNote);
+            if (!evt)
+                continue;
+            MIDI::Message msg;
+            msg.command = 0x9;
+            msg.data1 = evt->value;
+            msg.data2 = 0x7f;
+            track.messages.push(msg);
+        }
+    }
+    
+    bool mix(int i) {
+        TrackArray::iterator iter;
+        for (iter = model.tracks.begin(); iter != model.tracks.end(); ++iter) {
+            mix_track(*(*iter));
+        }
+        write_frame++;
+        if (write_frame == 64)
+            write_frame = 0;
+        return true;
+    }
+    
+    virtual void on_process(Jack::NFrames size) {
+        midi_omni_out->clear_buffer();
+        TrackArray::iterator iter;
+        for (iter = model.tracks.begin(); iter != model.tracks.end(); ++iter) {
+            Track &track = *(*iter);
+            while (track.messages.get_read_size()) {
+                MIDI::Message msg = track.messages.pop();
+                midi_omni_out->write_event(0, msg);
+            }
+        }
+    }
+    
 };
     
 } // namespace Jacker
