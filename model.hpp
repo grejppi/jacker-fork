@@ -7,14 +7,17 @@
 
 namespace Jacker {
     
+class Model;
+    
 //=============================================================================
 
-template<typename Event_T>
-class EventCollection : public std::multimap<int,Event_T> {
+template<typename Map_T>
+class EventCollection
+    : public Map_T {
 public:
-    typedef std::multimap<int,Event_T> map;
-    typedef Event_T Event;
-    typedef EventCollection<Event> BaseClass;
+    typedef Map_T map;
+    typedef typename map::mapped_type Event;
+    typedef EventCollection<Map_T> BaseClass;
     
     void add_event(const Event &event) {
         insert(typename map::value_type(event.key(),event));
@@ -91,8 +94,9 @@ struct PatternEvent {
 
 //=============================================================================
 
-struct Pattern : EventCollection<PatternEvent> {
-    
+class Pattern : public EventCollection< std::multimap<int,PatternEvent> > {
+    friend class Model;
+public:
     struct Row : std::vector<Event *> {
         typedef std::vector<Event *> vector;
         
@@ -103,8 +107,6 @@ struct Pattern : EventCollection<PatternEvent> {
     
     // name of pattern (non-unique)
     std::string name;
-    
-    Pattern();
     
     void add_event(const Event &event);
     void add_event(int frame, int channel, int param, int value);
@@ -119,6 +121,8 @@ struct Pattern : EventCollection<PatternEvent> {
     iterator get_event(int frame, int channel, int param);
     
 protected:
+    Pattern();
+    
     // length in frames
     int length;
     // number of channels
@@ -131,15 +135,24 @@ struct TrackEvent {
     int frame;
     Pattern *pattern;
     
+    TrackEvent();
+    TrackEvent(int frame, Pattern &pattern);
+    
     int key() const;
 };
 
-struct Track : EventCollection<TrackEvent> {
+class Track : public EventCollection< std::multimap<int,TrackEvent> > {
+    friend class Model;
+public:
     // name of track (non-unique)
     std::string name;
     // order of track
     int order;
     
+    void add_event(const Event &event);
+    void add_event(int frame, Pattern &pattern);
+
+protected:
     Track();
 };
 

@@ -75,11 +75,11 @@ public:
             pattern.add_event(i,1,ParamNote,NOTE(Ds,6));
         }
         
-        Track &track = model->new_track();
+        Track &track = model.new_track();
         track.name = "test 1";
         track.order = 0;
         
-        track.add_event(0,&pattern);
+        track.add_event(0,pattern);
         
         pattern_view->select_pattern(model, pattern);
         

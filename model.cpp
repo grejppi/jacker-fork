@@ -154,6 +154,16 @@ Pattern::iterator Pattern::get_event(int frame, int channel, int param) {
 
 //=============================================================================
 
+TrackEvent::TrackEvent() {
+    frame = ValueNone;
+    pattern = NULL;
+}
+
+TrackEvent::TrackEvent(int frame, Pattern &pattern) {
+    this->frame = frame;
+    this->pattern = &pattern;
+}
+
 int TrackEvent::key() const {
     return frame;
 }
@@ -162,6 +172,14 @@ int TrackEvent::key() const {
 
 Track::Track() {
     order = 0;
+}
+
+void Track::add_event(const Event &event) {
+    BaseClass::add_event(event);
+}
+
+void Track::add_event(int frame, Pattern &pattern) {
+    add_event(Event(frame, pattern));
 }
 
 //=============================================================================
