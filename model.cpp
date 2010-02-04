@@ -160,6 +160,12 @@ int TrackEvent::key() const {
 
 //=============================================================================
 
+Track::Track() {
+    order = 0;
+}
+
+//=============================================================================
+
 Model::Model() {
     end_cue = 0;
 }
@@ -168,6 +174,12 @@ Pattern &Model::new_pattern() {
     Pattern *pattern = new Pattern();
     patterns.push_back(pattern);
     return *pattern;
+}
+
+Track &Model::new_track() {
+    Track *track = new Track();
+    tracks.push_back(track);
+    return *track;
 }
 
 //=============================================================================

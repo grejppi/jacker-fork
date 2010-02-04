@@ -137,6 +137,10 @@ struct TrackEvent {
 struct Track : EventCollection<TrackEvent> {
     // name of track (non-unique)
     std::string name;
+    // order of track
+    int order;
+    
+    Track();
 };
 
 //=============================================================================
@@ -153,6 +157,7 @@ struct Model {
     
     Model();
     Pattern &new_pattern();
+    Track &new_track();
 };
 
 //=============================================================================
