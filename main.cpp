@@ -63,8 +63,8 @@ public:
         
         Pattern &pattern = model.new_pattern();
         pattern.name = "test";
-        pattern.set_length(4096);
-        pattern.set_channel_count(256);
+        pattern.set_length(64);
+        pattern.set_channel_count(4);
         
         for (int i = 0; i < 64; i += 8) {
             pattern.add_event(i,0,ParamNote,NOTE(C,4));

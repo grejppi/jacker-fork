@@ -57,12 +57,18 @@ void SeqCursor::get_pos(int &x, int &y) const {
     view->get_event_pos(frame, track, x, y);
 }
 
+void SeqCursor::set_pos(int x, int y) {
+    assert(view);
+    view->get_event_location(x, y, frame, track);
+}
+
 //=============================================================================
 
 SeqView::SeqView(BaseObjectType* cobject, 
                  const Glib::RefPtr<Gtk::Builder>& builder)
     : Gtk::Widget(cobject) {
     model = NULL;
+    zoomlevel = 1;
     origin_x = origin_y = 0;
     colors.resize(ColorCount);
     colors[ColorBlack].set("#000000");
@@ -121,14 +127,19 @@ void SeqView::get_origin(int &x, int &y) {
 
 void SeqView::get_event_pos(int frame, int track,
                             int &x, int &y) const {
-    x = origin_x + frame;
+    x = origin_x + (frame>>zoomlevel);
     y = origin_y + track*TrackHeight;
 }
 
 
 void SeqView::get_event_size(int length, int &w, int &h) const {
-    w = length;
+    w = length>>zoomlevel;
     h = TrackHeight;
+}
+
+void SeqView::get_event_location(int x, int y, int &frame, int &track) const {
+    frame = (x - origin_x)<<zoomlevel;
+    track = (y - origin_y)/TrackHeight;
 }
 
 void SeqView::render_event(SeqCursor &cursor, Track::Event &event) {
@@ -136,7 +147,7 @@ void SeqView::render_event(SeqCursor &cursor, Track::Event &event) {
     cursor.get_pos(x,y);
     get_event_size(event.pattern->get_length(), w, h);
     gc->set_foreground(colors[ColorBlack]);
-    window->draw_rectangle(gc, true, 0, 0, w, h);    
+    window->draw_rectangle(gc, false, 0, 0, w-1, h-1);    
 }
 
 bool SeqView::on_expose_event(GdkEventExpose* event) {
@@ -171,6 +182,10 @@ bool SeqView::on_motion_notify_event(GdkEventMotion *event) {
 }
 
 bool SeqView::on_button_press_event(GdkEventButton* event) {
+    grab_focus();
+    SeqCursor cursor;
+    cursor.set_view(*this);
+    cursor.set_pos(event->x, event->y);
     return false;
 }
 

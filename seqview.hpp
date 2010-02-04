@@ -32,6 +32,7 @@ public:
     void next_frame();
 
     void get_pos(int &x, int &y) const;
+    void set_pos(int x, int y);
 
 protected:
     // pointer to the view
@@ -50,6 +51,8 @@ public:
     enum {
         TrackHeight = 22,
     };
+    
+    typedef std::list<Track::Event *> EventList;
     
     SeqView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
@@ -80,13 +83,18 @@ public:
     void get_event_pos(int frame, int track,
                        int &x, int &y) const;
     void get_event_size(int length, int &w, int &h) const;
+    void get_event_location(int x, int y, int &frame, int &track) const;
+    
 protected:
     void render_event(SeqCursor &cursor, Track::Event &event);
 
     // start x and y position
     int origin_x, origin_y;
+    // zoomlevel (0=1:1, 1=1:2, 2=1:4, etc.)
+    int zoomlevel;
 
     Model *model;
+    EventList selection;
 };
     
 //=============================================================================
