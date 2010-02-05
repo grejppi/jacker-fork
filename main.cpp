@@ -151,7 +151,8 @@ public:
     virtual void on_process(Jack::NFrames size) {
         midi_omni_out->clear_buffer();
         Player::Message msg;
-        while (player.process(size,msg)) {
+        unsigned int s = size;
+        while (player.process(s,msg)) {
             midi_omni_out->write_event(0, msg);
         }
     }

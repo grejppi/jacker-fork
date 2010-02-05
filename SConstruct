@@ -27,6 +27,18 @@ if win32:
         ],
         CPPPATH = [
             "win32/include",
+        ],
+        LIBPATH = [
+            "win32/lib",
+        ],
+        LIBS = [
+            'libjack',
+        ],
+        )
+    
+    gtk_env = env.Clone()
+    gtk_env.Append(
+        CPPPATH = [
             r'${GTKMM_BASEPATH}\include\libglademm-2.4',
             r'${GTKMM_BASEPATH}\lib\libglademm-2.4\include',
             r'${GTKMM_BASEPATH}\lib\gtkmm-2.4\include',
@@ -56,14 +68,12 @@ if win32:
             r'${GTKMM_BASEPATH}\include',
         ],
         LIBPATH = [
-            "win32/lib",
             r'${GTKMM_BASEPATH}\lib',
         ],
-        LIBS = [
-            'libjack',
-        ] + GTKMM_LIBS,
-        )
-    env['GTKMM_BASEPATH'] = os.environ['GTKMM_BASEPATH']
+        LIBS = GTKMM_LIBS,
+    )
+        
+    gtk_env['GTKMM_BASEPATH'] = os.environ['GTKMM_BASEPATH']
 else:
     env = Environment(
         ENV = os.environ,
