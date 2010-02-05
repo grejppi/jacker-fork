@@ -31,7 +31,7 @@ public:
     Player();
     void mix(class Model &model);
     void mix_track(class Model &model, class Track &track);
-    bool process(unsigned int &size, Message &msg);
+    int process(int size, Message &msg);
 };
 
 //=============================================================================

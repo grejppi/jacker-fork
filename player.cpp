@@ -55,13 +55,19 @@ void Player::mix_track(Model &model, Track &track) {
     }
 }
 
-bool Player::process(unsigned int &size, Message &msg) {
+int Player::process(int size, Message &msg) {
+    int delta = size;
     if (messages.get_read_size()) {
-        msg = messages.pop();
-        return true;
+        Message next_msg;
+        next_msg = messages.peek();
+        delta = std::min(std::max(next_msg.timestamp - read_samples,0),size);
+        if (delta < size) {
+            msg = messages.pop();
+            msg.timestamp = 0;
+        }
     }
-    size = 0;
-    return false;
+    read_samples += delta;
+    return delta;
 }
 
 //=============================================================================
