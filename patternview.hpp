@@ -193,14 +193,10 @@ public:
     std::vector< Glib::RefPtr<Gdk::Pixmap> > chars;
     
     std::vector<Gdk::Color> colors;
-
-    // how many frames are in one beat
-    int frames_per_beat;
-    // how many beats are in one bar
-    int beats_per_bar;
     
     CellRendererNote note_renderer;
     CellRendererHex byte_renderer;
+    class Model *model;
     
     void set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                 Gtk::Adjustment *vadjustment);
@@ -233,7 +229,7 @@ public:
     int get_param_offset(int param) const;
     void set_font_size(int width, int height);
     void get_font_size(int &width, int &height) const;
-    
+
 protected:
     void invalidate_cursor();
     void invalidate_selection();
@@ -242,7 +238,6 @@ protected:
         
     InteractMode interact_mode;
 
-    class Model *model;
     class Pattern *pattern;
     Gtk::Adjustment *hadjustment;
     Gtk::Adjustment *vadjustment;

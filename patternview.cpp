@@ -59,7 +59,8 @@ PatternView *CellRenderer::get_view() const {
 void CellRenderer::render_background(PatternCursor &cursor,
                                      bool selected) {
     int row = cursor.get_row();
-    int frames_per_bar = view->frames_per_beat * view->beats_per_bar;
+    int frames_per_bar = view->model->frames_per_beat
+                          * view->model->beats_per_bar;
     
     int color_base = 0;
     if (selected) {
@@ -67,7 +68,7 @@ void CellRenderer::render_background(PatternCursor &cursor,
     }
     if (!(row % frames_per_bar)) {
         view->gc->set_foreground(view->colors[color_base+ColorRowBar]);
-    } else if (!(row % view->frames_per_beat)) {
+    } else if (!(row % view->model->frames_per_beat)) {
         view->gc->set_foreground(view->colors[color_base+ColorRowBeat]);
     } else if (selected) {
         view->gc->set_foreground(view->colors[color_base+ColorBackground]);
@@ -577,8 +578,6 @@ PatternView::PatternView(BaseObjectType* cobject,
   : Gtk::Widget(cobject), byte_renderer(2) {
     model = NULL;
     pattern = NULL;
-    frames_per_beat = 4;
-    beats_per_bar = 4;
     hadjustment = 0;
     vadjustment = 0;
     interact_mode = InteractNone;
@@ -1132,7 +1131,7 @@ void PatternView::get_font_size(int &width, int &height) const {
 }
 
 int PatternView::get_frames_per_bar() const {
-    return frames_per_beat * beats_per_bar;
+    return model->frames_per_beat * model->beats_per_bar;
 }
 
 //=============================================================================

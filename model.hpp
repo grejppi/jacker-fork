@@ -192,6 +192,12 @@ public:
     
     // end cue in frames
     int end_cue;
+    // how many frames are in one beat
+    int frames_per_beat;
+    // how many beats are in one bar
+    int beats_per_bar;
+    // how many beats are in one minute
+    int beats_per_minute;
     
     Model();
     Pattern &new_pattern();

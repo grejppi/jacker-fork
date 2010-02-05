@@ -149,6 +149,11 @@ public:
         return true;
     }
     
+    virtual void on_sample_rate(Jack::NFrames nframes) {
+        player.set_sample_rate((int)nframes);
+        player.reset(model);
+    }
+    
     virtual void on_process(Jack::NFrames size) {
         midi_omni_out->clear_buffer();
         Player::Message msg;

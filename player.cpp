@@ -4,6 +4,13 @@
 
 namespace Jacker {
 
+enum {
+    // how many messages can be buffered?
+    MaxMessageCount = 1024,
+    // how many samples should be pre-mixed
+    PreMixSize = 24000,
+};
+
 //=============================================================================
     
 Player::Bus::Bus() {
@@ -14,13 +21,31 @@ Player::Message::Message() {
     timestamp = 0;
 }
 
-Player::Player() : messages(64) {
+Player::Player() : messages(MaxMessageCount) {
     buses.resize(MaxBuses);
+    sample_rate = 44100;
     write_samples = 0;
     read_samples = 0;
+    position = 0;
+}
+
+void Player::set_sample_rate(int sample_rate) {
+    this->sample_rate = sample_rate;
+}
+
+void Player::reset(Model &model) {
+    // TODO
 }
 
 void Player::mix(Model &model) {
+    // frames per second
+    int fps = (model.frames_per_beat * model.beats_per_minute)/60;
+    44100
+    
+    int end_sample = read_samples + PreMixSize;
+    while (write_samples < end_sample) {
+        
+    }
     TrackArray::iterator iter;
     for (iter = model.tracks.begin(); iter != model.tracks.end(); ++iter) {
         mix_track(model, *(*iter));
