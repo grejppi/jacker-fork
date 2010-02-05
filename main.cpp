@@ -26,16 +26,14 @@ public:
     SeqView *seq_view;
 
     sigc::connection mix_timer;
-    int write_frame;
-    int read_samples;
+
+    Player player;
 
     App(int argc, char **argv)
         : Jack::Client("jacker"),kit(argc,argv) {
         midi_omni_out = new Jack::MIDIPort(*this, "omni", Jack::MIDIPort::IsOutput);
         pattern_view = NULL;
         seq_view = NULL;
-        write_frame = 0;
-        read_samples = 0;
     }
     
     ~App() {
@@ -145,51 +143,16 @@ public:
         shutdown();
     }
     
-    void mix_track(Track &track) {
-        Track::iterator iter = track.upper_bound(write_frame);
-        if (iter == track.begin())
-            return;
-        iter--;
-        Track::Event &event = iter->second;
-        if (event.get_last_frame() < write_frame)
-            return; // already ended
-        Pattern &pattern = *event.pattern;
-        Pattern::iterator row_iter = pattern.begin();
-        Pattern::Row row;
-        pattern.collect_events(write_frame - event.frame, row_iter, row);
-        
-        for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-            Pattern::Event *evt = row.get_event(channel, ParamNote);
-            if (!evt)
-                continue;
-            MIDI::Message msg;
-            msg.command = 0x9;
-            msg.data1 = evt->value;
-            msg.data2 = 0x7f;
-            track.messages.push(msg);
-        }
-    }
-    
     bool mix(int i) {
-        TrackArray::iterator iter;
-        for (iter = model.tracks.begin(); iter != model.tracks.end(); ++iter) {
-            mix_track(*(*iter));
-        }
-        write_frame++;
-        if (write_frame == 64)
-            write_frame = 0;
+        player.mix(model);
         return true;
     }
     
     virtual void on_process(Jack::NFrames size) {
         midi_omni_out->clear_buffer();
-        TrackArray::iterator iter;
-        for (iter = model.tracks.begin(); iter != model.tracks.end(); ++iter) {
-            Track &track = *(*iter);
-            while (track.messages.get_read_size()) {
-                MIDI::Message msg = track.messages.pop();
-                midi_omni_out->write_event(0, msg);
-            }
+        while (player.process(size)) {
+            MIDI::Message msg = player.messages.pop();
+            midi_omni_out->write_event(0, msg);
         }
     }
     

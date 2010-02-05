@@ -1,5 +1,4 @@
-#ifndef RING_BUFFER_HPP_
-#define RING_BUFFER_HPP_
+#pragma once
 
 #include <string.h>
 #include <assert.h>
@@ -118,5 +117,3 @@ public:
 		written += count;
 	}
 };
-
-#endif /* RING_BUFFER_HPP_ */

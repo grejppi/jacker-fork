@@ -63,6 +63,11 @@ enum {
     ParamCount,
 };
 
+enum {
+    MaxBus = 32,
+    MaxChannels = 256,
+};
+
 //=============================================================================
 
 // describes a parameter
@@ -157,9 +162,6 @@ public:
     void add_event(int frame, Pattern &pattern);
 
     iterator get_event(int frame);
-
-    RingBuffer<MIDI::Message> messages;
-
 protected:
     Track();
 };
@@ -200,6 +202,26 @@ struct Model {
     
     int get_track_count() const;
     Track &get_track(int track);
+};
+
+//=============================================================================
+
+class Player {
+public:
+    struct Bus {
+        int notes[MaxChannels];
+        
+        Bus();
+    };
+
+    RingBuffer<MIDI::Message> messages;
+    int write_frame;
+    int read_samples;
+
+    Player();
+    void mix(Model &model);
+    void mix_track(Model &model, Track &track);
+    bool process(unsigned int &size);
 };
 
 //=============================================================================
