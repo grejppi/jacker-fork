@@ -23,6 +23,7 @@ if win32:
         ],
         LINKFLAGS = [
             #"/SUBSYSTEM:WINDOWS",
+            "/NOLOGO",
             "/SUBSYSTEM:CONSOLE",
         ],
         CPPPATH = [
@@ -101,6 +102,7 @@ else:
     gtk_env.ParseConfig("pkg-config sigc++-2.0 --cflags --libs")
 
 objects = env.Object(['jack.cpp',
+     'player.cpp',
      'model.cpp'])
 gtk_objects = gtk_env.Object(['main.cpp',
      'seqview.cpp',

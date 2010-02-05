@@ -5,9 +5,6 @@
 #include <list>
 #include <vector>
 
-#include "ring_buffer.hpp"
-#include "midi.hpp"
-
 namespace Jacker {
     
 class Model;
@@ -185,7 +182,8 @@ struct TrackEventRef {
 typedef std::list<Pattern*> PatternList;
 typedef std::vector<Track*> TrackArray;
 
-struct Model {
+class Model {
+public:
     // list of all patterns
     PatternList patterns;
     
@@ -202,34 +200,6 @@ struct Model {
     
     int get_track_count() const;
     Track &get_track(int track);
-};
-
-//=============================================================================
-
-class Player {
-public:
-    struct Bus {
-        int notes[MaxChannels];
-        
-        Bus();
-    };
-    
-    std::vector<Bus> buses;
-    
-    struct Message : MIDI::Message {
-        int timestamp;
-        
-        Message();
-    };
-
-    RingBuffer<Message> messages;
-    int write_samples;
-    int read_samples;
-
-    Player();
-    void mix(Model &model);
-    void mix_track(Model &model, Track &track);
-    bool process(unsigned int &size, Message &msg);
 };
 
 //=============================================================================

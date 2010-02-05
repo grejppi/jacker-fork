@@ -9,6 +9,7 @@
 #include "model.hpp"
 #include "patternview.hpp"
 #include "seqview.hpp"
+#include "player.hpp"
 
 #define USE_JACK_CLIENT
 
