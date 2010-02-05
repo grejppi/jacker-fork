@@ -73,12 +73,18 @@ public:
 		read(&element, 1);
 		return element;
 	}
+    
+    T peek() {
+        T element;
+        read(&element, 1, true);
+        return element;
+    }
 
 	void reset_read() {
 		read_ptr = write_ptr;
 	}
 
-	void read(T *data, size_t count) {
+	void read(T *data, size_t count, bool keep=false) {
 		if (get_read_size() < count)
 			return;
 		assert(data);
@@ -91,9 +97,11 @@ public:
 			memcpy(data, &buffer[read_ptr], blocksize1 * sizeof(T));
 			memcpy(data + blocksize1, &buffer[0], blocksize2 * sizeof(T));
 		}
-		size_t new_read_ptr = (read_ptr + count) % get_size();
-		read_ptr = new_read_ptr;
-		read_count += count;
+        if (!keep) {
+            size_t new_read_ptr = (read_ptr + count) % get_size();
+            read_ptr = new_read_ptr;
+            read_count += count;
+        }
 	}
 
 	void write(const T *data, size_t count) {

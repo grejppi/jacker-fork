@@ -85,12 +85,14 @@ else:
         )
     #env.ParseConfig("pkg-config sdl --cflags --libs")
     env.ParseConfig("pkg-config jack --cflags --libs")
-    env.ParseConfig("pkg-config gtkmm-2.4 --cflags --libs")
-    env.ParseConfig("pkg-config sigc++-2.0 --cflags --libs")
+    
+    gtk_env = env.Clone()
+    gtk_env.ParseConfig("pkg-config gtkmm-2.4 --cflags --libs")
+    gtk_env.ParseConfig("pkg-config sigc++-2.0 --cflags --libs")
 
-env.Program('jacker',
-    ['main.cpp',
-     'jack.cpp',
-     'model.cpp',
+objects = env.Object(['jack.cpp',
+     'model.cpp'])
+gtk_objects = gtk_env.Object(['main.cpp',
      'seqview.cpp',
      'patternview.cpp'])
+gtk_env.Program('jacker', objects + gtk_objects)

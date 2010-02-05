@@ -64,7 +64,7 @@ enum {
 };
 
 enum {
-    MaxBus = 32,
+    MaxBuses = 32,
     MaxChannels = 256,
 };
 
@@ -213,15 +213,23 @@ public:
         
         Bus();
     };
+    
+    std::vector<Bus> buses;
+    
+    struct Message : MIDI::Message {
+        int timestamp;
+        
+        Message();
+    };
 
-    RingBuffer<MIDI::Message> messages;
-    int write_frame;
+    RingBuffer<Message> messages;
+    int write_samples;
     int read_samples;
 
     Player();
     void mix(Model &model);
     void mix_track(Model &model, Track &track);
-    bool process(unsigned int &size);
+    bool process(unsigned int &size, Message &msg);
 };
 
 //=============================================================================
