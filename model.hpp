@@ -106,8 +106,9 @@ public:
         typedef std::vector<Event *> vector;
         
         void resize(int channel_count);
-        Event *get_event(int channel, int param);
+        Event *get_event(int channel, int param) const;
         void set_event(Event &event);
+        int get_value(int channel, int param) const;
     };
     
     // name of pattern (non-unique)

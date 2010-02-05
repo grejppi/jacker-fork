@@ -66,7 +66,7 @@ void PatternEvent::sanitize_value() {
 
 //=============================================================================
 
-Pattern::Event *Pattern::Row::get_event(int channel, int param) {
+Pattern::Event *Pattern::Row::get_event(int channel, int param) const {
     int index = (channel * ParamCount) + param;
     return (*this)[index];
 }
@@ -82,6 +82,13 @@ void Pattern::Row::resize(int channel_count) {
     for (size_t i = 0; i < size(); ++i) {
         (*this)[i] = NULL;
     }    
+}
+
+int Pattern::Row::get_value(int channel, int param) const {
+    Event *evt = get_event(channel, param);
+    if (!evt)
+        return ValueNone;
+    return evt->value;
 }
 
 //=============================================================================

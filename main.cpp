@@ -74,19 +74,19 @@ public:
                 } break;
                 case 6:
                 {
-                    pattern.add_event(i,1,ParamVolume,0x7f);
+                    pattern.add_event(i,1,ParamVolume,0x2f);
                     pattern.add_event(i,1,ParamNote,NOTE(Ds,6));
                 } break;
                 case 2:
                 case 8:
                 {
-                    pattern.add_event(i,1,ParamVolume,0x7f);
+                    pattern.add_event(i,1,ParamVolume,0x6f);
                     pattern.add_event(i,1,ParamNote,NOTE(G,6));
                 } break;
                 case 4:
                 case 10:
                 {
-                    pattern.add_event(i,1,ParamVolume,0x7f);
+                    pattern.add_event(i,1,ParamVolume,0x5f);
                     pattern.add_event(i,1,ParamNote,NOTE(C,7));
                 } break;
                 default: break;

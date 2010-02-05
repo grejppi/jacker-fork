@@ -10,8 +10,17 @@ namespace Jacker {
 
 class Player {
 public:
+    struct Channel {
+        int note;
+        int volume;
+        
+        Channel();
+    };
+    
+    typedef std::vector<Channel> ChannelArray;
+    
     struct Bus {
-        std::vector<int> notes;
+        ChannelArray channels;
         
         Bus();
     };
