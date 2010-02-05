@@ -22,11 +22,11 @@ public:
 	}
 
 	void clear() {
-		memset(&buffer[0], 0, get_size() * sizeof(T));
-		read_ptr = 0;
 		write_ptr = 0;
+		read_ptr = 0;
 		written = 0;
 		read_count = 0;
+		memset(&buffer[0], 0, get_size() * sizeof(T));
 	}
 
 	size_t get_size() {

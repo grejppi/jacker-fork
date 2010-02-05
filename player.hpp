@@ -25,7 +25,8 @@ public:
     };
 
     RingBuffer<Message> messages;
-    int write_samples;
+    
+    long long write_samples; // 0-32: subsample, 32-64: sample
     int read_samples;
     int position; // in frames
 
