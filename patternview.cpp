@@ -104,12 +104,10 @@ int CellRenderer::get_item_count() {
 
 bool CellRenderer::on_key_press_event(GdkEventKey* event_key, 
                                       Pattern::Event &event, int item) {
-    if (event.is_valid()) {
-        if (event_key->keyval == GDK_period) {
-            event.value = ValueNone;
-            view->navigate(0,1);
-            return true;
-        }
+    if (event_key->keyval == GDK_period) {
+        event.value = ValueNone;
+        view->navigate(0,1);
+        return true;
     }
     return false;
 }
@@ -318,6 +316,78 @@ bool CellRendererHex::on_key_press_event(GdkEventKey* event_key,
     return CellRenderer::on_key_press_event(event_key, event, item);
 }
 
+//=============================================================================
+
+static int sprint_command(char *buffer, int value) {
+    if (value == ValueNone) {
+        sprintf(buffer, ".");
+    } else {
+        sprintf(buffer, "%c", (char)value);
+    }
+    return 1;
+}
+
+CellRendererCommand::CellRendererCommand() {
+}
+
+void CellRendererCommand::render_cell(PatternCursor &cursor, Pattern::Event *event, 
+                                  bool draw_cursor, bool selected) {
+    char text[16];
+    
+    int chars = 0;
+    int value = ValueNone;
+    if (event)
+        value = event->value;
+    
+    chars = sprint_command(text, value);
+    
+    render_background(cursor, selected);
+    
+    view->gc->set_foreground(view->colors[ColorBlack]);
+    
+    int x, y;
+    cursor.get_pos(x,y);
+    view->draw_text(x, y, text);
+
+    if (draw_cursor) {
+        int w,h;
+        view->get_font_size(w,h);
+        int item = cursor.get_item();
+        x += w * item;
+        view->window->draw_rectangle(view->xor_gc, true, x, y, w, h);
+    }
+}
+
+int CellRendererCommand::get_width() {
+    int w,h;
+    view->get_font_size(w,h);
+    return w;
+}
+
+int CellRendererCommand::get_item(int x) {
+    return 0;
+}
+
+int CellRendererCommand::get_item_count() {
+    return 1;
+}
+
+bool CellRendererCommand::on_key_press_event(GdkEventKey* event_key, 
+                                         Pattern::Event &event, int item) {
+    int value = ValueNone;
+    if ((event_key->keyval >= GDK_0) && (event_key->keyval <= GDK_9)) {
+        value = '0' + (event_key->keyval - GDK_0);
+    }
+    if ((event_key->keyval >= GDK_a) && (event_key->keyval <= GDK_z)) {
+        value = 'A' + (event_key->keyval - GDK_a);
+    }
+    if (value != ValueNone) {
+        event.value = value;
+        view->navigate(0,1);
+        return true;
+    }
+    return CellRenderer::on_key_press_event(event_key, event, item);
+}
 
 //=============================================================================
 
@@ -575,7 +645,9 @@ bool PatternSelection::get_rect(int &x, int &y, int &width, int &height) const {
 
 PatternView::PatternView(BaseObjectType* cobject,
                          const Glib::RefPtr<Gtk::Builder>& builder)
-  : Gtk::Widget(cobject), byte_renderer(2) {
+  : Gtk::Widget(cobject), 
+    byte_renderer(2),
+    word_renderer(4) {
     model = NULL;
     pattern = NULL;
     hadjustment = 0;
@@ -685,10 +757,10 @@ void PatternView::on_realize() {
     
     set_cell_renderer(ParamNote, &note_renderer);
     set_cell_renderer(ParamVolume, &byte_renderer);
-    set_cell_renderer(ParamCCIndex0, &byte_renderer);
-    set_cell_renderer(ParamCCValue0, &byte_renderer);
-    set_cell_renderer(ParamCCIndex1, &byte_renderer);
-    set_cell_renderer(ParamCCValue1, &byte_renderer);
+    set_cell_renderer(ParamCommand, &command_renderer);
+    set_cell_renderer(ParamValue, &word_renderer);
+    set_cell_renderer(ParamCCIndex, &byte_renderer);
+    set_cell_renderer(ParamCCValue, &byte_renderer);
     
     cursor.set_view(*this);
     selection.set_view(*this);
@@ -915,8 +987,14 @@ void PatternView::show_cursor() {
         hadjustment->clamp_page(channel,channel+1);
     }
     if (vadjustment) {
+        int fpb = get_frames_per_bar();
         int row = cursor.get_row();
-        vadjustment->clamp_page(row,row+1);
+        int value = vadjustment->get_value();
+        int page_size = vadjustment->get_page_size();
+        if (row < value)
+            vadjustment->clamp_page(row-fpb,row);
+        else if (row >= (value+page_size))
+            vadjustment->clamp_page(row,row+fpb);
     }
 }
 

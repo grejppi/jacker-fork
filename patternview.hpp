@@ -80,6 +80,22 @@ public:
 
 //=============================================================================
 
+class CellRendererCommand : public CellRenderer {
+public:
+    CellRendererCommand();
+    
+    virtual void render_cell(PatternCursor &cursor, 
+                             Pattern::Event *event, bool draw_cursor, 
+                             bool selected);
+    virtual int get_width();
+    virtual int get_item(int x);
+    virtual int get_item_count();
+    virtual bool on_key_press_event(GdkEventKey* event_key, 
+                                    Pattern::Event &event, int item);    
+};
+
+//=============================================================================
+
 class PatternCursor {
 friend class PatternSelection;
 public:
@@ -196,6 +212,8 @@ public:
     
     CellRendererNote note_renderer;
     CellRendererHex byte_renderer;
+    CellRendererCommand command_renderer;
+    CellRendererHex word_renderer;
     class Model *model;
     
     void set_scroll_adjustments(Gtk::Adjustment *hadjustment, 

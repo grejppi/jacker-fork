@@ -54,14 +54,29 @@ int PatternEvent::key() const {
 void PatternEvent::sanitize_value() {
     if (value == ValueNone)
         return;
-    if (param == ParamNote) {
-        if (value == NoteOff)
-            return;
+    switch(param) {
+        case ParamNote:
+        {
+            if (value == NoteOff)
+                return;
+            value = std::min(std::max(value,0),0x7f);
+        } break;
+        case ParamCommand:
+        {
+            value = std::min(std::max(value,0x21),0x7f);
+        } break;
+        case ParamValue:
+        {
+            value = std::min(std::max(value,0),0xffff);
+        } break;
+        case ParamVolume:
+        case ParamCCIndex:
+        case ParamCCValue:        
+        {
+            value = std::min(std::max(value,0),0x7f);
+        } break;
+        default: break;
     }
-    if (value < 0)
-        value = 0;
-    else if (value > 127)
-        value = 127;
 }
 
 //=============================================================================

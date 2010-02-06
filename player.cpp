@@ -82,6 +82,24 @@ void Player::mix_track(Model &model, Track &track) {
     Bus &bus = buses[0];
     int midi_channel = 0;
     
+    // first run: process all cc events
+    for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
+        int ccindex = row.get_value(channel, ParamCCIndex);
+        if (ccindex != ValueNone) {
+            int ccvalue = row.get_value(channel, ParamCCValue);
+            if (ccvalue != ValueNone) {
+                Message msg;
+                msg.timestamp = timestamp;
+                msg.command = MIDI::CommandControlChange;
+                msg.channel = midi_channel;
+                msg.data1 = ccindex;
+                msg.data2 = ccvalue;
+                messages.push(msg);
+            }
+        }
+    }
+    
+    // second run: process volume and notes
     for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
         Channel &values = bus.channels[channel];
         
@@ -112,32 +130,6 @@ void Player::mix_track(Model &model, Track &track) {
                 messages.push(msg);
                 
                 values.note = note;
-            }
-        }
-        int ccindex0 = row.get_value(channel, ParamCCIndex0);
-        if (ccindex0 != ValueNone) {
-            int ccvalue0 = row.get_value(channel, ParamCCValue0);
-            if (ccvalue0 != ValueNone) {
-                Message msg;
-                msg.timestamp = timestamp;
-                msg.command = MIDI::CommandControlChange;
-                msg.channel = midi_channel;
-                msg.data1 = ccindex0;
-                msg.data2 = ccvalue0;
-                messages.push(msg);
-            }
-        }
-        int ccindex1 = row.get_value(channel, ParamCCIndex1);
-        if (ccindex1 != ValueNone) {
-            int ccvalue1 = row.get_value(channel, ParamCCValue1);
-            if (ccvalue1 != ValueNone) {
-                Message msg;
-                msg.timestamp = timestamp;
-                msg.command = MIDI::CommandControlChange;
-                msg.channel = midi_channel;
-                msg.data1 = ccindex1;
-                msg.data2 = ccvalue1;
-                messages.push(msg);
             }
         }
     }

@@ -52,10 +52,10 @@ enum {
 enum {
     ParamNote = 0,
     ParamVolume,
-    ParamCCIndex0,
-    ParamCCValue0,
-    ParamCCIndex1,
-    ParamCCValue1,
+    ParamCommand,
+    ParamValue,
+    ParamCCIndex,
+    ParamCCValue,
     
     ParamCount,
 };
