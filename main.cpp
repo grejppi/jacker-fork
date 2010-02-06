@@ -26,6 +26,7 @@ public:
     Gtk::Window* window;
     PatternView *pattern_view;
     SeqView *track_view;
+    Gtk::Entry *play_frames;
 
     sigc::connection mix_timer;
 
@@ -36,6 +37,7 @@ public:
         midi_omni_out = new Jack::MIDIPort(*this, "omni", Jack::MIDIPort::IsOutput);
         pattern_view = NULL;
         track_view = NULL;
+        play_frames = NULL;
         player.set_model(model);
     }
     
@@ -119,12 +121,17 @@ public:
         action->signal_activate().connect(signal);
     }
     
-    void init_transport() {
-        connect_action("play_action", sigc::mem_fun(*this, &App::on_play_action));
-        connect_action("stop_action", sigc::mem_fun(*this, &App::on_stop_action));
+    void init_menu() {
         connect_action("save_action", sigc::mem_fun(*this, &App::on_save_action));
         connect_action("open_action", sigc::mem_fun(*this, &App::on_open_action));
         connect_action("about_action", sigc::mem_fun(*this, &App::on_about_action));
+    }
+    
+    void init_transport() {
+        connect_action("play_action", sigc::mem_fun(*this, &App::on_play_action));
+        connect_action("stop_action", sigc::mem_fun(*this, &App::on_stop_action));
+        
+        builder->get_widget("play_frames", play_frames);
     }
     
     void init_model() {
@@ -174,6 +181,7 @@ public:
         
         builder->get_widget("main", window);
         
+        init_menu();
         init_transport();
         init_model();
         init_pattern_view();
@@ -195,6 +203,11 @@ public:
     bool mix(int i) {
         player.mix();
         int frame = player.get_position();
+        
+        Measure measure;
+        measure.set_frame(model, frame);
+        play_frames->set_text(measure.get_string());
+        
         track_view->set_play_position(frame);
         
         // find out if our pattern is currently playing

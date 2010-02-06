@@ -58,7 +58,7 @@ public:
         int pattern_index = -1;
         if (!extract(root["pattern"], pattern_index))
             return false;
-        if ((pattern_index < 0)||(pattern_index >= patterns.size()))
+        if ((pattern_index < 0)||(pattern_index >= (int)patterns.size()))
             return false;
         event.pattern = patterns[pattern_index];
         return true;

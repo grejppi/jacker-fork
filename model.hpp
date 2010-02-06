@@ -184,8 +184,23 @@ typedef std::list<TrackEventRef> TrackEventRefList;
 
 //=============================================================================
 
+struct Measure {
+    int bar;
+    int beat;
+    int subframe;
+    
+    Measure();
+    void set_frame(Model &model, int frame);
+    int get_frame(Model &model) const;
+    std::string get_string() const;
+};
+
+//=============================================================================
+
 typedef std::list<Pattern*> PatternList;
 typedef std::vector<Track*> TrackArray;
+
+//=============================================================================
 
 class Model {
 public:

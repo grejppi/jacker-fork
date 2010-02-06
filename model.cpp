@@ -1,5 +1,6 @@
 #include "model.hpp"
 #include <cassert>
+#include <stdio.h>
 
 namespace Jacker {
 
@@ -249,6 +250,29 @@ bool TrackEventRef::operator <(const TrackEventRef &other) const {
     if (iter->second.frame < other.iter->second.frame)
         return true;
     return false;
+}
+
+//=============================================================================
+
+Measure::Measure() {
+    bar = beat = subframe = 0;
+}
+
+void Measure::set_frame(Model &model, int frame) {
+    int frames_per_bar = model.frames_per_beat * model.beats_per_bar;
+    bar = frame / frames_per_bar;
+    beat = (frame / model.frames_per_beat) % model.beats_per_bar;
+    subframe = frame % model.frames_per_beat;
+}
+
+int Measure::get_frame(Model &model) const {
+    return 0;
+}
+
+std::string Measure::get_string() const {
+    char text[32];
+    sprintf(text, "%i:%i.%i", bar, beat, subframe);
+    return text;
 }
 
 //=============================================================================
