@@ -716,10 +716,13 @@ Pattern *PatternView::get_pattern() const {
     return this->pattern;
 }
 
-void PatternView::select_pattern(Model &model, Pattern &pattern) {
+void PatternView::set_model(class Model &model) {
     this->model = &model;
-    this->pattern = &pattern;
-    
+}
+
+void PatternView::set_pattern(class Pattern *pattern) {
+    this->pattern = pattern;
+    invalidate();
     update_adjustments();
 }
 
@@ -813,7 +816,7 @@ void PatternView::on_adjustment_value_changed() {
     }
     
     set_origin(-x_scroll_value, -y_scroll_value);
-    window->invalidate(true);
+    invalidate();
 }
 
 void PatternView::update_adjustments() {
@@ -1276,6 +1279,11 @@ void PatternView::set_octave(int octave) {
     this->octave = std::min(std::max(octave,0),9);
 }
 
+void PatternView::invalidate() {
+    if (!window)
+        return;
+    window->invalidate(true);
+}
 
 //=============================================================================
 

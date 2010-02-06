@@ -94,6 +94,7 @@ public:
     void select_event(const TrackEventRef &ref);
     bool is_event_selected(const TrackEventRef &ref);
     void set_play_position(int pos);
+    void invalidate();
 protected:
     void invalidate_selection();
     void invalidate_play_position();

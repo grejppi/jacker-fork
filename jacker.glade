@@ -34,6 +34,7 @@
                       <object class="GtkImageMenuItem" id="imagemenuitem2">
                         <property name="label">gtk-open</property>
                         <property name="visible">True</property>
+                        <property name="related_action">open_action</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -346,4 +347,7 @@
     <property name="stock_id">gtk-save</property>
   </object>
   <object class="GtkUIManager" id="uimanager"/>
+  <object class="GtkAction" id="open_action">
+    <property name="stock_id">gtk-open</property>
+  </object>
 </interface>

@@ -187,7 +187,8 @@ public:
     PatternView(BaseObjectType* cobject, 
                 const Glib::RefPtr<Gtk::Builder>& builder);
 
-    void select_pattern(class Model &model, class Pattern &pattern);
+    void set_model(class Model &model);
+    void set_pattern(class Pattern *pattern);
     Pattern *get_pattern() const;
 
     virtual void on_realize();
@@ -254,6 +255,7 @@ public:
     int get_octave() const;
 
     void set_play_position(int pos);
+    void invalidate();
 protected:
     void invalidate_play_position();
     void invalidate_cursor();

@@ -260,9 +260,13 @@ void SeqView::get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, i
     get_event_size(event.pattern->get_length(), w, h);
 }
 
-void SeqView::invalidate_selection() {
+void SeqView::invalidate() {
+    if (!window)
+        return;
     window->invalidate(true);
-    return;
+}
+
+void SeqView::invalidate_selection() {
     EventSet::iterator iter;
     for (iter = selection.begin(); iter != selection.end(); ++iter) {
         int x,y,w,h;
