@@ -981,21 +981,29 @@ void PatternView::set_cursor(const PatternCursor &new_cursor) {
     show_cursor();
 }
 
-void PatternView::show_cursor() {
+void PatternView::show_cursor(const PatternCursor &cur, bool page_jump/*=false*/) {
     if (hadjustment) {
-        int channel = cursor.get_channel();
+        int channel = cur.get_channel();
         hadjustment->clamp_page(channel,channel+1);
     }
     if (vadjustment) {
-        int fpb = get_frames_per_bar();
-        int row = cursor.get_row();
-        int value = vadjustment->get_value();
-        int page_size = vadjustment->get_page_size();
-        if (row < value)
-            vadjustment->clamp_page(row-fpb,row);
-        else if (row >= (value+page_size))
-            vadjustment->clamp_page(row,row+fpb);
+        int row = cur.get_row();
+        if (page_jump) {
+            int fpb = get_frames_per_bar();
+            int value = vadjustment->get_value();
+            int page_size = vadjustment->get_page_size();
+            if (row < value)
+                vadjustment->clamp_page(row-fpb,row);
+            else if (row >= (value+page_size))
+                vadjustment->clamp_page(row,row+fpb);
+        } else {
+            vadjustment->clamp_page(row,row+1);
+        }
     }
+}
+
+void PatternView::show_cursor() {
+    show_cursor(cursor, true);
 }
 
 bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
@@ -1005,6 +1013,7 @@ bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
         selection.p1.set_pos(event->x, event->y);
         clip_cursor(selection.p1);
         invalidate_selection();
+        show_cursor(selection.p1);
     }
     return true;
 }

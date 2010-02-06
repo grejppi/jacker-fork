@@ -225,6 +225,7 @@ public:
     
     
     void show_cursor();
+    void show_cursor(const PatternCursor &cur, bool page_jump=false);
     
     int get_frames_per_bar() const;
     void set_row_height(int height);
