@@ -224,8 +224,7 @@ public:
                 break;
             s -= delta;
             offset += delta;
-            msg.timestamp = offset;
-            midi_omni_out->write_event(0, msg);
+            midi_omni_out->write_event(offset, msg);
         }
     }
     

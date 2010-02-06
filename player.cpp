@@ -204,6 +204,8 @@ int Player::process(int _size, Message &msg) {
             read_position++;
             read_frame_block -= framesize;
         }
+    } else {
+        read_position = position;
     }
     
     return (int)(delta>>32);
