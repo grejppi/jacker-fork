@@ -52,15 +52,7 @@ public:
         player.set_position(0);
     }
     
-    void on_save_action() {
-        Gtk::FileChooserDialog dialog("Save Song",
-            Gtk::FILE_CHOOSER_ACTION_SAVE);
-        dialog.set_transient_for(*window);
-        dialog.set_do_overwrite_confirmation();
-
-        dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-        dialog.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
-
+    void add_dialog_filters(Gtk::FileChooserDialog &dialog) {
         Gtk::FileFilter filter_song;
         filter_song.set_name("Jacker songs");
         filter_song.add_pattern("*.jsong");
@@ -70,6 +62,18 @@ public:
         filter_any.set_name("Any files");
         filter_any.add_pattern("*");
         dialog.add_filter(filter_any);
+    }
+    
+    void on_save_action() {
+        Gtk::FileChooserDialog dialog("Save Song",
+            Gtk::FILE_CHOOSER_ACTION_SAVE);
+        dialog.set_transient_for(*window);
+        dialog.set_do_overwrite_confirmation();
+
+        dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+        dialog.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
+
+        add_dialog_filters(dialog);
 
         int result = dialog.run();
         if (result != Gtk::RESPONSE_OK)
@@ -86,15 +90,7 @@ public:
         dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
         dialog.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
 
-        Gtk::FileFilter filter_song;
-        filter_song.set_name("Jacker songs");
-        filter_song.add_pattern("*.jsong");
-        dialog.add_filter(filter_song);
-
-        Gtk::FileFilter filter_any;
-        filter_any.set_name("Any files");
-        filter_any.add_pattern("*");
-        dialog.add_filter(filter_any);
+        add_dialog_filters(dialog);
 
         int result = dialog.run();
         if (result != Gtk::RESPONSE_OK)
@@ -104,6 +100,14 @@ public:
         
         pattern_view->set_pattern(NULL);
         track_view->invalidate();
+    }
+    
+    void on_about_action() {
+        Gtk::AboutDialog *dialog;
+        builder->get_widget("aboutdialog", dialog);
+        assert(dialog);
+        dialog->run();
+        dialog->hide();
     }
     
     template<typename T>
@@ -120,6 +124,7 @@ public:
         connect_action("stop_action", sigc::mem_fun(*this, &App::on_stop_action));
         connect_action("save_action", sigc::mem_fun(*this, &App::on_save_action));
         connect_action("open_action", sigc::mem_fun(*this, &App::on_open_action));
+        connect_action("about_action", sigc::mem_fun(*this, &App::on_about_action));
     }
     
     void init_model() {

@@ -7,6 +7,7 @@
     <property name="window_position">center</property>
     <property name="default_width">800</property>
     <property name="default_height">600</property>
+    <property name="icon">jacker.png</property>
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
@@ -135,6 +136,7 @@
                       <object class="GtkImageMenuItem" id="imagemenuitem10">
                         <property name="label">gtk-about</property>
                         <property name="visible">True</property>
+                        <property name="related_action">about_action</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -349,5 +351,42 @@
   <object class="GtkUIManager" id="uimanager"/>
   <object class="GtkAction" id="open_action">
     <property name="stock_id">gtk-open</property>
+  </object>
+  <object class="GtkAboutDialog" id="aboutdialog">
+    <property name="border_width">5</property>
+    <property name="icon">jacker.png</property>
+    <property name="type_hint">dialog</property>
+    <property name="transient_for">main</property>
+    <property name="has_separator">False</property>
+    <property name="program_name">Jacker</property>
+    <property name="copyright" translatable="yes">Copyright &#xA9; 2010 Leonard Ritter.</property>
+    <property name="comments" translatable="yes">A MIDI tracker for JACK.</property>
+    <property name="website">http://bitbucket.org/paniq/jacker/</property>
+    <property name="authors">Leonard Ritter &lt;paniq@paniq.org&gt;</property>
+    <property name="logo">jacker.png</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox1">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area1">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAction" id="about_action">
+    <property name="stock_id">gtk-about</property>
   </object>
 </interface>
