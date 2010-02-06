@@ -148,11 +148,8 @@ bool SeqView::find_event(const SeqCursor &cur, TrackEventRef &ref) {
     if (cur.get_track() >= model->get_track_count())
         return false;
     Track *track = &model->get_track(cur.get_track());
-    Track::iterator iter = track->upper_bound(cur.get_frame());
-    if (iter == track->begin())
-        return false;
-    iter--;
-    if (iter->second.get_last_frame() < cur.get_frame())
+    Track::iterator iter = track->find_event(cur.get_frame());
+    if (iter == track->end())
         return false;
     ref.track = track;
     ref.iter = iter;

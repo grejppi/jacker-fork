@@ -146,8 +146,29 @@ public:
     
     bool mix(int i) {
         player.mix();
-        int frames = player.get_position();
-        seq_view->set_play_position(frames);
+        int frame = player.get_position();
+        seq_view->set_play_position(frame);
+        
+        // find out if our pattern is currently playing
+        bool found = false;
+        Pattern *active_pattern = pattern_view->get_pattern();
+        if (active_pattern) {
+            TrackEventRefList refs;
+            model.find_events(frame, refs);
+            if (!refs.empty()) {
+                TrackEventRefList::iterator iter;
+                for (iter = refs.begin(); iter != refs.end(); ++iter) {
+                    TrackEvent &evt = iter->iter->second;
+                    if (evt.pattern == active_pattern) {
+                        found = true;
+                        pattern_view->set_play_position(frame - evt.frame);
+                        break;
+                    }
+                }
+            }
+        }
+        if (!found)
+            pattern_view->set_play_position(-1);
         return true;
     }
     

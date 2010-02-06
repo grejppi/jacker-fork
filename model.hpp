@@ -160,6 +160,8 @@ public:
     void add_event(int frame, Pattern &pattern);
 
     iterator get_event(int frame);
+    iterator find_event(int frame);
+
 protected:
     Track();
 };
@@ -177,6 +179,8 @@ struct TrackEventRef {
     bool operator !=(const TrackEventRef &other) const;
     bool operator <(const TrackEventRef &other) const;
 };
+
+typedef std::list<TrackEventRef> TrackEventRefList;
 
 //=============================================================================
 
@@ -207,6 +211,8 @@ public:
     
     int get_track_count() const;
     Track &get_track(int track);
+    
+    void find_events(int frame, TrackEventRefList &refs);
 };
 
 //=============================================================================

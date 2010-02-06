@@ -105,13 +105,10 @@ void Player::init_message(Message &msg) {
 void Player::mix_track(Track &track) {
     assert(model);
     
-    Track::iterator iter = track.upper_bound(position);
-    if (iter == track.begin())
+    Track::iterator iter = track.find_event(position);
+    if (iter == track.end())
         return;
-    iter--;
     Track::Event &event = iter->second;
-    if (event.get_last_frame() < position)
-        return; // already ended
     Pattern &pattern = *event.pattern;
     Pattern::iterator row_iter = pattern.begin();
     Pattern::Row row;

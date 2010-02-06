@@ -188,6 +188,7 @@ public:
                 const Glib::RefPtr<Gtk::Builder>& builder);
 
     void select_pattern(class Model &model, class Pattern &pattern);
+    Pattern *get_pattern() const;
 
     virtual void on_realize();
     virtual bool on_expose_event(GdkEventExpose* event);
@@ -252,7 +253,9 @@ public:
     void set_octave(int octave);
     int get_octave() const;
 
+    void set_play_position(int pos);
 protected:
+    void invalidate_play_position();
     void invalidate_cursor();
     void invalidate_selection();
     void clip_cursor(PatternCursor &c);
@@ -284,6 +287,9 @@ protected:
     int font_height;
     // current base octave
     int octave;
+    
+    int play_position;
+    
 };
 
 //=============================================================================

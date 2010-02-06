@@ -659,6 +659,7 @@ PatternView::PatternView(BaseObjectType* cobject,
     font_width = 0;
     font_height = 0;
     octave = 4;
+    play_position = -1;
     renderers.resize(ParamCount);
     for (size_t i = 0; i < renderers.size(); ++i) {
         renderers[i] = NULL;
@@ -675,6 +676,28 @@ PatternView::PatternView(BaseObjectType* cobject,
     colors[ColorSelRowBeat].set("#20c0ff");
 }
 
+void PatternView::invalidate_play_position() {
+    if (!window)
+        return;
+    if (play_position < 0)
+        return;
+    int width = 0;
+    int height = 0;
+    window->get_size(width, height);
+    int play_x, play_y;
+    get_cell_pos(play_position, 0, 0, play_x, play_y);
+    Gdk::Rectangle rect(0, play_y, width, row_height);
+    window->invalidate_rect(rect, true);
+}
+
+void PatternView::set_play_position(int pos) {
+    if (play_position == pos)
+        return;
+    invalidate_play_position();
+    play_position = pos;
+    invalidate_play_position();
+}
+
 void PatternView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                          Gtk::Adjustment *vadjustment) {
     this->hadjustment = hadjustment;
@@ -687,6 +710,10 @@ void PatternView::set_scroll_adjustments(Gtk::Adjustment *hadjustment,
         vadjustment->signal_value_changed().connect(sigc::mem_fun(*this,
             &PatternView::on_adjustment_value_changed));
     }
+}
+
+Pattern *PatternView::get_pattern() const {
+    return this->pattern;
 }
 
 void PatternView::select_pattern(Model &model, Pattern &pattern) {
@@ -925,6 +952,11 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
         render_cursor.next_row();
     }
     
+    if (play_position >= 0) {
+        int play_x, play_y;
+        get_cell_pos(play_position, 0, 0, play_x, play_y);
+        window->draw_rectangle(xor_gc, true, 0, play_y, width, row_height);
+    }
     return true;
 }
 

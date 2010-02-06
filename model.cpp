@@ -209,6 +209,17 @@ Track::iterator Track::get_event(int frame) {
     return BaseClass::find(frame);
 }
 
+Track::iterator Track::find_event(int frame) {
+    Track::iterator iter = upper_bound(frame);
+    if (iter == begin())
+        return end();
+    iter--;
+    Track::Event &event = iter->second;
+    if (event.get_last_frame() < frame)
+        return end(); // already ended
+    return iter;
+}
+
 //=============================================================================
 
 TrackEventRef::TrackEventRef() {
@@ -277,6 +288,21 @@ int Model::get_track_count() const {
 
 Track &Model::get_track(int track) {
     return *tracks[track];
+}
+
+void Model::find_events(int frame, TrackEventRefList &refs) {
+    refs.clear();
+    TrackArray::iterator iter;
+    for (iter = tracks.begin(); iter != tracks.end(); ++iter) {
+        Track &track = *(*iter);
+        Track::iterator evt_iter = track.find_event(frame);
+        if (evt_iter != track.end()) {
+            TrackEventRef ref;
+            ref.track = &track;
+            ref.iter = evt_iter;
+            refs.push_back(ref);
+        }
+    }
 }
 
 //=============================================================================
