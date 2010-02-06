@@ -54,6 +54,9 @@ public:
         TrackHeight = 22,
     };
     
+    // signals
+    typedef sigc::signal<void, Pattern *> type_pattern_edit_request;
+    
     typedef std::set<TrackEventRef> EventSet;
     
     TrackView(BaseObjectType* cobject, 
@@ -95,6 +98,8 @@ public:
     bool is_event_selected(const TrackEventRef &ref);
     void set_play_position(int pos);
     void invalidate();
+    
+    type_pattern_edit_request signal_pattern_edit_request();
 protected:
     void invalidate_selection();
     void invalidate_play_position();
@@ -110,6 +115,8 @@ protected:
     Model *model;
     EventSet selection;
     TrackCursor cursor;
+
+    type_pattern_edit_request _pattern_edit_request;
 };
     
 //=============================================================================

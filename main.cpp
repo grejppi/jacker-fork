@@ -165,6 +165,8 @@ public:
             track_vscroll->get_adjustment());
         
         track_view->set_model(model);
+        track_view->signal_pattern_edit_request().connect(
+            sigc::mem_fun(*pattern_view, &PatternView::set_pattern));
     }
     
     void init_player() {

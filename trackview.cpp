@@ -229,6 +229,11 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
     clear_selection();
     if (find_event(cur, ref)) {
         select_event(ref);
+        if (event->type == GDK_2BUTTON_PRESS)
+        {
+            Pattern *pattern = ref.iter->second.pattern;
+            _pattern_edit_request(pattern);
+        }
     }
     return false;
 }
@@ -288,6 +293,10 @@ void TrackView::set_play_position(int pos) {
 
 void TrackView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                      Gtk::Adjustment *vadjustment) {
+}
+
+TrackView::type_pattern_edit_request TrackView::signal_pattern_edit_request() {
+    return _pattern_edit_request;
 }
 
 //=============================================================================
