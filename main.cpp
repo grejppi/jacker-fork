@@ -8,7 +8,7 @@
 
 #include "model.hpp"
 #include "patternview.hpp"
-#include "seqview.hpp"
+#include "trackview.hpp"
 #include "player.hpp"
 
 #include "jsong.hpp"
@@ -25,7 +25,7 @@ public:
 
     Gtk::Window* window;
     PatternView *pattern_view;
-    SeqView *track_view;
+    TrackView *track_view;
     Gtk::Entry *play_frames;
 
     sigc::connection mix_timer;
@@ -153,16 +153,16 @@ public:
     }
     
     void init_track_view() {
-        builder->get_widget_derived("seq_view", track_view);
+        builder->get_widget_derived("track_view", track_view);
         assert(track_view);
         
-        Gtk::HScrollbar *seq_hscroll;
-        builder->get_widget("seq_hscroll", seq_hscroll);
-        Gtk::VScrollbar *seq_vscroll;
-        builder->get_widget("seq_vscroll", seq_vscroll);
+        Gtk::HScrollbar *track_hscroll;
+        builder->get_widget("track_hscroll", track_hscroll);
+        Gtk::VScrollbar *track_vscroll;
+        builder->get_widget("track_vscroll", track_vscroll);
         track_view->set_scroll_adjustments(
-            seq_hscroll->get_adjustment(), 
-            seq_vscroll->get_adjustment());
+            track_hscroll->get_adjustment(), 
+            track_vscroll->get_adjustment());
         
         track_view->set_model(model);
     }

@@ -12,16 +12,16 @@
 
 namespace Jacker {
 
-class SeqView;
+class TrackView;
     
 //=============================================================================
 
-class SeqCursor {
+class TrackCursor {
 public:
-    SeqCursor();
+    TrackCursor();
     
-    void set_view(SeqView &view);
-    SeqView *get_view() const;
+    void set_view(TrackView &view);
+    TrackView *get_view() const;
 
     void set_track(int track);
     int get_track() const;
@@ -38,7 +38,7 @@ public:
 
 protected:
     // pointer to the view
-    SeqView *view;
+    TrackView *view;
 
     // the current track the cursor is on
     int track;
@@ -48,7 +48,7 @@ protected:
     
 //=============================================================================
 
-class SeqView : public Gtk::Widget {
+class TrackView : public Gtk::Widget {
 public:
     enum {
         TrackHeight = 22,
@@ -56,7 +56,7 @@ public:
     
     typedef std::set<TrackEventRef> EventSet;
     
-    SeqView(BaseObjectType* cobject, 
+    TrackView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
 
     void set_model(class Model &model);
@@ -88,7 +88,7 @@ public:
     void get_event_location(int x, int y, int &frame, int &track) const;
     
     void get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h);
-    bool find_event(const SeqCursor &cursor, TrackEventRef &ref);
+    bool find_event(const TrackCursor &cursor, TrackEventRef &ref);
     
     void clear_selection();
     void select_event(const TrackEventRef &ref);
@@ -109,7 +109,7 @@ protected:
 
     Model *model;
     EventSet selection;
-    SeqCursor cursor;
+    TrackCursor cursor;
 };
     
 //=============================================================================

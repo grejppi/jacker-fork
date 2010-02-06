@@ -1,4 +1,4 @@
-#include "seqview.hpp"
+#include "trackview.hpp"
 #include "model.hpp"
 
 #include <cassert>
@@ -22,49 +22,49 @@ enum {
 
 //=============================================================================
 
-SeqCursor::SeqCursor() {
+TrackCursor::TrackCursor() {
     view = NULL;
     track = 0;
     frame = 0;
 }
 
-void SeqCursor::set_view(SeqView &view) {
+void TrackCursor::set_view(TrackView &view) {
     this->view = &view;
 }
 
-SeqView *SeqCursor::get_view() const {
+TrackView *TrackCursor::get_view() const {
     return view;
 }
 
-void SeqCursor::set_track(int track) {
+void TrackCursor::set_track(int track) {
     this->track = track;
 }
 
-int SeqCursor::get_track() const {
+int TrackCursor::get_track() const {
     return track;
 }
 
-void SeqCursor::set_frame(int frame) {
+void TrackCursor::set_frame(int frame) {
     this->frame = frame;
 }
 
-int SeqCursor::get_frame() const {
+int TrackCursor::get_frame() const {
     return frame;
 }
 
-void SeqCursor::get_pos(int &x, int &y) const {
+void TrackCursor::get_pos(int &x, int &y) const {
     assert(view);
     view->get_event_pos(frame, track, x, y);
 }
 
-void SeqCursor::set_pos(int x, int y) {
+void TrackCursor::set_pos(int x, int y) {
     assert(view);
     view->get_event_location(x, y, frame, track);
 }
 
 //=============================================================================
 
-SeqView::SeqView(BaseObjectType* cobject, 
+TrackView::TrackView(BaseObjectType* cobject, 
                  const Glib::RefPtr<Gtk::Builder>& builder)
     : Gtk::Widget(cobject) {
     model = NULL;
@@ -83,11 +83,11 @@ SeqView::SeqView(BaseObjectType* cobject,
     play_position = 0;
 }
 
-void SeqView::set_model(class Model &model) {
+void TrackView::set_model(class Model &model) {
     this->model = &model;
 }
 
-void SeqView::on_realize() {
+void TrackView::on_realize() {
     Gtk::Widget::on_realize();
     
     window = get_window();    
@@ -117,34 +117,34 @@ void SeqView::on_realize() {
     
 }
 
-void SeqView::set_origin(int x, int y) {
+void TrackView::set_origin(int x, int y) {
     this->origin_x = origin_x;
     this->origin_y = origin_y;
 }
 
-void SeqView::get_origin(int &x, int &y) {
+void TrackView::get_origin(int &x, int &y) {
     x = origin_x;
     y = origin_y;
 }
 
-void SeqView::get_event_pos(int frame, int track,
+void TrackView::get_event_pos(int frame, int track,
                             int &x, int &y) const {
     x = origin_x + (frame>>zoomlevel);
     y = origin_y + track*TrackHeight;
 }
 
 
-void SeqView::get_event_size(int length, int &w, int &h) const {
+void TrackView::get_event_size(int length, int &w, int &h) const {
     w = length>>zoomlevel;
     h = TrackHeight;
 }
 
-void SeqView::get_event_location(int x, int y, int &frame, int &track) const {
+void TrackView::get_event_location(int x, int y, int &frame, int &track) const {
     frame = (x - origin_x)<<zoomlevel;
     track = (y - origin_y)/TrackHeight;
 }
 
-bool SeqView::find_event(const SeqCursor &cur, TrackEventRef &ref) {
+bool TrackView::find_event(const TrackCursor &cur, TrackEventRef &ref) {
     if (cur.get_track() >= model->get_track_count())
         return false;
     Track *track = &model->get_track(cur.get_track());
@@ -156,7 +156,7 @@ bool SeqView::find_event(const SeqCursor &cur, TrackEventRef &ref) {
     return true;
 }
 
-void SeqView::render_event(const TrackEventRef &ref) {
+void TrackView::render_event(const TrackEventRef &ref) {
     int x,y,w,h;
     get_event_rect(ref, x, y, w, h);
     gc->set_foreground(colors[ColorBlack]);
@@ -167,7 +167,7 @@ void SeqView::render_event(const TrackEventRef &ref) {
         window->draw_rectangle(gc, false, x, y, w-1, h-1);
 }
 
-bool SeqView::on_expose_event(GdkEventExpose* event) {
+bool TrackView::on_expose_event(GdkEventExpose* event) {
     int width = 0;
     int height = 0;
     window->get_size(width, height);
@@ -193,7 +193,7 @@ bool SeqView::on_expose_event(GdkEventExpose* event) {
     return true;
 }
 
-void SeqView::invalidate_play_position() {
+void TrackView::invalidate_play_position() {
     int width = 0;
     int height = 0;
     window->get_size(width, height);
@@ -203,27 +203,27 @@ void SeqView::invalidate_play_position() {
     window->invalidate_rect(rect, true);
 }
 
-bool SeqView::is_event_selected(const TrackEventRef &ref) {
+bool TrackView::is_event_selected(const TrackEventRef &ref) {
     return (selection.find(ref) != selection.end());
 }
 
-bool SeqView::on_motion_notify_event(GdkEventMotion *event) {
+bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
     return false;
 }
 
-void SeqView::clear_selection() {
+void TrackView::clear_selection() {
     invalidate_selection();
     selection.clear();
 }
 
-void SeqView::select_event(const TrackEventRef &ref) {
+void TrackView::select_event(const TrackEventRef &ref) {
     selection.insert(ref);
     invalidate_selection();
 }
 
-bool SeqView::on_button_press_event(GdkEventButton* event) {
+bool TrackView::on_button_press_event(GdkEventButton* event) {
     grab_focus();
-    SeqCursor cur(cursor);
+    TrackCursor cur(cursor);
     cur.set_pos(event->x, event->y);
     TrackEventRef ref;
     clear_selection();
@@ -233,19 +233,19 @@ bool SeqView::on_button_press_event(GdkEventButton* event) {
     return false;
 }
 
-bool SeqView::on_button_release_event(GdkEventButton* event) {
+bool TrackView::on_button_release_event(GdkEventButton* event) {
     return false;
 }
 
-bool SeqView::on_key_press_event(GdkEventKey* event) {
+bool TrackView::on_key_press_event(GdkEventKey* event) {
     return false;
 }
 
-bool SeqView::on_key_release_event(GdkEventKey* event) {
+bool TrackView::on_key_release_event(GdkEventKey* event) {
     return false;
 }
 
-void SeqView::on_size_allocate(Gtk::Allocation& allocation) {
+void TrackView::on_size_allocate(Gtk::Allocation& allocation) {
     set_allocation(allocation);
     
     if (window) {
@@ -254,19 +254,19 @@ void SeqView::on_size_allocate(Gtk::Allocation& allocation) {
     }    
 }
 
-void SeqView::get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h) {
+void TrackView::get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h) {
     Track::Event &event = ref.iter->second;
     get_event_pos(event.frame, ref.track->order, x, y);
     get_event_size(event.pattern->get_length(), w, h);
 }
 
-void SeqView::invalidate() {
+void TrackView::invalidate() {
     if (!window)
         return;
     window->invalidate(true);
 }
 
-void SeqView::invalidate_selection() {
+void TrackView::invalidate_selection() {
     EventSet::iterator iter;
     for (iter = selection.begin(); iter != selection.end(); ++iter) {
         int x,y,w,h;
@@ -276,7 +276,7 @@ void SeqView::invalidate_selection() {
     }
 }
 
-void SeqView::set_play_position(int pos) {
+void TrackView::set_play_position(int pos) {
     if (!window)
         return;
     if (pos == play_position)
@@ -286,7 +286,7 @@ void SeqView::set_play_position(int pos) {
     invalidate_play_position();
 }
 
-void SeqView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
+void TrackView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                      Gtk::Adjustment *vadjustment) {
 }
 
