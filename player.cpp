@@ -37,6 +37,7 @@ Player::Player() : messages(MaxMessageCount) {
     sample_rate = 44100;
     write_samples = 0;
     read_samples = 0;
+    read_frame_block = 0;
     position = 0;
     read_position = 0;
     playing = false;
@@ -54,12 +55,15 @@ void Player::stop() {
     if (!playing)
         return;
     playing = false;
-    write_samples = 0;
 }
 
 void Player::play() {
     if (playing)
         return;
+    read_frame_block = 0;
+    read_samples = 0;
+    write_samples = 0;
+    messages.clear();
     mix(); // fill buffer
     playing = true;
 }
@@ -76,29 +80,34 @@ void Player::reset() {
     stop();
 }
 
+long long Player::get_frame_size() {
+    return ((long long)(sample_rate*60)<<32)/
+           (model->frames_per_beat * model->beats_per_minute);    
+}
+
 void Player::mix() {
     if (!playing)
         return;
     assert(model);
     
-    int target = read_samples + PreMixSize;
+    long long target = read_samples + ((long long)PreMixSize<<32);
+    long long framesize = get_frame_size();
     int mixed = 0;
-    while ((write_samples>>32) < target)
+    while (write_samples < target)
     {
         TrackArray::iterator iter;
         for (iter = model->tracks.begin(); iter != model->tracks.end(); ++iter) {
             mix_track(*(*iter));
         }
         position++;
-        write_samples += ((long long)(sample_rate*60)<<32)/
-            (model->frames_per_beat * model->beats_per_minute);
+        write_samples += framesize;
         mixed++;
     }
     //printf("mixed %i frames\n", mixed);
 }
 
 void Player::init_message(Message &msg) {
-    msg.timestamp = write_samples>>32;
+    msg.timestamp = write_samples;
     msg.frame = position;
 }
 
@@ -170,26 +179,34 @@ void Player::mix_track(Track &track) {
     }
 }
 
-int Player::process(int size, Message &msg) {
-    if (!playing) {
-        read_samples = 0;
-        read_position = position;
-        messages.clear();
-        return size;
-    }
-    int delta = size;
+int Player::process(int _size, Message &msg) {
+    long long size = (long long)_size << 32;
+    long long delta = size;
+    
     if (messages.get_read_size()) {
         Message next_msg;
         next_msg = messages.peek();
-        delta = std::min(std::max(next_msg.timestamp - read_samples,0),size);
+        delta = std::min(std::max(
+            next_msg.timestamp - read_samples,(long long)0L),(long long)size);
         if (delta < size) {
             msg = messages.pop();
             read_position = msg.frame;
+            read_frame_block = 0;
             msg.timestamp = 0;
         }
     }
-    read_samples += delta;
-    return delta;
+    
+    if (playing) {
+        read_samples += delta;
+        read_frame_block += delta;
+        long long framesize = get_frame_size();
+        while (read_frame_block >= framesize) {
+            read_position++;
+            read_frame_block -= framesize;
+        }
+    }
+    
+    return (int)(delta>>32);
 }
 
 //=============================================================================

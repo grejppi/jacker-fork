@@ -26,7 +26,7 @@ public:
     };
     
     struct Message : MIDI::Message {
-        int timestamp;
+        long long timestamp;
         int frame;
         
         Message();
@@ -49,13 +49,16 @@ public:
     void init_message(Message &msg);
     
 protected:
+    long long get_frame_size();
+
     int sample_rate;
     std::vector<Bus> buses;
     RingBuffer<Message> messages;
     class Model *model;
     
     long long write_samples; // 0-32: subsample, 32-64: sample
-    int read_samples;
+    long long read_samples;
+    long long read_frame_block;
     int position; // in frames
     int read_position; // last read position, in frames
     bool playing;

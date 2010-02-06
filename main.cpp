@@ -73,6 +73,42 @@ public:
         pattern.set_length(64);
         pattern.set_channel_count(4);
         
+        for (int i = 0; i < 64; i += 8) {
+            pattern.add_event(i,0,ParamNote,NOTE(C,4));
+            pattern.add_event(i,3,ParamNote,NOTE(G,3));
+        }
+        
+        int i = 0;
+        
+        while (i < 64) {
+            switch(i%12) {
+                case 0:
+                {
+                    pattern.add_event(i,1,ParamVolume,0x7f);
+                    pattern.add_event(i,1,ParamNote,NOTE(F,6));
+                } break;
+                case 6:
+                {
+                    pattern.add_event(i,1,ParamVolume,0x2f);
+                    pattern.add_event(i,1,ParamNote,NOTE(Ds,6));
+                } break;
+                case 2:
+                case 8:
+                {
+                    pattern.add_event(i,1,ParamVolume,0x6f);
+                    pattern.add_event(i,1,ParamNote,NOTE(G,6));
+                } break;
+                case 4:
+                case 10:
+                {
+                    pattern.add_event(i,1,ParamVolume,0x5f);
+                    pattern.add_event(i,1,ParamNote,NOTE(C,7));
+                } break;
+                default: break;
+            }
+            i++;
+        }
+        
         for (int i = 0; i < 5; ++i) {
             Track &track = model.new_track();
             track.name = "test";
