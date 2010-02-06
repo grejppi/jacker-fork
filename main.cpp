@@ -35,13 +35,39 @@ public:
         midi_omni_out = new Jack::MIDIPort(*this, "omni", Jack::MIDIPort::IsOutput);
         pattern_view = NULL;
         seq_view = NULL;
+        player.set_model(model);
     }
     
     ~App() {
         delete midi_omni_out;
     }
     
-    void init_ui() {
+    void on_play_action() {
+        player.play();
+    }
+    
+    void on_stop_action() {
+        player.stop();
+        player.set_position(0);
+    }
+    
+    void init_transport() {
+        Glib::RefPtr<Gtk::Action> play_action =
+            Glib::RefPtr<Gtk::Action>::cast_static(
+                builder->get_object("play_action"));
+        assert(play_action);
+        play_action->signal_activate().connect(
+            sigc::mem_fun(*this, &App::on_play_action));
+        
+        Glib::RefPtr<Gtk::Action> stop_action =
+            Glib::RefPtr<Gtk::Action>::cast_static(
+                builder->get_object("stop_action"));
+        assert(stop_action);
+        stop_action->signal_activate().connect(
+            sigc::mem_fun(*this, &App::on_stop_action));
+    }
+    
+    void init_pattern_view() {
         builder->get_widget_derived("pattern_view", pattern_view);
         assert(pattern_view);
         
@@ -102,7 +128,9 @@ public:
         }
         
         pattern_view->select_pattern(model, pattern);
-        
+    }
+    
+    void init_track_view() {
         builder->get_widget_derived("seq_view", seq_view);
         assert(seq_view);
         
@@ -115,13 +143,15 @@ public:
             seq_vscroll->get_adjustment());
         
         seq_view->set_model(model);
-        
+    }
+    
+    void init_player() {
         sigc::slot<bool> mix_timer_slot = sigc::bind(
             sigc::mem_fun(*this, &App::mix), 0);
         mix_timer = Glib::signal_timeout().connect(mix_timer_slot,
             100);
     }
-
+    
     void run() {
         if (!init())
             return;
@@ -130,7 +160,10 @@ public:
         Gtk::Window* window = 0;
         builder->get_widget("main", window);
         
-        init_ui();
+        init_transport();
+        init_pattern_view();
+        init_track_view();
+        init_player();
         
         window->show_all();
         
@@ -145,13 +178,13 @@ public:
     }
     
     bool mix(int i) {
-        player.mix(model);
+        player.mix();
         return true;
     }
     
     virtual void on_sample_rate(Jack::NFrames nframes) {
         player.set_sample_rate((int)nframes);
-        player.reset(model);
+        player.reset();
     }
     
     virtual void on_process(Jack::NFrames size) {

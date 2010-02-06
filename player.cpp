@@ -28,43 +28,85 @@ Player::Bus::Bus() {
 
 Player::Message::Message() {
     timestamp = 0;
+    frame = 0;
 }
 
 Player::Player() : messages(MaxMessageCount) {
     buses.resize(MaxBuses);
+    model = NULL;
     sample_rate = 44100;
     write_samples = 0;
     read_samples = 0;
     position = 0;
+    read_position = 0;
+    playing = false;
+}
+
+void Player::set_model(class Model &model) {
+    this->model = &model;
 }
 
 void Player::set_sample_rate(int sample_rate) {
     this->sample_rate = sample_rate;
 }
 
-void Player::reset(Model &model) {
-    messages.clear();
-    mix(model);
+void Player::stop() {
+    if (!playing)
+        return;
+    playing = false;
 }
 
-void Player::mix(Model &model) {
+void Player::play() {
+    if (playing)
+        return;
+    write_samples = 0;
+    read_samples = 0;
+    messages.clear();
+    mix(); // fill buffer
+    playing = true;
+}
+
+void Player::set_position(int position) {
+    this->position = position;
+}
+
+int Player::get_position() const {
+    return read_position;
+}
+
+void Player::reset() {
+    stop();
+}
+
+void Player::mix() {
+    if (!playing)
+        return;
+    assert(model);
+    
     int target = read_samples + PreMixSize;
     int mixed = 0;
     while ((write_samples>>32) < target)
     {
         TrackArray::iterator iter;
-        for (iter = model.tracks.begin(); iter != model.tracks.end(); ++iter) {
-            mix_track(model, *(*iter));
+        for (iter = model->tracks.begin(); iter != model->tracks.end(); ++iter) {
+            mix_track(*(*iter));
         }
         position++;
         write_samples += ((long long)(sample_rate*60)<<32)/
-            (model.frames_per_beat * model.beats_per_minute);
+            (model->frames_per_beat * model->beats_per_minute);
         mixed++;
     }
     //printf("mixed %i frames\n", mixed);
 }
 
-void Player::mix_track(Model &model, Track &track) {
+void Player::init_message(Message &msg) {
+    msg.timestamp = write_samples>>32;
+    msg.frame = position;
+}
+
+void Player::mix_track(Track &track) {
+    assert(model);
+    
     Track::iterator iter = track.upper_bound(position);
     if (iter == track.begin())
         return;
@@ -77,8 +119,6 @@ void Player::mix_track(Model &model, Track &track) {
     Pattern::Row row;
     pattern.collect_events(position - event.frame, row_iter, row);
     
-    int timestamp = (write_samples>>32);
-    
     Bus &bus = buses[0];
     int midi_channel = 0;
     
@@ -89,7 +129,7 @@ void Player::mix_track(Model &model, Track &track) {
             int ccvalue = row.get_value(channel, ParamCCValue);
             if (ccvalue != ValueNone) {
                 Message msg;
-                msg.timestamp = timestamp;
+                init_message(msg);
                 msg.command = MIDI::CommandControlChange;
                 msg.channel = midi_channel;
                 msg.data1 = ccindex;
@@ -111,7 +151,7 @@ void Player::mix_track(Model &model, Track &track) {
         if (note != ValueNone) {
             if (values.note != ValueNone) {
                 Message msg;
-                msg.timestamp = timestamp;
+                init_message(msg);
                 msg.command = MIDI::CommandNoteOff;
                 msg.channel = midi_channel;
                 msg.data1 = values.note;
@@ -122,7 +162,7 @@ void Player::mix_track(Model &model, Track &track) {
             }
             if (note != NoteOff) {
                 Message msg;
-                msg.timestamp = timestamp;
+                init_message(msg);
                 msg.command = MIDI::CommandNoteOn;
                 msg.channel = midi_channel;
                 msg.data1 = note;
@@ -136,6 +176,9 @@ void Player::mix_track(Model &model, Track &track) {
 }
 
 int Player::process(int size, Message &msg) {
+    if (!playing) {
+        return size;
+    }
     int delta = size;
     if (messages.get_read_size()) {
         Message next_msg;
@@ -143,6 +186,7 @@ int Player::process(int size, Message &msg) {
         delta = std::min(std::max(next_msg.timestamp - read_samples,0),size);
         if (delta < size) {
             msg = messages.pop();
+            read_position = msg.frame;
             msg.timestamp = 0;
         }
     }
