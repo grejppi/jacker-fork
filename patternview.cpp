@@ -886,6 +886,9 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     gc->set_foreground(colors[ColorBackground]);
     window->draw_rectangle(gc, true, 0, 0, width, height);
     
+    if (!pattern)
+        return true;
+    
     // build temporary row
     Pattern::Row row;
     // start iterating at start of pattern
@@ -982,6 +985,8 @@ void PatternView::invalidate_cursor() {
 }
 
 void PatternView::clip_cursor(PatternCursor &c) {
+    if (!pattern)
+        return;
     // sanity checks/fixes
     if (c.get_row() < 0) {
         c.set_row(0);
@@ -1039,6 +1044,8 @@ void PatternView::show_cursor() {
 }
 
 bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
+    if (!pattern)
+        return true;
     if (interact_mode == InteractSelect) {
         invalidate_selection();
         selection.set_active(true);
@@ -1062,6 +1069,8 @@ void PatternView::navigate(int delta_x, int delta_y) {
 }
 
 bool PatternView::on_button_press_event(GdkEventButton* event) {
+    if (!pattern)
+        return false;
     grab_focus();
     
     set_cursor(event->x, event->y);
@@ -1076,6 +1085,8 @@ bool PatternView::on_button_press_event(GdkEventButton* event) {
 }
 
 bool PatternView::on_button_release_event(GdkEventButton* event) {
+    if (!pattern)
+        return false;
     interact_mode = InteractNone;
     return false;
 }
@@ -1087,6 +1098,8 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
     bool alt_down = event->state & Gdk::MOD1_MASK;
     bool super_down = event->state & (Gdk::SUPER_MASK|Gdk::MOD4_MASK);
     */
+    if (!pattern)
+        return true;
     
     switch (event->keyval) {
         case GDK_Left: navigate(-1,0); break;

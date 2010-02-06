@@ -42,7 +42,7 @@
                       <object class="GtkImageMenuItem" id="imagemenuitem3">
                         <property name="label">gtk-save</property>
                         <property name="visible">True</property>
-                        <property name="use_underline">True</property>
+                        <property name="related_action">save_action</property>
                         <property name="use_stock">True</property>
                       </object>
                     </child>
@@ -155,8 +155,8 @@
             <child>
               <object class="GtkToolButton" id="toolbutton1">
                 <property name="visible">True</property>
-                <property name="related_action">play_action</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">play_action</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
               </object>
@@ -168,8 +168,8 @@
             <child>
               <object class="GtkToolButton" id="toolbutton2">
                 <property name="visible">True</property>
-                <property name="related_action">stop_action</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">stop_action</property>
                 <property name="label" translatable="yes">toolbutton2</property>
                 <property name="use_underline">True</property>
               </object>
@@ -342,4 +342,8 @@
     <property name="short_label">Stop</property>
     <property name="stock_id">gtk-media-stop</property>
   </object>
+  <object class="GtkAction" id="save_action">
+    <property name="stock_id">gtk-save</property>
+  </object>
+  <object class="GtkUIManager" id="uimanager"/>
 </interface>

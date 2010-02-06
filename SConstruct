@@ -90,6 +90,9 @@ else:
             '-msse',
             '-ffast-math',
         ],
+        CPPPATH = [
+            '.',
+        ],
         LIBS = [
             'stdc++',
         ],
@@ -101,9 +104,16 @@ else:
     gtk_env.ParseConfig("pkg-config gtkmm-2.4 --cflags --libs")
     gtk_env.ParseConfig("pkg-config sigc++-2.0 --cflags --libs")
 
+json_files = [
+    'json/json_reader.cpp',
+    'json/json_value.cpp',
+    'json/json_writer.cpp',
+]
+
 objects = env.Object(['jack.cpp',
      'player.cpp',
-     'model.cpp'])
+     'jsong.cpp',
+     'model.cpp'] + json_files)
 gtk_objects = gtk_env.Object(['main.cpp',
      'seqview.cpp',
      'patternview.cpp'])

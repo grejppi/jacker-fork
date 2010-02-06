@@ -11,7 +11,7 @@
 #include "seqview.hpp"
 #include "player.hpp"
 
-#define USE_JACK_CLIENT
+#include "jsong.hpp"
 
 namespace Jacker {
 
@@ -23,6 +23,7 @@ public:
 
     Glib::RefPtr<Gtk::Builder> builder;
 
+    Gtk::Window* window;
     PatternView *pattern_view;
     SeqView *seq_view;
 
@@ -51,6 +52,32 @@ public:
         player.set_position(0);
     }
     
+    void on_save_action() {
+        Gtk::FileChooserDialog dialog("Save Song",
+            Gtk::FILE_CHOOSER_ACTION_SAVE);
+        dialog.set_transient_for(*window);
+        dialog.set_do_overwrite_confirmation();
+
+        dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+        dialog.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
+
+        Gtk::FileFilter filter_song;
+        filter_song.set_name("Jacker songs");
+        filter_song.add_pattern("*.jsong");
+        dialog.add_filter(filter_song);
+
+        Gtk::FileFilter filter_any;
+        filter_any.set_name("Any files");
+        filter_any.add_pattern("*");
+        dialog.add_filter(filter_any);
+
+        int result = dialog.run();
+        if (result != Gtk::RESPONSE_OK)
+            return;
+        
+        write_jsong(model, dialog.get_filename());
+    }
+    
     void init_transport() {
         Glib::RefPtr<Gtk::Action> play_action =
             Glib::RefPtr<Gtk::Action>::cast_static(
@@ -65,9 +92,19 @@ public:
         assert(stop_action);
         stop_action->signal_activate().connect(
             sigc::mem_fun(*this, &App::on_stop_action));
+        
+        Glib::RefPtr<Gtk::Action> save_action =
+            Glib::RefPtr<Gtk::Action>::cast_static(
+                builder->get_object("save_action"));
+        assert(save_action);
+        save_action->signal_activate().connect(
+            sigc::mem_fun(*this, &App::on_save_action));
     }
     
     void init_model() {
+        bool result = read_jsong(model, "dump.jsong");
+        assert(result);
+        /*
         Pattern &pattern = model.new_pattern();
         pattern.name = "test";
         pattern.set_length(64);
@@ -115,6 +152,7 @@ public:
             track.add_event(i*pattern.get_length(),pattern);
             //track.add_event((i+2)*pattern.get_length(),pattern);
         }
+        */
     }
     
     void init_pattern_view() {
@@ -129,7 +167,8 @@ public:
             pattern_hscroll->get_adjustment(), 
             pattern_vscroll->get_adjustment());
         
-        pattern_view->select_pattern(model, *(*model.patterns.begin()));
+        if (model.patterns.size())
+            pattern_view->select_pattern(model, *(*model.patterns.begin()));
     }
     
     void init_track_view() {
@@ -159,7 +198,6 @@ public:
             return;
         builder = Gtk::Builder::create_from_file("jacker.glade");
         
-        Gtk::Window* window = 0;
         builder->get_widget("main", window);
         
         init_transport();
