@@ -203,6 +203,8 @@ public:
     int beats_per_bar;
     // how many beats are in one minute
     int beats_per_minute;
+
+    void reset();
     
     Model();
     Pattern &new_pattern();

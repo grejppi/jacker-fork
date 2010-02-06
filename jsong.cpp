@@ -10,8 +10,90 @@ namespace Jacker {
 
 class JSongReader {
 public:
-    void build(Json::Value &root, Model &model) {
+    // so we can resolve by index
+    std::vector<Pattern *> patterns;
+
+    bool extract(const Json::Value &value, std::string &target) {
+        if (!value.isString())
+            return false;
+        target = value.asString();
+        return true;
+    }
+
+    bool extract(const Json::Value &value, int &target) {
+        if (!value.isInt())
+            return false;
+        target = value.asInt();
+        return true;
+    }
+    
+    void build(const Json::Value &root, Pattern::Event &event) {
+        extract(root["frame"], event.frame);
+        extract(root["channel"], event.channel);
+        extract(root["param"], event.param);
+        extract(root["value"], event.value);        
+    }
+    
+    void build(const Json::Value &root, Pattern &pattern) {
+        extract(root["name"], pattern.name);
+        int length = 64;
+        if (extract(root["length"], length))
+            pattern.set_length(length);
+        int channel_count = 1;
+        if (extract(root["channel_count"], channel_count))
+            pattern.set_channel_count(channel_count);
         
+        const Json::Value events = root["events"];
+        for (size_t i = 0; i < events.size(); ++i) {
+            Pattern::Event event;
+            build(events[i], event);
+            pattern.add_event(event);
+        }
+        
+        patterns.push_back(&pattern);
+    }
+    
+    bool build(const Json::Value &root, Track::Event &event) {
+        extract(root["frame"], event.frame);
+        int pattern_index = -1;
+        if (!extract(root["pattern"], pattern_index))
+            return false;
+        if ((pattern_index < 0)||(pattern_index >= patterns.size()))
+            return false;
+        event.pattern = patterns[pattern_index];
+        return true;
+    }
+    
+    void build(const Json::Value &root, Track &track) {
+        extract(root["name"], track.name);
+        extract(root["order"], track.order);
+        
+        const Json::Value events = root["events"];
+        for (size_t i = 0; i < events.size(); ++i) {
+            Track::Event event;
+            if (build(events[i], event))
+                track.add_event(event);
+        }
+    }
+
+    void build(const Json::Value &root, Model &model) {
+        model.reset();
+        extract(root["end_cue"], model.end_cue);
+        extract(root["frames_per_beat"], model.frames_per_beat);
+        extract(root["beats_per_bar"], model.beats_per_bar);
+        extract(root["beats_per_minute"], model.beats_per_minute);
+        
+        const Json::Value patterns = root["patterns"];
+        for (size_t i = 0; i < patterns.size(); ++i) {
+            Pattern &pattern = model.new_pattern();
+            build(patterns[i], pattern);
+        }
+        
+        const Json::Value tracks = root["tracks"];
+        for (size_t i = 0; i < tracks.size(); ++i) {
+            Track &track = model.new_track();
+            build(tracks[i], track);
+        }
     }
 
     bool read(Json::Value &root, const std::string &filepath) {
@@ -22,6 +104,8 @@ public:
             std::cout << "Error parsing JSong: " << reader.getFormatedErrorMessages();
         }
         inp.close();
+        if (root["format"] != "jacker-song")
+            return false;
         return result;
     }
 };

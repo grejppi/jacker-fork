@@ -254,10 +254,16 @@ bool TrackEventRef::operator <(const TrackEventRef &other) const {
 //=============================================================================
 
 Model::Model() {
+    reset();
+}
+
+void Model::reset() {
     end_cue = 0;
     beats_per_minute = 120;
     frames_per_beat = 4;
     beats_per_bar = 4;
+    patterns.clear();
+    tracks.clear();
 }
 
 Pattern &Model::new_pattern() {
