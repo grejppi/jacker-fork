@@ -646,8 +646,7 @@ bool PatternSelection::get_rect(int &x, int &y, int &width, int &height) const {
 PatternView::PatternView(BaseObjectType* cobject,
                          const Glib::RefPtr<Gtk::Builder>& builder)
   : Gtk::Widget(cobject), 
-    byte_renderer(2),
-    word_renderer(4) {
+    byte_renderer(2) {
     model = NULL;
     pattern = NULL;
     hadjustment = 0;
@@ -758,7 +757,7 @@ void PatternView::on_realize() {
     set_cell_renderer(ParamNote, &note_renderer);
     set_cell_renderer(ParamVolume, &byte_renderer);
     set_cell_renderer(ParamCommand, &command_renderer);
-    set_cell_renderer(ParamValue, &word_renderer);
+    set_cell_renderer(ParamValue, &byte_renderer);
     set_cell_renderer(ParamCCIndex, &byte_renderer);
     set_cell_renderer(ParamCCValue, &byte_renderer);
     

@@ -213,7 +213,7 @@ public:
     CellRendererNote note_renderer;
     CellRendererHex byte_renderer;
     CellRendererCommand command_renderer;
-    CellRendererHex word_renderer;
+    //CellRendererHex word_renderer;
     class Model *model;
     
     void set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
