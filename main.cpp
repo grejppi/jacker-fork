@@ -67,6 +67,20 @@ public:
             sigc::mem_fun(*this, &App::on_stop_action));
     }
     
+    void init_model() {
+        Pattern &pattern = model.new_pattern();
+        pattern.name = "test";
+        pattern.set_length(64);
+        pattern.set_channel_count(4);
+        
+        for (int i = 0; i < 5; ++i) {
+            Track &track = model.new_track();
+            track.name = "test";
+            track.add_event(i*pattern.get_length(),pattern);
+            //track.add_event((i+2)*pattern.get_length(),pattern);
+        }
+    }
+    
     void init_pattern_view() {
         builder->get_widget_derived("pattern_view", pattern_view);
         assert(pattern_view);
@@ -79,55 +93,7 @@ public:
             pattern_hscroll->get_adjustment(), 
             pattern_vscroll->get_adjustment());
         
-        Pattern &pattern = model.new_pattern();
-        pattern.name = "test";
-        pattern.set_length(64);
-        pattern.set_channel_count(4);
-        
-        for (int i = 0; i < 64; i += 8) {
-            pattern.add_event(i,0,ParamNote,NOTE(C,4));
-            pattern.add_event(i,3,ParamNote,NOTE(G,3));
-        }
-        
-        int i = 0;
-        
-        while (i < 64) {
-            switch(i%12) {
-                case 0:
-                {
-                    pattern.add_event(i,1,ParamVolume,0x7f);
-                    pattern.add_event(i,1,ParamNote,NOTE(F,6));
-                } break;
-                case 6:
-                {
-                    pattern.add_event(i,1,ParamVolume,0x2f);
-                    pattern.add_event(i,1,ParamNote,NOTE(Ds,6));
-                } break;
-                case 2:
-                case 8:
-                {
-                    pattern.add_event(i,1,ParamVolume,0x6f);
-                    pattern.add_event(i,1,ParamNote,NOTE(G,6));
-                } break;
-                case 4:
-                case 10:
-                {
-                    pattern.add_event(i,1,ParamVolume,0x5f);
-                    pattern.add_event(i,1,ParamNote,NOTE(C,7));
-                } break;
-                default: break;
-            }
-            i++;
-        }
-        
-        for (int i = 0; i < 5; ++i) {
-            Track &track = model.new_track();
-            track.name = "test";
-            track.add_event(i*pattern.get_length(),pattern);
-            //track.add_event((i+2)*pattern.get_length(),pattern);
-        }
-        
-        pattern_view->select_pattern(model, pattern);
+        pattern_view->select_pattern(model, *(*model.patterns.begin()));
     }
     
     void init_track_view() {
@@ -161,6 +127,7 @@ public:
         builder->get_widget("main", window);
         
         init_transport();
+        init_model();
         init_pattern_view();
         init_track_view();
         init_player();
@@ -179,6 +146,8 @@ public:
     
     bool mix(int i) {
         player.mix();
+        int frames = player.get_position();
+        seq_view->set_play_position(frames);
         return true;
     }
     

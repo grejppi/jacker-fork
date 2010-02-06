@@ -249,6 +249,9 @@ public:
     void set_font_size(int width, int height);
     void get_font_size(int &width, int &height) const;
 
+    void set_octave(int octave);
+    int get_octave() const;
+
 protected:
     void invalidate_cursor();
     void invalidate_selection();
@@ -279,6 +282,8 @@ protected:
     int font_width;
     // how high is a pattern character
     int font_height;
+    // current base octave
+    int octave;
 };
 
 //=============================================================================

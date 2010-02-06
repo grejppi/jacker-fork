@@ -207,7 +207,7 @@ bool CellRendererNote::on_key_press_event(GdkEventKey* event_key,
         size_t count = sizeof(piano_scancodes) / sizeof(guint16);
         for (size_t i = 0; i < count; ++i) {
             if (event_key->hardware_keycode == piano_scancodes[i]) {
-                event.value = i;
+                event.value = 12*view->get_octave() + i;
                 view->navigate(0,1);
                 return true;
             }
@@ -658,6 +658,7 @@ PatternView::PatternView(BaseObjectType* cobject,
     channel_margin = 0;
     font_width = 0;
     font_height = 0;
+    octave = 4;
     renderers.resize(ParamCount);
     for (size_t i = 0; i < renderers.size(); ++i) {
         renderers[i] = NULL;
@@ -1219,6 +1220,17 @@ void PatternView::get_font_size(int &width, int &height) const {
 int PatternView::get_frames_per_bar() const {
     return model->frames_per_beat * model->beats_per_bar;
 }
+
+int PatternView::get_octave() const {
+    return this->octave;
+}
+
+void PatternView::set_octave(int octave) {
+    if (octave == this->octave)
+        return;
+    this->octave = std::min(std::max(octave,0),9);
+}
+
 
 //=============================================================================
 

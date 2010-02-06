@@ -80,6 +80,7 @@ SeqView::SeqView(BaseObjectType* cobject,
     colors[ColorSelBackground].set("#00a0ff");
     colors[ColorSelRowBar].set("#20c0ff");
     colors[ColorSelRowBeat].set("#40e0ff");        
+    play_position = 0;
 }
 
 void SeqView::set_model(class Model &model) {
@@ -186,8 +187,23 @@ bool SeqView::on_expose_event(GdkEventExpose* event) {
             render_event(TrackEventRef(track,iter));
         }
     }
-    
+
+    // draw play cursor
+    int play_x, play_y;
+    get_event_pos(play_position, 0, play_x, play_y);
+    window->draw_rectangle(xor_gc, true, play_x, 0, 2, height);
+
     return true;
+}
+
+void SeqView::invalidate_play_position() {
+    int width = 0;
+    int height = 0;
+    window->get_size(width, height);
+    int play_x, play_y;
+    get_event_pos(play_position, 0, play_x, play_y);
+    Gdk::Rectangle rect(play_x,0,2,height);
+    window->invalidate_rect(rect, true);
 }
 
 bool SeqView::is_event_selected(const TrackEventRef &ref) {
@@ -257,6 +273,16 @@ void SeqView::invalidate_selection() {
         Gdk::Rectangle rect(x,y,w,h);
         window->invalidate_rect(rect, true);
     }
+}
+
+void SeqView::set_play_position(int pos) {
+    if (!window)
+        return;
+    if (pos == play_position)
+        return;
+    invalidate_play_position();
+    play_position = pos;
+    invalidate_play_position();
 }
 
 void SeqView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 

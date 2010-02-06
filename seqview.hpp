@@ -93,14 +93,18 @@ public:
     void clear_selection();
     void select_event(const TrackEventRef &ref);
     bool is_event_selected(const TrackEventRef &ref);
+    void set_play_position(int pos);
 protected:
     void invalidate_selection();
+    void invalidate_play_position();
     void render_event(const TrackEventRef &ref);
 
     // start x and y position
     int origin_x, origin_y;
     // zoomlevel (0=1:1, 1=1:2, 2=1:4, etc.)
     int zoomlevel;
+
+    int play_position;
 
     Model *model;
     EventSet selection;

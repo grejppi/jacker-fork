@@ -54,14 +54,12 @@ void Player::stop() {
     if (!playing)
         return;
     playing = false;
+    write_samples = 0;
 }
 
 void Player::play() {
     if (playing)
         return;
-    write_samples = 0;
-    read_samples = 0;
-    messages.clear();
     mix(); // fill buffer
     playing = true;
 }
@@ -177,6 +175,9 @@ void Player::mix_track(Track &track) {
 
 int Player::process(int size, Message &msg) {
     if (!playing) {
+        read_samples = 0;
+        read_position = position;
+        messages.clear();
         return size;
     }
     int delta = size;
