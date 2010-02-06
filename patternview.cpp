@@ -671,8 +671,8 @@ PatternView::PatternView(BaseObjectType* cobject,
     colors[ColorRowBar].set("#c0c0c0");
     colors[ColorRowBeat].set("#d0d0d0");
     colors[ColorSelBackground].set("#00a0ff");
-    colors[ColorSelRowBar].set("#20c0ff");
-    colors[ColorSelRowBeat].set("#40e0ff");
+    colors[ColorSelRowBar].set("#40e0ff");
+    colors[ColorSelRowBeat].set("#20c0ff");
 }
 
 void PatternView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
