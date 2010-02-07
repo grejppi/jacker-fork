@@ -48,10 +48,37 @@ protected:
     
 //=============================================================================
 
+class Drag {
+public:
+    int start_x, start_y;
+    int x, y;
+    int threshold;
+
+    Drag();
+    void start(int x, int y);
+    void update(int x, int y);
+    // returns true if the threshold has been reached
+    bool threshold_reached();
+    void get_delta(int &delta_x, int &delta_y);
+};
+
+//=============================================================================
+
 class TrackView : public Gtk::Widget {
 public:
     enum {
         TrackHeight = 22,
+    };
+    
+    enum InteractMode {
+        InteractNone = 0,
+        InteractDrag,
+        InteractMove,
+    };
+    
+    enum SnapMode {
+        SnapOff = 0,
+        SnapBar = 1,
     };
     
     // signals
@@ -113,12 +140,22 @@ protected:
     void render_event(const TrackEventRef &ref);
     void render_track(Track &track);
 
+    void get_drag_offset(int &frame, int &track);
+
+    bool dragging() const;
+    bool moving() const;
+
     // start x and y position
     int origin_x, origin_y;
     // zoomlevel (0=1:1, 1=1:2, 2=1:4, etc.)
     int zoomlevel;
+    int snap_frames;
+
+    InteractMode interact_mode;
+    SnapMode snap_mode;
 
     int play_position;
+    Drag drag;
 
     Model *model;
     EventSet selection;

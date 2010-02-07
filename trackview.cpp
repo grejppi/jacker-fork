@@ -60,11 +60,46 @@ void TrackCursor::set_pos(int x, int y) {
 
 //=============================================================================
 
+Drag::Drag() {
+    x = y = 0;
+    start_x = start_y = 0;
+    threshold = 8;
+}
+
+void Drag::start(int x, int y) {
+    this->x = this->start_x = x;
+    this->y = this->start_y = y;
+}
+
+void Drag::update(int x, int y) {
+    this->x = x;
+    this->y = y;
+}
+
+bool Drag::threshold_reached() {
+    int delta_x;
+    int delta_y;
+    get_delta(delta_x, delta_y);
+    float length = std::sqrt((float)(delta_x*delta_x + delta_y*delta_y));
+    if ((int)(length+0.5) >= threshold)
+        return true;
+    return false;
+}
+
+void Drag::get_delta(int &delta_x, int &delta_y) {
+    delta_x = (x - start_x);
+    delta_y = (y - start_y);
+}
+
+//=============================================================================
+
 TrackView::TrackView(BaseObjectType* cobject, 
                  const Glib::RefPtr<Gtk::Builder>& builder)
     : Gtk::Widget(cobject) {
     model = NULL;
     zoomlevel = 1;
+    snap_mode = SnapBar;
+    interact_mode = InteractNone;
     cursor.set_view(*this);
     origin_x = origin_y = 0;
     colors.resize(ColorCount);
@@ -180,11 +215,18 @@ bool TrackView::on_expose_event(GdkEventExpose* event) {
     gc->set_foreground(colors[ColorBackground]);
     window->draw_rectangle(gc, true, 0, 0, width, height);
     
+    // first pass: render tracks
     TrackArray::iterator track_iter;
     for (track_iter = model->tracks.begin(); 
          track_iter != model->tracks.end(); ++track_iter) {
         Track &track = *(*track_iter);
         render_track(track);
+    }
+    
+    // second pass: render events
+    for (track_iter = model->tracks.begin(); 
+         track_iter != model->tracks.end(); ++track_iter) {
+        Track &track = *(*track_iter);
         for (Track::iterator iter = track.begin(); iter != track.end(); ++iter) {
             render_event(TrackEventRef(track,iter));
         }
@@ -212,10 +254,6 @@ bool TrackView::is_event_selected(const TrackEventRef &ref) {
     return (selection.find(ref) != selection.end());
 }
 
-bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
-    return false;
-}
-
 void TrackView::clear_selection() {
     invalidate_selection();
     selection.clear();
@@ -240,10 +278,8 @@ void TrackView::new_pattern(const TrackCursor &cur) {
     if (cur.get_track() < model->get_track_count()) {
         Track &track = model->get_track(cur.get_track());
         Pattern &pattern = model->new_pattern();
-        Track::iterator iter = track.add_event(cur.get_frame(), pattern);
-        TrackEventRef ref;
-        ref.track = &track;
-        ref.iter = iter;
+        TrackEventRef ref(track, 
+            track.add_event(cur.get_frame(), pattern));
         clear_selection();
         select_event(ref);
     }
@@ -253,6 +289,15 @@ void TrackView::new_pattern(const TrackCursor &cur) {
 void TrackView::edit_pattern(const TrackEventRef &ref) {
     Pattern *pattern = ref.iter->second.pattern;
     _pattern_edit_request(pattern);
+}
+
+
+bool TrackView::dragging() const {
+    return (interact_mode == InteractDrag);
+}
+
+bool TrackView::moving() const {
+    return (interact_mode == InteractMove);
 }
 
 bool TrackView::on_button_press_event(GdkEventButton* event) {
@@ -271,7 +316,7 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
         cur.set_pos(event->x, event->y);
         TrackEventRef ref;
 
-        if (!ctrl_down)
+        if (!ctrl_down && (selection.size() == 1))
             clear_selection();
         
         if (find_event(cur, ref)) {
@@ -281,17 +326,87 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
                 select_event(ref);
                 if (double_click)
                     edit_pattern(ref);
+                else {
+                    interact_mode = InteractDrag;
+                    drag.start(event->x, event->y);
+                }
             }
         } else if (double_click) {
             new_pattern(cur);
+        } else {
+            clear_selection();
         }
     } else if (event->button == 3) {
         _signal_context_menu(this, event);
     }
-    return false;
+    return true;
+}
+
+bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
+    if (interact_mode == InteractNone)
+        return false;
+    if (dragging()) {
+        drag.update(event->x, event->y);
+        if (drag.threshold_reached()) {
+            invalidate_selection();
+            interact_mode = InteractMove;
+        }
+    }
+    if (moving()) {
+        invalidate_selection();
+        drag.update(event->x, event->y);
+        invalidate_selection();
+    }
+    return true;
 }
 
 bool TrackView::on_button_release_event(GdkEventButton* event) {
+    if (moving()) {
+        invalidate_selection();
+        
+        int ofs_frame,ofs_track;
+        get_drag_offset(ofs_frame, ofs_track);
+        
+        bool can_move = true;        
+        // verify that we can move
+        for (EventSet::iterator iter = selection.begin();
+            iter != selection.end(); ++iter) {
+            const TrackEventRef &ref = *iter;
+            Track::Event &event = ref.iter->second;
+            int frame = event.frame + ofs_frame;
+            int track = ref.track->order + ofs_track;
+            if ((frame < 0)||(track < 0)||(track >= model->get_track_count())) {
+                can_move = false;
+                break;
+            }
+        }
+        
+        if (can_move) {
+            EventSet new_selection;
+            
+            // verify that we can move
+            for (EventSet::iterator iter = selection.begin();
+                iter != selection.end(); ++iter) {
+                const TrackEventRef &ref = *iter;
+                Track::Event event = ref.iter->second;
+                
+                event.frame += ofs_frame;
+                int track_index = ref.track->order + ofs_track;
+                
+                model->delete_event(ref);
+                
+                Track &track = model->get_track(track_index);
+                TrackEventRef new_ref(track, 
+                    track.add_event(event));
+                new_selection.insert(new_ref);
+            }
+            
+            selection.clear();
+            //selection = new_selection;
+        }
+    }
+    interact_mode = InteractNone;
+    invalidate_selection();
     return false;
 }
 
@@ -312,9 +427,32 @@ void TrackView::on_size_allocate(Gtk::Allocation& allocation) {
     }    
 }
 
+int absmod(int x, int m) {
+    return (x >= 0)?(x%m):((m-x)%m);
+}
+
+void TrackView::get_drag_offset(int &frame, int &track) {
+    int dx,dy;
+    drag.get_delta(dx,dy);
+    get_event_location(dx, dy, frame, track);
+    switch(snap_mode) {
+        case SnapBar: {
+            frame -= (frame%model->get_frames_per_bar());
+        } break;
+    }
+}
+
 void TrackView::get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h) {
     Track::Event &event = ref.iter->second;
-    get_event_pos(event.frame, ref.track->order, x, y);
+    int frame = event.frame;
+    int track = ref.track->order;
+    if (moving() && is_event_selected(ref)) {
+        int ofs_frame,ofs_track;
+        get_drag_offset(ofs_frame, ofs_track);
+        frame += ofs_frame;
+        track += ofs_track;
+    }
+    get_event_pos(frame, track, x, y);
     get_event_size(event.pattern->get_length(), w, h);
 }
 

@@ -243,6 +243,9 @@ public:
     Track &get_track(int track);
     
     void find_events(int frame, TrackEventRefList &refs);
+    void delete_event(const TrackEventRef &ref);
+    
+    int get_frames_per_bar() const;
 };
 
 //=============================================================================

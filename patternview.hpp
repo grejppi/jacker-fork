@@ -194,7 +194,7 @@ public:
     
     enum InteractMode {
         InteractNone = 0,
-        InteractSelect = 1,
+        InteractSelect,
     };
     
     PatternView(BaseObjectType* cobject, 

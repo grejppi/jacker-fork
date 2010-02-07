@@ -336,6 +336,14 @@ void Model::find_events(int frame, TrackEventRefList &refs) {
     }
 }
 
+void Model::delete_event(const TrackEventRef &ref) {
+    ref.track->erase(ref.iter);
+}
+
+int Model::get_frames_per_bar() const {
+    return frames_per_beat * beats_per_bar;
+}
+
 //=============================================================================
 
 } // namespace Jacker
