@@ -11,6 +11,18 @@ class Model;
     
 //=============================================================================
 
+template<typename Key_T, typename T>
+inline typename std::map<Key_T,T>::iterator extract_iterator(
+    std::pair< typename std::map<const Key_T,T>::iterator, bool> result) {
+    return result.first;
+}
+
+template<typename Key_T, typename T>
+inline typename std::multimap<Key_T,T>::iterator extract_iterator(
+    typename std::multimap<Key_T,T>::iterator result) {
+    return result;
+}
+
 template<typename Map_T>
 class EventCollection
     : public Map_T {
@@ -19,8 +31,9 @@ public:
     typedef typename map::mapped_type Event;
     typedef EventCollection<Map_T> BaseClass;
     
-    void add_event(const Event &event) {
-        insert(typename map::value_type(event.key(),event));
+    typename map::iterator add_event(const Event &event) {
+        return extract_iterator<typename map::key_type, Event>(
+            insert(typename map::value_type(event.key(),event)));
     }
 };
 
@@ -156,8 +169,8 @@ public:
     // order of track
     int order;
     
-    void add_event(const Event &event);
-    void add_event(int frame, Pattern &pattern);
+    iterator add_event(const Event &event);
+    iterator add_event(int frame, Pattern &pattern);
 
     iterator get_event(int frame);
     iterator find_event(int frame);

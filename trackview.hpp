@@ -56,6 +56,7 @@ public:
     
     // signals
     typedef sigc::signal<void, Pattern *> type_pattern_edit_request;
+    typedef sigc::signal<void, TrackView *, GdkEventButton*> type_context_menu;
     
     typedef std::set<TrackEventRef> EventSet;
     
@@ -95,15 +96,22 @@ public:
     
     void clear_selection();
     void select_event(const TrackEventRef &ref);
+    void deselect_event(const TrackEventRef &ref);
     bool is_event_selected(const TrackEventRef &ref);
     void set_play_position(int pos);
     void invalidate();
     
+    void add_track();
+    void new_pattern(const TrackCursor &cursor);
+    void edit_pattern(const TrackEventRef &ref);
+    
     type_pattern_edit_request signal_pattern_edit_request();
+    type_context_menu signal_context_menu();
 protected:
     void invalidate_selection();
     void invalidate_play_position();
     void render_event(const TrackEventRef &ref);
+    void render_track(Track &track);
 
     // start x and y position
     int origin_x, origin_y;
@@ -117,6 +125,7 @@ protected:
     TrackCursor cursor;
 
     type_pattern_edit_request _pattern_edit_request;
+    type_context_menu _signal_context_menu;
 };
     
 //=============================================================================

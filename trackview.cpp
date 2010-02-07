@@ -11,11 +11,7 @@ enum {
     ColorBlack = 0,
     ColorWhite,
     ColorBackground,
-    ColorRowBar,
-    ColorRowBeat,
-    ColorSelBackground,
-    ColorSelRowBar,
-    ColorSelRowBeat,
+    ColorTrack,
 
     ColorCount,
 };
@@ -75,11 +71,7 @@ TrackView::TrackView(BaseObjectType* cobject,
     colors[ColorBlack].set("#000000");
     colors[ColorWhite].set("#FFFFFF");
     colors[ColorBackground].set("#e0e0e0");
-    colors[ColorRowBar].set("#c0c0c0");
-    colors[ColorRowBeat].set("#d0d0d0");
-    colors[ColorSelBackground].set("#00a0ff");
-    colors[ColorSelRowBar].set("#20c0ff");
-    colors[ColorSelRowBeat].set("#40e0ff");        
+    colors[ColorTrack].set("#ffffff");
     play_position = 0;
 }
 
@@ -167,6 +159,18 @@ void TrackView::render_event(const TrackEventRef &ref) {
         window->draw_rectangle(gc, false, x, y, w-1, h-1);
 }
 
+void TrackView::render_track(Track &track) {
+    int width = 0;
+    int height = 0;
+    window->get_size(width, height);
+    
+    int x,y;
+    get_event_pos(0, track.order, x, y);
+    
+    gc->set_foreground(colors[ColorTrack]);
+    window->draw_rectangle(gc, true, x, y, width, TrackHeight);
+}
+
 bool TrackView::on_expose_event(GdkEventExpose* event) {
     int width = 0;
     int height = 0;
@@ -180,6 +184,7 @@ bool TrackView::on_expose_event(GdkEventExpose* event) {
     for (track_iter = model->tracks.begin(); 
          track_iter != model->tracks.end(); ++track_iter) {
         Track &track = *(*track_iter);
+        render_track(track);
         for (Track::iterator iter = track.begin(); iter != track.end(); ++iter) {
             render_event(TrackEventRef(track,iter));
         }
@@ -221,19 +226,67 @@ void TrackView::select_event(const TrackEventRef &ref) {
     invalidate_selection();
 }
 
-bool TrackView::on_button_press_event(GdkEventButton* event) {
-    grab_focus();
-    TrackCursor cur(cursor);
-    cur.set_pos(event->x, event->y);
-    TrackEventRef ref;
-    clear_selection();
-    if (find_event(cur, ref)) {
+void TrackView::deselect_event(const TrackEventRef &ref) {
+    invalidate_selection();
+    selection.erase(ref);
+}
+
+void TrackView::add_track() {
+    model->new_track();
+    invalidate();
+}
+
+void TrackView::new_pattern(const TrackCursor &cur) {
+    if (cur.get_track() < model->get_track_count()) {
+        Track &track = model->get_track(cur.get_track());
+        Pattern &pattern = model->new_pattern();
+        Track::iterator iter = track.add_event(cur.get_frame(), pattern);
+        TrackEventRef ref;
+        ref.track = &track;
+        ref.iter = iter;
+        clear_selection();
         select_event(ref);
-        if (event->type == GDK_2BUTTON_PRESS)
-        {
-            Pattern *pattern = ref.iter->second.pattern;
-            _pattern_edit_request(pattern);
+    }
+    
+}
+
+void TrackView::edit_pattern(const TrackEventRef &ref) {
+    Pattern *pattern = ref.iter->second.pattern;
+    _pattern_edit_request(pattern);
+}
+
+bool TrackView::on_button_press_event(GdkEventButton* event) {
+    bool ctrl_down = event->state & Gdk::CONTROL_MASK;
+    /*
+    bool shift_down = event->state & Gdk::SHIFT_MASK;
+    bool alt_down = event->state & Gdk::MOD1_MASK;
+    bool super_down = event->state & (Gdk::SUPER_MASK|Gdk::MOD4_MASK);
+    */
+    bool double_click = (event->type == GDK_2BUTTON_PRESS);
+    
+    grab_focus();
+    
+    if (event->button == 1) {
+        TrackCursor cur(cursor);
+        cur.set_pos(event->x, event->y);
+        TrackEventRef ref;
+
+        if (!ctrl_down)
+            clear_selection();
+        
+        if (find_event(cur, ref)) {
+            if (ctrl_down && is_event_selected(ref)) {
+                deselect_event(ref);
+            } else {
+                select_event(ref);
+                if (double_click)
+                    edit_pattern(ref);
+            }
+        } else if (double_click) {
+            new_pattern(cur);
         }
+    } else if (event->button == 3) {
+        _signal_context_menu(this, event);
     }
     return false;
 }
@@ -297,6 +350,10 @@ void TrackView::set_scroll_adjustments(Gtk::Adjustment *hadjustment,
 
 TrackView::type_pattern_edit_request TrackView::signal_pattern_edit_request() {
     return _pattern_edit_request;
+}
+
+TrackView::type_context_menu TrackView::signal_context_menu() {
+    return _signal_context_menu;
 }
 
 //=============================================================================

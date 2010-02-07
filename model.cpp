@@ -107,8 +107,8 @@ int Pattern::Row::get_value(int channel, int param) const {
 //=============================================================================
 
 Pattern::Pattern() {
-    length = 0;
-    channel_count = 0;
+    length = 1;
+    channel_count = 1;
 }
 
 void Pattern::add_event(const Event &event) {
@@ -198,12 +198,12 @@ Track::Track() {
     order = -1;
 }
 
-void Track::add_event(const Event &event) {
-    BaseClass::add_event(event);
+Track::iterator Track::add_event(const Event &event) {
+    return BaseClass::add_event(event);
 }
 
-void Track::add_event(int frame, Pattern &pattern) {
-    add_event(Event(frame, pattern));
+Track::iterator Track::add_event(int frame, Pattern &pattern) {
+    return add_event(Event(frame, pattern));
 }
 
 Track::iterator Track::get_event(int frame) {
@@ -292,6 +292,7 @@ void Model::reset() {
 
 Pattern &Model::new_pattern() {
     Pattern *pattern = new Pattern();
+    pattern->set_length(frames_per_beat * beats_per_bar);
     patterns.push_back(pattern);
     return *pattern;
 }

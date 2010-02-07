@@ -25,8 +25,10 @@ public:
 
     Gtk::Window* window;
     PatternView *pattern_view;
-    TrackView *track_view;
     Gtk::Entry *play_frames;
+
+    TrackView *track_view;
+    Gtk::Menu *trackview_menu;
 
     sigc::connection mix_timer;
 
@@ -152,6 +154,10 @@ public:
         pattern_view->set_model(model);
     }
     
+    void on_track_view_context_menu(TrackView *view, GdkEventButton* event) {
+        trackview_menu->popup(event->button, event->time);
+    }
+    
     void init_track_view() {
         builder->get_widget_derived("track_view", track_view);
         assert(track_view);
@@ -167,6 +173,14 @@ public:
         track_view->set_model(model);
         track_view->signal_pattern_edit_request().connect(
             sigc::mem_fun(*pattern_view, &PatternView::set_pattern));
+        track_view->signal_context_menu().connect(
+            sigc::mem_fun(*this, &App::on_track_view_context_menu));
+        
+        builder->get_widget("trackview_menu", trackview_menu);
+        assert(trackview_menu);
+        
+        connect_action("add_track_action", 
+            sigc::mem_fun(*track_view, &TrackView::add_track));
     }
     
     void init_player() {
