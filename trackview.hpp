@@ -74,6 +74,7 @@ public:
         InteractNone = 0,
         InteractDrag,
         InteractMove,
+        InteractResize,
     };
     
     enum SnapMode {
@@ -140,12 +141,17 @@ protected:
     void render_event(const TrackEventRef &ref);
     void render_track(Track &track);
 
+    bool can_resize_event(const TrackEventRef &ref, int x);
     void get_drag_offset(int &frame, int &track);
     int get_step_size();
     int quantize_frame(int frame); 
 
+    bool resizing() const;
     bool dragging() const;
     bool moving() const;
+
+    void apply_move();
+    void apply_resize();
 
     // start x and y position
     int origin_x, origin_y;

@@ -132,6 +132,15 @@ Pattern::iterator Pattern::add_event(int frame, int channel, int param, int valu
 
 void Pattern::set_length(int length) {
     this->length = length;
+    bool clipped = false;
+    for (iterator iter = begin(); iter != end(); ++iter) {
+        if (iter->second.frame >= length) {
+            iter->second.frame = -1; // mark for delete
+            clipped = true;
+        }
+    }
+    if (clipped)
+        update_keys();
 }
 
 int Pattern::get_length() const {

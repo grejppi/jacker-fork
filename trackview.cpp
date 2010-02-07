@@ -16,6 +16,11 @@ enum {
     ColorCount,
 };
 
+enum {
+    // how far away from the border can a resize be done
+    ResizeThreshold = 8,
+};
+
 //=============================================================================
 
 TrackCursor::TrackCursor() {
@@ -97,7 +102,7 @@ TrackView::TrackView(BaseObjectType* cobject,
                  const Glib::RefPtr<Gtk::Builder>& builder)
     : Gtk::Widget(cobject) {
     model = NULL;
-    zoomlevel = 1;
+    zoomlevel = 0;
     snap_mode = SnapBar;
     interact_mode = InteractNone;
     cursor.set_view(*this);
@@ -141,7 +146,6 @@ void TrackView::on_realize() {
     xor_gc->set_function(Gdk::XOR);
     xor_gc->set_foreground(xor_color);
     xor_gc->set_background(xor_color);
-    
 }
 
 void TrackView::set_origin(int x, int y) {
@@ -300,6 +304,10 @@ bool TrackView::moving() const {
     return (interact_mode == InteractMove);
 }
 
+bool TrackView::resizing() const {
+    return (interact_mode == InteractResize);
+}
+
 bool TrackView::on_button_press_event(GdkEventButton* event) {
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     /*
@@ -344,17 +352,41 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
     return true;
 }
 
-bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
-    if (interact_mode == InteractNone)
+bool TrackView::can_resize_event(const TrackEventRef &ref, int x) {
+    int ex, ey, ew, eh;
+    get_event_rect(ref,ex,ey,ew,eh);
+    return std::abs(x - (ex+ew)) < ResizeThreshold;
+}
+
+bool TrackView::on_motion_notify_event(GdkEventMotion *event) {    
+    if (interact_mode == InteractNone) {
+        TrackCursor cur(cursor);
+        cur.set_pos(event->x, event->y);
+        TrackEventRef ref;
+        if (find_event(cur, ref)) {
+            if (can_resize_event(ref, event->x))
+                window->set_cursor(Gdk::Cursor(Gdk::SB_H_DOUBLE_ARROW));
+            else
+                window->set_cursor(Gdk::Cursor(Gdk::HAND1));
+        } else
+            window->set_cursor(Gdk::Cursor(Gdk::ARROW));
         return false;
+    }
     if (dragging()) {
         drag.update(event->x, event->y);
         if (drag.threshold_reached()) {
             invalidate_selection();
-            interact_mode = InteractMove;
+            TrackCursor cur(cursor);
+            cur.set_pos(drag.start_x, drag.start_y);
+            TrackEventRef ref;
+            if (find_event(cur, ref) && can_resize_event(ref,drag.start_x)) {
+                interact_mode = InteractResize;
+            } else {
+                interact_mode = InteractMove;
+            }
         }
     }
-    if (moving()) {
+    if (resizing()||moving()) {
         invalidate_selection();
         drag.update(event->x, event->y);
         invalidate_selection();
@@ -362,50 +394,76 @@ bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
     return true;
 }
 
-bool TrackView::on_button_release_event(GdkEventButton* event) {
-    if (moving()) {
-        invalidate_selection();
+void TrackView::apply_move() {
+    invalidate_selection();
+    
+    int ofs_frame,ofs_track;
+    get_drag_offset(ofs_frame, ofs_track);
+    
+    bool can_move = true;        
+    // verify that we can move
+    for (EventSet::iterator iter = selection.begin();
+        iter != selection.end(); ++iter) {
+        const TrackEventRef &ref = *iter;
+        Track::Event &event = ref.iter->second;
+        int frame = event.frame + ofs_frame;
+        int track = ref.track->order + ofs_track;
+        if ((frame < 0)||(track < 0)||(track >= model->get_track_count())) {
+            can_move = false;
+            break;
+        }
+    }
+    
+    if (can_move) {
+        EventSet new_selection;
         
-        int ofs_frame,ofs_track;
-        get_drag_offset(ofs_frame, ofs_track);
-        
-        bool can_move = true;        
         // verify that we can move
         for (EventSet::iterator iter = selection.begin();
             iter != selection.end(); ++iter) {
             const TrackEventRef &ref = *iter;
-            Track::Event &event = ref.iter->second;
-            int frame = event.frame + ofs_frame;
-            int track = ref.track->order + ofs_track;
-            if ((frame < 0)||(track < 0)||(track >= model->get_track_count())) {
-                can_move = false;
-                break;
-            }
+            Track::Event event = ref.iter->second;
+            
+            event.frame += ofs_frame;
+            int track_index = ref.track->order + ofs_track;
+            
+            model->delete_event(ref);
+            
+            Track &track = model->get_track(track_index);
+            TrackEventRef new_ref(track, 
+                track.add_event(event));
+            new_selection.insert(new_ref);
         }
         
-        if (can_move) {
-            EventSet new_selection;
+        selection.clear();
+        //selection = new_selection;
+    }
+}
+
+void TrackView::apply_resize() {
+    
+    int ofs_frame,ofs_track;
+    get_drag_offset(ofs_frame, ofs_track);
+    
+    // verify that we can move
+    for (EventSet::iterator iter = selection.begin();
+        iter != selection.end(); ++iter) {
+        const TrackEventRef &ref = *iter;
+        Track::Event &event = ref.iter->second;
+        
+        int length = std::max(event.pattern->get_length() + ofs_frame, 
+            get_step_size());
             
-            // verify that we can move
-            for (EventSet::iterator iter = selection.begin();
-                iter != selection.end(); ++iter) {
-                const TrackEventRef &ref = *iter;
-                Track::Event event = ref.iter->second;
-                
-                event.frame += ofs_frame;
-                int track_index = ref.track->order + ofs_track;
-                
-                model->delete_event(ref);
-                
-                Track &track = model->get_track(track_index);
-                TrackEventRef new_ref(track, 
-                    track.add_event(event));
-                new_selection.insert(new_ref);
-            }
-            
-            selection.clear();
-            //selection = new_selection;
-        }
+        event.pattern->set_length(length);
+    }
+    
+    invalidate();
+}
+
+bool TrackView::on_button_release_event(GdkEventButton* event) {
+    if (moving()) {
+        apply_move();
+    } else if (resizing()) {
+        apply_resize();
     }
     interact_mode = InteractNone;
     invalidate_selection();
@@ -456,14 +514,19 @@ void TrackView::get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w,
     Track::Event &event = ref.iter->second;
     int frame = event.frame;
     int track = ref.track->order;
+    int length = event.pattern->get_length();
     if (moving() && is_event_selected(ref)) {
         int ofs_frame,ofs_track;
         get_drag_offset(ofs_frame, ofs_track);
         frame += ofs_frame;
         track += ofs_track;
+    } else if (resizing() && is_event_selected(ref)) {
+        int ofs_frame,ofs_track;
+        get_drag_offset(ofs_frame, ofs_track);
+        length = std::max(length + ofs_frame, get_step_size());
     }
     get_event_pos(frame, track, x, y);
-    get_event_size(event.pattern->get_length(), w, h);
+    get_event_size(length, w, h);
 }
 
 void TrackView::invalidate() {
