@@ -213,7 +213,7 @@ public:
     virtual bool on_key_release_event(GdkEventKey* event);
     virtual void on_size_allocate(Gtk::Allocation& allocation);
 
-    void set_cursor(const PatternCursor &cursor);
+    void set_cursor(const PatternCursor &cursor, bool select=false);
     void set_cursor(int x, int y);
 
     Glib::RefPtr<Gdk::GC> gc;
@@ -236,7 +236,7 @@ public:
                                 
     void on_adjustment_value_changed();
     void draw_text(int x, int y, const char *text);
-    void navigate(int delta_x, int delta_y);
+    void navigate(int delta_x, int delta_y, bool select=false);
     
     
     void show_cursor();
@@ -304,7 +304,7 @@ protected:
     int octave;
     
     int play_position;
-    
+    bool select_at_cursor;
 };
 
 //=============================================================================

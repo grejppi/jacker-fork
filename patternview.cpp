@@ -703,6 +703,7 @@ PatternView::PatternView(BaseObjectType* cobject,
     byte_renderer(2) {
     model = NULL;
     pattern = NULL;
+    select_at_cursor = false;
     hadjustment = 0;
     vadjustment = 0;
     interact_mode = InteractNone;
@@ -776,6 +777,7 @@ void PatternView::set_model(class Model &model) {
 
 void PatternView::set_pattern(class Pattern *pattern) {
     this->pattern = pattern;
+    selection.set_active(false);
     invalidate();
     update_adjustments();
 }
@@ -1069,10 +1071,27 @@ void PatternView::set_cursor(int x, int y) {
     set_cursor(new_cursor);
 }
 
-void PatternView::set_cursor(const PatternCursor &new_cursor) {
+void PatternView::set_cursor(const PatternCursor &new_cursor, bool select/*=false*/) {
     invalidate_cursor();
+    if (select) {
+        if (!selection.get_active() || !select_at_cursor) {
+            invalidate_selection();
+            selection.p0 = cursor;
+            selection.p1 = selection.p0;
+            selection.set_active(true);
+            invalidate_selection();
+        }
+        select_at_cursor = true;
+    } else {
+        select_at_cursor = false;
+    }
     cursor = new_cursor;
     clip_cursor(cursor);
+    if (select) {
+        invalidate_selection();
+        selection.p1 = cursor;
+        invalidate_selection();
+    }
     invalidate_cursor();
     show_cursor();
 }
@@ -1116,7 +1135,7 @@ bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
     return true;
 }
 
-void PatternView::navigate(int delta_x, int delta_y) {
+void PatternView::navigate(int delta_x, int delta_y, bool select/*=false*/) {
     PatternCursor new_cursor(cursor);
     if (delta_x) {
         new_cursor.navigate_column(delta_x);
@@ -1124,7 +1143,7 @@ void PatternView::navigate(int delta_x, int delta_y) {
     if (delta_y) {
         new_cursor.navigate_row(delta_y);
     }
-    set_cursor(new_cursor);
+    set_cursor(new_cursor, select);
 }
 
 bool PatternView::on_button_press_event(GdkEventButton* event) {
@@ -1162,21 +1181,21 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
     
     PatternCursor new_cursor(cursor);
     switch (event->keyval) {
-        case GDK_Left: navigate(-1,0); return true;
-        case GDK_Right: navigate(1,0); return true;
-        case GDK_Up: navigate(0,-1); return true;
-        case GDK_Down: navigate(0,1); return true;
-        case GDK_Page_Up: navigate(0,-get_frames_per_bar()); return true;
-        case GDK_Page_Down: navigate(0,get_frames_per_bar()); return true;
-        case GDK_Home: new_cursor.home(); set_cursor(new_cursor); return true;
-        case GDK_End: new_cursor.end(); set_cursor(new_cursor); return true;
+        case GDK_Left: navigate(-1,0,shift_down); return true;
+        case GDK_Right: navigate(1,0,shift_down); return true;
+        case GDK_Up: navigate(0,-1,shift_down); return true;
+        case GDK_Down: navigate(0,1,shift_down); return true;
+        case GDK_Page_Up: navigate(0,-get_frames_per_bar(),shift_down); return true;
+        case GDK_Page_Down: navigate(0,get_frames_per_bar(),shift_down); return true;
+        case GDK_Home: new_cursor.home(); set_cursor(new_cursor,shift_down); return true;
+        case GDK_End: new_cursor.end(); set_cursor(new_cursor,shift_down); return true;
         case GDK_ISO_Left_Tab:
         case GDK_Tab: {
             if (shift_down)
                 new_cursor.prev_channel();
             else
                 new_cursor.next_channel();
-            set_cursor(new_cursor);
+            set_cursor(new_cursor,shift_down);
             return true;
         } break;
         default: {

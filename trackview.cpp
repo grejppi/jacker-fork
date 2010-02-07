@@ -324,9 +324,10 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
                 deselect_event(ref);
             } else {
                 select_event(ref);
-                if (double_click)
+                if (double_click) {
+                    interact_mode = InteractNone;
                     edit_pattern(ref);
-                else {
+                } else {
                     interact_mode = InteractDrag;
                     drag.start(event->x, event->y);
                 }
