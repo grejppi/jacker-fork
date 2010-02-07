@@ -177,9 +177,13 @@ public:
 
     PatternCursor p0;
     PatternCursor p1;
+
+    void first(PatternCursor &cursor);
+    bool next(PatternCursor &cursor);
 protected:
     
     bool active;
+    PatternView *view;
     
 };
 
@@ -272,8 +276,12 @@ public:
     void set_play_position(int pos);
     void invalidate();
     
+    Pattern::iterator get_event(PatternCursor &cur);
+    
     type_play_event_request signal_play_event_request();
     void play_event(const Pattern::Event &event);
+    
+    void clear_block();
 protected:
     void invalidate_play_position();
     void invalidate_cursor();

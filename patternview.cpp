@@ -625,6 +625,7 @@ void PatternCursor::navigate_column(int delta) {
 
 PatternSelection::PatternSelection() {
     active = false;
+    view = NULL;
 }
 
 void PatternSelection::set_active(bool active) {
@@ -653,6 +654,7 @@ bool PatternSelection::in_range(const PatternCursor &cursor) const {
 }
 
 void PatternSelection::set_view(PatternView &view) {
+    this->view = &view;
     p0.set_view(view);
     p1.set_view(view);
 }
@@ -694,6 +696,28 @@ bool PatternSelection::get_rect(int &x, int &y, int &width, int &height) const {
     y = y0;
     width = x1 - x0;
     height = y1 - y0;
+    return true;
+}
+
+void PatternSelection::first(PatternCursor &cursor) {
+    // must be sorted for iteration
+    sort();
+    cursor = p0;
+}
+
+bool PatternSelection::next(PatternCursor &cursor) {
+    if (cursor.is_at(p1))
+        return false;
+    cursor.set_param(cursor.get_param()+1);
+    if (cursor.get_param() == view->get_cell_count()) {
+        cursor.set_channel(cursor.get_channel()+1);
+        cursor.set_param(0);
+    }
+    if (cursor.get_column() == (p1.get_column()+1)) {
+        cursor.set_channel(p0.get_channel());
+        cursor.set_param(p0.get_param());
+        cursor.set_row(cursor.get_row()+1);
+    }
     return true;
 }
 
@@ -1171,72 +1195,88 @@ bool PatternView::on_button_release_event(GdkEventButton* event) {
     return false;
 }
 
+void PatternView::clear_block() {
+    PatternCursor cur;
+    selection.first(cur);
+    do {
+        //printf("%i %i %i\n", cur.get_row(), cur.get_channel(), cur.get_param());
+        Pattern::iterator iter = get_event(cur);
+        if (iter != pattern->end())
+            pattern->erase(iter);
+    } while (selection.next(cur));
+    invalidate_selection();
+}
+
 bool PatternView::on_key_press_event(GdkEventKey* event) {
     bool shift_down = event->state & Gdk::SHIFT_MASK;
     bool alt_down = event->state & Gdk::MOD1_MASK;
-    /*
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
+    /*
     bool super_down = event->state & (Gdk::SUPER_MASK|Gdk::MOD4_MASK);
     */
     if (!pattern)
         return true;
     
     PatternCursor new_cursor(cursor);
-    switch (event->keyval) {
-        case GDK_Left: navigate(-1,0,shift_down); return true;
-        case GDK_Right: navigate(1,0,shift_down); return true;
-        case GDK_Up: navigate(0,-1,shift_down); return true;
-        case GDK_Down: navigate(0,1,shift_down); return true;
-        case GDK_Page_Up: navigate(0,-get_frames_per_bar(),shift_down); return true;
-        case GDK_Page_Down: navigate(0,get_frames_per_bar(),shift_down); return true;
-        case GDK_KP_Divide: set_octave(get_octave()-1); return true;
-        case GDK_KP_Multiply: set_octave(get_octave()+1); return true;
-        case GDK_Home: {
-            if (alt_down)
-                set_octave(get_octave()-1);
-            else
-                new_cursor.home(); set_cursor(new_cursor,shift_down); 
-            return true;
-        } break;
-        case GDK_End: {
-            if (alt_down)
-                set_octave(get_octave()+1);
-            else
-                new_cursor.end(); set_cursor(new_cursor,shift_down); 
-            return true;
-        } break;
-        case GDK_ISO_Left_Tab:
-        case GDK_Tab: {
-            if (shift_down)
-                new_cursor.prev_channel();
-            else
-                new_cursor.next_channel();
-            set_cursor(new_cursor,shift_down);
-            return true;
-        } break;
-        default: {
-            CellRenderer *renderer = get_cell_renderer(cursor.get_param());
-            if (renderer) {
-                Pattern::Event evt;
-                evt.frame = cursor.get_row();
-                evt.channel = cursor.get_channel();
-                evt.param = cursor.get_param();
-                Pattern::iterator i = pattern->get_event(cursor.get_row(),
-                    cursor.get_channel(), cursor.get_param());
-                if (i != pattern->end())
-                    evt = i->second;
-                if (renderer->on_key_press_event(event, evt, 
-                                                 cursor.get_item())) {
-                    evt.sanitize_value();
-                    if (evt.is_valid())
-                        pattern->add_event(evt);
-                    else if (i != pattern->end())
-                        pattern->erase(i);
-                    invalidate_cursor();
-                    return true;
-                }
-            }            
-        } break;
+    
+    if (ctrl_down) {
+        switch (event->keyval) {
+            case GDK_x: clear_block(); return true;
+            default: break;
+        }
+        
+    }
+    else if (alt_down) {
+        switch (event->keyval) {
+            case GDK_Home: set_octave(get_octave()-1); return true;
+            case GDK_End: set_octave(get_octave()+1); return true;
+            default: break;
+        }
+    }
+    else {
+        switch (event->keyval) {
+            case GDK_Left: navigate(-1,0,shift_down); return true;
+            case GDK_Right: navigate(1,0,shift_down); return true;
+            case GDK_Up: navigate(0,-1,shift_down); return true;
+            case GDK_Down: navigate(0,1,shift_down); return true;
+            case GDK_Page_Up: navigate(0,-get_frames_per_bar(),shift_down); return true;
+            case GDK_Page_Down: navigate(0,get_frames_per_bar(),shift_down); return true;
+            case GDK_KP_Divide: set_octave(get_octave()-1); return true;
+            case GDK_KP_Multiply: set_octave(get_octave()+1); return true;
+            case GDK_Home: new_cursor.home(); set_cursor(new_cursor,shift_down); return true;
+            case GDK_End: new_cursor.end(); set_cursor(new_cursor,shift_down); return true;
+            case GDK_ISO_Left_Tab:
+            case GDK_Tab: {
+                if (shift_down)
+                    new_cursor.prev_channel();
+                else
+                    new_cursor.next_channel();
+                set_cursor(new_cursor,shift_down);
+                return true;
+            } break;
+            default: {
+                CellRenderer *renderer = get_cell_renderer(cursor.get_param());
+                if (renderer) {
+                    Pattern::Event evt;
+                    evt.frame = cursor.get_row();
+                    evt.channel = cursor.get_channel();
+                    evt.param = cursor.get_param();
+                    Pattern::iterator i = get_event(cursor);
+                    if (i != pattern->end())
+                        evt = i->second;
+                    if (renderer->on_key_press_event(event, evt, 
+                                                     cursor.get_item())) {
+                        evt.sanitize_value();
+                        if (evt.is_valid())
+                            pattern->add_event(evt);
+                        else if (i != pattern->end())
+                            pattern->erase(i);
+                        invalidate_cursor();
+                        return true;
+                    }
+                }            
+            } break;
+        }
     }
     fprintf(stderr, "No handler for %s\n", gdk_keyval_name(event->keyval));
     return true;
@@ -1244,6 +1284,10 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
 
 bool PatternView::on_key_release_event(GdkEventKey* event) {
     return false;
+}
+
+Pattern::iterator PatternView::get_event(PatternCursor &cur) {
+    return pattern->get_event(cur.get_row(), cur.get_channel(), cur.get_param());
 }
 
 void PatternView::set_cell_renderer(int param, CellRenderer *renderer) {
