@@ -146,6 +146,10 @@ public:
     
     // true if cursor shares row/channel/param with other cursor
     bool is_at(const PatternCursor &other) const;
+    
+    std::string debug_string() const;
+    
+    const PatternCursor &operator =(const Pattern::Event &event);
 
 protected:
     PatternView *view;
@@ -178,8 +182,7 @@ public:
     PatternCursor p0;
     PatternCursor p1;
 
-    void first(PatternCursor &cursor);
-    bool next(PatternCursor &cursor);
+    std::string debug_string() const;
 protected:
     
     bool active;
@@ -282,10 +285,12 @@ public:
     void play_event(const Pattern::Event &event);
     
     void clear_block();
+    void move_frames(int step, bool all_channels=false);
 protected:
     void invalidate_play_position();
     void invalidate_cursor();
     void invalidate_selection();
+    void invalidate_range(const PatternSelection &range);
     void clip_cursor(PatternCursor &c);
     void update_adjustments();
         

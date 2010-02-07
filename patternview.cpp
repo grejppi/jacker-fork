@@ -621,6 +621,20 @@ void PatternCursor::navigate_column(int delta) {
     }
 }
 
+std::string PatternCursor::debug_string() const {
+    char text[64];
+    sprintf(text, "(#%i[%i]%i:%i)", row, channel, param, item);
+    return text;
+}
+
+const PatternCursor &PatternCursor::operator =(const Pattern::Event &event) {
+    row = event.frame;
+    channel = event.channel;
+    param = event.param;
+    item = 0;
+    return *this;
+}
+
 //=============================================================================
 
 PatternSelection::PatternSelection() {
@@ -699,26 +713,10 @@ bool PatternSelection::get_rect(int &x, int &y, int &width, int &height) const {
     return true;
 }
 
-void PatternSelection::first(PatternCursor &cursor) {
-    // must be sorted for iteration
-    sort();
-    cursor = p0;
-}
-
-bool PatternSelection::next(PatternCursor &cursor) {
-    if (cursor.is_at(p1))
-        return false;
-    cursor.set_param(cursor.get_param()+1);
-    if (cursor.get_param() == view->get_cell_count()) {
-        cursor.set_channel(cursor.get_channel()+1);
-        cursor.set_param(0);
-    }
-    if (cursor.get_column() == (p1.get_column()+1)) {
-        cursor.set_channel(p0.get_channel());
-        cursor.set_param(p0.get_param());
-        cursor.set_row(cursor.get_row()+1);
-    }
-    return true;
+std::string PatternSelection::debug_string() const {
+    char text[128];
+    sprintf(text, "{%s-%s}", p0.debug_string().c_str(), p1.debug_string().c_str());
+    return text;
 }
 
 //=============================================================================
@@ -1048,12 +1046,16 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     return true;
 }
 
-void PatternView::invalidate_selection() {
+void PatternView::invalidate_range(const PatternSelection &range) {
     int x,y,w,h;
-    if (!selection.get_rect(x,y,w,h))
+    if (!range.get_rect(x,y,w,h))
         return;
     Gdk::Rectangle rect(x,y,w,h);
     window->invalidate_rect(rect, true);
+}
+
+void PatternView::invalidate_selection() {
+    invalidate_range(selection);
 }
 
 void PatternView::invalidate_cursor() {
@@ -1195,15 +1197,44 @@ bool PatternView::on_button_release_event(GdkEventButton* event) {
     return false;
 }
 
+void PatternView::move_frames(int step, bool all_channels/*=false*/) {
+    int row = cursor.get_row();
+    int channel = cursor.get_channel();
+    int length = pattern->get_length();
+    
+    Pattern::iterator iter;
+    for (Pattern::iterator iter = pattern->begin(); 
+         iter != pattern->end(); ++iter) {
+        int frame = iter->second.frame;
+        if (frame < row)
+            continue;
+        if (!all_channels && (iter->second.channel != channel))
+            continue;
+        int newframe = frame + step;
+        if ((newframe < row) || (newframe >= length)) {
+            iter->second.frame = -1; // will be deleted
+        } else {
+            iter->second.frame = newframe;
+        }
+    }
+    
+    pattern->update_keys();
+    invalidate();
+}
+
 void PatternView::clear_block() {
-    PatternCursor cur;
-    selection.first(cur);
-    do {
-        //printf("%i %i %i\n", cur.get_row(), cur.get_channel(), cur.get_param());
-        Pattern::iterator iter = get_event(cur);
-        if (iter != pattern->end())
-            pattern->erase(iter);
-    } while (selection.next(cur));
+    Pattern::iterator iter;
+    for (Pattern::iterator iter = pattern->begin(); 
+         iter != pattern->end(); ++iter) {
+        PatternCursor cur(cursor);
+        cur = iter->second;
+        if (!selection.in_range(cur))
+            continue;
+        iter->second.frame = -1; // will be deleted
+    }
+    
+    pattern->update_keys();
+    
     invalidate_selection();
 }
 
@@ -1230,11 +1261,15 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
         switch (event->keyval) {
             case GDK_Home: set_octave(get_octave()-1); return true;
             case GDK_End: set_octave(get_octave()+1); return true;
+            case GDK_Insert: move_frames(1,true); return true;
+            case GDK_Delete: move_frames(-1,true); return true;
             default: break;
         }
     }
     else {
         switch (event->keyval) {
+            case GDK_Insert: move_frames(1); return true;
+            case GDK_Delete: move_frames(-1); return true;
             case GDK_Left: navigate(-1,0,shift_down); return true;
             case GDK_Right: navigate(1,0,shift_down); return true;
             case GDK_Up: navigate(0,-1,shift_down); return true;

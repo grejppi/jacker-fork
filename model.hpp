@@ -28,6 +28,7 @@ class EventCollection
     : public Map_T {
 public:
     typedef Map_T map;
+    typedef typename map::key_type Key;
     typedef typename map::mapped_type Event;
     typedef EventCollection<Map_T> BaseClass;
     
@@ -127,8 +128,8 @@ public:
     // name of pattern (non-unique)
     std::string name;
     
-    void add_event(const Event &event);
-    void add_event(int frame, int channel, int param, int value);
+    iterator add_event(const Event &event);
+    iterator add_event(int frame, int channel, int param, int value);
     
     void set_length(int length);
     int get_length() const;
@@ -139,6 +140,7 @@ public:
     void collect_events(int frame, iterator &iter, Row &row);
     iterator get_event(int frame, int channel, int param);
     
+    void update_keys();
 protected:
     Pattern();
     

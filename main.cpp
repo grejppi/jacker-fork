@@ -109,7 +109,11 @@ public:
         if (result != Gtk::RESPONSE_OK)
             return;
         
-        read_jsong(model, dialog.get_filename());
+        load_song(dialog.get_filename());
+    }
+    
+    void load_song(const std::string &filename) {
+        read_jsong(model, filename);
         
         pattern_view->set_pattern(NULL);
         track_view->invalidate();
@@ -227,6 +231,8 @@ public:
         init_pattern_view();
         init_track_view();
         init_player();
+        
+        load_song("dump.jsong");
         
         window->show_all();
         

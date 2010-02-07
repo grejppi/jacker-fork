@@ -111,7 +111,7 @@ Pattern::Pattern() {
     channel_count = 1;
 }
 
-void Pattern::add_event(const Event &event) {
+Pattern::iterator Pattern::add_event(const Event &event) {
     assert(event.is_valid());
     assert(event.frame < length);
     assert(event.channel < channel_count);
@@ -120,13 +120,14 @@ void Pattern::add_event(const Event &event) {
     if (iter != end()) {
         // replace event
         iter->second.value = event.value;
+        return iter;
     } else {
-        BaseClass::add_event(event);
+        return BaseClass::add_event(event);
     }
 }
 
-void Pattern::add_event(int frame, int channel, int param, int value) {
-    add_event(Event(frame,channel,param,value));
+Pattern::iterator Pattern::add_event(int frame, int channel, int param, int value) {
+    return add_event(Event(frame,channel,param,value));
 }
 
 void Pattern::set_length(int length) {
@@ -170,6 +171,33 @@ Pattern::iterator Pattern::get_event(int frame, int channel, int param) {
         iter++;
     }
     return end();
+}
+
+void Pattern::update_keys() {
+    typedef std::list<Event> EventList;
+    typedef std::list<Pattern::iterator> IterList;
+    
+    IterList dead_iters;
+    EventList events;
+    
+    for (iterator iter = begin(); iter != end(); ++iter) {
+        if (iter->first != iter->second.frame) {
+            events.push_back(iter->second);
+            dead_iters.push_back(iter);
+        }
+    }
+    
+    for (IterList::iterator iter = dead_iters.begin();
+         iter != dead_iters.end(); ++iter) {
+        erase(*iter);
+    }
+    
+    for (EventList::iterator iter = events.begin();
+         iter != events.end(); ++iter) {
+        if (iter->frame == -1) // skip
+            continue;
+        add_event(*iter);
+    }
 }
 
 //=============================================================================
