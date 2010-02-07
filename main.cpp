@@ -30,9 +30,16 @@ public:
     TrackView *track_view;
     Gtk::Menu *trackview_menu;
 
+    Gtk::Notebook *view_notebook;
+
     sigc::connection mix_timer;
 
     Player player;
+
+    enum NotebookPages {
+        PageTrackView = 0,
+        PagePatternView,
+    };
 
     App(int argc, char **argv)
         : Jack::Client("jacker"),kit(argc,argv) {
@@ -40,6 +47,8 @@ public:
         pattern_view = NULL;
         track_view = NULL;
         play_frames = NULL;
+        trackview_menu = NULL;
+        view_notebook = NULL;
         player.set_model(model);
     }
     
@@ -154,6 +163,11 @@ public:
         pattern_view->set_model(model);
     }
     
+    void on_track_view_edit_pattern(Pattern *pattern) {
+        view_notebook->set_current_page(PagePatternView);
+        pattern_view->set_pattern(pattern);
+    }
+    
     void on_track_view_context_menu(TrackView *view, GdkEventButton* event) {
         trackview_menu->popup(event->button, event->time);
     }
@@ -172,7 +186,7 @@ public:
         
         track_view->set_model(model);
         track_view->signal_pattern_edit_request().connect(
-            sigc::mem_fun(*pattern_view, &PatternView::set_pattern));
+            sigc::mem_fun(*this, &App::on_track_view_edit_pattern));
         track_view->signal_context_menu().connect(
             sigc::mem_fun(*this, &App::on_track_view_context_menu));
         
@@ -196,6 +210,9 @@ public:
         builder = Gtk::Builder::create_from_file("jacker.glade");
         
         builder->get_widget("main", window);
+        assert(window);
+        builder->get_widget("view_notebook", view_notebook);
+        assert(view_notebook);
         
         init_menu();
         init_transport();
