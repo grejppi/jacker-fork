@@ -197,6 +197,8 @@ public:
         InteractSelect,
     };
     
+    typedef sigc::signal<void, const Pattern::Event &> type_play_event_request;
+    
     PatternView(BaseObjectType* cobject, 
                 const Glib::RefPtr<Gtk::Builder>& builder);
 
@@ -269,6 +271,9 @@ public:
 
     void set_play_position(int pos);
     void invalidate();
+    
+    type_play_event_request signal_play_event_request();
+    void play_event(const Pattern::Event &event);
 protected:
     void invalidate_play_position();
     void invalidate_cursor();
@@ -305,6 +310,8 @@ protected:
     
     int play_position;
     bool select_at_cursor;
+    
+    type_play_event_request _play_event_request;
 };
 
 //=============================================================================

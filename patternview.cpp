@@ -201,6 +201,7 @@ bool CellRendererNote::on_key_press_event(GdkEventKey* event_key,
     if (item == ItemNote) {
         if (event_key->keyval == GDK_1) {
             event.value = NoteOff;
+            view->play_event(event);
             view->navigate(0,1);
             return true;
         }
@@ -208,6 +209,7 @@ bool CellRendererNote::on_key_press_event(GdkEventKey* event_key,
         for (size_t i = 0; i < count; ++i) {
             if (event_key->hardware_keycode == piano_scancodes[i]) {
                 event.value = 12*view->get_octave() + i;
+                view->play_event(event);
                 view->navigate(0,1);
                 return true;
             }
@@ -1171,9 +1173,9 @@ bool PatternView::on_button_release_event(GdkEventButton* event) {
 
 bool PatternView::on_key_press_event(GdkEventKey* event) {
     bool shift_down = event->state & Gdk::SHIFT_MASK;
+    bool alt_down = event->state & Gdk::MOD1_MASK;
     /*
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
-    bool alt_down = event->state & Gdk::MOD1_MASK;
     bool super_down = event->state & (Gdk::SUPER_MASK|Gdk::MOD4_MASK);
     */
     if (!pattern)
@@ -1187,8 +1189,20 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
         case GDK_Down: navigate(0,1,shift_down); return true;
         case GDK_Page_Up: navigate(0,-get_frames_per_bar(),shift_down); return true;
         case GDK_Page_Down: navigate(0,get_frames_per_bar(),shift_down); return true;
-        case GDK_Home: new_cursor.home(); set_cursor(new_cursor,shift_down); return true;
-        case GDK_End: new_cursor.end(); set_cursor(new_cursor,shift_down); return true;
+        case GDK_Home: {
+            if (alt_down)
+                set_octave(get_octave()-1);
+            else
+                new_cursor.home(); set_cursor(new_cursor,shift_down); 
+            return true;
+        } break;
+        case GDK_End: {
+            if (alt_down)
+                set_octave(get_octave()+1);
+            else
+                new_cursor.end(); set_cursor(new_cursor,shift_down); 
+            return true;
+        } break;
         case GDK_ISO_Left_Tab:
         case GDK_Tab: {
             if (shift_down)
@@ -1344,6 +1358,10 @@ bool PatternView::get_cell_location(int x, int y, int &row, int &channel,
     return false;
 }
 
+void PatternView::play_event(const Pattern::Event &event) {
+    _play_event_request(event);
+}
+
 void PatternView::set_font_size(int width, int height) {
     font_width = width;
     font_height = height;
@@ -1372,6 +1390,10 @@ void PatternView::invalidate() {
     if (!window)
         return;
     window->invalidate(true);
+}
+
+PatternView::type_play_event_request PatternView::signal_play_event_request() {
+    return _play_event_request;
 }
 
 //=============================================================================

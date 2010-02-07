@@ -85,6 +85,71 @@ long long Player::get_frame_size() {
            (model->frames_per_beat * model->beats_per_minute);    
 }
 
+void Player::on_cc(int ccindex, int ccvalue) {
+    if (ccindex == ValueNone)
+        return;
+    if (ccvalue == ValueNone)
+        return;
+    int midi_channel = 0;
+    
+    Message msg;
+    init_message(msg);
+    msg.command = MIDI::CommandControlChange;
+    msg.channel = midi_channel;
+    msg.data1 = ccindex;
+    msg.data2 = ccvalue;
+    messages.push(msg);
+}
+
+void Player::on_volume(int channel, int volume) {
+    if (volume == ValueNone)
+        return;
+    Bus &bus = buses[0];
+    Channel &values = bus.channels[channel];    
+    values.volume = volume;
+}
+
+void Player::on_note(int channel, int note) {
+    if (note == ValueNone)
+        return;
+    Bus &bus = buses[0];
+    int midi_channel = 0;
+    
+    Channel &values = bus.channels[channel];
+    if (values.note != ValueNone) {
+        Message msg;
+        init_message(msg);
+        msg.command = MIDI::CommandNoteOff;
+        msg.channel = midi_channel;
+        msg.data1 = values.note;
+        msg.data2 = values.volume;
+        messages.push(msg);
+        
+        values.note = ValueNone;
+    }
+    if (note != NoteOff) {
+        Message msg;
+        init_message(msg);
+        msg.command = MIDI::CommandNoteOn;
+        msg.channel = midi_channel;
+        msg.data1 = note;
+        msg.data2 = values.volume;
+        messages.push(msg);
+        
+        values.note = note;
+    }
+    
+}
+
+void Player::play_event(const class PatternEvent &event) {
+    if (event.param != ParamNote)
+        return;
+    int note = event.value;
+    if (note == ValueNone)
+        return;
+    on_note(event.channel, note);
+}
+
 void Player::mix() {
     if (!playing)
         return;
@@ -123,59 +188,16 @@ void Player::mix_track(Track &track) {
     Pattern::Row row;
     pattern.collect_events(position - event.frame, row_iter, row);
     
-    Bus &bus = buses[0];
-    int midi_channel = 0;
-    
     // first run: process all cc events
     for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-        int ccindex = row.get_value(channel, ParamCCIndex);
-        if (ccindex != ValueNone) {
-            int ccvalue = row.get_value(channel, ParamCCValue);
-            if (ccvalue != ValueNone) {
-                Message msg;
-                init_message(msg);
-                msg.command = MIDI::CommandControlChange;
-                msg.channel = midi_channel;
-                msg.data1 = ccindex;
-                msg.data2 = ccvalue;
-                messages.push(msg);
-            }
-        }
+        on_cc(row.get_value(channel, ParamCCIndex), 
+              row.get_value(channel, ParamCCValue));
     }
     
     // second run: process volume and notes
     for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-        Channel &values = bus.channels[channel];
-        
-        int volume = row.get_value(channel, ParamVolume);
-        if (volume != ValueNone) {
-            values.volume = volume;
-        }
-        int note = row.get_value(channel, ParamNote);
-        if (note != ValueNone) {
-            if (values.note != ValueNone) {
-                Message msg;
-                init_message(msg);
-                msg.command = MIDI::CommandNoteOff;
-                msg.channel = midi_channel;
-                msg.data1 = values.note;
-                msg.data2 = values.volume;
-                messages.push(msg);
-                
-                values.note = ValueNone;
-            }
-            if (note != NoteOff) {
-                Message msg;
-                init_message(msg);
-                msg.command = MIDI::CommandNoteOn;
-                msg.channel = midi_channel;
-                msg.data1 = note;
-                msg.data2 = values.volume;
-                messages.push(msg);
-                
-                values.note = note;
-            }
-        }
+        on_volume(channel, row.get_value(channel, ParamVolume));
+        on_note(channel, row.get_value(channel, ParamNote));
     }
 }
 

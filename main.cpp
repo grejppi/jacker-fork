@@ -148,6 +148,10 @@ public:
     void init_model() {
     }
     
+    void on_pattern_view_play_event(const Pattern::Event &event) {
+        player.play_event(event);
+    }
+    
     void init_pattern_view() {
         builder->get_widget_derived("pattern_view", pattern_view);
         assert(pattern_view);
@@ -161,6 +165,9 @@ public:
             pattern_vscroll->get_adjustment());
         
         pattern_view->set_model(model);
+        
+        pattern_view->signal_play_event_request().connect(
+            sigc::mem_fun(*this, &App::on_pattern_view_play_event));
     }
     
     void on_track_view_edit_pattern(Pattern *pattern) {

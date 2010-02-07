@@ -141,6 +141,8 @@ protected:
     void render_track(Track &track);
 
     void get_drag_offset(int &frame, int &track);
+    int get_step_size();
+    int quantize_frame(int frame); 
 
     bool dragging() const;
     bool moving() const;

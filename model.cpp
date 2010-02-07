@@ -60,7 +60,7 @@ void PatternEvent::sanitize_value() {
         {
             if (value == NoteOff)
                 return;
-            value = std::min(std::max(value,0),0x7f);
+            value = std::min(std::max(value,0),119);
         } break;
         case ParamCommand:
         {

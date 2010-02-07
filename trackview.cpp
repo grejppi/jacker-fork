@@ -333,6 +333,7 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
                 }
             }
         } else if (double_click) {
+            cur.set_frame(quantize_frame(cur.get_frame()));
             new_pattern(cur);
         } else {
             clear_selection();
@@ -436,11 +437,19 @@ void TrackView::get_drag_offset(int &frame, int &track) {
     int dx,dy;
     drag.get_delta(dx,dy);
     get_event_location(dx, dy, frame, track);
+    frame = quantize_frame(frame);
+}
+
+int TrackView::get_step_size() {
     switch(snap_mode) {
-        case SnapBar: {
-            frame -= (frame%model->get_frames_per_bar());
-        } break;
+        case SnapBar: return model->get_frames_per_bar();
+        default: break;
     }
+    return 1;
+}
+
+int TrackView::quantize_frame(int frame) {
+    return frame - (frame%get_step_size());
 }
 
 void TrackView::get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h) {
