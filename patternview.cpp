@@ -428,14 +428,69 @@ void PatternCursor::next_channel() {
     item = 0;
 }
 
+void PatternCursor::prev_channel() {
+    if (!param && !item)
+        channel = std::max(channel-1,0);
+    param = 0;
+    item = 0;
+}
+
 void PatternCursor::next_param() {
     param++;
     item = 0;
 }
 
+void PatternCursor::home() {
+    if (param || item) {
+        param = 0;
+        item = 0;
+    } else if (channel) {
+        channel = 0;
+    } else if (row) {
+        row = 0;
+    }
+}
+
+void PatternCursor::end() {
+    if (!is_last_param() || !is_last_item()) {
+        set_last_param();
+        set_last_item();
+    } else if (!is_last_channel()) {
+        set_last_channel();
+    } else if (!is_last_row()) {
+        set_last_row();
+    }
+}
+
 bool PatternCursor::is_last_param() const {
     assert(view);
     return param == view->get_cell_count()-1;
+}
+
+void PatternCursor::set_last_param() {
+    assert(view);
+    item = 0;
+    param = view->get_cell_count()-1;
+}
+
+bool PatternCursor::is_last_channel() const {
+    assert(view);
+    return channel == view->get_pattern()->get_channel_count()-1;
+}
+
+void PatternCursor::set_last_channel() {
+    assert(view);
+    channel = view->get_pattern()->get_channel_count()-1;
+}
+
+bool PatternCursor::is_last_row() const {
+    assert(view);
+    return row == view->get_pattern()->get_length()-1;
+}
+
+void PatternCursor::set_last_row() {
+    assert(view);
+    row = view->get_pattern()->get_length()-1;
 }
 
 int PatternCursor::get_row() const {
@@ -491,7 +546,6 @@ void PatternCursor::set_item(int item) {
 }
 
 void PatternCursor::set_last_item() {
-    param = view->get_cell_count()-1;
     item = 0;
     CellRenderer *renderer = view->get_cell_renderer(param);
     if (renderer) {
@@ -1000,9 +1054,11 @@ void PatternView::clip_cursor(PatternCursor &c) {
         c.set_channel(0);
     } else if (c.get_channel() >= pattern->get_channel_count()) {
         c.set_channel(pattern->get_channel_count()-1);
+        c.set_last_param();
         c.set_last_item();
     }
     else if (c.get_param() >= get_cell_count()) {
+        c.set_last_param();
         c.set_last_item();
     }
 }
@@ -1095,8 +1151,8 @@ bool PatternView::on_button_release_event(GdkEventButton* event) {
 }
 
 bool PatternView::on_key_press_event(GdkEventKey* event) {
-    /*
     bool shift_down = event->state & Gdk::SHIFT_MASK;
+    /*
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     bool alt_down = event->state & Gdk::MOD1_MASK;
     bool super_down = event->state & (Gdk::SUPER_MASK|Gdk::MOD4_MASK);
@@ -1104,13 +1160,25 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
     if (!pattern)
         return true;
     
+    PatternCursor new_cursor(cursor);
     switch (event->keyval) {
-        case GDK_Left: navigate(-1,0); break;
-        case GDK_Right: navigate(1,0); break;
-        case GDK_Up: navigate(0,-1); break;
-        case GDK_Down: navigate(0,1); break;
-        case GDK_Page_Up: navigate(0,-get_frames_per_bar()); break;
-        case GDK_Page_Down: navigate(0,get_frames_per_bar()); break;
+        case GDK_Left: navigate(-1,0); return true;
+        case GDK_Right: navigate(1,0); return true;
+        case GDK_Up: navigate(0,-1); return true;
+        case GDK_Down: navigate(0,1); return true;
+        case GDK_Page_Up: navigate(0,-get_frames_per_bar()); return true;
+        case GDK_Page_Down: navigate(0,get_frames_per_bar()); return true;
+        case GDK_Home: new_cursor.home(); set_cursor(new_cursor); return true;
+        case GDK_End: new_cursor.end(); set_cursor(new_cursor); return true;
+        case GDK_ISO_Left_Tab:
+        case GDK_Tab: {
+            if (shift_down)
+                new_cursor.prev_channel();
+            else
+                new_cursor.next_channel();
+            set_cursor(new_cursor);
+            return true;
+        } break;
         default: {
             CellRenderer *renderer = get_cell_renderer(cursor.get_param());
             if (renderer) {
@@ -1130,10 +1198,12 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
                     else if (i != pattern->end())
                         pattern->erase(i);
                     invalidate_cursor();
+                    return true;
                 }
-            }
+            }            
         } break;
     }
+    fprintf(stderr, "No handler for %s\n", gdk_keyval_name(event->keyval));
     return true;
 }
 

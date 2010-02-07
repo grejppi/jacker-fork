@@ -103,7 +103,15 @@ public:
     void origin();
     void next_row();
     void next_channel();
+    void prev_channel();
     void next_param();
+
+    // moves to the first param, then to the first channel,
+    // then to the first row
+    void home();
+    // moves to the last param, then to the last channel,
+    // then to the last row
+    void end();
 
     int get_row() const;
     int get_channel() const;
@@ -123,6 +131,11 @@ public:
 
     // true if param is the last param in a channel
     bool is_last_param() const;
+    void set_last_param();
+    bool is_last_channel() const;
+    void set_last_channel();
+    bool is_last_row() const;
+    void set_last_row();
 
     void get_pos(int &x, int &y) const;
     void set_pos(int x, int y);
