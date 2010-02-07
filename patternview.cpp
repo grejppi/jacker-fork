@@ -1189,6 +1189,8 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
         case GDK_Down: navigate(0,1,shift_down); return true;
         case GDK_Page_Up: navigate(0,-get_frames_per_bar(),shift_down); return true;
         case GDK_Page_Down: navigate(0,get_frames_per_bar(),shift_down); return true;
+        case GDK_KP_Divide: set_octave(get_octave()-1); return true;
+        case GDK_KP_Multiply: set_octave(get_octave()+1); return true;
         case GDK_Home: {
             if (alt_down)
                 set_octave(get_octave()-1);
