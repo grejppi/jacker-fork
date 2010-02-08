@@ -113,6 +113,8 @@ public:
     void activate();
     void deactivate();
 
+    bool is_created();
+
     virtual void on_process(NFrames size) {}
     virtual void on_sample_rate(NFrames nframes) {}
     virtual void on_shutdown() {}

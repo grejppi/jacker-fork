@@ -9,27 +9,29 @@ namespace Jack {
     
 static bool handle_status(int status)
 {
-	if (status & JackFailure)
-		printf("JACK: Overall operation failed.\n");
-	if (status & JackInvalidOption)
-		printf("JACK: The operation contained an invalid or unsupported option.\n");
-	if (status & JackNameNotUnique)
-		printf("JACK: The desired client name was not unique.\n");
-	if (status & JackServerStarted)
+	if (status == JackServerStarted) {
 		printf("JACK: The JACK server was started as a result of this operation.\n");
-	if (status & JackServerFailed)
+        return true;
+    }
+    if (status & JackFailure)
+		printf("JACK: Overall operation failed.\n");
+	else if (status & JackInvalidOption)
+		printf("JACK: The operation contained an invalid or unsupported option.\n");
+	else if (status & JackNameNotUnique)
+		printf("JACK: The desired client name was not unique.\n");
+	else if (status & JackServerFailed)
 		printf("JACK: Unable to connect to the JACK server.\n");
-	if (status & JackServerError)
+	else if (status & JackServerError)
 		printf("JACK: Communication error with the JACK server.\n");
-	if (status & JackNoSuchClient)
+	else if (status & JackNoSuchClient)
 		printf("JACK: Requested client does not exist.\n");
-	if (status & JackLoadFailure)
+	else if (status & JackLoadFailure)
 		printf("JACK: Unable to load internal client.\n");
-	if (status & JackInitFailure)
+	else if (status & JackInitFailure)
 		printf("JACK: Unable to initialize client.\n");
-	if (status & JackShmFailure)
+	else if (status & JackShmFailure)
 		printf("JACK: Unable to access shared memory.\n");
-	if (status & JackVersionError)
+	else if (status & JackVersionError)
 		printf("JACK: Client's protocol version does not match.\n");
 	fflush(stdout);
 
@@ -65,6 +67,10 @@ Client::Client(const char *name) {
     this->name = name;
     handle = NULL;
     nframes = 0;
+}
+
+bool Client::is_created() {
+    return handle != NULL;
 }
 
 Client::~Client() {

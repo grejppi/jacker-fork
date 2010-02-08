@@ -19,8 +19,10 @@ class JackPlayer : public Jack::Client,
                    public Player {
 public:
     Jack::MIDIPort *midi_omni_out;
+    bool defunct;
 
     JackPlayer() : Jack::Client("jacker") {
+        defunct = false;
         midi_omni_out = new Jack::MIDIPort(
             *this, "omni", Jack::MIDIPort::IsOutput);
     }
@@ -43,7 +45,10 @@ public:
         midi_omni_out->clear_buffer();
         process_messages((int)size);
     }
-
+    
+    virtual void on_shutdown() {
+        defunct = true;
+    }
 };
 
 class App {
@@ -251,14 +256,24 @@ public:
             100);
     }
     
+    void shutdown_player() {
+        if (!player)
+            return;
+        if (player->is_created()) {
+            player->deactivate();
+            player->shutdown();
+        }
+        delete player;
+        player = NULL;
+    }
+    
     void init_player() {
         if (player)
             return;
         player = new JackPlayer();
         player->set_model(model);
         if (!player->init()) {
-            delete player;
-            player = NULL;
+            shutdown_player();
         }
     }
     
@@ -290,16 +305,16 @@ public:
         kit.run(*window);
         
         mix_timer.disconnect();
-            
-        if (player) {
-            player->deactivate();
-            player->shutdown();
-            delete player;
-            player = NULL;
-        }
+        
+        shutdown_player();
     }
     
     bool mix(int i) {
+        // check if player is dead
+        if (player && player->defunct) {
+            shutdown_player();
+        }
+        
         int frame = 0;
         if (player) {
             player->mix();
