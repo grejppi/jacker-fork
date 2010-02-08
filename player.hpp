@@ -62,6 +62,7 @@ protected:
     int sample_rate;
     std::vector<Bus> buses;
     RingBuffer<Message> messages;
+    RingBuffer<Message> rt_messages;
     class Model *model;
     
     long long write_samples; // 0-32: subsample, 32-64: sample

@@ -37,7 +37,9 @@ Player::Message::Message() {
     bus_channel = 0;
 }
 
-Player::Player() : messages(MaxMessageCount) {
+Player::Player()
+    : messages(MaxMessageCount),
+      rt_messages(128) {
     buses.resize(MaxBuses);
     model = NULL;
     sample_rate = 44100;
@@ -96,12 +98,10 @@ void Player::on_cc(int ccindex, int ccvalue) {
         return;
     if (ccvalue == ValueNone)
         return;
-    int midi_channel = 0;
-    
     Message msg;
     init_message(msg);
     msg.command = MIDI::CommandControlChange;
-    msg.channel = midi_channel;
+    msg.channel = 0;
     msg.data1 = ccindex;
     msg.data2 = ccvalue;
     messages.push(msg);
@@ -110,13 +110,11 @@ void Player::on_cc(int ccindex, int ccvalue) {
 void Player::on_volume(int channel, int volume) {
     if (volume == ValueNone)
         return;
-    int midi_channel = 0;
-    
     Message msg;
     init_message(msg);
     msg.bus_channel = channel;
     msg.command = MIDI::CommandControlChange;
-    msg.channel = midi_channel;
+    msg.channel = 0;
     msg.data1 = CCVolume;
     msg.data2 = volume;
     messages.push(msg);    
@@ -125,26 +123,21 @@ void Player::on_volume(int channel, int volume) {
 void Player::on_note(int channel, int note) {
     if (note == ValueNone)
         return;
-    int midi_channel = 0;
-    
-    if (note != NoteOff) {
-        Message msg;
-        init_message(msg);
-        msg.bus_channel = channel;
-        msg.command = MIDI::CommandNoteOff;
-        msg.channel = midi_channel;
-        msg.data1 = 0;
-        msg.data2 = 0;
-        messages.push(msg);
-    }
-    
     Message msg;
     init_message(msg);
-    msg.bus_channel = channel;
-    msg.command = MIDI::CommandNoteOn;
-    msg.channel = midi_channel;
-    msg.data1 = note;
-    msg.data2 = 0;
+    if (note == NoteOff) {
+        msg.bus_channel = channel;
+        msg.command = MIDI::CommandNoteOff;
+        msg.channel = 0;
+        msg.data1 = 0;
+        msg.data2 = 0;
+    } else {
+        msg.bus_channel = channel;
+        msg.command = MIDI::CommandNoteOn;
+        msg.channel = 0;
+        msg.data1 = note;
+        msg.data2 = 0;
+    }
     messages.push(msg);
 }
 
@@ -249,6 +242,11 @@ void Player::process_messages(int _size) {
     Message next_msg;
     Message msg;
     while (size) {
+        while (rt_messages.get_read_size()) {
+            msg = rt_messages.pop();
+            msg.timestamp = 0;
+            handle_message(msg);
+        }
         long long delta = size;
         
         if (messages.get_read_size()) {
