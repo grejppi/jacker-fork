@@ -64,7 +64,7 @@ public:
 
     sigc::connection mix_timer;
 
-    JackPlayer player;
+    JackPlayer *player;
 
     enum NotebookPages {
         PageTrackView = 0,
@@ -73,24 +73,29 @@ public:
 
     App(int argc, char **argv)
         : kit(argc,argv) {
+        player = NULL;
         pattern_view = NULL;
         track_view = NULL;
         play_frames = NULL;
         trackview_menu = NULL;
         view_notebook = NULL;
-        player.set_model(model);
     }
     
     ~App() {
+        assert(!player);
     }
     
     void on_play_action() {
-        player.play();
+        if (!player)
+            return;
+        player->play();
     }
     
     void on_stop_action() {
-        player.stop();
-        player.set_position(0);
+        if (!player)
+            return;
+        player->stop();
+        player->set_position(0);
     }
     
     void add_dialog_filters(Gtk::FileChooserDialog &dialog) {
@@ -181,7 +186,9 @@ public:
     }
     
     void on_pattern_view_play_event(const Pattern::Event &event) {
-        player.play_event(event);
+        if (!player)
+            return;
+        player->play_event(event);
     }
     
     void init_pattern_view() {
@@ -244,8 +251,15 @@ public:
     }
     
     void run() {
-        if (!player.init())
-            return;
+        if (!player) {
+            player = new JackPlayer();
+            player->set_model(model);
+            if (!player->init()) {
+                delete player;
+                player = NULL;
+            }
+        }        
+        
         builder = Gtk::Builder::create_from_file("jacker.glade");
         assert(builder);
         
@@ -265,19 +279,27 @@ public:
         
         window->show_all();
         
-        player.activate();
+        if (player)
+            player->activate();
         
         kit.run(*window);
         
         mix_timer.disconnect();
             
-        player.deactivate();
-        player.shutdown();
+        if (player) {
+            player->deactivate();
+            player->shutdown();
+            delete player;
+            player = NULL;
+        }
     }
     
     bool mix(int i) {
-        player.mix();
-        int frame = player.get_position();
+        int frame = 0;
+        if (player) {
+            player->mix();
+            frame = player->get_position();
+        }
         
         Measure measure;
         measure.set_frame(model, frame);
