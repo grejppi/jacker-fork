@@ -113,10 +113,11 @@ public:
     std::vector<Gdk::Color> colors;
     
     void set_origin(int x, int y);
-    void get_origin(int &x, int &y);    
+    void get_origin(int &x, int &y) const;
     void get_event_pos(int frame, int track,
                        int &x, int &y) const;
     void get_event_size(int length, int &w, int &h) const;
+    void get_event_length(int w, int h, int &length, int &track) const;
     void get_event_location(int x, int y, int &frame, int &track) const;
     
     void get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h);
@@ -153,11 +154,15 @@ protected:
     void apply_move();
     void apply_resize();
 
-    // start x and y position
-    int origin_x, origin_y;
+    void update_adjustments();
+    void on_adjustment_value_changed();
+
     // zoomlevel (0=1:1, 1=1:2, 2=1:4, etc.)
     int zoomlevel;
     int snap_frames;
+    
+    // start x and y position
+    int origin_x, origin_y;
 
     InteractMode interact_mode;
     SnapMode snap_mode;
@@ -171,8 +176,11 @@ protected:
 
     type_pattern_edit_request _pattern_edit_request;
     type_context_menu _signal_context_menu;
-};
     
+    Gtk::Adjustment *hadjustment;
+    Gtk::Adjustment *vadjustment;
+};
+
 //=============================================================================
     
 } // namespace Jacker

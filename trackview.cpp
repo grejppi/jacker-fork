@@ -101,12 +101,15 @@ void Drag::get_delta(int &delta_x, int &delta_y) {
 TrackView::TrackView(BaseObjectType* cobject, 
                  const Glib::RefPtr<Gtk::Builder>& builder)
     : Gtk::Widget(cobject) {
+    origin_x = 0;
+    origin_y = 0;
     model = NULL;
-    zoomlevel = 0;
+    zoomlevel = 1;
+    hadjustment = NULL;
+    vadjustment = NULL;
     snap_mode = SnapBar;
     interact_mode = InteractNone;
     cursor.set_view(*this);
-    origin_x = origin_y = 0;
     colors.resize(ColorCount);
     colors[ColorBlack].set("#000000");
     colors[ColorWhite].set("#FFFFFF");
@@ -146,14 +149,16 @@ void TrackView::on_realize() {
     xor_gc->set_function(Gdk::XOR);
     xor_gc->set_foreground(xor_color);
     xor_gc->set_background(xor_color);
+    
+    update_adjustments();
 }
 
 void TrackView::set_origin(int x, int y) {
-    this->origin_x = origin_x;
-    this->origin_y = origin_y;
+    origin_x = x;
+    origin_y = y;
 }
 
-void TrackView::get_origin(int &x, int &y) {
+void TrackView::get_origin(int &x, int &y) const {
     x = origin_x;
     y = origin_y;
 }
@@ -168,6 +173,11 @@ void TrackView::get_event_pos(int frame, int track,
 void TrackView::get_event_size(int length, int &w, int &h) const {
     w = length>>zoomlevel;
     h = TrackHeight;
+}
+
+void TrackView::get_event_length(int w, int h, int &length, int &track) const {
+    length = w<<zoomlevel;
+    track = h/TrackHeight;
 }
 
 void TrackView::get_event_location(int x, int y, int &frame, int &track) const {
@@ -484,7 +494,8 @@ void TrackView::on_size_allocate(Gtk::Allocation& allocation) {
     if (window) {
         window->move_resize(allocation.get_x(), allocation.get_y(),
             allocation.get_width(), allocation.get_height());
-    }    
+        update_adjustments();
+    }
 }
 
 int absmod(int x, int m) {
@@ -494,7 +505,7 @@ int absmod(int x, int m) {
 void TrackView::get_drag_offset(int &frame, int &track) {
     int dx,dy;
     drag.get_delta(dx,dy);
-    get_event_location(dx, dy, frame, track);
+    get_event_length(dx, dy, frame, track);
     frame = quantize_frame(frame);
 }
 
@@ -555,8 +566,50 @@ void TrackView::set_play_position(int pos) {
     invalidate_play_position();
 }
 
+void TrackView::update_adjustments() {
+    if (!window)
+        return;
+    Gtk::Allocation allocation = get_allocation();
+
+    int width = allocation.get_width();
+    int height = allocation.get_height();
+    
+    if (hadjustment) {
+        int frame, track;
+        get_event_location(width, height, frame, track);
+        
+        hadjustment->configure(0, // value
+                               0, // lower
+                               frame*4, // upper
+                               1, // step increment
+                               1, // page increment
+                               frame); // page size
+    }
+    
+}
+
+void TrackView::on_adjustment_value_changed() {
+    if (hadjustment) {
+        int w,h;
+        get_event_size((int)(hadjustment->get_value()+0.5),w,h);
+        origin_x = -w;
+    }
+    
+    invalidate();
+}
+
 void TrackView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                      Gtk::Adjustment *vadjustment) {
+    this->hadjustment = hadjustment;
+    this->vadjustment = vadjustment;
+    if (hadjustment) {
+        hadjustment->signal_value_changed().connect(sigc::mem_fun(*this,
+            &TrackView::on_adjustment_value_changed));
+    }
+    if (vadjustment) {
+        vadjustment->signal_value_changed().connect(sigc::mem_fun(*this,
+            &TrackView::on_adjustment_value_changed));
+    }                                         
 }
 
 TrackView::type_pattern_edit_request TrackView::signal_pattern_edit_request() {

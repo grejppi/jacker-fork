@@ -882,8 +882,8 @@ void PatternView::on_adjustment_value_changed() {
     int origin_x, origin_y;
     get_origin(origin_x, origin_y);
     
-    int x_scroll_value = origin_x;
-    int y_scroll_value = origin_y;
+    int x_scroll_value = -origin_x;
+    int y_scroll_value = -origin_y;
     
     if (hadjustment) {
         int channel_width = get_channel_width()+get_channel_margin();

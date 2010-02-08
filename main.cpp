@@ -9,6 +9,7 @@
 #include "model.hpp"
 #include "patternview.hpp"
 #include "trackview.hpp"
+#include "measure.hpp"
 #include "player.hpp"
 
 #include "jsong.hpp"
@@ -63,6 +64,7 @@ public:
     Gtk::Entry *play_frames;
 
     TrackView *track_view;
+    MeasureView *track_measure;
     Gtk::Menu *trackview_menu;
 
     Gtk::Notebook *view_notebook;
@@ -81,6 +83,7 @@ public:
         player = NULL;
         pattern_view = NULL;
         track_view = NULL;
+        track_measure = NULL;
         play_frames = NULL;
         trackview_menu = NULL;
         view_notebook = NULL;
@@ -247,6 +250,10 @@ public:
         
         connect_action("add_track_action", 
             sigc::mem_fun(*track_view, &TrackView::add_track));
+            
+        builder->get_widget_derived("track_measure", track_measure);
+        assert(track_measure);
+        track_measure->set_adjustment(track_vscroll->get_adjustment());
     }
     
     void init_timer() {
