@@ -1253,6 +1253,20 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
     if (ctrl_down) {
         switch (event->keyval) {
             case GDK_x: clear_block(); return true;
+            case GDK_plus:
+            case GDK_KP_Add:
+            {
+                pattern->set_channel_count(pattern->get_channel_count()+1);
+                invalidate();
+                return true;
+            } break;
+            case GDK_minus:
+            case GDK_KP_Subtract:
+            {
+                pattern->set_channel_count(pattern->get_channel_count()-1);
+                invalidate();
+                return true;
+            } break;
             default: break;
         }
         
