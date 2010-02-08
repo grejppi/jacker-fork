@@ -148,7 +148,7 @@ int Pattern::get_length() const {
 }
 
 void Pattern::set_channel_count(int count) {
-    this->channel_count = count;
+    this->channel_count = std::min(std::max(count, 1), (int)MaxChannels);
 }
 
 int Pattern::get_channel_count() const {
