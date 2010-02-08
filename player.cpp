@@ -208,36 +208,55 @@ void Player::mix_track(Track &track) {
     }
 }
 
-int Player::process(int _size, Message &msg) {
+void Player::handle_message(Message msg) {
+    switch(msg.command) {
+        case MIDI::CommandControlChange:
+        {
+            if (msg.data1 == CCVolume) {
+            } else {
+            }
+        } break;
+    }
+    on_message(msg);
+}
+
+void Player::process_messages(int _size) {
     long long size = (long long)_size << 32;
-    long long delta = size;
+    long long offset = 0;
     
-    if (messages.get_read_size()) {
-        Message next_msg;
-        next_msg = messages.peek();
-        delta = std::min(std::max(
-            next_msg.timestamp - read_samples,(long long)0L),(long long)size);
-        if (delta < size) {
-            msg = messages.pop();
-            read_position = msg.frame;
-            read_frame_block = 0;
-            msg.timestamp = 0;
+    Message next_msg;
+    Message msg;
+    while (size) {
+        long long delta = size;
+        
+        if (messages.get_read_size()) {
+            next_msg = messages.peek();
+            delta = std::min(std::max(
+                next_msg.timestamp - read_samples,(long long)0L),size);
+            if (delta < size) {
+                msg = messages.pop();
+                read_position = msg.frame;
+                read_frame_block = 0;
+                msg.timestamp = offset;
+                handle_message(msg);
+            }
         }
-    }
-    
-    if (playing) {
-        read_samples += delta;
-        read_frame_block += delta;
-        long long framesize = get_frame_size();
-        while (read_frame_block >= framesize) {
-            read_position++;
-            read_frame_block -= framesize;
+        
+        if (playing) {
+            read_samples += delta;
+            read_frame_block += delta;
+            long long framesize = get_frame_size();
+            while (read_frame_block >= framesize) {
+                read_position++;
+                read_frame_block -= framesize;
+            }
+        } else {
+            read_position = position;
         }
-    } else {
-        read_position = position;
+        
+        size -= delta;
+        offset += delta;
     }
-    
-    return (int)(delta>>32);
 }
 
 //=============================================================================

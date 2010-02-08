@@ -15,10 +15,40 @@
 
 namespace Jacker {
 
-class App : public Jack::Client {
+class JackPlayer : public Jack::Client,
+                   public Player {
+public:
+    Jack::MIDIPort *midi_omni_out;
+
+    JackPlayer() : Jack::Client("jacker") {
+        midi_omni_out = new Jack::MIDIPort(
+            *this, "omni", Jack::MIDIPort::IsOutput);
+    }
+    
+    ~JackPlayer() {
+        delete midi_omni_out;
+    }
+    
+    virtual void on_sample_rate(Jack::NFrames nframes) {
+        set_sample_rate((int)nframes);
+        reset();
+    }
+    
+    virtual void on_message(const Message &msg) {
+        int offset = (int)(msg.timestamp>>32);
+        midi_omni_out->write_event(offset, msg);
+    }
+    
+    virtual void on_process(Jack::NFrames size) {
+        midi_omni_out->clear_buffer();
+        process_messages((int)size);
+    }
+
+};
+
+class App {
 public:
     Gtk::Main kit;
-    Jack::MIDIPort *midi_omni_out;
     Model model;
 
     Glib::RefPtr<Gtk::Builder> builder;
@@ -34,7 +64,7 @@ public:
 
     sigc::connection mix_timer;
 
-    Player player;
+    JackPlayer player;
 
     enum NotebookPages {
         PageTrackView = 0,
@@ -42,8 +72,7 @@ public:
     };
 
     App(int argc, char **argv)
-        : Jack::Client("jacker"),kit(argc,argv) {
-        midi_omni_out = new Jack::MIDIPort(*this, "omni", Jack::MIDIPort::IsOutput);
+        : kit(argc,argv) {
         pattern_view = NULL;
         track_view = NULL;
         play_frames = NULL;
@@ -53,7 +82,6 @@ public:
     }
     
     ~App() {
-        delete midi_omni_out;
     }
     
     void on_play_action() {
@@ -216,7 +244,7 @@ public:
     }
     
     void run() {
-        if (!init())
+        if (!player.init())
             return;
         builder = Gtk::Builder::create_from_file("jacker.glade");
         
@@ -236,14 +264,14 @@ public:
         
         window->show_all();
         
-        activate();
+        player.activate();
         
         kit.run(*window);
         
         mix_timer.disconnect();
             
-        deactivate();
-        shutdown();
+        player.deactivate();
+        player.shutdown();
     }
     
     bool mix(int i) {
@@ -278,27 +306,6 @@ public:
             pattern_view->set_play_position(-1);
         return true;
     }
-    
-    virtual void on_sample_rate(Jack::NFrames nframes) {
-        player.set_sample_rate((int)nframes);
-        player.reset();
-    }
-    
-    virtual void on_process(Jack::NFrames size) {
-        midi_omni_out->clear_buffer();
-        Player::Message msg;
-        int s = (int)size;
-        int offset = 0;
-        while (s) {
-            int delta = player.process(s,msg);
-            if (s == delta) // nothing left to do
-                break;
-            s -= delta;
-            offset += delta;
-            midi_omni_out->write_event(offset, msg);
-        }
-    }
-    
 };
     
 } // namespace Jacker

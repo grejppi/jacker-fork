@@ -38,7 +38,8 @@ public:
     void reset();
     void mix();
     void mix_track(class Track &track);
-    int process(int size, Message &msg);
+    void process_messages(int size);
+    virtual void on_message(const Message &msg) {}
     
     void set_model(class Model &model);
     void set_sample_rate(int sample_rate);
@@ -52,6 +53,7 @@ public:
     
 protected:
     void init_message(Message &msg);
+    void handle_message(Message msg);
     void on_note(int channel, int value);
     void on_volume(int channel, int value);
     void on_cc(int ccindex, int ccvalue);
