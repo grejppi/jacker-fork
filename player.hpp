@@ -52,9 +52,10 @@ public:
     void play_event(const class PatternEvent &event);
     
 protected:
+    void mix_events(int samples);
     void init_message(Message &msg);
     void handle_message(Message msg);
-    void on_note(int channel, int value);
+    void on_note(int channel, int value, bool rt=false);
     void on_volume(int channel, int value);
     void on_cc(int ccindex, int ccvalue);
     long long get_frame_size();

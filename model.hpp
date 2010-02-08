@@ -11,17 +11,19 @@ class Model;
     
 //=============================================================================
 
-template<typename Key_T, typename T>
-inline typename std::map<Key_T,T>::iterator extract_iterator(
-    std::pair< typename std::map<const Key_T,T>::iterator, bool> result) {
-    return result.first;
-}
-
+#if defined(WIN32)
 template<typename Key_T, typename T>
 inline typename std::map<Key_T,T>::iterator extract_iterator(
     std::pair< typename std::map<Key_T,T>::iterator, bool> result) {
     return result.first;
 }
+#else
+template<typename Key_T, typename T>
+inline typename std::map<Key_T,T>::iterator extract_iterator(
+    std::pair< typename std::map<const Key_T,T>::iterator, bool> result) {
+    return result.first;
+}
+#endif
 
 template<typename Key_T, typename T>
 inline typename std::multimap<Key_T,T>::iterator extract_iterator(

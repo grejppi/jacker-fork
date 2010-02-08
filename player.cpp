@@ -72,7 +72,7 @@ void Player::play() {
     read_samples = 0;
     write_samples = 0;
     messages.clear();
-    mix(); // fill buffer
+    mix_events(PreMixSize);// fill buffer
     playing = true;
 }
 
@@ -120,7 +120,7 @@ void Player::on_volume(int channel, int volume) {
     messages.push(msg);    
 }
 
-void Player::on_note(int channel, int note) {
+void Player::on_note(int channel, int note, bool rt/*=false*/) {
     if (note == ValueNone)
         return;
     Message msg;
@@ -138,7 +138,10 @@ void Player::on_note(int channel, int note) {
         msg.data1 = note;
         msg.data2 = 0;
     }
-    messages.push(msg);
+    if (rt)
+        rt_messages.push(msg);
+    else
+        messages.push(msg);
 }
 
 void Player::play_event(const class PatternEvent &event) {
@@ -147,15 +150,13 @@ void Player::play_event(const class PatternEvent &event) {
     int note = event.value;
     if (note == ValueNone)
         return;
-    on_note(event.channel, note);
+    on_note(event.channel, note, true);
 }
 
-void Player::mix() {
-    if (!playing)
-        return;
+void Player::mix_events(int samples) {
     assert(model);
     
-    long long target = read_samples + ((long long)PreMixSize<<32);
+    long long target = read_samples + ((long long)samples<<32);
     long long framesize = get_frame_size();
     int mixed = 0;
     while (write_samples < target)
@@ -168,7 +169,12 @@ void Player::mix() {
         write_samples += framesize;
         mixed++;
     }
-    //printf("mixed %i frames\n", mixed);
+}
+
+void Player::mix() {
+    if (!playing)
+        return;
+    mix_events(PreMixSize);
 }
 
 void Player::init_message(Message &msg) {
@@ -229,6 +235,7 @@ void Player::handle_message(Message msg) {
             values.note = ValueNone;
             on_message(off_msg);
         }
+        values.note = msg.data1;
         msg.data2 = values.volume;
         on_message(msg);
         return;
@@ -251,9 +258,13 @@ void Player::process_messages(int _size) {
         
         if (messages.get_read_size()) {
             next_msg = messages.peek();
-            delta = std::min(std::max(
-                next_msg.timestamp - read_samples,(long long)0L),size);
-            if (delta < size) {
+            delta = std::min(
+                next_msg.timestamp - read_samples,size);
+            if (delta < 0) {
+                // drop
+                messages.pop();
+                delta = 0;
+            } if (delta < size) {
                 msg = messages.pop();
                 read_position = msg.frame;
                 read_frame_block = 0;
