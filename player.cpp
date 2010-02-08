@@ -209,15 +209,37 @@ void Player::mix_track(Track &track) {
 }
 
 void Player::handle_message(Message msg) {
-    switch(msg.command) {
-        case MIDI::CommandControlChange:
-        {
-            if (msg.data1 == CCVolume) {
-            } else {
-            }
-        } break;
+    Bus &bus = buses[0];
+    Channel &values = bus.channels[msg.bus_channel];
+    
+    if (msg.command == MIDI::CommandControlChange) {
+        if (msg.data1 == CCVolume) {
+            values.volume = msg.data2;
+        } else {
+            on_message(msg);
+        }
+        return;
+    } else if (msg.command == MIDI::CommandNoteOff) {
+        if (values.note != ValueNone) {
+            msg.data1 = values.note;
+            msg.data2 = 0;
+            values.note = ValueNone;
+            on_message(msg);            
+        }
+        return;
+    } else if (msg.command == MIDI::CommandNoteOn) {
+        if (values.note != ValueNone) {
+            Message off_msg(msg);
+            off_msg.command = MIDI::CommandNoteOff;
+            off_msg.data1 = values.note;
+            off_msg.data2 = 0;
+            values.note = ValueNone;
+            on_message(off_msg);
+        }
+        msg.data2 = values.volume;
+        on_message(msg);
+        return;
     }
-    on_message(msg);
 }
 
 void Player::process_messages(int _size) {

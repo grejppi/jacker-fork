@@ -247,6 +247,7 @@ public:
         if (!player.init())
             return;
         builder = Gtk::Builder::create_from_file("jacker.glade");
+        assert(builder);
         
         builder->get_widget("main", window);
         assert(window);

@@ -5,10 +5,33 @@ import sys
 win32 = sys.platform == 'win32'
 
 if win32:
-    GTKMM_LIBS = "glademm-vc90-2_4.lib xml++-vc90-2_6.lib gtkmm-vc90-2_4.lib glade-2.0.lib gdkmm-vc90-2_4.lib atkmm-vc90-1_6.lib pangomm-vc90-1_4.lib giomm-vc90-2_4.lib glibmm-vc90-2_4.lib cairomm-vc90-1_0.lib sigc-vc90-2_0.lib gtk-win32-2.0.lib libxml2.lib gdk-win32-2.0.lib atk-1.0.lib gdk_pixbuf-2.0.lib pangowin32-1.0.lib pangocairo-1.0.lib pango-1.0.lib cairo.lib gio-2.0.lib gobject-2.0.lib gmodule-2.0.lib glib-2.0.lib intl.lib iconv.lib".split(' ')
-
-    env = Environment(
-        ENV = os.environ,
+    LINKFLAGS = [
+        #"/SUBSYSTEM:WINDOWS",
+        "/NOLOGO",
+        "/SUBSYSTEM:CONSOLE",
+    ]
+    
+    if 1:
+        # debug
+        GTKMM_LIBS = "glademm-vc90-d-2_4.lib xml++-vc90-d-2_6.lib gtkmm-vc90-d-2_4.lib glade-2.0.lib gdkmm-vc90-d-2_4.lib atkmm-vc90-d-1_6.lib pangomm-vc90-d-1_4.lib giomm-vc90-d-2_4.lib glibmm-vc90-d-2_4.lib cairomm-vc90-d-1_0.lib sigc-vc90-d-2_0.lib gtk-win32-2.0.lib libxml2.lib gdk-win32-2.0.lib atk-1.0.lib gdk_pixbuf-2.0.lib pangowin32-1.0.lib pangocairo-1.0.lib pango-1.0.lib cairo.lib gio-2.0.lib gobject-2.0.lib gmodule-2.0.lib glib-2.0.lib intl.lib iconv.lib".split(' ')
+        CXXFLAGS = [
+            "/EHsc",
+            "/arch:SSE",
+            "/MTd",
+            "/DWIN32",
+            "/DDEBUG",
+            "/D_DEBUG",
+            "/D",        
+            "/vd2",
+            "/fp:fast",
+            "/Zi",
+        ]
+        LINKFLAGS += [
+            "/DEBUG",
+        ]
+    else:
+        # release
+        GTKMM_LIBS = "glademm-vc90-2_4.lib xml++-vc90-2_6.lib gtkmm-vc90-2_4.lib glade-2.0.lib gdkmm-vc90-2_4.lib atkmm-vc90-1_6.lib pangomm-vc90-1_4.lib giomm-vc90-2_4.lib glibmm-vc90-2_4.lib cairomm-vc90-1_0.lib sigc-vc90-2_0.lib gtk-win32-2.0.lib libxml2.lib gdk-win32-2.0.lib atk-1.0.lib gdk_pixbuf-2.0.lib pangowin32-1.0.lib pangocairo-1.0.lib pango-1.0.lib cairo.lib gio-2.0.lib gobject-2.0.lib gmodule-2.0.lib glib-2.0.lib intl.lib iconv.lib".split(' ')
         CXXFLAGS = [
             "/EHsc",
             "/arch:SSE",
@@ -20,14 +43,15 @@ if win32:
             "/MT",
             "/DWIN32",
             "/vd2",
-        ],
-        LINKFLAGS = [
-            #"/SUBSYSTEM:WINDOWS",
-            "/NOLOGO",
-            "/SUBSYSTEM:CONSOLE",
-        ],
+        ]
+
+    env = Environment(
+        ENV = os.environ,
+        CXXFLAGS = CXXFLAGS,
+        LINKFLAGS = LINKFLAGS,
         CPPPATH = [
             "win32/include",
+            ".",
         ],
         LIBPATH = [
             "win32/lib",

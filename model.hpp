@@ -18,6 +18,12 @@ inline typename std::map<Key_T,T>::iterator extract_iterator(
 }
 
 template<typename Key_T, typename T>
+inline typename std::map<Key_T,T>::iterator extract_iterator(
+    std::pair< typename std::map<Key_T,T>::iterator, bool> result) {
+    return result.first;
+}
+
+template<typename Key_T, typename T>
 inline typename std::multimap<Key_T,T>::iterator extract_iterator(
     typename std::multimap<Key_T,T>::iterator result) {
     return result;
