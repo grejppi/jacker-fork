@@ -149,6 +149,15 @@ int Pattern::get_length() const {
 
 void Pattern::set_channel_count(int count) {
     this->channel_count = std::min(std::max(count, 1), (int)MaxChannels);
+    bool clipped = false;
+    for (iterator iter = begin(); iter != end(); ++iter) {
+        if (iter->second.channel >= channel_count) {
+            iter->second.frame = -1; // mark for delete
+            clipped = true;
+        }
+    }
+    if (clipped)
+        update_keys();
 }
 
 int Pattern::get_channel_count() const {
