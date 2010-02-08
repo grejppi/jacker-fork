@@ -227,6 +227,12 @@ public:
         trackview_menu->popup(event->button, event->time);
     }
     
+    void on_seek_request(int frame) {
+        if (!player)
+            return;
+        player->set_position(frame);
+    }
+    
     void init_track_view() {
         builder->get_widget_derived("track_view", track_view);
         assert(track_view);
@@ -253,7 +259,10 @@ public:
             
         builder->get_widget_derived("track_measure", track_measure);
         assert(track_measure);
-        track_measure->set_adjustment(track_vscroll->get_adjustment());
+        track_measure->set_model(model);
+        track_measure->set_adjustment(track_hscroll->get_adjustment());
+        track_measure->signal_seek_request().connect(
+            sigc::mem_fun(*this, &App::on_seek_request));
     }
     
     void init_timer() {

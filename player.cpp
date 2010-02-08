@@ -73,11 +73,14 @@ void Player::play() {
     write_samples = 0;
     messages.clear();
     mix_events(PreMixSize);// fill buffer
+    read_position = position;
     playing = true;
 }
 
 void Player::set_position(int position) {
+    stop();
     this->position = position;
+    play();
 }
 
 int Player::get_position() const {

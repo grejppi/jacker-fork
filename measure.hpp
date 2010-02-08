@@ -12,8 +12,12 @@ namespace Jacker {
 
 class MeasureView : public Gtk::Widget {
 public:
+    typedef sigc::signal<void, int> type_seek_request;
+
     MeasureView(BaseObjectType* cobject, 
                 const Glib::RefPtr<Gtk::Builder>& builder);
+
+    void set_model(class Model &model);
 
     virtual void on_realize();
     virtual bool on_expose_event(GdkEventExpose* event);
@@ -31,11 +35,17 @@ public:
     Glib::RefPtr<Gdk::Colormap> cm;
     Glib::RefPtr<Pango::Layout> pango_layout;
     std::vector<Gdk::Color> colors;
+    
+    type_seek_request signal_seek_request();
 protected:
+    void on_seek(int x);
     void invalidate();
     void on_adjustment_value_changed();
 
     Gtk::Adjustment *adjustment;
+    Model *model;
+
+    type_seek_request _seek_request;
 };
     
 } // namespace Jacker

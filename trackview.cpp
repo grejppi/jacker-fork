@@ -104,7 +104,7 @@ TrackView::TrackView(BaseObjectType* cobject,
     origin_x = 0;
     origin_y = 0;
     model = NULL;
-    zoomlevel = 1;
+    zoomlevel = 0;
     hadjustment = NULL;
     vadjustment = NULL;
     snap_mode = SnapBar;
@@ -217,7 +217,7 @@ void TrackView::render_track(Track &track) {
     get_event_pos(0, track.order, x, y);
     
     gc->set_foreground(colors[ColorTrack]);
-    window->draw_rectangle(gc, true, x, y, width, TrackHeight);
+    window->draw_rectangle(gc, true, 0, y, width, TrackHeight);
 }
 
 bool TrackView::on_expose_event(GdkEventExpose* event) {
