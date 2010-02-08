@@ -28,6 +28,8 @@ public:
     struct Message : MIDI::Message {
         long long timestamp;
         int frame;
+        int bus;
+        int bus_channel;
         
         Message();
     };

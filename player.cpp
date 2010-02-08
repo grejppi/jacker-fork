@@ -11,6 +11,10 @@ enum {
     PreMixSize = 44100,
 };
 
+enum {
+    CCVolume = 255,
+};
+
 //=============================================================================
 
 Player::Channel::Channel() {
@@ -29,6 +33,8 @@ Player::Bus::Bus() {
 Player::Message::Message() {
     timestamp = 0;
     frame = 0;
+    bus = 0;
+    bus_channel = 0;
 }
 
 Player::Player() : messages(MaxMessageCount) {
@@ -104,41 +110,42 @@ void Player::on_cc(int ccindex, int ccvalue) {
 void Player::on_volume(int channel, int volume) {
     if (volume == ValueNone)
         return;
-    Bus &bus = buses[0];
-    Channel &values = bus.channels[channel];    
-    values.volume = volume;
+    int midi_channel = 0;
+    
+    Message msg;
+    init_message(msg);
+    msg.bus_channel = channel;
+    msg.command = MIDI::CommandControlChange;
+    msg.channel = midi_channel;
+    msg.data1 = CCVolume;
+    msg.data2 = volume;
+    messages.push(msg);    
 }
 
 void Player::on_note(int channel, int note) {
     if (note == ValueNone)
         return;
-    Bus &bus = buses[0];
     int midi_channel = 0;
     
-    Channel &values = bus.channels[channel];
-    if (values.note != ValueNone) {
-        Message msg;
-        init_message(msg);
-        msg.command = MIDI::CommandNoteOff;
-        msg.channel = midi_channel;
-        msg.data1 = values.note;
-        msg.data2 = values.volume;
-        messages.push(msg);
-        
-        values.note = ValueNone;
-    }
     if (note != NoteOff) {
         Message msg;
         init_message(msg);
-        msg.command = MIDI::CommandNoteOn;
+        msg.bus_channel = channel;
+        msg.command = MIDI::CommandNoteOff;
         msg.channel = midi_channel;
-        msg.data1 = note;
-        msg.data2 = values.volume;
+        msg.data1 = 0;
+        msg.data2 = 0;
         messages.push(msg);
-        
-        values.note = note;
     }
     
+    Message msg;
+    init_message(msg);
+    msg.bus_channel = channel;
+    msg.command = MIDI::CommandNoteOn;
+    msg.channel = midi_channel;
+    msg.data1 = note;
+    msg.data2 = 0;
+    messages.push(msg);
 }
 
 void Player::play_event(const class PatternEvent &event) {
