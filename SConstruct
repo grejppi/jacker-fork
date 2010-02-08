@@ -140,5 +140,6 @@ objects = env.Object(['jack.cpp',
      'model.cpp'] + json_files)
 gtk_objects = gtk_env.Object(['main.cpp',
      'trackview.cpp',
-     'patternview.cpp'])
+     'patternview.cpp',
+     'measure.cpp'])
 gtk_env.Program('jacker', objects + gtk_objects)

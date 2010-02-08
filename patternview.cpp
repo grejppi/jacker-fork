@@ -1300,7 +1300,7 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
                     new_cursor.prev_channel();
                 else
                     new_cursor.next_channel();
-                set_cursor(new_cursor,shift_down);
+                set_cursor(new_cursor);
                 return true;
             } break;
             default: {

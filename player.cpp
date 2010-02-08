@@ -249,6 +249,8 @@ void Player::process_messages(int _size) {
     Message next_msg;
     Message msg;
     while (size) {
+        bool block_set = false;
+        
         while (rt_messages.get_read_size()) {
             msg = rt_messages.pop();
             msg.timestamp = 0;
@@ -268,6 +270,7 @@ void Player::process_messages(int _size) {
                 msg = messages.pop();
                 read_position = msg.frame;
                 read_frame_block = 0;
+                block_set = true;
                 msg.timestamp = offset;
                 handle_message(msg);
             }
