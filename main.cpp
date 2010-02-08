@@ -86,6 +86,7 @@ public:
     }
     
     void on_play_action() {
+        init_player();
         if (!player)
             return;
         player->play();
@@ -243,22 +244,26 @@ public:
             sigc::mem_fun(*track_view, &TrackView::add_track));
     }
     
-    void init_player() {
+    void init_timer() {
         sigc::slot<bool> mix_timer_slot = sigc::bind(
             sigc::mem_fun(*this, &App::mix), 0);
         mix_timer = Glib::signal_timeout().connect(mix_timer_slot,
             100);
     }
     
+    void init_player() {
+        if (player)
+            return;
+        player = new JackPlayer();
+        player->set_model(model);
+        if (!player->init()) {
+            delete player;
+            player = NULL;
+        }
+    }
+    
     void run() {
-        if (!player) {
-            player = new JackPlayer();
-            player->set_model(model);
-            if (!player->init()) {
-                delete player;
-                player = NULL;
-            }
-        }        
+        init_player();       
         
         builder = Gtk::Builder::create_from_file("jacker.glade");
         assert(builder);
@@ -273,7 +278,7 @@ public:
         init_model();
         init_pattern_view();
         init_track_view();
-        init_player();
+        init_timer();
         
         load_song("dump.jsong");
         
