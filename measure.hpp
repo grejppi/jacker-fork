@@ -12,6 +12,11 @@ namespace Jacker {
 
 class MeasureView : public Gtk::Widget {
 public:
+    enum Orientation {
+        OrientationHorizontal = 0,
+        OrientationVertical,
+    };
+    
     typedef sigc::signal<void, int> type_seek_request;
 
     MeasureView(BaseObjectType* cobject, 
@@ -29,6 +34,7 @@ public:
     virtual void on_size_allocate(Gtk::Allocation& allocation);
 
     void set_adjustment(Gtk::Adjustment *adjustment);
+    void set_orientation(Orientation orientation);
 
     Glib::RefPtr<Gdk::Window> window;
     Glib::RefPtr<Gdk::GC> gc;
@@ -41,7 +47,10 @@ protected:
     void on_seek(int x);
     void invalidate();
     void on_adjustment_value_changed();
+    void draw_horizontal();
+    void draw_vertical();
 
+    Orientation orientation;
     Gtk::Adjustment *adjustment;
     Model *model;
 

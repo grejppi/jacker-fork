@@ -17,6 +17,7 @@ MeasureView::MeasureView(BaseObjectType* cobject,
     : Gtk::Widget(cobject) {
     adjustment = NULL;
     model = NULL;
+    orientation = OrientationHorizontal;
     colors.resize(ColorCount);
     colors[ColorBlack].set("#000000");
     colors[ColorWhite].set("#FFFFFF");
@@ -25,6 +26,11 @@ MeasureView::MeasureView(BaseObjectType* cobject,
 
 void MeasureView::set_model(class Model &model) {
     this->model = &model;
+}
+
+void MeasureView::set_orientation(Orientation orientation) {
+    this->orientation = orientation;
+    invalidate();
 }
 
 void MeasureView::on_realize() {
@@ -47,7 +53,7 @@ void MeasureView::on_realize() {
     pango_layout->set_width(-1);
 }
 
-bool MeasureView::on_expose_event(GdkEventExpose* event) {
+void MeasureView::draw_horizontal() {
     int width = 0;
     int height = 0;
     window->get_size(width, height);
@@ -83,7 +89,59 @@ bool MeasureView::on_expose_event(GdkEventExpose* event) {
     }
     
     window->draw_rectangle(gc, true, 0, height-1, width, 1);
+}
+
+void MeasureView::draw_vertical() {
+    int width = 0;
+    int height = 0;
+    window->get_size(width, height);
     
+    // clear screen
+    gc->set_foreground(colors[ColorBackground]);
+    window->draw_rectangle(gc, true, 0, 0, width, height);
+    
+    double value = int(adjustment->get_value()+0.5);
+    double page_size = adjustment->get_page_size();
+    double scale = (double)height / page_size;
+    
+    int fpb = model->get_frames_per_bar();
+    int fpbt = model->frames_per_beat;
+    
+    int frame = (int)value;
+    frame -= (frame%fpb);
+    
+    gc->set_foreground(colors[ColorBlack]);
+    
+    int end_frame = value + page_size;
+    char buffer[16];    
+    for (int i = frame; i < end_frame; i += fpbt) {
+        int y = int(((i-value)*scale)+0.5);
+        int beat = i / fpbt;
+        if (!(beat % model->beats_per_bar)) {
+            int bar = i/ fpb;
+            window->draw_rectangle(gc, true, 0, y, width, 1);
+            sprintf(buffer, "%i", bar);
+            pango_layout->set_text(buffer);
+            window->draw_layout(gc, 0, y+2, pango_layout);
+        } else {
+            window->draw_rectangle(gc, true, width/2, y, width/2, 1);
+        }
+    }
+    
+    window->draw_rectangle(gc, true, width-1, 0, 1, height);
+}
+
+bool MeasureView::on_expose_event(GdkEventExpose* event) {
+    switch(orientation) {
+        case OrientationHorizontal:
+        {
+            draw_horizontal();
+        } break;
+        case OrientationVertical:
+        {
+            draw_vertical();
+        } break;
+    }
     return true;
 }
 

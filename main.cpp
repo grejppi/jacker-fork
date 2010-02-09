@@ -61,6 +61,7 @@ public:
 
     Gtk::Window* window;
     PatternView *pattern_view;
+    MeasureView *pattern_measure;
     Gtk::Entry *play_frames;
 
     TrackView *track_view;
@@ -84,6 +85,7 @@ public:
         pattern_view = NULL;
         track_view = NULL;
         track_measure = NULL;
+        pattern_measure = NULL;
         play_frames = NULL;
         trackview_menu = NULL;
         view_notebook = NULL;
@@ -200,6 +202,9 @@ public:
         player->play_event(event);
     }
     
+    void on_pattern_seek_request(int frame) {
+    }
+    
     void init_pattern_view() {
         builder->get_widget_derived("pattern_view", pattern_view);
         assert(pattern_view);
@@ -216,6 +221,14 @@ public:
         
         pattern_view->signal_play_event_request().connect(
             sigc::mem_fun(*this, &App::on_pattern_view_play_event));
+        
+        builder->get_widget_derived("pattern_measure", pattern_measure);
+        assert(pattern_measure);
+        pattern_measure->set_model(model);
+        pattern_measure->set_adjustment(pattern_vscroll->get_adjustment());
+        pattern_measure->signal_seek_request().connect(
+            sigc::mem_fun(*this, &App::on_pattern_seek_request));
+        pattern_measure->set_orientation(MeasureView::OrientationVertical);
     }
     
     void on_track_view_edit_pattern(Pattern *pattern) {

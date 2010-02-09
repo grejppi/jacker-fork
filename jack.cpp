@@ -17,9 +17,10 @@ static bool handle_status(int status)
 		printf("JACK: Overall operation failed.\n");
 	else if (status & JackInvalidOption)
 		printf("JACK: The operation contained an invalid or unsupported option.\n");
-	else if (status & JackNameNotUnique)
+	else if (status & JackNameNotUnique) {
 		printf("JACK: The desired client name was not unique.\n");
-	else if (status & JackServerFailed)
+        return true;
+	} else if (status & JackServerFailed)
 		printf("JACK: Unable to connect to the JACK server.\n");
 	else if (status & JackServerError)
 		printf("JACK: Communication error with the JACK server.\n");
