@@ -422,14 +422,21 @@ bool TrackView::can_resize_event(const TrackEventRef &ref, int x) {
 void TrackView::render_select_box() {
     int x,y,w,h;
     drag.get_rect(x,y,w,h);
-    gc->set_foreground(colors[ColorBlack]);
-    window->draw_rectangle(gc, false, 
+    if (w <= 1)
+        return;
+    if (h <= 1)
+        return;
+    window->draw_rectangle(xor_gc, false, 
         x,y,w-1,h-1);
 }
 
 void TrackView::invalidate_select_box() {
     int x,y,w,h;
     drag.get_rect(x,y,w,h);
+    if (w <= 1)
+        return;
+    if (h <= 1)
+        return;
     Gdk::Rectangle rect(x,y,w,h);
     window->invalidate_rect(rect, true);
 }
