@@ -5,13 +5,6 @@
 #include <cmath>
 #include <algorithm>
 
-/*
-TODO:
-
-- implement pattern resize
-- implement 
-*/
-
 namespace Jacker {
 
 enum {

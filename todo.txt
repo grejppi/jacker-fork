@@ -1,0 +1,69 @@
+This is an assorted, unmaintained, always outdated TODO list that I use to write down fixes, plans and ideas.
+
+- player/jack:
+    - jack transport support
+    - LASH/LADI support
+    - fix borked change position request
+
+- global:
+    - bpm (tempo) entry
+    - beats per bar entry
+    - frames per beat entry
+    - undo/redo
+    - proper open/save/save as
+    - status bar
+
+- pattern view:
+    - copy/paste
+    - fix borked measure
+    - reposition play cursor on measure click
+    - status bar: display row, channel, param, value
+
+- track header view:
+    - track name
+    - jack port
+    - midi channel
+    - mute/solo track
+    - midi channel volume
+    - midi bank/instrument
+    
+- track view:
+    - loop begin/end
+    - delete selection
+    - copy/paste
+    - clone (reference to same pattern)
+    - zooming controls
+    - fix borked track view selection
+        + don't clear selection after move/resize
+    - rename pattern
+
+- global keyboard commands:
+    - F3: go to pattern editor
+    - F4: go to sequencer
+    - F5: play song
+    - F7: play from pattern row
+    - F8: stop song
+
+- track view: keyboard commands:
+    - left/right: select prev/next pattern
+    - shift+left/right: multiselect prev/next pattern
+    - up/down: select prev/next track
+    - shift+up/down: multiselect patterns across tracks
+    - ctrl+left/right: expand/contract pattern
+    - ctrl+up/down: move track up/down
+    - ctrl+plus: add pattern after current one and select
+    - alt+left/right/up/down: move pattern
+    - return: edit pattern in pattern editor
+    - F2: rename pattern
+
+- new major features:
+    - midi input recording
+    - set song position on midi input
+    - multiple loop sections
+    - mute track events
+    - split patterns
+    - join patterns
+    - jsongz: zipped jsong
+    - MID export
+    - resize event independent from pattern:
+        - event longer than pattern: loop
