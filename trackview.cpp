@@ -29,6 +29,12 @@ TrackCursor::TrackCursor() {
     frame = 0;
 }
 
+TrackCursor::TrackCursor(TrackView &view) {
+    this->view = &view;
+    track = 0;
+    frame = 0;
+}
+
 void TrackCursor::set_view(TrackView &view) {
     this->view = &view;
 }
@@ -96,6 +102,22 @@ void Drag::get_delta(int &delta_x, int &delta_y) {
     delta_y = (y - start_y);
 }
 
+void Drag::get_rect(int &x, int &y, int &w, int &h) {
+    int x0,y0,x1,y1;
+    x0 = this->start_x;
+    y0 = this->start_y;
+    x1 = this->x;
+    y1 = this->y;
+    if (x0 > x1)
+        std::swap(x0,x1);
+    if (y0 > y1)
+        std::swap(y0,y1);
+    x = x0;
+    y = y0;
+    w = std::abs(x1 - x0);
+    h = std::abs(y1 - y0);
+}
+
 //=============================================================================
 
 TrackView::TrackView(BaseObjectType* cobject, 
@@ -109,7 +131,6 @@ TrackView::TrackView(BaseObjectType* cobject,
     vadjustment = NULL;
     snap_mode = SnapBar;
     interact_mode = InteractNone;
-    cursor.set_view(*this);
     colors.resize(ColorCount);
     colors[ColorBlack].set("#000000");
     colors[ColorWhite].set("#FFFFFF");
@@ -271,6 +292,10 @@ bool TrackView::on_expose_event(GdkEventExpose* event) {
     int play_x, play_y;
     get_event_pos(play_position, 0, play_x, play_y);
     window->draw_rectangle(xor_gc, true, play_x, 0, 2, height);
+    
+    if (selecting()) {
+        render_select_box();
+    }
 
     return true;
 }
@@ -339,6 +364,10 @@ bool TrackView::resizing() const {
     return (interact_mode == InteractResize);
 }
 
+bool TrackView::selecting() const {
+    return (interact_mode == InteractSelect);
+}
+
 bool TrackView::on_button_press_event(GdkEventButton* event) {
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     /*
@@ -351,11 +380,11 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
     grab_focus();
     
     if (event->button == 1) {
-        TrackCursor cur(cursor);
+        TrackCursor cur(*this);
         cur.set_pos(event->x, event->y);
         TrackEventRef ref;
 
-        if (!ctrl_down && (selection.size() == 1))
+        if (!ctrl_down)
             clear_selection();
         
         if (find_event(cur, ref)) {
@@ -375,7 +404,8 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
             cur.set_frame(quantize_frame(cur.get_frame()));
             new_pattern(cur);
         } else {
-            clear_selection();
+            interact_mode = InteractSelect;
+            drag.start(event->x, event->y);
         }
     } else if (event->button == 3) {
         _signal_context_menu(this, event);
@@ -389,9 +419,28 @@ bool TrackView::can_resize_event(const TrackEventRef &ref, int x) {
     return std::abs(x - (ex+ew)) < ResizeThreshold;
 }
 
+void TrackView::render_select_box() {
+    int x,y,w,h;
+    drag.get_rect(x,y,w,h);
+    gc->set_foreground(colors[ColorBlack]);
+    window->draw_rectangle(gc, false, 
+        x,y,w-1,h-1);
+}
+
+void TrackView::invalidate_select_box() {
+    int x,y,w,h;
+    drag.get_rect(x,y,w,h);
+    Gdk::Rectangle rect(x,y,w,h);
+    window->invalidate_rect(rect, true);
+}
+    
+void TrackView::select_from_box() {
+    
+}
+
 bool TrackView::on_motion_notify_event(GdkEventMotion *event) {    
     if (interact_mode == InteractNone) {
-        TrackCursor cur(cursor);
+        TrackCursor cur(*this);
         cur.set_pos(event->x, event->y);
         TrackEventRef ref;
         if (find_event(cur, ref)) {
@@ -407,7 +456,7 @@ bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
         drag.update(event->x, event->y);
         if (drag.threshold_reached()) {
             invalidate_selection();
-            TrackCursor cur(cursor);
+            TrackCursor cur(*this);
             cur.set_pos(drag.start_x, drag.start_y);
             TrackEventRef ref;
             if (find_event(cur, ref) && can_resize_event(ref,drag.start_x)) {
@@ -421,6 +470,11 @@ bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
         invalidate_selection();
         drag.update(event->x, event->y);
         invalidate_selection();
+    }
+    else if (selecting()) {
+        invalidate_select_box();
+        drag.update(event->x, event->y);
+        invalidate_select_box();
     }
     return true;
 }
@@ -479,8 +533,7 @@ void TrackView::apply_resize() {
     for (EventSet::iterator iter = selection.begin();
         iter != selection.end(); ++iter) {
         const TrackEventRef &ref = *iter;
-        Track::Event &event = ref.iter->second;
-        
+        Track::Event &event = ref.iter->second;        
         int length = std::max(event.pattern->get_length() + ofs_frame, 
             get_step_size());
             
@@ -495,6 +548,9 @@ bool TrackView::on_button_release_event(GdkEventButton* event) {
         apply_move();
     } else if (resizing()) {
         apply_resize();
+    } else if (selecting()) {
+        invalidate_select_box();
+        select_from_box();
     }
     interact_mode = InteractNone;
     invalidate_selection();
@@ -502,6 +558,10 @@ bool TrackView::on_button_release_event(GdkEventButton* event) {
 }
 
 bool TrackView::on_key_press_event(GdkEventKey* event) {
+    switch (event->keyval) {
+        case GDK_Delete: erase_events(); break;
+        default: break;
+    }
     return false;
 }
 
@@ -576,6 +636,16 @@ void TrackView::invalidate_selection() {
         Gdk::Rectangle rect(x,y,w,h);
         window->invalidate_rect(rect, true);
     }
+}
+
+void TrackView::erase_events() {
+    invalidate_selection();
+    EventSet::iterator iter;
+    for (iter = selection.begin(); iter != selection.end(); ++iter) {
+        iter->track->erase(iter->iter);
+    }
+    
+    selection.clear();
 }
 
 void TrackView::set_play_position(int pos) {

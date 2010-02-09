@@ -18,6 +18,7 @@ class TrackView;
 
 class TrackCursor {
 public:
+    TrackCursor(TrackView &view);
     TrackCursor();
     
     void set_view(TrackView &view);
@@ -60,6 +61,7 @@ public:
     // returns true if the threshold has been reached
     bool threshold_reached();
     void get_delta(int &delta_x, int &delta_y);
+    void get_rect(int &x, int &y, int &w, int &h);
 };
 
 //=============================================================================
@@ -75,6 +77,7 @@ public:
         InteractDrag,
         InteractMove,
         InteractResize,
+        InteractSelect,
     };
     
     enum SnapMode {
@@ -133,6 +136,7 @@ public:
     void add_track();
     void new_pattern(const TrackCursor &cursor);
     void edit_pattern(const TrackEventRef &ref);
+    void erase_events();
     
     type_pattern_edit_request signal_pattern_edit_request();
     type_context_menu signal_context_menu();
@@ -141,6 +145,9 @@ protected:
     void invalidate_play_position();
     void render_event(const TrackEventRef &ref);
     void render_track(Track &track);
+    void render_select_box();
+    void invalidate_select_box();
+    void select_from_box();
 
     bool can_resize_event(const TrackEventRef &ref, int x);
     void get_drag_offset(int &frame, int &track);
@@ -150,6 +157,7 @@ protected:
     bool resizing() const;
     bool dragging() const;
     bool moving() const;
+    bool selecting() const;
 
     void apply_move();
     void apply_resize();
@@ -172,7 +180,6 @@ protected:
 
     Model *model;
     EventSet selection;
-    TrackCursor cursor;
 
     type_pattern_edit_request _pattern_edit_request;
     type_context_menu _signal_context_menu;

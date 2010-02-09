@@ -4,6 +4,7 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - jack transport support
     - LASH/LADI support
     - fix borked change position request
+    
 
 - global:
     - bpm (tempo) entry
@@ -28,8 +29,8 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - midi bank/instrument
     
 - track view:
+    - box select
     - loop begin/end
-    - delete selection
     - copy/paste
     - clone (reference to same pattern)
     - zooming controls
