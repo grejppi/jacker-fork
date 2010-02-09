@@ -37,7 +37,7 @@ public:
     Player();
     void reset();
     void mix();
-    void mix_track(class Track &track);
+    void mix_frame();
     void process_messages(int size);
     virtual void on_message(const Message &msg) {}
     

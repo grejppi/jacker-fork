@@ -160,20 +160,23 @@ protected:
 
 //=============================================================================
 
-struct TrackEvent {
+struct SongEvent {
     int frame;
+    int track;
     Pattern *pattern;
     
-    TrackEvent();
-    TrackEvent(int frame, Pattern &pattern);
+    SongEvent();
+    SongEvent(int frame, int track, Pattern &pattern);
     
     int key() const;
     int get_last_frame() const;
 };
 
-class Track : public EventCollection< std::map<int,TrackEvent> > {
+class Song : public EventCollection< std::multimap<int,SongEvent> > {
     friend class Model;
 public:
+    typedef std::list<iterator> EventList;
+
     // name of track (non-unique)
     std::string name;
     // order of track
@@ -183,27 +186,11 @@ public:
     iterator add_event(int frame, Pattern &pattern);
 
     iterator get_event(int frame);
-    iterator find_event(int frame);
 
+    void find_events(int frame, EventList &events);
 protected:
-    Track();
+    Song();
 };
-
-//=============================================================================
-
-struct TrackEventRef {
-    Track *track;
-    Track::iterator iter;
-    
-    TrackEventRef();
-    TrackEventRef(Track &track, Track::iterator iter);
-    
-    bool operator ==(const TrackEventRef &other) const;
-    bool operator !=(const TrackEventRef &other) const;
-    bool operator <(const TrackEventRef &other) const;
-};
-
-typedef std::list<TrackEventRef> TrackEventRefList;
 
 //=============================================================================
 
@@ -221,7 +208,6 @@ struct Measure {
 //=============================================================================
 
 typedef std::list<Pattern*> PatternList;
-typedef std::vector<Track*> TrackArray;
 
 //=============================================================================
 
@@ -229,9 +215,9 @@ class Model {
 public:
     // list of all patterns
     PatternList patterns;
-    
-    // list of all tracks
-    TrackArray tracks;
+
+    // contains all song events
+    Song song;
     
     // end cue in frames
     int end_cue;
@@ -246,15 +232,9 @@ public:
     
     Model();
     Pattern &new_pattern();
-    Track &new_track();
-    void renumber_tracks();
     
     int get_track_count() const;
-    Track &get_track(int track);
-    
-    void find_events(int frame, TrackEventRefList &refs);
-    void delete_event(const TrackEventRef &ref);
-    
+        
     int get_frames_per_bar() const;
 };
 

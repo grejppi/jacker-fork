@@ -162,10 +162,7 @@ void Player::mix_events(int samples) {
     int mixed = 0;
     while (write_samples < target)
     {
-        TrackArray::iterator iter;
-        for (iter = model->tracks.begin(); iter != model->tracks.end(); ++iter) {
-            mix_track(*(*iter));
-        }
+        mix_frame();
         position++;
         write_samples += framesize;
         mixed++;
@@ -183,12 +180,14 @@ void Player::init_message(Message &msg) {
     msg.frame = position;
 }
 
-void Player::mix_track(Track &track) {
+void Player::mix_frame() {
     assert(model);
     
-    Track::iterator iter = track.find_event(position);
-    if (iter == track.end())
+    Song::EventList events;
+    model.song.find_events(position, events);
+    if (events.empty())
         return;
+    
     Track::Event &event = iter->second;
     Pattern &pattern = *event.pattern;
     Pattern::iterator row_iter = pattern.begin();

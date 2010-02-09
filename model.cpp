@@ -220,82 +220,54 @@ void Pattern::update_keys() {
 
 //=============================================================================
 
-TrackEvent::TrackEvent() {
+SongEvent::SongEvent() {
     frame = ValueNone;
     pattern = NULL;
+    track = 0;
 }
 
-TrackEvent::TrackEvent(int frame, Pattern &pattern) {
+SongEvent::SongEvent(int frame, int track, Pattern &pattern) {
     this->frame = frame;
+    this->track = track;
     this->pattern = &pattern;
 }
 
-int TrackEvent::key() const {
+int SongEvent::key() const {
     return frame;
 }
 
-int TrackEvent::get_last_frame() const {
+int SongEvent::get_last_frame() const {
     return frame + pattern->get_length() - 1;
 }
 
 //=============================================================================
 
-Track::Track() {
+Song::Song() {
     order = -1;
 }
 
-Track::iterator Track::add_event(const Event &event) {
+Song::iterator Song::add_event(const Event &event) {
     return BaseClass::add_event(event);
 }
 
-Track::iterator Track::add_event(int frame, Pattern &pattern) {
+Song::iterator Song::add_event(int frame, Pattern &pattern) {
     return add_event(Event(frame, pattern));
 }
 
-Track::iterator Track::get_event(int frame) {
+Song::iterator Song::get_event(int frame) {
     return BaseClass::find(frame);
 }
 
-Track::iterator Track::find_event(int frame) {
-    Track::iterator iter = upper_bound(frame);
-    if (iter == begin())
-        return end();
-    iter--;
-    Track::Event &event = iter->second;
-    if (event.get_last_frame() < frame)
-        return end(); // already ended
-    return iter;
-}
-
-//=============================================================================
-
-TrackEventRef::TrackEventRef() {
-    track = NULL;
-}
-
-TrackEventRef::TrackEventRef(Track &track, Track::iterator iter) {
-    this->track = &track;
-    this->iter = iter;
-}
-
-bool TrackEventRef::operator ==(const TrackEventRef &other) const {
-    if (track != other.track)
-        return false;
-    if (iter != other.iter)
-        return false;
-    return true;
-}
-
-bool TrackEventRef::operator !=(const TrackEventRef &other) const {
-    return !(*this == other);
-}
-
-bool TrackEventRef::operator <(const TrackEventRef &other) const {
-    if (track->order < other.track->order)
-        return true;
-    if (iter->second.frame < other.iter->second.frame)
-        return true;
-    return false;
+void Song::find_events(int frame, EventList &events) {
+    events.clear();
+    Song::iterator iter;
+    for (iter = begin(); iter != end(); ++iter) {
+        if (iter->second.frame > frame)
+            continue;
+        if (iter->second.get_last_frame() < frame)
+            continue;
+        events.push_back(iter);
+    }
 }
 
 //=============================================================================
@@ -360,30 +332,7 @@ void Model::renumber_tracks() {
 }
 
 int Model::get_track_count() const {
-    return tracks.size();
-}
-
-Track &Model::get_track(int track) {
-    return *tracks[track];
-}
-
-void Model::find_events(int frame, TrackEventRefList &refs) {
-    refs.clear();
-    TrackArray::iterator iter;
-    for (iter = tracks.begin(); iter != tracks.end(); ++iter) {
-        Track &track = *(*iter);
-        Track::iterator evt_iter = track.find_event(frame);
-        if (evt_iter != track.end()) {
-            TrackEventRef ref;
-            ref.track = &track;
-            ref.iter = evt_iter;
-            refs.push_back(ref);
-        }
-    }
-}
-
-void Model::delete_event(const TrackEventRef &ref) {
-    ref.track->erase(ref.iter);
+    return 8;
 }
 
 int Model::get_frames_per_bar() const {
