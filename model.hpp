@@ -85,7 +85,7 @@ enum {
 };
 
 enum {
-    MaxBuses = 32,
+    MaxTracks = 32,
     MaxChannels = 256,
 };
 

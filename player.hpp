@@ -8,8 +8,48 @@ namespace Jacker {
 
 //=============================================================================
 
+struct Message : MIDI::Message {
+    enum Type {
+        // empty, for updating position
+        TypeEmpty = 0,
+        // midi package
+        TypeMIDI = 1,
+    };
+    
+    Type type;
+    long long timestamp;
+    int frame;
+    int bus;
+    int bus_channel;
+    
+    Message();
+};
+
+class MessageQueue : public RingBuffer<Message> {
+public:
+    MessageQueue();
+    volatile long long write_samples; // 0-32: subsample, 32-64: sample
+    volatile int position; // in frames
+    volatile long long read_samples;
+
+    void on_note(int bus, int channel, int value);
+    void on_volume(int bus, int channel, int value);
+    void on_cc(int bus, int ccindex, int ccvalue);
+
+    void status_msg();
+
+    void init_message(Message &msg);
+
+};
+    
 class Player {
 public:
+    enum {
+        // how many message queues are used
+        // for flipping?
+        QueueCount = 4,
+    };
+    
     struct Channel {
         int note;
         int volume;
@@ -24,20 +64,10 @@ public:
         
         Bus();
     };
-    
-    struct Message : MIDI::Message {
-        long long timestamp;
-        int frame;
-        int bus;
-        int bus_channel;
-        
-        Message();
-    };
 
     Player();
     void reset();
     void mix();
-    void mix_frame();
     void process_messages(int size);
     virtual void on_message(const Message &msg) {}
     
@@ -46,32 +76,33 @@ public:
     
     void stop();
     void play();
-    void set_position(int position);
+    void seek(int position);
     int get_position() const;
+        
+    bool is_playing() const;
     
     void play_event(const class PatternEvent &event);
     
 protected:
-    void mix_events(int samples);
-    void init_message(Message &msg);
+    void premix();
+    void mix_events(MessageQueue &queue, int samples);
+    void mix_frame(MessageQueue &queue);
     void handle_message(Message msg);
-    void on_note(int channel, int value, bool rt=false);
-    void on_volume(int channel, int value);
-    void on_cc(int ccindex, int ccvalue);
     long long get_frame_size();
 
+    MessageQueue &get_back();
+    MessageQueue &get_front();
+    void flip();
+
     int sample_rate;
+    volatile int front_index; // index of messages front buffer
     std::vector<Bus> buses;
-    RingBuffer<Message> messages;
-    RingBuffer<Message> rt_messages;
+    MessageQueue messages[QueueCount];
+    MessageQueue rt_messages;
     class Model *model;
     
-    long long write_samples; // 0-32: subsample, 32-64: sample
-    long long read_samples;
-    long long read_frame_block;
-    int position; // in frames
-    int read_position; // last read position, in frames
-    bool playing;
+    volatile int read_position; // last read position, in frames
+    volatile bool playing;
 
 };
 

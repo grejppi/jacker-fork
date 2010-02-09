@@ -17,6 +17,90 @@ enum {
 
 //=============================================================================
 
+Message::Message() {
+    type = TypeEmpty;
+    timestamp = 0;
+    frame = 0;
+    bus = 0;
+    bus_channel = 0;
+}
+
+//=============================================================================
+
+MessageQueue::MessageQueue()
+    : RingBuffer<Message>(MaxMessageCount) {
+    write_samples = 0;
+    position = 0;
+    read_samples = 0;
+}
+
+void MessageQueue::init_message(Message &msg) {
+    msg.timestamp = write_samples;
+    msg.frame = position;
+}
+
+void MessageQueue::on_cc(int bus, int ccindex, int ccvalue) {
+    if (ccindex == ValueNone)
+        return;
+    if (ccvalue == ValueNone)
+        return;
+    Message msg;
+    init_message(msg);
+    msg.type = Message::TypeMIDI;
+    msg.bus = bus;
+    msg.command = MIDI::CommandControlChange;
+    msg.channel = 0;
+    msg.data1 = ccindex;
+    msg.data2 = ccvalue;
+    push(msg);
+}
+
+void MessageQueue::on_volume(int bus, int channel, int volume) {
+    if (volume == ValueNone)
+        return;
+    Message msg;
+    init_message(msg);
+    msg.type = Message::TypeMIDI;
+    msg.bus = bus;
+    msg.bus_channel = channel;
+    msg.command = MIDI::CommandControlChange;
+    msg.channel = 0;
+    msg.data1 = CCVolume;
+    msg.data2 = volume;
+    push(msg);    
+}
+
+void MessageQueue::on_note(int bus, int channel, int note) {
+    if (note == ValueNone)
+        return;
+    Message msg;
+    init_message(msg);
+    msg.type = Message::TypeMIDI;
+    msg.bus = bus;
+    msg.bus_channel = channel;
+    if (note == NoteOff) {
+        msg.command = MIDI::CommandNoteOff;
+        msg.channel = 0;
+        msg.data1 = 0;
+        msg.data2 = 0;
+    } else {
+        msg.command = MIDI::CommandNoteOn;
+        msg.channel = 0;
+        msg.data1 = note;
+        msg.data2 = 0;
+    }
+    push(msg);
+}
+
+void MessageQueue::status_msg() {
+    Message msg;
+    init_message(msg);
+    msg.type = Message::TypeEmpty;
+    push(msg);
+}
+
+//=============================================================================
+
 Player::Channel::Channel() {
     note = ValueNone;
     volume = 0x7f;
@@ -30,25 +114,25 @@ Player::Bus::Bus() {
 
 //=============================================================================
 
-Player::Message::Message() {
-    timestamp = 0;
-    frame = 0;
-    bus = 0;
-    bus_channel = 0;
-}
-
-Player::Player()
-    : messages(MaxMessageCount),
-      rt_messages(128) {
-    buses.resize(MaxBuses);
+Player::Player() {
+    buses.resize(MaxTracks);
     model = NULL;
     sample_rate = 44100;
-    write_samples = 0;
-    read_samples = 0;
-    read_frame_block = 0;
-    position = 0;
     read_position = 0;
     playing = false;
+    front_index = 0;
+}
+
+MessageQueue &Player::get_back() {    
+    return messages[(front_index+1)%QueueCount];
+}
+
+MessageQueue &Player::get_front() {
+    return messages[front_index];
+}
+
+void Player::flip() {
+    front_index = (front_index+1)%QueueCount;
 }
 
 void Player::set_model(class Model &model) {
@@ -63,22 +147,34 @@ void Player::stop() {
     if (!playing)
         return;
     playing = false;
+    seek(read_position);
 }
 
 void Player::play() {
     if (playing)
         return;
-    read_frame_block = 0;
-    read_samples = 0;
-    write_samples = 0;
-    messages.clear();
-    mix_events(PreMixSize);// fill buffer
-    read_position = position;
     playing = true;
+    seek(read_position);
 }
 
-void Player::set_position(int position) {
-    this->position = position;
+bool Player::is_playing() const {
+    return playing;
+}
+
+void Player::premix() {
+    MessageQueue &queue = get_back();
+    queue.clear();
+    queue.read_samples = 0;
+    queue.write_samples = 0;
+    mix_events(queue, PreMixSize);// fill buffer
+}
+
+void Player::seek(int position) {
+    MessageQueue &queue = get_back();
+    queue.position = position;
+    if (playing)
+        premix();
+    flip();
 }
 
 int Player::get_position() const {
@@ -94,77 +190,28 @@ long long Player::get_frame_size() {
            (model->frames_per_beat * model->beats_per_minute);    
 }
 
-void Player::on_cc(int ccindex, int ccvalue) {
-    if (ccindex == ValueNone)
-        return;
-    if (ccvalue == ValueNone)
-        return;
-    Message msg;
-    init_message(msg);
-    msg.command = MIDI::CommandControlChange;
-    msg.channel = 0;
-    msg.data1 = ccindex;
-    msg.data2 = ccvalue;
-    messages.push(msg);
-}
-
-void Player::on_volume(int channel, int volume) {
-    if (volume == ValueNone)
-        return;
-    Message msg;
-    init_message(msg);
-    msg.bus_channel = channel;
-    msg.command = MIDI::CommandControlChange;
-    msg.channel = 0;
-    msg.data1 = CCVolume;
-    msg.data2 = volume;
-    messages.push(msg);    
-}
-
-void Player::on_note(int channel, int note, bool rt/*=false*/) {
-    if (note == ValueNone)
-        return;
-    Message msg;
-    init_message(msg);
-    if (note == NoteOff) {
-        msg.bus_channel = channel;
-        msg.command = MIDI::CommandNoteOff;
-        msg.channel = 0;
-        msg.data1 = 0;
-        msg.data2 = 0;
-    } else {
-        msg.bus_channel = channel;
-        msg.command = MIDI::CommandNoteOn;
-        msg.channel = 0;
-        msg.data1 = note;
-        msg.data2 = 0;
-    }
-    if (rt)
-        rt_messages.push(msg);
-    else
-        messages.push(msg);
-}
-
 void Player::play_event(const class PatternEvent &event) {
     if (event.param != ParamNote)
         return;
     int note = event.value;
     if (note == ValueNone)
         return;
-    on_note(event.channel, note, true);
+    rt_messages.on_note(0, event.channel, note);
 }
 
-void Player::mix_events(int samples) {
+void Player::mix_events(MessageQueue &queue, int samples) {
     assert(model);
     
-    long long target = read_samples + ((long long)samples<<32);
+    long long target = queue.read_samples + ((long long)samples<<32);
     long long framesize = get_frame_size();
     int mixed = 0;
-    while (write_samples < target)
+    while (queue.write_samples < target)
     {
-        mix_frame();
-        position++;
-        write_samples += framesize;
+        // send status package
+        queue.status_msg();
+        mix_frame(queue);
+        queue.position++;
+        queue.write_samples += framesize;
         mixed++;
     }
 }
@@ -172,19 +219,14 @@ void Player::mix_events(int samples) {
 void Player::mix() {
     if (!playing)
         return;
-    mix_events(PreMixSize);
+    mix_events(get_front(), PreMixSize);
 }
 
-void Player::init_message(Message &msg) {
-    msg.timestamp = write_samples;
-    msg.frame = position;
-}
-
-void Player::mix_frame() {
+void Player::mix_frame(MessageQueue &queue) {
     assert(model);
     
     Song::IterList events;
-    model->song.find_events(position, events);
+    model->song.find_events(queue.position, events);
     if (events.empty())
         return;
     
@@ -194,25 +236,32 @@ void Player::mix_frame() {
         Pattern &pattern = *event.pattern;
         Pattern::iterator row_iter = pattern.begin();
         Pattern::Row row;
-        pattern.collect_events(position - event.frame, row_iter, row);
+        pattern.collect_events(queue.position - event.frame, row_iter, row);
         
         // first run: process all cc events
         for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-            on_cc(row.get_value(channel, ParamCCIndex), 
-                  row.get_value(channel, ParamCCValue));
+            queue.on_cc(event.track, row.get_value(channel, ParamCCIndex), 
+                row.get_value(channel, ParamCCValue));
         }
         
         // second run: process volume and notes
         for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-            on_volume(channel, row.get_value(channel, ParamVolume));
-            on_note(channel, row.get_value(channel, ParamNote));
+            queue.on_volume(event.track, channel, 
+                row.get_value(channel, ParamVolume));
+            queue.on_note(event.track, channel, 
+                row.get_value(channel, ParamNote));
         }
     }
     
 }
 
 void Player::handle_message(Message msg) {
-    Bus &bus = buses[0];
+    if (msg.type == Message::TypeEmpty) {
+        // status package, discard
+        return;
+    }
+    
+    Bus &bus = buses[msg.bus];
     Channel &values = bus.channels[msg.bus_channel];
     
     if (msg.command == MIDI::CommandControlChange) {
@@ -252,45 +301,40 @@ void Player::process_messages(int _size) {
     
     Message next_msg;
     Message msg;
+    
+    while (!rt_messages.empty()) {
+        msg = rt_messages.pop();
+        msg.timestamp = 0;
+        handle_message(msg);
+    }
+    
+    MessageQueue &queue = get_front();
+    
+    if (!playing) {
+        read_position = queue.position;
+        return;
+    }
+    
     while (size) {
-        bool block_set = false;
-        
-        while (rt_messages.get_read_size()) {
-            msg = rt_messages.pop();
-            msg.timestamp = 0;
-            handle_message(msg);
-        }
         long long delta = size;
         
-        if (messages.get_read_size()) {
-            next_msg = messages.peek();
+        if (!queue.empty()) {
+            next_msg = queue.peek();
             delta = std::min(
-                next_msg.timestamp - read_samples,size);
+                next_msg.timestamp - queue.read_samples,size);
             if (delta < 0) {
                 // drop
-                messages.pop();
+                queue.pop();
                 delta = 0;
             } if (delta < size) {
-                msg = messages.pop();
+                msg = queue.pop();
                 read_position = msg.frame;
-                read_frame_block = 0;
-                block_set = true;
                 msg.timestamp = offset;
                 handle_message(msg);
             }
         }
-        
-        if (playing) {
-            read_samples += delta;
-            read_frame_block += delta;
-            long long framesize = get_frame_size();
-            while (read_frame_block >= framesize) {
-                read_position++;
-                read_frame_block -= framesize;
-            }
-        } else {
-            read_position = position;
-        }
+
+        queue.read_samples += delta;
         
         size -= delta;
         offset += delta;

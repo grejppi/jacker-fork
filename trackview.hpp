@@ -162,6 +162,8 @@ protected:
 
     void update_adjustments();
     void on_adjustment_value_changed();
+    
+    void clone_selection();
 
     // zoomlevel (0=1:1, 1=1:2, 2=1:4, etc.)
     int zoomlevel;

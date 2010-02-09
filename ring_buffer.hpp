@@ -14,10 +14,22 @@ public:
 	volatile size_t written;
 	volatile size_t read_count;
 
+    RingBuffer() {
+        buffer.resize(10);
+        clear();
+    }
+
 	RingBuffer(int size) {
 		buffer.resize(size);
 		clear();
 	}
+    
+    
+    void resize(int size) {
+        buffer.resize(size);
+        clear();
+    }
+    
 	virtual ~RingBuffer() {
 	}
 

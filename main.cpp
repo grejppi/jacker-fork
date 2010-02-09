@@ -105,8 +105,11 @@ public:
     void on_stop_action() {
         if (!player)
             return;
-        player->stop();
-        player->set_position(0);
+        if (player->is_playing()) {
+            player->stop();
+        } else {
+            player->seek(0);
+        }
     }
     
     void add_dialog_filters(Gtk::FileChooserDialog &dialog) {
@@ -243,7 +246,7 @@ public:
     void on_seek_request(int frame) {
         if (!player)
             return;
-        player->set_position(frame);
+        player->seek(frame);
     }
     
     void init_track_view() {

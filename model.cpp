@@ -330,6 +330,9 @@ void Model::reset() {
 
 Pattern &Model::new_pattern() {
     Pattern *pattern = new Pattern();
+    char text[64];
+    sprintf(text, "Pattern %i", patterns.size()+1);
+    pattern->name = text;
     pattern->set_length(frames_per_beat * beats_per_bar);
     patterns.push_back(pattern);
     return *pattern;

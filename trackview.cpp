@@ -447,10 +447,48 @@ void TrackView::invalidate_select_box() {
 }
     
 void TrackView::select_from_box() {
+    int x0,y0,w,h;
+    drag.get_rect(x0,y0,w,h);
+    if (w <= 1)
+        return;
+    if (h <= 1)
+        return;
+    int x1 = x0+w;
+    int y1 = y0+h;
     
+    Song::iterator iter;
+    for (iter = model->song.begin(); iter != model->song.end(); ++iter) {
+        int ex0,ey0,ew,eh;
+        get_event_rect(iter, ex0, ey0, ew, eh);
+        int ex1 = ex0+ew;
+        int ey1 = ey0+eh;
+        if (ex0 >= x1)
+            continue;
+        if (ex1 < x0)
+            continue;
+        if (ey0 >= y1)
+            continue;
+        if (ey1 < y0)
+            continue;
+        selection.push_back(iter);
+    }
+}
+
+void TrackView::clone_selection() {
+    Song::IterList new_selection;
+    
+    Song::IterList::iterator iter;
+    for (iter = selection.begin(); iter != selection.end(); ++iter) {
+        Song::Event event = (*iter)->second;
+        new_selection.push_back(model->song.add_event(event));
+    }
+    
+    selection = new_selection;
 }
 
 bool TrackView::on_motion_notify_event(GdkEventMotion *event) {    
+    bool shift_down = event->state & Gdk::SHIFT_MASK;
+    
     if (interact_mode == InteractNone) {
         TrackCursor cur(*this);
         cur.set_pos(event->x, event->y);
@@ -474,6 +512,10 @@ bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
             if (find_event(cur, evt) && can_resize_event(evt,drag.start_x)) {
                 interact_mode = InteractResize;
             } else {
+                if (shift_down) {
+                    invalidate_selection();
+                    clone_selection();
+                }
                 interact_mode = InteractMove;
             }
         }
@@ -549,12 +591,17 @@ void TrackView::apply_resize() {
 }
 
 bool TrackView::on_button_release_event(GdkEventButton* event) {
+    bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     if (moving()) {
         apply_move();
     } else if (resizing()) {
         apply_resize();
     } else if (selecting()) {
         invalidate_select_box();
+        if (!ctrl_down) {
+            invalidate_selection();
+            selection.clear();
+        }
         select_from_box();
     }
     interact_mode = InteractNone;
