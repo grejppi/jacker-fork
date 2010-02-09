@@ -78,9 +78,7 @@ void Player::play() {
 }
 
 void Player::set_position(int position) {
-    stop();
     this->position = position;
-    play();
 }
 
 int Player::get_position() const {

@@ -135,7 +135,7 @@ void TrackView::on_realize() {
         cm->alloc_color(*i);
     }
     
-    Pango::FontDescription font_desc("sans 8");
+    Pango::FontDescription font_desc("sans 7");
     
     pango_layout = Pango::Layout::create(get_pango_context());
     pango_layout->set_font_description(font_desc);
@@ -202,10 +202,21 @@ void TrackView::render_event(const TrackEventRef &ref) {
     get_event_rect(ref, x, y, w, h);
     gc->set_foreground(colors[ColorBlack]);
     bool selected = is_event_selected(ref);
-    if (selected)
-        window->draw_rectangle(gc, true, x, y, w, h);
-    else
-        window->draw_rectangle(gc, false, x, y, w-1, h-1);
+    window->draw_rectangle(gc, false, x, y, w, h-3);
+    window->draw_rectangle(gc, true, x+1, y+h-2, w, 1);
+    window->draw_rectangle(gc, true, x+w+1, y+1, 1, h-2);
+    pango_layout->set_text(ref.iter->second.pattern->name.c_str());
+    if (selected) {
+        window->draw_rectangle(gc, true, x+2, y+2, w-3, h-6);
+        gc->set_foreground(colors[ColorWhite]);
+        window->draw_rectangle(gc, false, x+1, y+1, w-2, h-5);
+        window->draw_layout(gc, x+3, y+4, pango_layout);
+    } else {
+        gc->set_foreground(colors[ColorWhite]);
+        window->draw_rectangle(gc, true, x+1, y+1, w-1, h-4);
+        gc->set_foreground(colors[ColorBlack]);
+        window->draw_layout(gc, x+3, y+4, pango_layout);
+    }
 }
 
 void TrackView::render_track(Track &track) {
@@ -551,6 +562,7 @@ void TrackView::invalidate_selection() {
     for (iter = selection.begin(); iter != selection.end(); ++iter) {
         int x,y,w,h;
         get_event_rect(*iter, x, y, w, h);
+        w += 2;
         Gdk::Rectangle rect(x,y,w,h);
         window->invalidate_rect(rect, true);
     }
