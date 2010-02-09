@@ -139,7 +139,8 @@ void TrackView::on_realize() {
     
     pango_layout = Pango::Layout::create(get_pango_context());
     pango_layout->set_font_description(font_desc);
-    pango_layout->set_width(-1);
+    //pango_layout->set_width(-1);
+    pango_layout->set_ellipsize(Pango::ELLIPSIZE_MIDDLE);
     
     // create xor gc for drawing the cursor
     xor_gc = Gdk::GC::create(window);
@@ -198,24 +199,33 @@ bool TrackView::find_event(const TrackCursor &cur, TrackEventRef &ref) {
 }
 
 void TrackView::render_event(const TrackEventRef &ref) {
+    bool selected = is_event_selected(ref);
     int x,y,w,h;
     get_event_rect(ref, x, y, w, h);
+    // main border
     gc->set_foreground(colors[ColorBlack]);
-    bool selected = is_event_selected(ref);
-    window->draw_rectangle(gc, false, x, y, w, h-3);
-    window->draw_rectangle(gc, true, x+1, y+h-2, w, 1);
-    window->draw_rectangle(gc, true, x+w+1, y+1, 1, h-2);
+    window->draw_rectangle(gc, false, x, y+1, w, h-3);
+    // bottom shadow
+    window->draw_rectangle(gc, true, x+1, y+h-1, w, 1);
+    // right shadow
+    window->draw_rectangle(gc, true, x+w+1, y+2, 1, h-2);
+    pango_layout->set_width((w-4)*Pango::SCALE);
     pango_layout->set_text(ref.iter->second.pattern->name.c_str());
     if (selected) {
-        window->draw_rectangle(gc, true, x+2, y+2, w-3, h-6);
+        // fill
+        window->draw_rectangle(gc, true, x+2, y+3, w-3, h-6);
+        // outline
         gc->set_foreground(colors[ColorWhite]);
-        window->draw_rectangle(gc, false, x+1, y+1, w-2, h-5);
-        window->draw_layout(gc, x+3, y+4, pango_layout);
+        window->draw_rectangle(gc, false, x+1, y+2, w-2, h-5);
+        // label
+        window->draw_layout(gc, x+3, y+5, pango_layout);
     } else {
+        // fill
         gc->set_foreground(colors[ColorWhite]);
-        window->draw_rectangle(gc, true, x+1, y+1, w-1, h-4);
+        window->draw_rectangle(gc, true, x+1, y+2, w-1, h-4);
+        // label
         gc->set_foreground(colors[ColorBlack]);
-        window->draw_layout(gc, x+3, y+4, pango_layout);
+        window->draw_layout(gc, x+3, y+5, pango_layout);
     }
 }
 

@@ -20,7 +20,7 @@ MeasureView::MeasureView(BaseObjectType* cobject,
     colors.resize(ColorCount);
     colors[ColorBlack].set("#000000");
     colors[ColorWhite].set("#FFFFFF");
-    colors[ColorBackground].set("#e0e0e0");
+    colors[ColorBackground].set("#FFFFFF");
 }
 
 void MeasureView::set_model(class Model &model) {
@@ -81,6 +81,8 @@ bool MeasureView::on_expose_event(GdkEventExpose* event) {
             window->draw_rectangle(gc, true, x, height/2, 1, height/2);
         }
     }
+    
+    window->draw_rectangle(gc, true, 0, height-1, width, 1);
     
     return true;
 }
