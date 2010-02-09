@@ -360,12 +360,12 @@ public:
         bool found = false;
         Pattern *active_pattern = pattern_view->get_pattern();
         if (active_pattern) {
-            TrackEventRefList refs;
-            model.find_events(frame, refs);
-            if (!refs.empty()) {
-                TrackEventRefList::iterator iter;
-                for (iter = refs.begin(); iter != refs.end(); ++iter) {
-                    TrackEvent &evt = iter->iter->second;
+            Song::IterList events;
+            model.song.find_events(frame, events);
+            if (!events.empty()) {
+                Song::IterList::iterator iter;
+                for (iter = events.begin(); iter != events.end(); ++iter) {
+                    Song::Event &evt = (*iter)->second;
                     if (evt.pattern == active_pattern) {
                         found = true;
                         pattern_view->set_play_position(frame - evt.frame);

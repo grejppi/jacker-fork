@@ -89,8 +89,6 @@ public:
     typedef sigc::signal<void, Pattern *> type_pattern_edit_request;
     typedef sigc::signal<void, TrackView *, GdkEventButton*> type_context_menu;
     
-    typedef std::set<TrackEventRef> EventSet;
-    
     TrackView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
 
@@ -123,19 +121,19 @@ public:
     void get_event_length(int w, int h, int &length, int &track) const;
     void get_event_location(int x, int y, int &frame, int &track) const;
     
-    void get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h);
-    bool find_event(const TrackCursor &cursor, TrackEventRef &ref);
+    void get_event_rect(Song::iterator event, int &x, int &y, int &w, int &h);
+    bool find_event(const TrackCursor &cursor, Song::iterator &event);
     
     void clear_selection();
-    void select_event(const TrackEventRef &ref);
-    void deselect_event(const TrackEventRef &ref);
-    bool is_event_selected(const TrackEventRef &ref);
+    void select_event(Song::iterator event);
+    void deselect_event(Song::iterator event);
+    bool is_event_selected(Song::iterator event);
     void set_play_position(int pos);
     void invalidate();
     
     void add_track();
     void new_pattern(const TrackCursor &cursor);
-    void edit_pattern(const TrackEventRef &ref);
+    void edit_pattern(Song::iterator event);
     void erase_events();
     
     type_pattern_edit_request signal_pattern_edit_request();
@@ -143,13 +141,13 @@ public:
 protected:
     void invalidate_selection();
     void invalidate_play_position();
-    void render_event(const TrackEventRef &ref);
-    void render_track(Track &track);
+    void render_event(Song::iterator event);
+    void render_track(int track);
     void render_select_box();
     void invalidate_select_box();
     void select_from_box();
 
-    bool can_resize_event(const TrackEventRef &ref, int x);
+    bool can_resize_event(Song::iterator event, int x);
     void get_drag_offset(int &frame, int &track);
     int get_step_size();
     int quantize_frame(int frame); 
@@ -179,7 +177,7 @@ protected:
     Drag drag;
 
     Model *model;
-    EventSet selection;
+    Song::IterList selection;
 
     type_pattern_edit_request _pattern_edit_request;
     type_context_menu _signal_context_menu;

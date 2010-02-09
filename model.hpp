@@ -39,6 +39,8 @@ public:
     typedef typename map::key_type Key;
     typedef typename map::mapped_type Event;
     typedef EventCollection<Map_T> BaseClass;
+    typedef std::list<Event> EventList;
+    typedef std::list<typename Map_T::iterator> IterList;
     
     typename map::iterator add_event(const Event &event) {
         return extract_iterator<typename map::key_type, Event>(
@@ -175,19 +177,14 @@ struct SongEvent {
 class Song : public EventCollection< std::multimap<int,SongEvent> > {
     friend class Model;
 public:
-    typedef std::list<iterator> EventList;
-
-    // name of track (non-unique)
-    std::string name;
-    // order of track
-    int order;
-    
     iterator add_event(const Event &event);
-    iterator add_event(int frame, Pattern &pattern);
+    iterator add_event(int frame, int track, Pattern &pattern);
 
     iterator get_event(int frame);
 
-    void find_events(int frame, EventList &events);
+    void find_events(int frame, IterList &events);
+
+    void update_keys();
 protected:
     Song();
 };

@@ -183,28 +183,32 @@ void Player::init_message(Message &msg) {
 void Player::mix_frame() {
     assert(model);
     
-    Song::EventList events;
-    model.song.find_events(position, events);
+    Song::IterList events;
+    model->song.find_events(position, events);
     if (events.empty())
         return;
     
-    Track::Event &event = iter->second;
-    Pattern &pattern = *event.pattern;
-    Pattern::iterator row_iter = pattern.begin();
-    Pattern::Row row;
-    pattern.collect_events(position - event.frame, row_iter, row);
-    
-    // first run: process all cc events
-    for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-        on_cc(row.get_value(channel, ParamCCIndex), 
-              row.get_value(channel, ParamCCValue));
+    Song::IterList::iterator iter;
+    for (iter = events.begin(); iter != events.end(); ++iter) {
+        Song::Event &event = (*iter)->second;
+        Pattern &pattern = *event.pattern;
+        Pattern::iterator row_iter = pattern.begin();
+        Pattern::Row row;
+        pattern.collect_events(position - event.frame, row_iter, row);
+        
+        // first run: process all cc events
+        for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
+            on_cc(row.get_value(channel, ParamCCIndex), 
+                  row.get_value(channel, ParamCCValue));
+        }
+        
+        // second run: process volume and notes
+        for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
+            on_volume(channel, row.get_value(channel, ParamVolume));
+            on_note(channel, row.get_value(channel, ParamNote));
+        }
     }
     
-    // second run: process volume and notes
-    for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-        on_volume(channel, row.get_value(channel, ParamVolume));
-        on_note(channel, row.get_value(channel, ParamNote));
-    }
 }
 
 void Player::handle_message(Message msg) {

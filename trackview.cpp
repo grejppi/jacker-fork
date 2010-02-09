@@ -207,22 +207,27 @@ void TrackView::get_event_location(int x, int y, int &frame, int &track) const {
     track = (y - origin_y)/TrackHeight;
 }
 
-bool TrackView::find_event(const TrackCursor &cur, TrackEventRef &ref) {
+bool TrackView::find_event(const TrackCursor &cur, Song::iterator &event) {
     if (cur.get_track() >= model->get_track_count())
         return false;
-    Track *track = &model->get_track(cur.get_track());
-    Track::iterator iter = track->find_event(cur.get_frame());
-    if (iter == track->end())
+    Song::IterList events;
+    model->song.find_events(cur.get_frame(), events);
+    if (events.empty())
         return false;
-    ref.track = track;
-    ref.iter = iter;
-    return true;
+    for (Song::IterList::reverse_iterator iter = events.rbegin();
+        iter != events.rend(); ++iter) {
+        if ((*iter)->second.track == cur.get_track()) {
+            event = *iter;
+            return true;
+        }
+    }
+    return false;
 }
 
-void TrackView::render_event(const TrackEventRef &ref) {
-    bool selected = is_event_selected(ref);
+void TrackView::render_event(Song::iterator event) {
+    bool selected = is_event_selected(event);
     int x,y,w,h;
-    get_event_rect(ref, x, y, w, h);
+    get_event_rect(event, x, y, w, h);
     // main border
     gc->set_foreground(colors[ColorBlack]);
     window->draw_rectangle(gc, false, x, y+1, w, h-3);
@@ -231,7 +236,7 @@ void TrackView::render_event(const TrackEventRef &ref) {
     // right shadow
     window->draw_rectangle(gc, true, x+w+1, y+2, 1, h-2);
     pango_layout->set_width((w-4)*Pango::SCALE);
-    pango_layout->set_text(ref.iter->second.pattern->name.c_str());
+    pango_layout->set_text(event->second.pattern->name.c_str());
     if (selected) {
         // fill
         window->draw_rectangle(gc, true, x+2, y+3, w-3, h-6);
@@ -250,13 +255,13 @@ void TrackView::render_event(const TrackEventRef &ref) {
     }
 }
 
-void TrackView::render_track(Track &track) {
+void TrackView::render_track(int track) {
     int width = 0;
     int height = 0;
     window->get_size(width, height);
     
     int x,y;
-    get_event_pos(0, track.order, x, y);
+    get_event_pos(0, track, x, y);
     
     gc->set_foreground(colors[ColorTrack]);
     window->draw_rectangle(gc, true, 0, y, width, TrackHeight);
@@ -272,20 +277,15 @@ bool TrackView::on_expose_event(GdkEventExpose* event) {
     window->draw_rectangle(gc, true, 0, 0, width, height);
     
     // first pass: render tracks
-    TrackArray::iterator track_iter;
-    for (track_iter = model->tracks.begin(); 
-         track_iter != model->tracks.end(); ++track_iter) {
-        Track &track = *(*track_iter);
+    for (int track = 0; track < model->get_track_count(); ++track) {
         render_track(track);
     }
     
     // second pass: render events
-    for (track_iter = model->tracks.begin(); 
-         track_iter != model->tracks.end(); ++track_iter) {
-        Track &track = *(*track_iter);
-        for (Track::iterator iter = track.begin(); iter != track.end(); ++iter) {
-            render_event(TrackEventRef(track,iter));
-        }
+    
+    for (Song::iterator iter = model->song.begin();
+         iter != model->song.end(); ++iter) {
+        render_event(iter);
     }
 
     // draw play cursor
@@ -310,8 +310,9 @@ void TrackView::invalidate_play_position() {
     window->invalidate_rect(rect, true);
 }
 
-bool TrackView::is_event_selected(const TrackEventRef &ref) {
-    return (selection.find(ref) != selection.end());
+bool TrackView::is_event_selected(Song::iterator event) {
+    return (std::find(selection.begin(), selection.end(), 
+        event) != selection.end());
 }
 
 void TrackView::clear_selection() {
@@ -319,35 +320,38 @@ void TrackView::clear_selection() {
     selection.clear();
 }
 
-void TrackView::select_event(const TrackEventRef &ref) {
-    selection.insert(ref);
+void TrackView::select_event(Song::iterator event) {
+    if (is_event_selected(event))
+        return;
+    selection.push_back(event);
     invalidate_selection();
 }
 
-void TrackView::deselect_event(const TrackEventRef &ref) {
+void TrackView::deselect_event(Song::iterator event) {
+    if (!is_event_selected(event))
+        return;
     invalidate_selection();
-    selection.erase(ref);
+    selection.remove(event);
 }
 
 void TrackView::add_track() {
-    model->new_track();
+    // TODO
+    //model->new_track();
     invalidate();
 }
 
 void TrackView::new_pattern(const TrackCursor &cur) {
     if (cur.get_track() < model->get_track_count()) {
-        Track &track = model->get_track(cur.get_track());
         Pattern &pattern = model->new_pattern();
-        TrackEventRef ref(track, 
-            track.add_event(cur.get_frame(), pattern));
+        Song::iterator event = model->song.add_event(cur.get_frame(), cur.get_track(), pattern);
         clear_selection();
-        select_event(ref);
+        select_event(event);
     }
     
 }
 
-void TrackView::edit_pattern(const TrackEventRef &ref) {
-    Pattern *pattern = ref.iter->second.pattern;
+void TrackView::edit_pattern(Song::iterator iter) {
+    Pattern *pattern = iter->second.pattern;
     _pattern_edit_request(pattern);
 }
 
@@ -382,19 +386,19 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
     if (event->button == 1) {
         TrackCursor cur(*this);
         cur.set_pos(event->x, event->y);
-        TrackEventRef ref;
+        Song::iterator evt;
 
-        if (!ctrl_down)
+        if (!ctrl_down && (selection.size() == 1))
             clear_selection();
         
-        if (find_event(cur, ref)) {
-            if (ctrl_down && is_event_selected(ref)) {
-                deselect_event(ref);
+        if (find_event(cur, evt)) {
+            if (ctrl_down && is_event_selected(evt)) {
+                deselect_event(evt);
             } else {
-                select_event(ref);
+                select_event(evt);
                 if (double_click) {
                     interact_mode = InteractNone;
-                    edit_pattern(ref);
+                    edit_pattern(evt);
                 } else {
                     interact_mode = InteractDrag;
                     drag.start(event->x, event->y);
@@ -404,6 +408,7 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
             cur.set_frame(quantize_frame(cur.get_frame()));
             new_pattern(cur);
         } else {
+            clear_selection();
             interact_mode = InteractSelect;
             drag.start(event->x, event->y);
         }
@@ -413,9 +418,9 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
     return true;
 }
 
-bool TrackView::can_resize_event(const TrackEventRef &ref, int x) {
+bool TrackView::can_resize_event(Song::iterator event, int x) {
     int ex, ey, ew, eh;
-    get_event_rect(ref,ex,ey,ew,eh);
+    get_event_rect(event,ex,ey,ew,eh);
     return std::abs(x - (ex+ew)) < ResizeThreshold;
 }
 
@@ -449,9 +454,9 @@ bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
     if (interact_mode == InteractNone) {
         TrackCursor cur(*this);
         cur.set_pos(event->x, event->y);
-        TrackEventRef ref;
-        if (find_event(cur, ref)) {
-            if (can_resize_event(ref, event->x))
+        Song::iterator evt;
+        if (find_event(cur, evt)) {
+            if (can_resize_event(evt, event->x))
                 window->set_cursor(Gdk::Cursor(Gdk::SB_H_DOUBLE_ARROW));
             else
                 window->set_cursor(Gdk::Cursor(Gdk::HAND1));
@@ -465,8 +470,8 @@ bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
             invalidate_selection();
             TrackCursor cur(*this);
             cur.set_pos(drag.start_x, drag.start_y);
-            TrackEventRef ref;
-            if (find_event(cur, ref) && can_resize_event(ref,drag.start_x)) {
+            Song::iterator evt;
+            if (find_event(cur, evt) && can_resize_event(evt,drag.start_x)) {
                 interact_mode = InteractResize;
             } else {
                 interact_mode = InteractMove;
@@ -494,12 +499,11 @@ void TrackView::apply_move() {
     
     bool can_move = true;        
     // verify that we can move
-    for (EventSet::iterator iter = selection.begin();
+    for (Song::IterList::iterator iter = selection.begin();
         iter != selection.end(); ++iter) {
-        const TrackEventRef &ref = *iter;
-        Track::Event &event = ref.iter->second;
+        Song::Event &event = (*iter)->second;
         int frame = event.frame + ofs_frame;
-        int track = ref.track->order + ofs_track;
+        int track = event.track + ofs_track;
         if ((frame < 0)||(track < 0)||(track >= model->get_track_count())) {
             can_move = false;
             break;
@@ -507,27 +511,22 @@ void TrackView::apply_move() {
     }
     
     if (can_move) {
-        EventSet new_selection;
+        Song::IterList new_selection;
         
-        // verify that we can move
-        for (EventSet::iterator iter = selection.begin();
+        // do the actual move
+        for (Song::IterList::iterator iter = selection.begin();
             iter != selection.end(); ++iter) {
-            const TrackEventRef &ref = *iter;
-            Track::Event event = ref.iter->second;
+            Song::Event event = (*iter)->second;
             
             event.frame += ofs_frame;
-            int track_index = ref.track->order + ofs_track;
+            event.track += ofs_track;
             
-            model->delete_event(ref);
-            
-            Track &track = model->get_track(track_index);
-            TrackEventRef new_ref(track, 
-                track.add_event(event));
-            new_selection.insert(new_ref);
+            model->song.erase(*iter);
+            Song::iterator new_event = model->song.add_event(event);
+            new_selection.push_back(new_event);
         }
         
-        selection.clear();
-        //selection = new_selection;
+        selection = new_selection;
     }
 }
 
@@ -537,10 +536,9 @@ void TrackView::apply_resize() {
     get_drag_offset(ofs_frame, ofs_track);
     
     // verify that we can move
-    for (EventSet::iterator iter = selection.begin();
+    for (Song::IterList::iterator iter = selection.begin();
         iter != selection.end(); ++iter) {
-        const TrackEventRef &ref = *iter;
-        Track::Event &event = ref.iter->second;        
+        Song::Event &event = (*iter)->second;
         int length = std::max(event.pattern->get_length() + ofs_frame, 
             get_step_size());
             
@@ -609,17 +607,17 @@ int TrackView::quantize_frame(int frame) {
     return frame - (frame%get_step_size());
 }
 
-void TrackView::get_event_rect(const TrackEventRef &ref, int &x, int &y, int &w, int &h) {
-    Track::Event &event = ref.iter->second;
+void TrackView::get_event_rect(Song::iterator iter, int &x, int &y, int &w, int &h) {
+    Song::Event &event = iter->second;
     int frame = event.frame;
-    int track = ref.track->order;
+    int track = event.track;
     int length = event.pattern->get_length();
-    if (moving() && is_event_selected(ref)) {
+    if (moving() && is_event_selected(iter)) {
         int ofs_frame,ofs_track;
         get_drag_offset(ofs_frame, ofs_track);
         frame += ofs_frame;
         track += ofs_track;
-    } else if (resizing() && is_event_selected(ref)) {
+    } else if (resizing() && is_event_selected(iter)) {
         int ofs_frame,ofs_track;
         get_drag_offset(ofs_frame, ofs_track);
         length = std::max(length + ofs_frame, get_step_size());
@@ -635,7 +633,7 @@ void TrackView::invalidate() {
 }
 
 void TrackView::invalidate_selection() {
-    EventSet::iterator iter;
+    Song::IterList::iterator iter;
     for (iter = selection.begin(); iter != selection.end(); ++iter) {
         int x,y,w,h;
         get_event_rect(*iter, x, y, w, h);
@@ -647,9 +645,9 @@ void TrackView::invalidate_selection() {
 
 void TrackView::erase_events() {
     invalidate_selection();
-    EventSet::iterator iter;
+    Song::IterList::iterator iter;
     for (iter = selection.begin(); iter != selection.end(); ++iter) {
-        iter->track->erase(iter->iter);
+        model->song.erase(*iter);
     }
     
     selection.clear();

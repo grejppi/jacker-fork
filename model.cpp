@@ -192,9 +192,6 @@ Pattern::iterator Pattern::get_event(int frame, int channel, int param) {
 }
 
 void Pattern::update_keys() {
-    typedef std::list<Event> EventList;
-    typedef std::list<Pattern::iterator> IterList;
-    
     IterList dead_iters;
     EventList events;
     
@@ -243,22 +240,21 @@ int SongEvent::get_last_frame() const {
 //=============================================================================
 
 Song::Song() {
-    order = -1;
 }
 
 Song::iterator Song::add_event(const Event &event) {
     return BaseClass::add_event(event);
 }
 
-Song::iterator Song::add_event(int frame, Pattern &pattern) {
-    return add_event(Event(frame, pattern));
+Song::iterator Song::add_event(int frame, int track, Pattern &pattern) {
+    return add_event(Event(frame, track, pattern));
 }
 
 Song::iterator Song::get_event(int frame) {
     return BaseClass::find(frame);
 }
 
-void Song::find_events(int frame, EventList &events) {
+void Song::find_events(int frame, IterList &events) {
     events.clear();
     Song::iterator iter;
     for (iter = begin(); iter != end(); ++iter) {
@@ -267,6 +263,30 @@ void Song::find_events(int frame, EventList &events) {
         if (iter->second.get_last_frame() < frame)
             continue;
         events.push_back(iter);
+    }
+}
+
+void Song::update_keys() {
+    IterList dead_iters;
+    EventList events;
+    
+    for (iterator iter = begin(); iter != end(); ++iter) {
+        if (iter->first != iter->second.frame) {
+            events.push_back(iter->second);
+            dead_iters.push_back(iter);
+        }
+    }
+    
+    for (IterList::iterator iter = dead_iters.begin();
+         iter != dead_iters.end(); ++iter) {
+        erase(*iter);
+    }
+    
+    for (EventList::iterator iter = events.begin();
+         iter != events.end(); ++iter) {
+        if (iter->frame == -1) // skip
+            continue;
+        add_event(*iter);
     }
 }
 
@@ -305,7 +325,7 @@ void Model::reset() {
     frames_per_beat = 4;
     beats_per_bar = 4;
     patterns.clear();
-    tracks.clear();
+    song.clear();
 }
 
 Pattern &Model::new_pattern() {
@@ -313,22 +333,6 @@ Pattern &Model::new_pattern() {
     pattern->set_length(frames_per_beat * beats_per_bar);
     patterns.push_back(pattern);
     return *pattern;
-}
-
-Track &Model::new_track() {
-    Track *track = new Track();
-    tracks.push_back(track);
-    renumber_tracks();
-    return *track;
-}
-
-void Model::renumber_tracks() {
-    TrackArray::iterator iter;
-    int index = 0;
-    for (iter = tracks.begin(); iter != tracks.end(); ++iter) {
-        (*iter)->order = index;
-        index++;
-    }
 }
 
 int Model::get_track_count() const {
