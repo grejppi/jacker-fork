@@ -322,8 +322,8 @@ void Player::process_messages(int _size) {
         
         if (!queue.empty()) {
             next_msg = queue.peek();
-            delta = std::min(
-                next_msg.timestamp - queue.read_samples,size);
+            long long offset = next_msg.timestamp - queue.read_samples;
+            delta = std::min(offset, size);
             if (delta < 0) {
                 // drop
                 queue.pop();
