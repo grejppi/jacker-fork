@@ -3,8 +3,6 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
 - player/jack:
     - jack transport support
     - LASH/LADI support
-    - fix borked change position request
-    
 
 - global:
     - bpm (tempo) entry
@@ -17,7 +15,9 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
 - pattern view:
     - copy/paste
     - fix borked measure
+    - measure shows actual position of pattern in song
     - reposition play cursor on measure click
+    - set loop begin/end in measure
     - status bar: display row, channel, param, value
 
 - track header view:
@@ -29,13 +29,9 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - midi bank/instrument
     
 - track view:
-    - box select
-    - loop begin/end
     - copy/paste
     - clone (reference to same pattern)
     - zooming controls
-    - fix borked track view selection
-        + don't clear selection after move/resize
     - rename pattern
 
 - global keyboard commands:
@@ -68,3 +64,4 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - MID export
     - resize event independent from pattern:
         - event longer than pattern: loop
+    - multiple pattern views

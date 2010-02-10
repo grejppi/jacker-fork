@@ -448,6 +448,8 @@ void TrackView::render_loop() {
 }
 
 void TrackView::invalidate_loop() {
+    if (!window)
+        return;
     int width = 0;
     int height = 0;
     window->get_size(width, height);

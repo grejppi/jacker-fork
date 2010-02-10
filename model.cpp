@@ -329,13 +329,13 @@ void Loop::set(int begin, int end)  {
 void Loop::set_begin(int begin) {
     this->begin = begin;
     if (this->begin > this->end)
-        std::swap(this->begin, this->end);
+        this->end = this->begin;
 }
 
 void Loop::set_end(int end) {
     this->end = end;
     if (this->begin > this->end)
-        std::swap(this->begin, this->end);
+        this->begin = this->end;
 }
 
 void Loop::get(int &begin, int &end) const {

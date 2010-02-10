@@ -18,6 +18,7 @@ public:
     };
     
     typedef sigc::signal<void, int> type_seek_request;
+    typedef sigc::signal<void> type_loop_changed;
 
     MeasureView(BaseObjectType* cobject, 
                 const Glib::RefPtr<Gtk::Builder>& builder);
@@ -44,17 +45,19 @@ public:
     std::vector<Gdk::Color> colors;
     
     type_seek_request signal_seek_request();
+    type_loop_changed signal_loop_changed();
 protected:
-    void on_seek(int x);
     void on_adjustment_value_changed();
-    void draw_horizontal();
-    void draw_vertical();
+    void flip(int &x, int &y);
+    void flip(int &x, int &y, int &w, int &h);
+    int get_frame(int x, int y);
 
     Orientation orientation;
     Gtk::Adjustment *adjustment;
     Model *model;
 
     type_seek_request _seek_request;
+    type_loop_changed _loop_changed;
 };
     
 } // namespace Jacker
