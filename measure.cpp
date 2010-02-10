@@ -1,6 +1,7 @@
 #include "measure.hpp"
 #include "model.hpp"
 
+#include <cassert>
 
 namespace Jacker {
 
@@ -17,6 +18,7 @@ MeasureView::MeasureView(BaseObjectType* cobject,
     : Gtk::Widget(cobject) {
     adjustment = NULL;
     model = NULL;
+    interact_mode = InteractNone;
     orientation = OrientationHorizontal;
     colors.resize(ColorCount);
     colors[ColorBlack].set("#000000");
@@ -119,26 +121,14 @@ bool MeasureView::on_expose_event(GdkEventExpose* event) {
     }
     
     // loop
-    if ((orientation == OrientationHorizontal) && model->enable_loop) {
+    if (/*(orientation == OrientationHorizontal) &&*/ model->enable_loop) {
         int lc1 = int(((model->loop.get_begin()-value)*scale)+0.5);
         int lc2 = int(((model->loop.get_end()-value)*scale)+0.5);
         
-        std::vector<Gdk::Point> points;
-        x = lc1; y = height-1; flip(x,y);
-        points.push_back(Gdk::Point(x,y));
-        x = lc1+8; y = height-1; flip(x,y);
-        points.push_back(Gdk::Point(x,y));
-        x = lc1; y = height-9; flip(x,y);
-        points.push_back(Gdk::Point(x,y));
-        window->draw_polygon(gc, true, points);
-        points.clear();
-        x = lc2; y = height-1; flip(x,y);
-        points.push_back(Gdk::Point(x,y));
-        x = lc2-8; y = height-1; flip(x,y);
-        points.push_back(Gdk::Point(x,y));
-        x = lc2; y = height-9; flip(x,y);
-        points.push_back(Gdk::Point(x,y));
-        window->draw_polygon(gc, true, points);
+        x = lc1; y = height-1;
+        render_arrow(x,y, true);
+        x = lc2; y = height-1;
+        render_arrow(x,y, false);
     }
 
     // bottom bar
@@ -148,7 +138,60 @@ bool MeasureView::on_expose_event(GdkEventExpose* event) {
     return true;
 }
 
+Gdk::Point MeasureView::flip(const Gdk::Point &pt) {
+    int x = pt.get_x();
+    int y = pt.get_y();
+    flip(x,y);
+    return Gdk::Point(x,y);
+}
+
+void MeasureView::render_arrow(int x, int y, bool begin) {
+    std::vector<Gdk::Point> points;
+    y -= 1;
+    const int R = 5;
+    points.push_back(flip(Gdk::Point(x,y)));
+    points.push_back(flip(Gdk::Point(x+R,y-R)));
+    points.push_back(flip(Gdk::Point(x+R,y-R*3)));
+    points.push_back(flip(Gdk::Point(x-R,y-R*3)));
+    points.push_back(flip(Gdk::Point(x-R,y-R)));
+    
+    gc->set_foreground(colors[ColorWhite]);
+    window->draw_polygon(gc, true, points);
+    gc->set_foreground(colors[ColorBlack]);
+    window->draw_polygon(gc, false, points);
+
+    points.clear();
+    if (begin) {
+        points.push_back(flip(Gdk::Point(x-R+2,y-R-2)));
+        points.push_back(flip(Gdk::Point(x+R-2,y-R-2)));
+        points.push_back(flip(Gdk::Point(x-R+2,y-R*3+2)));
+        window->draw_polygon(gc, false, points);
+    } else {
+        points.push_back(flip(Gdk::Point(x+R-1,y-R-1)));
+        points.push_back(flip(Gdk::Point(x-R+1,y-R-1)));
+        points.push_back(flip(Gdk::Point(x+R-1,y-R*3+1)));
+        window->draw_polygon(gc, true, points);
+    }
+}
+
+int MeasureView::get_pixel(int frame) {
+    assert(adjustment);
+    if (!window)
+        return 0;
+    int width = 0;
+    int height = 0;
+    window->get_size(width, height);
+    flip(width, height);
+    double value = adjustment->get_value();
+    double page_size = adjustment->get_page_size();
+    double scale = (double)width / page_size;
+    return int((frame - value)*scale+0.5);
+}
+
 int MeasureView::get_frame(int x, int y) {
+    assert(adjustment);
+    if (!window)
+        return 0;
     flip(x,y);
     int width = 0;
     int height = 0;
@@ -157,35 +200,100 @@ int MeasureView::get_frame(int x, int y) {
     double value = adjustment->get_value();
     double page_size = adjustment->get_page_size();
     double scale = (double)width / page_size;
-    int frame = (x / scale) + value; 
-    frame -= frame % model->get_frames_per_bar();
+    return ((x / scale) + value);
+}
+
+int MeasureView::quantize_frame(int frame) {
+    assert(model);
+    int step = model->get_frames_per_bar();
+    frame += step / 2;
+    frame -= frame % step;
     return frame;
 }
 
-bool MeasureView::on_motion_notify_event(GdkEventMotion *event) {
-    
-    return false;
+bool MeasureView::hit_loop_begin(int x) {
+    if (!model->enable_loop)
+        return false;
+    return (std::abs(get_pixel(model->loop.get_begin()) - x) <= 4);
+}
+
+bool MeasureView::hit_loop_end(int x) {
+    if (!model->enable_loop)
+        return false;
+    return (std::abs(get_pixel(model->loop.get_end()) - x) <= 4);
 }
 
 bool MeasureView::on_button_press_event(GdkEventButton* event) {
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     bool alt_down = event->state & Gdk::MOD1_MASK;
     int frame = get_frame(event->x,event->y);
+    int x = event->x;
+    int y = event->y;
+    flip(x,y);
     if (ctrl_down) {
-        model->loop.set_begin(frame);
+        model->loop.set_begin(quantize_frame(frame));
         invalidate();
         _loop_changed();
     } else if (alt_down) {
-        model->loop.set_end(frame);
+        model->loop.set_end(quantize_frame(frame));
         invalidate();
         _loop_changed();
     } else {
-        _seek_request(frame);
+        drag.start(event->x, event->y);
+        interact_mode = InteractDrag;
+    }
+    return false;
+}
+
+bool MeasureView::on_motion_notify_event(GdkEventMotion *event) {
+    if (interact_mode == InteractDrag) {
+        drag.update(event->x, event->y);
+        if (drag.threshold_reached()) {
+            int x = drag.start_x;
+            int y = drag.start_y;
+            flip(x,y);
+            if (hit_loop_begin(x))
+                interact_mode = InteractDragLoopBegin;
+            else if (hit_loop_end(x))
+                interact_mode = InteractDragLoopEnd;
+            else
+                interact_mode = InteractSeek;
+        }
+    }
+    if (interact_mode == InteractDragLoopBegin) {
+        int frame = quantize_frame(get_frame(event->x,event->y));
+        if (frame != model->loop.get_begin()) {
+            model->loop.set_begin(frame);
+            invalidate();
+            _loop_changed();
+            return true;
+        }
+    } else if (interact_mode == InteractDragLoopEnd) {
+        int frame = quantize_frame(get_frame(event->x,event->y));
+        if (frame != model->loop.get_end()) {
+            model->loop.set_end(frame);
+            invalidate();
+            _loop_changed();
+            return true;
+        }
+    } else if (interact_mode == InteractNone) {
+        int x = event->x;
+        int y = event->y;
+        flip(x,y);
+        if (hit_loop_begin(x)||hit_loop_end(x))
+            window->set_cursor(Gdk::Cursor(Gdk::HAND1));
+        else
+            window->set_cursor(Gdk::Cursor(Gdk::ARROW));
     }
     return false;
 }
 
 bool MeasureView::on_button_release_event(GdkEventButton* event) {
+    if ((interact_mode == InteractSeek)||(interact_mode == InteractDrag)) {
+        int frame = get_frame(event->x,event->y);
+        _seek_request(quantize_frame(frame));
+    }
+    interact_mode = InteractNone;
     return false;
 }
 

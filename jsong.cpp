@@ -68,6 +68,11 @@ public:
             root["events"] = events;
         }
     }
+    
+    void collect(Json::Value &root, Loop &loop) {
+        root["begin"] = loop.get_begin();
+        root["end"] = loop.get_end();
+    }
 
     void collect(Json::Value &root, Model &model) {
         root["format"] = "jacker-song";
@@ -76,6 +81,13 @@ public:
         root["frames_per_beat"] = model.frames_per_beat;
         root["beats_per_bar"] = model.beats_per_bar;
         root["beats_per_minute"] = model.beats_per_minute;
+        root["enable_loop"] = model.enable_loop;
+        
+        Json::Value loop;
+        collect(loop, model.loop);
+        if (!loop.empty()) {
+            root["loop"] = loop;
+        }
         
         Json::Value patterns;
         
@@ -130,6 +142,13 @@ public:
         target = value.asInt();
         return true;
     }
+
+    bool extract(const Json::Value &value, bool &target) {
+        if (!value.isBool())
+            return false;
+        target = value.asBool();
+        return true;
+    }
     
     void build(const Json::Value &root, Pattern::Event &event) {
         extract(root["frame"], event.frame);
@@ -177,6 +196,14 @@ public:
                 song.add_event(event);
         }
     }
+    
+    void build(const Json::Value &root, Loop &loop) {
+        int begin = 0;
+        int end = 0;
+        extract(root["begin"], begin);
+        extract(root["end"], end);
+        loop.set(begin, end);
+    }
 
     void build(const Json::Value &root, Model &model) {
         model.reset();
@@ -184,6 +211,12 @@ public:
         extract(root["frames_per_beat"], model.frames_per_beat);
         extract(root["beats_per_bar"], model.beats_per_bar);
         extract(root["beats_per_minute"], model.beats_per_minute);
+        extract(root["enable_loop"], model.enable_loop);
+        
+        const Json::Value loop = root["loop"];
+        if (!loop.empty()) {
+            build(loop, model.loop);
+        }
         
         const Json::Value patterns = root["patterns"];
         for (size_t i = 0; i < patterns.size(); ++i) {

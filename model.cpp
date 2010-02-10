@@ -331,20 +331,20 @@ Loop::Loop() {
 }
 
 void Loop::set(int begin, int end)  {
-    this->begin = begin;
-    this->end = end;
+    this->begin = std::max(begin,0);
+    this->end = std::max(end,0);
     if (this->begin > this->end)
         std::swap(this->begin, this->end);
 }
 
 void Loop::set_begin(int begin) {
-    this->begin = begin;
+    this->begin = std::max(begin,0);
     if (this->begin > this->end)
         this->end = this->begin;
 }
 
 void Loop::set_end(int end) {
-    this->end = end;
+    this->end = std::max(end,0);
     if (this->begin > this->end)
         this->begin = this->end;
 }

@@ -6,6 +6,8 @@
 #error GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED must be set.
 #endif    
 
+#include "drag.hpp"
+
 namespace Jacker {
 
 //=============================================================================
@@ -15,6 +17,14 @@ public:
     enum Orientation {
         OrientationHorizontal = 0,
         OrientationVertical,
+    };
+    
+    enum InteractMode {
+        InteractNone = 0,
+        InteractDrag,
+        InteractDragLoopBegin,
+        InteractDragLoopEnd,
+        InteractSeek,
     };
     
     typedef sigc::signal<void, int> type_seek_request;
@@ -49,12 +59,21 @@ public:
 protected:
     void on_adjustment_value_changed();
     void flip(int &x, int &y);
+    Gdk::Point flip(const Gdk::Point &pt);
     void flip(int &x, int &y, int &w, int &h);
+    int get_pixel(int frame);
     int get_frame(int x, int y);
+    int quantize_frame(int frame);
+    bool hit_loop_begin(int x);
+    bool hit_loop_end(int x);
+    void render_arrow(int x, int y, bool begin);
 
     Orientation orientation;
     Gtk::Adjustment *adjustment;
     Model *model;
+
+    InteractMode interact_mode;
+    Drag drag;
 
     type_seek_request _seek_request;
     type_loop_changed _loop_changed;
