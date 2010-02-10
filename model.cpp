@@ -215,6 +215,17 @@ void Pattern::update_keys() {
     }
 }
 
+void Pattern::copy_from(const Pattern &pattern) {
+    name = pattern.name;
+    length = pattern.length;
+    channel_count = pattern.channel_count;
+    
+    const_iterator iter;
+    for (iter = pattern.begin(); iter != pattern.end(); ++iter) {
+        add_event(iter->second);
+    }
+}
+
 //=============================================================================
 
 SongEvent::SongEvent() {
@@ -368,12 +379,16 @@ void Model::reset() {
     song.clear();
 }
 
-Pattern &Model::new_pattern() {
+Pattern &Model::new_pattern(const Pattern *template_pattern) {
     Pattern *pattern = new Pattern();
-    char text[64];
-    sprintf(text, "Pattern %i", patterns.size()+1);
-    pattern->name = text;
-    pattern->set_length(frames_per_beat * beats_per_bar);
+    if (template_pattern) {
+        pattern->copy_from(*template_pattern);
+    } else {
+        char text[64];
+        sprintf(text, "Pattern %i", patterns.size()+1);
+        pattern->name = text;
+        pattern->set_length(frames_per_beat * beats_per_bar);
+    }
     patterns.push_back(pattern);
     return *pattern;
 }

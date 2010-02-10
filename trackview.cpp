@@ -510,12 +510,15 @@ void TrackView::select_from_box() {
     }
 }
 
-void TrackView::clone_selection() {
+void TrackView::clone_selection(bool references/*=false*/) {
     Song::IterList new_selection;
     
     Song::IterList::iterator iter;
     for (iter = selection.begin(); iter != selection.end(); ++iter) {
         Song::Event event = (*iter)->second;
+        if (!references) {
+            event.pattern = &model->new_pattern(event.pattern);
+        }
         new_selection.push_back(model->song.add_event(event));
     }
     
@@ -524,6 +527,7 @@ void TrackView::clone_selection() {
 
 bool TrackView::on_motion_notify_event(GdkEventMotion *event) {    
     bool shift_down = event->state & Gdk::SHIFT_MASK;
+    bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     
     if (interact_mode == InteractNone) {
         TrackCursor cur(*this);
@@ -550,7 +554,7 @@ bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
             } else {
                 if (shift_down) {
                     invalidate_selection();
-                    clone_selection();
+                    clone_selection(ctrl_down);
                 }
                 interact_mode = InteractMove;
             }

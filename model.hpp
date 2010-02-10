@@ -151,6 +151,7 @@ public:
     iterator get_event(int frame, int channel, int param);
     
     void update_keys();
+    void copy_from(const Pattern &pattern);
 protected:
     Pattern();
     
@@ -250,7 +251,7 @@ public:
     void reset();
     
     Model();
-    Pattern &new_pattern();
+    Pattern &new_pattern(const Pattern *template_pattern=NULL);
     
     int get_track_count() const;
         
