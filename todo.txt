@@ -5,9 +5,6 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - LASH/LADI support
 
 - global:
-    - bpm (tempo) entry
-    - beats per bar entry
-    - frames per beat entry
     - undo/redo
     - proper open/save/save as
     - status bar
@@ -30,7 +27,7 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     
 - track view:
     - copy/paste
-    - clone (reference to same pattern)
+    - duplicate pattern (make non-reference copy)
     - zooming controls
     - rename pattern
 
