@@ -279,6 +279,8 @@ public:
         track_measure->set_adjustment(track_hscroll->get_adjustment());
         track_measure->signal_seek_request().connect(
             sigc::mem_fun(*this, &App::on_seek_request));
+            
+        track_view->set_loop(model.loop);
     }
     
     void init_timer() {

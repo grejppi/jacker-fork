@@ -281,6 +281,8 @@ bool TrackView::on_expose_event(GdkEventExpose* event) {
         render_track(track);
     }
     
+    render_loop();
+    
     // second pass: render events
     
     for (Song::iterator iter = model->song.begin();
@@ -422,6 +424,38 @@ bool TrackView::can_resize_event(Song::iterator event, int x) {
     int ex, ey, ew, eh;
     get_event_rect(event,ex,ey,ew,eh);
     return std::abs(x - (ex+ew)) < ResizeThreshold;
+}
+
+void TrackView::set_loop(const Loop &loop) {
+    invalidate_loop();
+    this->loop = loop;
+    invalidate_loop();
+}
+
+void TrackView::render_loop() {
+    if (!model->enable_loop)
+        return;
+    int width = 0;
+    int height = 0;
+    window->get_size(width, height);
+    
+    gc->set_foreground(colors[ColorBlack]);
+    int x, y;
+    get_event_pos(loop.get_begin(), 0, x, y);
+    window->draw_rectangle(gc, true, x, 0, 1, height);
+    get_event_pos(loop.get_end(), 0, x, y);
+    window->draw_rectangle(gc, true, x, 0, 1, height);
+}
+
+void TrackView::invalidate_loop() {
+    int width = 0;
+    int height = 0;
+    window->get_size(width, height);
+    int x, y;
+    get_event_pos(loop.get_begin(), 0, x, y);
+    window->invalidate_rect(Gdk::Rectangle(x,0,1,height), true);
+    get_event_pos(loop.get_end(), 0, x, y);
+    window->invalidate_rect(Gdk::Rectangle(x,0,1,height), true);
 }
 
 void TrackView::render_select_box() {

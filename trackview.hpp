@@ -136,6 +136,8 @@ public:
     void edit_pattern(Song::iterator event);
     void erase_events();
     
+    void set_loop(const Loop &loop);
+    
     type_pattern_edit_request signal_pattern_edit_request();
     type_context_menu signal_context_menu();
 protected:
@@ -146,6 +148,8 @@ protected:
     void render_select_box();
     void invalidate_select_box();
     void select_from_box();
+    void render_loop();
+    void invalidate_loop();
 
     bool can_resize_event(Song::iterator event, int x);
     void get_drag_offset(int &frame, int &track);
@@ -177,6 +181,8 @@ protected:
 
     int play_position;
     Drag drag;
+    
+    Loop loop;
 
     Model *model;
     Song::IterList selection;

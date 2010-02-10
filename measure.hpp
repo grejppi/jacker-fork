@@ -35,6 +35,7 @@ public:
 
     void set_adjustment(Gtk::Adjustment *adjustment);
     void set_orientation(Orientation orientation);
+    void invalidate();
 
     Glib::RefPtr<Gdk::Window> window;
     Glib::RefPtr<Gdk::GC> gc;
@@ -45,7 +46,6 @@ public:
     type_seek_request signal_seek_request();
 protected:
     void on_seek(int x);
-    void invalidate();
     void on_adjustment_value_changed();
     void draw_horizontal();
     void draw_vertical();
