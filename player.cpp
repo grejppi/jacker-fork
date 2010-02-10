@@ -204,15 +204,17 @@ void Player::mix_events(MessageQueue &queue, int samples) {
     
     long long target = queue.read_samples + ((long long)samples<<32);
     long long framesize = get_frame_size();
-    int mixed = 0;
+    
     while (queue.write_samples < target)
     {
         // send status package
         queue.status_msg();
         mix_frame(queue);
-        queue.position++;
         queue.write_samples += framesize;
-        mixed++;
+        queue.position++;
+        if (model->enable_loop && (queue.position == model->loop.get_end())) {
+            queue.position = model->loop.get_begin();
+        }
     }
 }
 

@@ -208,6 +208,23 @@ typedef std::list<Pattern*> PatternList;
 
 //=============================================================================
 
+class Loop {
+public:
+    Loop();
+    void set(int begin, int end);
+    void set_begin(int begin);
+    void set_end(int end);
+
+    void get(int &begin, int &end) const;
+    int get_begin() const;
+    int get_end() const;
+protected:
+    int begin;
+    int end;
+};
+
+//=============================================================================
+
 class Model {
 public:
     // list of all patterns
@@ -215,6 +232,11 @@ public:
 
     // contains all song events
     Song song;
+
+    // describes the loop
+    Loop loop;
+    // tells if the loop is enabled
+    bool enable_loop;
     
     // end cue in frames
     int end_cue;

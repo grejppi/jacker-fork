@@ -315,6 +315,44 @@ std::string Measure::get_string() const {
 
 //=============================================================================
 
+Loop::Loop() {
+    begin = end = 0;
+}
+
+void Loop::set(int begin, int end)  {
+    this->begin = begin;
+    this->end = end;
+    if (this->begin > this->end)
+        std::swap(this->begin, this->end);
+}
+
+void Loop::set_begin(int begin) {
+    this->begin = begin;
+    if (this->begin > this->end)
+        std::swap(this->begin, this->end);
+}
+
+void Loop::set_end(int end) {
+    this->end = end;
+    if (this->begin > this->end)
+        std::swap(this->begin, this->end);
+}
+
+void Loop::get(int &begin, int &end) const {
+    begin = this->begin;
+    end = this->end;
+}
+
+int Loop::get_begin() const {
+    return begin;
+}
+
+int Loop::get_end() const {
+    return end;
+}
+
+//=============================================================================
+
 Model::Model() {
     reset();
 }
@@ -324,6 +362,8 @@ void Model::reset() {
     beats_per_minute = 120;
     frames_per_beat = 4;
     beats_per_bar = 4;
+    enable_loop = true;
+    loop.set(get_frames_per_bar()*4,get_frames_per_bar()*8);
     patterns.clear();
     song.clear();
 }
