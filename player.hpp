@@ -77,6 +77,7 @@ public:
     void stop();
     void play();
     void seek(int position);
+    void flush();
     int get_position() const;
         
     bool is_playing() const;

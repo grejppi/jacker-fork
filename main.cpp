@@ -59,6 +59,10 @@ public:
 
     Glib::RefPtr<Gtk::Builder> builder;
 
+    Glib::RefPtr<Gtk::Adjustment> bpm_range;
+    Glib::RefPtr<Gtk::Adjustment> bpb_range;
+    Glib::RefPtr<Gtk::Adjustment> fpb_range;
+
     Gtk::Window* window;
     PatternView *pattern_view;
     MeasureView *pattern_measure;
@@ -162,8 +166,18 @@ public:
     void load_song(const std::string &filename) {
         read_jsong(model, filename);
         
-        pattern_view->set_pattern(NULL);
         track_view->invalidate();
+        pattern_view->set_pattern(NULL);
+        track_view->set_loop(model.loop);
+        update_measures();
+        all_views_changed();
+    }
+    
+    void all_views_changed() {
+        pattern_view->invalidate();
+        track_view->invalidate();
+        track_measure->invalidate();
+        pattern_measure->invalidate();
     }
     
     void on_about_action() {
@@ -172,6 +186,14 @@ public:
         assert(dialog);
         dialog->run();
         dialog->hide();
+    }
+    
+    Glib::RefPtr<Gtk::Adjustment> get_adjustment(const std::string &name) {
+        Glib::RefPtr<Gtk::Adjustment> adjustment =
+            Glib::RefPtr<Gtk::Adjustment>::cast_static(
+                builder->get_object(name));
+        assert(adjustment);
+        return adjustment;
     }
     
     template<typename T>
@@ -188,12 +210,44 @@ public:
         connect_action("open_action", sigc::mem_fun(*this, &App::on_open_action));
         connect_action("about_action", sigc::mem_fun(*this, &App::on_about_action));
     }
+
+    void on_bpm_changed() {
+        model.beats_per_minute = int(bpm_range->get_value()+0.5);
+        if (player)
+            player->flush();
+    }
+    
+    void on_bpb_changed() {
+        model.beats_per_bar = int(bpb_range->get_value()+0.5);
+        all_views_changed();
+    }
+    
+    void on_fpb_changed() {
+        model.frames_per_beat = int(fpb_range->get_value()+0.5);
+        all_views_changed();
+    }
+    
+    void update_measures() {
+        bpm_range->set_value(model.beats_per_minute);
+        bpb_range->set_value(model.beats_per_bar);
+        fpb_range->set_value(model.frames_per_beat);
+    }
     
     void init_transport() {
         connect_action("play_action", sigc::mem_fun(*this, &App::on_play_action));
         connect_action("stop_action", sigc::mem_fun(*this, &App::on_stop_action));
         
         builder->get_widget("play_frames", play_frames);
+        
+        bpm_range = get_adjustment("bpm_range");
+        bpm_range->signal_value_changed().connect(sigc::mem_fun(*this,
+            &App::on_bpm_changed));
+        bpb_range = get_adjustment("bpb_range");
+        bpb_range->signal_value_changed().connect(sigc::mem_fun(*this,
+            &App::on_bpb_changed));
+        fpb_range = get_adjustment("fpb_range");
+        fpb_range->signal_value_changed().connect(sigc::mem_fun(*this,
+            &App::on_fpb_changed));
     }
     
     void init_model() {
@@ -285,8 +339,6 @@ public:
             sigc::mem_fun(*this, &App::on_seek_request));
         track_measure->signal_loop_changed().connect(
             sigc::mem_fun(*this, &App::on_loop_changed));
-            
-        track_view->set_loop(model.loop);
     }
     
     void init_timer() {

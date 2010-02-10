@@ -169,6 +169,10 @@ void Player::premix() {
     mix_events(queue, PreMixSize);// fill buffer
 }
 
+void Player::flush() {
+    seek(read_position);
+}
+
 void Player::seek(int position) {
     MessageQueue &queue = get_back();
     queue.position = position;

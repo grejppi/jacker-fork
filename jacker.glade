@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
-  <!-- interface-naming-policy project-wide -->
+<!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="main">
     <property name="title" translatable="yes">Jacker</property>
     <property name="window_position">center</property>
@@ -606,23 +606,17 @@
     <property name="lower">10</property>
     <property name="upper">250</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-    <property name="page_size">10</property>
   </object>
   <object class="GtkAdjustment" id="bpb_range">
     <property name="value">4</property>
     <property name="lower">1</property>
     <property name="upper">12</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-    <property name="page_size">10</property>
   </object>
   <object class="GtkAdjustment" id="fpb_range">
     <property name="value">4</property>
     <property name="lower">1</property>
     <property name="upper">32</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-    <property name="page_size">10</property>
   </object>
 </interface>
