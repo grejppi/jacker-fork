@@ -3,6 +3,7 @@
 
 
 #include <gtkmm.h>
+#include <gtkmm/accelmap.h>
 #include <assert.h>
 #include <stdio.h>
 
@@ -62,6 +63,8 @@ public:
     Glib::RefPtr<Gtk::Adjustment> bpm_range;
     Glib::RefPtr<Gtk::Adjustment> bpb_range;
     Glib::RefPtr<Gtk::Adjustment> fpb_range;
+
+    Glib::RefPtr<Gtk::AccelGroup> accel_group;
 
     Gtk::Window* window;
     PatternView *pattern_view;
@@ -197,11 +200,21 @@ public:
     }
     
     template<typename T>
-    void connect_action(const std::string &name, const T &signal) {
+    void connect_action(const std::string &name, 
+                        const T &signal,
+                        const Glib::ustring& accel_path="") {
         Glib::RefPtr<Gtk::Action> action =
             Glib::RefPtr<Gtk::Action>::cast_static(
                 builder->get_object(name));
         assert(action);
+        if (!accel_path.empty()) {
+            action->set_accel_path(accel_path);
+            action->set_accel_group(accel_group);
+        Gtk::AccelMap::add_entry("Jacker/Transport/Play",
+            GDK_F5, Gdk::ModifierType());
+        
+            action->connect_accelerator();
+        }
         action->signal_activate().connect(signal);
     }
     
@@ -234,8 +247,12 @@ public:
     }
     
     void init_transport() {
-        connect_action("play_action", sigc::mem_fun(*this, &App::on_play_action));
-        connect_action("stop_action", sigc::mem_fun(*this, &App::on_stop_action));
+        connect_action("play_action", 
+            sigc::mem_fun(*this, &App::on_play_action),
+            "Jacker/Transport/Play");
+        connect_action("stop_action", 
+            sigc::mem_fun(*this, &App::on_stop_action),
+            "Jacker/Transport/Stop");
         
         builder->get_widget("play_frames", play_frames);
         
@@ -377,6 +394,10 @@ public:
         
         builder->get_widget("main", window);
         assert(window);
+        
+        accel_group = Gtk::AccelGroup::create();
+        window->add_accel_group(accel_group);
+        
         builder->get_widget("view_notebook", view_notebook);
         assert(view_notebook);
         
@@ -386,7 +407,7 @@ public:
         init_pattern_view();
         init_track_view();
         init_timer();
-        
+
         load_song("dump.jsong");
         
         window->show_all();
