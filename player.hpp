@@ -35,6 +35,7 @@ public:
     void on_note(int bus, int channel, int value);
     void on_volume(int bus, int channel, int value);
     void on_cc(int bus, int ccindex, int ccvalue);
+    void all_notes_off();
 
     void status_msg();
 
@@ -51,16 +52,20 @@ public:
     };
     
     struct Channel {
-        int note;
         int volume;
+        int note;
         
         Channel();
     };
     
     typedef std::vector<Channel> ChannelArray;
+    typedef std::vector<char> NoteArray;
     
     struct Bus {
         ChannelArray channels;
+        // stores which key is pressed on
+        // which channel. (notes[key] = channel)
+        NoteArray notes;
         
         Bus();
     };
