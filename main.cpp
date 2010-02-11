@@ -295,6 +295,13 @@ public:
     void init_model() {
     }
     
+    void on_pattern_play_request(int frame) {
+        if (!player)
+            return;
+        player->seek(frame);
+        player->play();
+    }
+    
     void on_pattern_view_play_event(const Pattern::Event &event) {
         if (!player)
             return;
@@ -326,6 +333,8 @@ public:
             sigc::mem_fun(*this, &App::on_pattern_view_play_event));
         pattern_view->signal_return_request().connect(
             sigc::mem_fun(*this, &App::on_pattern_return_request));
+        pattern_view->signal_play_request().connect(
+            sigc::mem_fun(*this, &App::on_pattern_play_request));
         
         builder->get_widget_derived("pattern_measure", pattern_measure);
         assert(pattern_measure);

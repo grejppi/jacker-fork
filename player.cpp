@@ -178,6 +178,8 @@ void Player::seek(int position) {
     queue.position = position;
     if (playing)
         premix();
+    else
+        read_position = position;
     flip();
 }
 

@@ -284,6 +284,7 @@ public:
     Pattern::iterator get_event(PatternCursor &cur);
     
     void play_event(const Pattern::Event &event);
+    void play_from_cursor();
     
     void clear_block();
     void move_frames(int step, bool all_channels=false);

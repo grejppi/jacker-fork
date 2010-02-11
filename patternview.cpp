@@ -1279,6 +1279,7 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
     }
     else {
         switch (event->keyval) {
+            case GDK_F7: play_from_cursor(); return true;
             case GDK_Return: _return_request(); return true;
             case GDK_Insert: move_frames(1); return true;
             case GDK_Delete: move_frames(-1); return true;
@@ -1450,6 +1451,13 @@ bool PatternView::get_cell_location(int x, int y, int &row, int &channel,
             x -= cell_margin;
     }
     return false;
+}
+
+void PatternView::play_from_cursor() {
+    if (!get_pattern())
+        return;
+    int frame = song_event->second.frame + cursor.get_row();
+    _play_request(frame);
 }
 
 void PatternView::play_event(const Pattern::Event &event) {
