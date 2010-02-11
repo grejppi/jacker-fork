@@ -248,6 +248,10 @@ int SongEvent::get_last_frame() const {
     return frame + pattern->get_length() - 1;
 }
 
+int SongEvent::get_end() const {
+    return frame + pattern->get_length();
+}
+
 //=============================================================================
 
 Song::Song() {

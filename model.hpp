@@ -173,7 +173,10 @@ struct SongEvent {
     
     int key() const;
     int get_last_frame() const;
+    int get_end() const;
 };
+
+//=============================================================================
 
 class Song : public EventCollection< std::multimap<int,SongEvent> > {
     friend class Model;
@@ -205,10 +208,6 @@ struct Measure {
 
 //=============================================================================
 
-typedef std::list<Pattern*> PatternList;
-
-//=============================================================================
-
 class Loop {
 public:
     Loop();
@@ -225,6 +224,8 @@ protected:
 };
 
 //=============================================================================
+
+typedef std::list<Pattern*> PatternList;
 
 class Model {
 public:

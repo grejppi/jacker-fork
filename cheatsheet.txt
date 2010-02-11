@@ -61,8 +61,13 @@ Song
 
             -- Navigation --
             
+      Left/Right: Select previous/next pattern.
+         Up/Down: Select previous/next track.
+            Home: Move to first pattern.
+             End: Move to last pattern.
           Return: Edit selected pattern.
     Double-Click: Edit pattern at cursor.
+              F7: Play song starting at selection.
             
             -- Measure --
 
@@ -70,6 +75,8 @@ Song
   Ctrl+Click: Set beginning of loop.
    Alt+Click: Set end of loop.
   Click+Drag: Move loop beginning/end handles.
+      Ctrl+B: Set beginning of loop at selection.
+      Ctrl+E: Set end of loop at selection.
 
             -- Selection --
 

@@ -72,6 +72,8 @@ public:
     // signals
     typedef sigc::signal<void, Song::iterator> type_pattern_edit_request;
     typedef sigc::signal<void, TrackView *, GdkEventButton*> type_context_menu;
+    typedef sigc::signal<void> type_loop_changed;
+    typedef sigc::signal<void, int> type_play_request;
     
     TrackView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
@@ -87,6 +89,9 @@ public:
     virtual bool on_key_release_event(GdkEventKey* event);
     virtual void on_size_allocate(Gtk::Allocation& allocation);
 
+    Song::iterator get_left_event(Song::iterator start);
+    Song::iterator get_right_event(Song::iterator start);
+    Song::iterator nearest_y_event(Song::iterator start, int direction);
     void navigate(int dir_x, int dir_y);
     void select_first();
     void select_last();
@@ -124,9 +129,13 @@ public:
     void erase_events();
     
     void set_loop(const Loop &loop);
+    void set_loop_begin();
+    void set_loop_end();
     
     type_pattern_edit_request signal_pattern_edit_request();
     type_context_menu signal_context_menu();
+    type_loop_changed signal_loop_changed();
+    type_play_request signal_play_request();
 protected:
     void invalidate_selection();
     void invalidate_play_position();
@@ -137,6 +146,9 @@ protected:
     void select_from_box();
     void render_loop();
     void invalidate_loop();
+    int get_selection_begin();
+    int get_selection_end();
+    void play_from_selection();
 
     bool can_resize_event(Song::iterator event, int x);
     void get_drag_offset(int &frame, int &track);
@@ -176,6 +188,8 @@ protected:
 
     type_pattern_edit_request _pattern_edit_request;
     type_context_menu _signal_context_menu;
+    type_loop_changed _loop_changed;
+    type_play_request _play_request;
     
     Gtk::Adjustment *hadjustment;
     Gtk::Adjustment *vadjustment;

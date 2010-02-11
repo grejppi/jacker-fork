@@ -615,50 +615,166 @@ void TrackView::select_last() {
     select_event(iter);
 }
 
+Song::iterator TrackView::get_left_event(Song::iterator start) {
+    Song::iterator not_found = model->song.end();
+    if (start == model->song.begin())
+        return not_found;
+
+    Song::iterator iter = start;
+    do {
+        iter--;
+        if (iter->first == start->first)
+            continue;
+        if (iter->second.track == start->second.track)
+            return iter;
+    } while(iter != model->song.begin());
+    
+    return not_found;
+}
+
+Song::iterator TrackView::get_right_event(Song::iterator start) {
+    Song::iterator not_found = model->song.end();
+
+    Song::iterator iter = start;
+    iter++;
+    while (iter != model->song.end()) {
+        if (iter->first != start->first) {
+            if (iter->second.track == start->second.track)
+                return iter;
+        }
+        iter++;
+    }
+    
+    return not_found;
+}
+
+
+Song::iterator TrackView::nearest_y_event(Song::iterator start, int direction) {
+    Song::iterator not_found = model->song.end();
+    
+    int best_delta_x = 9999999;
+    int best_delta_y = 9999999;
+    Song::iterator best_iter = not_found;
+    
+    for (Song::iterator iter = model->song.begin();
+         iter != model->song.end(); ++iter) {
+        int delta_x = iter->second.track - start->second.track;
+        int delta_y = iter->first - start->first;
+        delta_x *= direction;
+        if (delta_x <= 0)
+            continue;
+        if (delta_x > best_delta_x)
+            continue;
+        delta_y = std::abs(delta_y);
+        if (delta_x == best_delta_x) {
+            if (delta_y >= best_delta_y)
+                continue;
+        }
+        best_delta_x = delta_x;
+        best_delta_y = delta_y;
+        best_iter = iter;
+    }
+    
+    return best_iter;
+}
+
 void TrackView::navigate(int dir_x, int dir_y) {
     if (selection.empty()) {
         select_first();
         return;
     }
     Song::iterator iter = selection.back();
-    Song::Event &event = iter->second;
-    if (dir_x > 0) {
-        while (iter != model->song.end()) {
-            if (iter->second.frame > event.frame) {
-                clear_selection();
-                select_event(iter);
-                return;
-            }
-            iter++;
-        }
-    } else if (dir_x < 0) {
-        do {
-            iter--;
-            if (iter->second.frame < event.frame) {
-                clear_selection();
-                select_event(iter);
-                return;
-            }
-        } while (iter != model->song.begin());
-    }
     
+    if (dir_x < 0)
+        iter = get_left_event(iter);
+    else if (dir_x > 0)
+        iter = get_right_event(iter);
+    else if (dir_y)
+        iter = nearest_y_event(iter, dir_y);
+    
+    if (iter != model->song.end()) {
+        clear_selection();
+        select_event(iter);
+    }
+}
+
+int TrackView::get_selection_begin() {
+    if (selection.empty())
+        return -1;
+    int best = selection.front()->first;
+    for (Song::IterList::iterator iter = selection.begin();
+      iter != selection.end(); ++iter) {
+        best = std::min(best, (*iter)->first);
+    }
+    return best;
+}
+
+int TrackView::get_selection_end() {
+    if (selection.empty())
+        return -1;
+    int best = selection.front()->second.get_end();
+    for (Song::IterList::iterator iter = selection.begin();
+      iter != selection.end(); ++iter) {
+        best = std::max(best, (*iter)->second.get_end());
+    }
+    return best;
+}
+
+void TrackView::set_loop_begin() {
+    int frame = get_selection_begin();
+    if (frame == -1)
+        return;
+    invalidate_loop();    
+    loop.set_begin(frame);
+    model->loop = loop;
+    _loop_changed();
+    invalidate_loop();
+}
+
+void TrackView::set_loop_end() {
+    int frame = get_selection_end();
+    if (frame == -1)
+        return;
+    invalidate_loop();
+    loop.set_end(frame);
+    model->loop = loop;
+    _loop_changed();
+    invalidate_loop();
+}
+
+void TrackView::play_from_selection() {
+    int frame = get_selection_begin();
+    if (frame == -1)
+        return;
+    _play_request(frame);
 }
 
 bool TrackView::on_key_press_event(GdkEventKey* event) {
-    switch (event->keyval) {
-        case GDK_Delete: erase_events(); return true;
-        case GDK_Return: {
-            if (selection.size() == 1)
-                edit_pattern(selection.front());
-            return true;
-        } break;
-        case GDK_Left: navigate(-1,0); return true;
-        case GDK_Right: navigate(1,0); return true;
-        case GDK_Up: navigate(0,-1); return true;
-        case GDK_Down: navigate(0,1); return true;
-        case GDK_Home: select_first(); return true;
-        case GDK_End: select_last(); return true;
-        default: break;
+    bool ctrl_down = event->state & Gdk::CONTROL_MASK;
+
+    if (ctrl_down) {
+        switch (event->keyval) {
+            case GDK_b: set_loop_begin(); return true;
+            case GDK_e: set_loop_end(); return true;
+            default: break;
+        }
+    } else {
+        switch (event->keyval) {
+            case GDK_Delete: erase_events(); return true;
+            case GDK_Return: {
+                if (selection.size() == 1)
+                    edit_pattern(selection.front());
+                return true;
+            } break;
+            case GDK_Left: navigate(-1,0); return true;
+            case GDK_Right: navigate(1,0); return true;
+            case GDK_Up: navigate(0,-1); return true;
+            case GDK_Down: navigate(0,1); return true;
+            case GDK_Home: select_first(); return true;
+            case GDK_End: select_last(); return true;
+            case GDK_F7: play_from_selection(); return true;
+            default: break;
+        }
     }
     return false;
 }
@@ -808,6 +924,14 @@ TrackView::type_pattern_edit_request TrackView::signal_pattern_edit_request() {
 
 TrackView::type_context_menu TrackView::signal_context_menu() {
     return _signal_context_menu;
+}
+
+TrackView::type_loop_changed TrackView::signal_loop_changed() {
+    return _loop_changed;
+}
+
+TrackView::type_play_request TrackView::signal_play_request() {
+    return _play_request;
 }
 
 //=============================================================================

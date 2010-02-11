@@ -295,7 +295,7 @@ public:
     void init_model() {
     }
     
-    void on_pattern_play_request(int frame) {
+    void on_play_request(int frame) {
         if (!player)
             return;
         player->seek(frame);
@@ -334,7 +334,7 @@ public:
         pattern_view->signal_return_request().connect(
             sigc::mem_fun(*this, &App::on_pattern_return_request));
         pattern_view->signal_play_request().connect(
-            sigc::mem_fun(*this, &App::on_pattern_play_request));
+            sigc::mem_fun(*this, &App::on_play_request));
         
         builder->get_widget_derived("pattern_measure", pattern_measure);
         assert(pattern_measure);
@@ -370,8 +370,12 @@ public:
         player->seek(frame);
     }
     
-    void on_loop_changed() {
+    void on_measure_loop_changed() {
         track_view->set_loop(model.loop);
+    }
+    
+    void on_track_view_loop_changed() {
+        track_measure->invalidate();
     }
     
     void init_track_view() {
@@ -391,6 +395,10 @@ public:
             sigc::mem_fun(*this, &App::on_track_view_edit_pattern));
         track_view->signal_context_menu().connect(
             sigc::mem_fun(*this, &App::on_track_view_context_menu));
+        track_view->signal_loop_changed().connect(
+            sigc::mem_fun(*this, &App::on_track_view_loop_changed));
+        track_view->signal_play_request().connect(
+            sigc::mem_fun(*this, &App::on_play_request));
         
         builder->get_widget("trackview_menu", trackview_menu);
         assert(trackview_menu);
@@ -405,7 +413,7 @@ public:
         track_measure->signal_seek_request().connect(
             sigc::mem_fun(*this, &App::on_seek_request));
         track_measure->signal_loop_changed().connect(
-            sigc::mem_fun(*this, &App::on_loop_changed));
+            sigc::mem_fun(*this, &App::on_measure_loop_changed));
     }
     
     void init_timer() {
@@ -466,6 +474,7 @@ public:
         load_song("dump.jsong");
         
         window->show_all();
+        show_track_view();
         
         if (player)
             player->activate();
