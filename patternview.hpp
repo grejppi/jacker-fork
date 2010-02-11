@@ -206,13 +206,13 @@ public:
     
     typedef sigc::signal<void, const Pattern::Event &> type_play_event_request;
     typedef sigc::signal<void> type_return_request;
+    typedef sigc::signal<void, int> type_play_request;
     
     PatternView(BaseObjectType* cobject, 
                 const Glib::RefPtr<Gtk::Builder>& builder);
 
     void set_model(class Model &model);
-    //void set_song_event(Song::iterator event);
-    void set_pattern(Pattern *pattern);
+    void set_song_event(Song::iterator event);
     Pattern *get_pattern() const;
 
     virtual void on_realize();
@@ -290,6 +290,7 @@ public:
 
     type_play_event_request signal_play_event_request();
     type_return_request signal_return_request();
+    type_play_request signal_play_request();
 protected:
     void invalidate_play_position();
     void invalidate_cursor();
@@ -300,7 +301,7 @@ protected:
         
     InteractMode interact_mode;
 
-    class Pattern *pattern;
+    Song::iterator song_event;
     Gtk::Adjustment *hadjustment;
     Gtk::Adjustment *vadjustment;
     PatternCursor cursor;
@@ -330,6 +331,7 @@ protected:
     
     type_play_event_request _play_event_request;
     type_return_request _return_request;
+    type_play_request _play_request;
 };
 
 //=============================================================================

@@ -304,8 +304,7 @@ void TrackView::new_pattern(const TrackCursor &cur) {
 }
 
 void TrackView::edit_pattern(Song::iterator iter) {
-    Pattern *pattern = iter->second.pattern;
-    _pattern_edit_request(pattern);
+    _pattern_edit_request(iter);
 }
 
 

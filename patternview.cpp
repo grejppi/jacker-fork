@@ -719,7 +719,6 @@ PatternView::PatternView(BaseObjectType* cobject,
   : Gtk::Widget(cobject), 
     byte_renderer(2) {
     model = NULL;
-    pattern = NULL;
     select_at_cursor = false;
     hadjustment = 0;
     vadjustment = 0;
@@ -785,15 +784,18 @@ void PatternView::set_scroll_adjustments(Gtk::Adjustment *hadjustment,
 }
 
 Pattern *PatternView::get_pattern() const {
-    return this->pattern;
+    if (song_event == model->song.end())
+        return NULL;
+    return song_event->second.pattern;
 }
 
 void PatternView::set_model(class Model &model) {
     this->model = &model;
+    this->song_event = this->model->song.end();
 }
 
-void PatternView::set_pattern(class Pattern *pattern) {
-    this->pattern = pattern;
+void PatternView::set_song_event(Song::iterator event) {
+    song_event = event;
     selection.set_active(false);
     invalidate();
     update_adjustments();
@@ -893,7 +895,7 @@ void PatternView::on_adjustment_value_changed() {
 }
 
 void PatternView::update_adjustments() {
-    if (!pattern)
+    if (!get_pattern())
         return;
     
     Gtk::Allocation allocation = get_allocation();
@@ -906,7 +908,7 @@ void PatternView::update_adjustments() {
         
         hadjustment->configure(0, // value
                                0, // lower
-                               pattern->get_channel_count(), // upper
+                               get_pattern()->get_channel_count(), // upper
                                1, // step increment
                                4, // page increment
                                page_size); // page size
@@ -919,7 +921,7 @@ void PatternView::update_adjustments() {
         
         vadjustment->configure(0, // value
                                0, // lower
-                               pattern->get_length(), // upper
+                               get_pattern()->get_length(), // upper
                                1, // step increment
                                8,  // page increment
                                page_size); // page size
@@ -962,16 +964,16 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     gc->set_foreground(colors[ColorBackground]);
     window->draw_rectangle(gc, true, 0, 0, width, height);
     
-    if (!pattern)
+    if (!get_pattern())
         return true;
     
     // build temporary row
     Pattern::Row row;
     // start iterating at start of pattern
-    Pattern::iterator iter = pattern->begin();    
+    Pattern::iterator iter = get_pattern()->begin();    
     
-    int frame_count = pattern->get_length();
-    int channel_count = pattern->get_channel_count();
+    int frame_count = get_pattern()->get_length();
+    int channel_count = get_pattern()->get_channel_count();
     
     PatternCursor render_cursor;
     render_cursor.set_view(*this);
@@ -1005,7 +1007,7 @@ bool PatternView::on_expose_event(GdkEventExpose* event) {
     
     for (int frame = start_frame; frame < end_frame; ++frame) {
         // collect events from pattern
-        pattern->collect_events(frame, iter, row);
+        get_pattern()->collect_events(frame, iter, row);
         
         render_cursor.set_channel(start_channel);
         
@@ -1065,18 +1067,18 @@ void PatternView::invalidate_cursor() {
 }
 
 void PatternView::clip_cursor(PatternCursor &c) {
-    if (!pattern)
+    if (!get_pattern())
         return;
     // sanity checks/fixes
     if (c.get_row() < 0) {
         c.set_row(0);
-    } else if (c.get_row() >= pattern->get_length()) {
-        c.set_row(pattern->get_length()-1);
+    } else if (c.get_row() >= get_pattern()->get_length()) {
+        c.set_row(get_pattern()->get_length()-1);
     }
     if (c.get_channel() < 0) {
         c.set_channel(0);
-    } else if (c.get_channel() >= pattern->get_channel_count()) {
-        c.set_channel(pattern->get_channel_count()-1);
+    } else if (c.get_channel() >= get_pattern()->get_channel_count()) {
+        c.set_channel(get_pattern()->get_channel_count()-1);
         c.set_last_param();
         c.set_last_item();
     }
@@ -1143,7 +1145,7 @@ void PatternView::show_cursor() {
 }
 
 bool PatternView::on_motion_notify_event(GdkEventMotion *event) {
-    if (!pattern)
+    if (!get_pattern())
         return true;
     if (interact_mode == InteractSelect) {
         invalidate_selection();
@@ -1168,7 +1170,7 @@ void PatternView::navigate(int delta_x, int delta_y, bool select/*=false*/) {
 }
 
 bool PatternView::on_button_press_event(GdkEventButton* event) {
-    if (!pattern)
+    if (!get_pattern())
         return false;
     grab_focus();
     
@@ -1184,7 +1186,7 @@ bool PatternView::on_button_press_event(GdkEventButton* event) {
 }
 
 bool PatternView::on_button_release_event(GdkEventButton* event) {
-    if (!pattern)
+    if (!get_pattern())
         return false;
     interact_mode = InteractNone;
     return false;
@@ -1193,11 +1195,11 @@ bool PatternView::on_button_release_event(GdkEventButton* event) {
 void PatternView::move_frames(int step, bool all_channels/*=false*/) {
     int row = cursor.get_row();
     int channel = cursor.get_channel();
-    int length = pattern->get_length();
+    int length = get_pattern()->get_length();
     
     Pattern::iterator iter;
-    for (Pattern::iterator iter = pattern->begin(); 
-         iter != pattern->end(); ++iter) {
+    for (Pattern::iterator iter = get_pattern()->begin(); 
+         iter != get_pattern()->end(); ++iter) {
         int frame = iter->second.frame;
         if (frame < row)
             continue;
@@ -1211,14 +1213,14 @@ void PatternView::move_frames(int step, bool all_channels/*=false*/) {
         }
     }
     
-    pattern->update_keys();
+    get_pattern()->update_keys();
     invalidate();
 }
 
 void PatternView::clear_block() {
     Pattern::iterator iter;
-    for (Pattern::iterator iter = pattern->begin(); 
-         iter != pattern->end(); ++iter) {
+    for (Pattern::iterator iter = get_pattern()->begin(); 
+         iter != get_pattern()->end(); ++iter) {
         PatternCursor cur(cursor);
         cur = iter->second;
         if (!selection.in_range(cur))
@@ -1226,7 +1228,7 @@ void PatternView::clear_block() {
         iter->second.frame = -1; // will be deleted
     }
     
-    pattern->update_keys();
+    get_pattern()->update_keys();
     
     invalidate_selection();
 }
@@ -1238,7 +1240,7 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
     /*
     bool super_down = event->state & (Gdk::SUPER_MASK|Gdk::MOD4_MASK);
     */
-    if (!pattern)
+    if (!get_pattern())
         return true;
     
     PatternCursor new_cursor(cursor);
@@ -1249,14 +1251,16 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
             case GDK_plus:
             case GDK_KP_Add:
             {
-                pattern->set_channel_count(pattern->get_channel_count()+1);
+                get_pattern()->set_channel_count(
+                    get_pattern()->get_channel_count()+1);
                 invalidate();
                 return true;
             } break;
             case GDK_minus:
             case GDK_KP_Subtract:
             {
-                pattern->set_channel_count(pattern->get_channel_count()-1);
+                get_pattern()->set_channel_count(
+                    get_pattern()->get_channel_count()-1);
                 invalidate();
                 return true;
             } break;
@@ -1305,15 +1309,15 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
                     evt.channel = cursor.get_channel();
                     evt.param = cursor.get_param();
                     Pattern::iterator i = get_event(cursor);
-                    if (i != pattern->end())
+                    if (i != get_pattern()->end())
                         evt = i->second;
                     if (renderer->on_key_press_event(event, evt, 
                                                      cursor.get_item())) {
                         evt.sanitize_value();
                         if (evt.is_valid())
-                            pattern->add_event(evt);
-                        else if (i != pattern->end())
-                            pattern->erase(i);
+                            get_pattern()->add_event(evt);
+                        else if (i != get_pattern()->end())
+                            get_pattern()->erase(i);
                         invalidate_cursor();
                         return true;
                     }
@@ -1330,7 +1334,8 @@ bool PatternView::on_key_release_event(GdkEventKey* event) {
 }
 
 Pattern::iterator PatternView::get_event(PatternCursor &cur) {
-    return pattern->get_event(cur.get_row(), cur.get_channel(), cur.get_param());
+    return get_pattern()->get_event(
+        cur.get_row(), cur.get_channel(), cur.get_param());
 }
 
 void PatternView::set_cell_renderer(int param, CellRenderer *renderer) {
@@ -1487,6 +1492,10 @@ PatternView::type_play_event_request PatternView::signal_play_event_request() {
 
 PatternView::type_return_request PatternView::signal_return_request() {
     return _return_request;
+}
+
+PatternView::type_play_request PatternView::signal_play_request() {
+    return _play_request;
 }
 
 //=============================================================================
