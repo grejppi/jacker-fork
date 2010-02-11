@@ -123,6 +123,29 @@
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">_View</property>
                 <property name="use_underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="menu4">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem11">
+                        <property name="label" translatable="yes">Song</property>
+                        <property name="visible">True</property>
+                        <property name="related_action">show_tracks_action</property>
+                        <property name="image">image2</property>
+                        <property name="use_stock">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem12">
+                        <property name="label" translatable="yes">Pattern</property>
+                        <property name="visible">True</property>
+                        <property name="related_action">show_pattern_action</property>
+                        <property name="image">image1</property>
+                        <property name="use_stock">False</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
@@ -659,5 +682,21 @@
     <property name="lower">1</property>
     <property name="upper">32</property>
     <property name="step_increment">1</property>
+  </object>
+  <object class="GtkAction" id="show_pattern_action">
+    <property name="label">Pattern</property>
+    <property name="short_label">Pattern</property>
+  </object>
+  <object class="GtkAction" id="show_tracks_action">
+    <property name="label">Tracks</property>
+    <property name="short_label">Tracks</property>
+  </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="stock">gtk-missing-image</property>
+  </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="stock">gtk-missing-image</property>
   </object>
 </interface>

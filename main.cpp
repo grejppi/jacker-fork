@@ -17,6 +17,11 @@
 
 namespace Jacker {
 
+const char AccelPathPlay[] = "<Jacker>/Transport/Play";
+const char AccelPathStop[] = "<Jacker>/Transport/Stop";
+const char AccelPathPatternView[] = "<Jacker>/View/Pattern";
+const char AccelPathTrackView[] = "<Jacker>/View/Tracks";
+    
 class JackPlayer : public Jack::Client,
                    public Player {
 public:
@@ -209,19 +214,32 @@ public:
         assert(action);
         if (!accel_path.empty()) {
             action->set_accel_path(accel_path);
-            action->set_accel_group(accel_group);
-        Gtk::AccelMap::add_entry("Jacker/Transport/Play",
-            GDK_F5, Gdk::ModifierType());
-        
+            action->set_accel_group(accel_group);       
             action->connect_accelerator();
         }
         action->signal_activate().connect(signal);
+    }
+    
+    void on_show_pattern_action() {
+        show_pattern_view();
+    }
+    
+    void on_show_tracks_action() {
+        show_track_view();
     }
     
     void init_menu() {
         connect_action("save_action", sigc::mem_fun(*this, &App::on_save_action));
         connect_action("open_action", sigc::mem_fun(*this, &App::on_open_action));
         connect_action("about_action", sigc::mem_fun(*this, &App::on_about_action));
+    
+        connect_action("show_pattern_action", 
+            sigc::mem_fun(*this, &App::on_show_pattern_action),
+            AccelPathPatternView);
+        connect_action("show_tracks_action", 
+            sigc::mem_fun(*this, &App::on_show_tracks_action),
+            AccelPathTrackView);
+    
     }
 
     void on_bpm_changed() {
@@ -249,10 +267,10 @@ public:
     void init_transport() {
         connect_action("play_action", 
             sigc::mem_fun(*this, &App::on_play_action),
-            "Jacker/Transport/Play");
+            AccelPathPlay);
         connect_action("stop_action", 
             sigc::mem_fun(*this, &App::on_stop_action),
-            "Jacker/Transport/Stop");
+            AccelPathStop);
         
         builder->get_widget("play_frames", play_frames);
         
@@ -305,9 +323,17 @@ public:
         pattern_measure->set_orientation(MeasureView::OrientationVertical);
     }
     
-    void on_track_view_edit_pattern(Pattern *pattern) {
+    void show_pattern_view() {
         view_notebook->set_current_page(PagePatternView);
+    }
+    
+    void show_track_view() {
+        view_notebook->set_current_page(PageTrackView);
+    }
+    
+    void on_track_view_edit_pattern(Pattern *pattern) {
         pattern_view->set_pattern(pattern);
+        show_pattern_view();
     }
     
     void on_track_view_context_menu(TrackView *view, GdkEventButton* event) {
@@ -395,9 +421,14 @@ public:
         builder->get_widget("main", window);
         assert(window);
         
+        Gtk::AccelMap::add_entry(AccelPathPatternView, GDK_F4, Gdk::ModifierType());
+        Gtk::AccelMap::add_entry(AccelPathTrackView, GDK_F3, Gdk::ModifierType());
+        Gtk::AccelMap::add_entry(AccelPathPlay, GDK_F5, Gdk::ModifierType());
+        Gtk::AccelMap::add_entry(AccelPathStop, GDK_F8, Gdk::ModifierType());
+
         accel_group = Gtk::AccelGroup::create();
         window->add_accel_group(accel_group);
-        
+                
         builder->get_widget("view_notebook", view_notebook);
         assert(view_notebook);
         
