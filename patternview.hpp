@@ -296,7 +296,7 @@ protected:
         
     InteractMode interact_mode;
 
-    class Pattern *pattern;
+    Song::iterator song_event;
     Gtk::Adjustment *hadjustment;
     Gtk::Adjustment *vadjustment;
     PatternCursor cursor;

@@ -182,7 +182,7 @@ public:
         read_jsong(model, filename);
         
         track_view->invalidate();
-        pattern_view->set_pattern(NULL);
+        pattern_view->set_song_event(model.song.end());
         track_view->set_loop(model.loop);
         update_measures();
         all_views_changed();
@@ -338,8 +338,8 @@ public:
         view_notebook->set_current_page(PageTrackView);
     }
     
-    void on_track_view_edit_pattern(Pattern *pattern) {
-        pattern_view->set_pattern(pattern);
+    void on_track_view_edit_pattern(Song::iterator event) {
+        pattern_view->set_song_event(event);
         show_pattern_view();
     }
     

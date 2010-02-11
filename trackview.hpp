@@ -70,7 +70,7 @@ public:
     };
     
     // signals
-    typedef sigc::signal<void, Pattern *> type_pattern_edit_request;
+    typedef sigc::signal<void, Song::iterator> type_pattern_edit_request;
     typedef sigc::signal<void, TrackView *, GdkEventButton*> type_context_menu;
     
     TrackView(BaseObjectType* cobject, 
