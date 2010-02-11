@@ -121,7 +121,7 @@ bool MeasureView::on_expose_event(GdkEventExpose* event) {
     }
     
     // loop
-    if (/*(orientation == OrientationHorizontal) &&*/ model->enable_loop) {
+    if ((orientation == OrientationHorizontal) && model->enable_loop) {
         int lc1 = int(((model->loop.get_begin()-value)*scale)+0.5);
         int lc2 = int(((model->loop.get_end()-value)*scale)+0.5);
         

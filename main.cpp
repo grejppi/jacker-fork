@@ -111,7 +111,11 @@ public:
         init_player();
         if (!player)
             return;
-        player->play();
+        if (!player->is_playing()) {
+            player->play();
+        } else if (model.enable_loop) {
+            player->seek(model.loop.get_begin());
+        }
     }
     
     void on_stop_action() {
@@ -119,6 +123,9 @@ public:
             return;
         if (player->is_playing()) {
             player->stop();
+        } else if (model.enable_loop && 
+                (player->get_position() > model.loop.get_begin())) {
+            player->seek(model.loop.get_begin());
         } else {
             player->seek(0);
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
-  <!-- interface-naming-policy project-wide -->
+<!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="main">
     <property name="title" translatable="yes">Jacker</property>
     <property name="window_position">center</property>
@@ -128,20 +128,18 @@
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem11">
-                        <property name="label" translatable="yes">Song</property>
                         <property name="visible">True</property>
+                        <property name="use_action_appearance">True</property>
                         <property name="related_action">show_tracks_action</property>
-                        <property name="image">image2</property>
-                        <property name="use_stock">False</property>
+                        <property name="use_stock">True</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem12">
-                        <property name="label" translatable="yes">Pattern</property>
                         <property name="visible">True</property>
+                        <property name="use_action_appearance">True</property>
                         <property name="related_action">show_pattern_action</property>
-                        <property name="image">image1</property>
-                        <property name="use_stock">False</property>
+                        <property name="use_stock">True</property>
                       </object>
                     </child>
                   </object>
@@ -690,13 +688,5 @@
   <object class="GtkAction" id="show_tracks_action">
     <property name="label">Tracks</property>
     <property name="short_label">Tracks</property>
-  </object>
-  <object class="GtkImage" id="image1">
-    <property name="visible">True</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
-  <object class="GtkImage" id="image2">
-    <property name="visible">True</property>
-    <property name="stock">gtk-missing-image</property>
   </object>
 </interface>

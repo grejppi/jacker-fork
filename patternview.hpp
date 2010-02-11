@@ -210,7 +210,7 @@ public:
                 const Glib::RefPtr<Gtk::Builder>& builder);
 
     void set_model(class Model &model);
-    void set_pattern(class Pattern *pattern);
+    void set_song_event(Song::iterator event);
     Pattern *get_pattern() const;
 
     virtual void on_realize();

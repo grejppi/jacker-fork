@@ -1,0 +1,82 @@
+
+
+Jacker Mouse & Keyboard Commands
+================================
+
+Global
+------
+
+F3: Go to song view.
+F4: Go to pattern view.
+
+F5: Play Song from current position.
+    * Play Song from beginning of loop, if enabled.
+F8: Pause Song.
+    * Jump to beginning of loop, if enabled.
+    ** Jump to beginning of song.
+
+Pattern
+-------
+
+            -- Navigation --
+            
+     Up/Down: Move cursor to previous/next row.
+  Left/Right: Move cursor to previous/next column.
+        Home: Move cursor to first parameter.
+              * Move cursor to first channel.
+              ** Move cursor to first row.
+         End: Move cursor to last parameter.
+              * Move cursor to last channel.
+              ** Move cursor to last row.
+Page Up/Down: Move cursor to previous/next bar.
+
+            -- Selection --
+   
+   Shift+Up/Down: Expand selection across rows.
+Shift+Left/Right: Expand selection across columns.
+      Click+Drag: Expand selection across pattern.
+
+            -- Editing --
+
+     0-9,A-F: Set values in value columns.
+ZSXDCVGBHNJM: Set notes in note columns (Octave +0).
+Q2W3ER5T6Y7U: Set notes in note columns (Octave +1).
+       I9O0P: Set notes in note columns (Octave +2).
+          . : Wipe value at cursor.
+      Insert: Move all values below cursor down 
+              by one row in current channel.
+         Del: Move all values below cursor up
+              by one row in current channel.
+  Alt+Insert: Move all values below cursor down
+              by one row in all channels.
+     Alt+Del: Move all values below cursor up
+              by one row in all channels.
+
+      Ctrl+X: Delete events in selection.
+
+
+Song
+----
+
+            -- Measure --
+
+       Click: Set song position.
+  Ctrl+Click: Set beginning of loop.
+   Alt+Click: Set end of loop.
+  Click+Drag: Move loop beginning/end handles.
+
+            -- Selection --
+
+  Ctrl+Click: Add pattern to selection,
+              remove pattern from selection.
+  Click+Drag: Box select.
+
+            -- Editing --
+
+      Click+Drag: Move selected pattern(s) at cursor
+                  Resize pattern(s) at cursor.
+Shift+Click+Drag: Move copy of pattern(s) at cursor.
+      Ctrl+Shift
+     +Click+Drag: Move pattern link(s) at cursor.
+    Double-Click: Edit pattern at cursor.
+          Delete: Remove selected tracks.
