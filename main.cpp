@@ -304,6 +304,10 @@ public:
     void on_pattern_seek_request(int frame) {
     }
     
+    void on_pattern_return_request() {
+        show_track_view();
+    }
+    
     void init_pattern_view() {
         builder->get_widget_derived("pattern_view", pattern_view);
         assert(pattern_view);
@@ -320,6 +324,8 @@ public:
         
         pattern_view->signal_play_event_request().connect(
             sigc::mem_fun(*this, &App::on_pattern_view_play_event));
+        pattern_view->signal_return_request().connect(
+            sigc::mem_fun(*this, &App::on_pattern_return_request));
         
         builder->get_widget_derived("pattern_measure", pattern_measure);
         assert(pattern_measure);
@@ -332,10 +338,12 @@ public:
     
     void show_pattern_view() {
         view_notebook->set_current_page(PagePatternView);
+        pattern_view->grab_focus();
     }
     
     void show_track_view() {
         view_notebook->set_current_page(PageTrackView);
+        track_view->grab_focus();
     }
     
     void on_track_view_edit_pattern(Pattern *pattern) {

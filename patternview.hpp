@@ -205,12 +205,14 @@ public:
     };
     
     typedef sigc::signal<void, const Pattern::Event &> type_play_event_request;
+    typedef sigc::signal<void> type_return_request;
     
     PatternView(BaseObjectType* cobject, 
                 const Glib::RefPtr<Gtk::Builder>& builder);
 
     void set_model(class Model &model);
-    void set_song_event(Song::iterator event);
+    //void set_song_event(Song::iterator event);
+    void set_pattern(Pattern *pattern);
     Pattern *get_pattern() const;
 
     virtual void on_realize();
@@ -281,11 +283,13 @@ public:
     
     Pattern::iterator get_event(PatternCursor &cur);
     
-    type_play_event_request signal_play_event_request();
     void play_event(const Pattern::Event &event);
     
     void clear_block();
     void move_frames(int step, bool all_channels=false);
+
+    type_play_event_request signal_play_event_request();
+    type_return_request signal_return_request();
 protected:
     void invalidate_play_position();
     void invalidate_cursor();
@@ -325,6 +329,7 @@ protected:
     bool select_at_cursor;
     
     type_play_event_request _play_event_request;
+    type_return_request _return_request;
 };
 
 //=============================================================================

@@ -603,6 +603,10 @@ bool TrackView::on_button_release_event(GdkEventButton* event) {
 bool TrackView::on_key_press_event(GdkEventKey* event) {
     switch (event->keyval) {
         case GDK_Delete: erase_events(); break;
+        case GDK_Return: {
+            if (selection.size() == 1)
+                edit_pattern(selection.front());
+        } break;
         default: break;
     }
     return false;

@@ -1275,6 +1275,7 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
     }
     else {
         switch (event->keyval) {
+            case GDK_Return: _return_request(); return true;
             case GDK_Insert: move_frames(1); return true;
             case GDK_Delete: move_frames(-1); return true;
             case GDK_Left: navigate(-1,0,shift_down); return true;
@@ -1482,6 +1483,10 @@ void PatternView::invalidate() {
 
 PatternView::type_play_event_request PatternView::signal_play_event_request() {
     return _play_event_request;
+}
+
+PatternView::type_return_request PatternView::signal_return_request() {
+    return _return_request;
 }
 
 //=============================================================================
