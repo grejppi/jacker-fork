@@ -29,6 +29,7 @@ Pattern
               ** Move cursor to last row.
 Page Up/Down: Move cursor to previous/next bar.
       Return: Go to song view.
+          F7: Play song starting at cursor row.
 
             -- Selection --
    

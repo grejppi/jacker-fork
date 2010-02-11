@@ -599,13 +599,65 @@ bool TrackView::on_button_release_event(GdkEventButton* event) {
     return false;
 }
 
+void TrackView::select_first() {
+    if (model->song.empty())
+        return;
+    clear_selection();
+    select_event(model->song.begin());
+}
+
+void TrackView::select_last() {
+    if (model->song.empty())
+        return;
+    Song::iterator iter = model->song.end();
+    iter--;
+    clear_selection();
+    select_event(iter);
+}
+
+void TrackView::navigate(int dir_x, int dir_y) {
+    if (selection.empty()) {
+        select_first();
+        return;
+    }
+    Song::iterator iter = selection.back();
+    Song::Event &event = iter->second;
+    if (dir_x > 0) {
+        while (iter != model->song.end()) {
+            if (iter->second.frame > event.frame) {
+                clear_selection();
+                select_event(iter);
+                return;
+            }
+            iter++;
+        }
+    } else if (dir_x < 0) {
+        do {
+            iter--;
+            if (iter->second.frame < event.frame) {
+                clear_selection();
+                select_event(iter);
+                return;
+            }
+        } while (iter != model->song.begin());
+    }
+    
+}
+
 bool TrackView::on_key_press_event(GdkEventKey* event) {
     switch (event->keyval) {
-        case GDK_Delete: erase_events(); break;
+        case GDK_Delete: erase_events(); return true;
         case GDK_Return: {
             if (selection.size() == 1)
                 edit_pattern(selection.front());
+            return true;
         } break;
+        case GDK_Left: navigate(-1,0); return true;
+        case GDK_Right: navigate(1,0); return true;
+        case GDK_Up: navigate(0,-1); return true;
+        case GDK_Down: navigate(0,1); return true;
+        case GDK_Home: select_first(); return true;
+        case GDK_End: select_last(); return true;
         default: break;
     }
     return false;

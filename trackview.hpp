@@ -87,6 +87,9 @@ public:
     virtual bool on_key_release_event(GdkEventKey* event);
     virtual void on_size_allocate(Gtk::Allocation& allocation);
 
+    void navigate(int dir_x, int dir_y);
+    void select_first();
+    void select_last();
     void set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                 Gtk::Adjustment *vadjustment);
 
