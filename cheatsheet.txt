@@ -1,5 +1,4 @@
 
-
 Jacker Mouse & Keyboard Commands
 ================================
 
@@ -29,6 +28,7 @@ Pattern
               * Move cursor to last channel.
               ** Move cursor to last row.
 Page Up/Down: Move cursor to previous/next bar.
+      Return: Go to song view.
 
             -- Selection --
    
@@ -58,6 +58,11 @@ Q2W3ER5T6Y7U: Set notes in note columns (Octave +1).
 Song
 ----
 
+            -- Navigation --
+            
+          Return: Edit selected pattern.
+    Double-Click: Edit pattern at cursor.
+            
             -- Measure --
 
        Click: Set song position.
@@ -78,5 +83,4 @@ Song
 Shift+Click+Drag: Move copy of pattern(s) at cursor.
       Ctrl+Shift
      +Click+Drag: Move pattern link(s) at cursor.
-    Double-Click: Edit pattern at cursor.
           Delete: Remove selected tracks.
