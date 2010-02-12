@@ -13,17 +13,17 @@
 
 namespace Jacker {
 
-class TrackView;
+class SongView;
     
 //=============================================================================
 
-class TrackCursor {
+class SongCursor {
 public:
-    TrackCursor(TrackView &view);
-    TrackCursor();
+    SongCursor(SongView &view);
+    SongCursor();
     
-    void set_view(TrackView &view);
-    TrackView *get_view() const;
+    void set_view(SongView &view);
+    SongView *get_view() const;
 
     void set_track(int track);
     int get_track() const;
@@ -40,7 +40,7 @@ public:
 
 protected:
     // pointer to the view
-    TrackView *view;
+    SongView *view;
 
     // the current track the cursor is on
     int track;
@@ -50,7 +50,7 @@ protected:
 
 //=============================================================================
 
-class TrackView : public Gtk::Widget {
+class SongView : public Gtk::Widget {
 public:
     enum {
         TrackHeight = 22,
@@ -71,12 +71,12 @@ public:
     
     // signals
     typedef sigc::signal<void, Song::iterator> type_pattern_edit_request;
-    typedef sigc::signal<void, TrackView *, GdkEventButton*> type_context_menu;
+    typedef sigc::signal<void, SongView *, GdkEventButton*> type_context_menu;
     typedef sigc::signal<void> type_loop_changed;
     typedef sigc::signal<void, int> type_play_request;
     typedef sigc::signal<void, Song::iterator> type_pattern_erased;
     
-    TrackView(BaseObjectType* cobject, 
+    SongView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
 
     void set_model(class Model &model);
@@ -115,7 +115,7 @@ public:
     void get_event_location(int x, int y, int &frame, int &track) const;
     
     void get_event_rect(Song::iterator event, int &x, int &y, int &w, int &h);
-    bool find_event(const TrackCursor &cursor, Song::iterator &event);
+    bool find_event(const SongCursor &cursor, Song::iterator &event);
     
     void clear_selection();
     void select_event(Song::iterator event);
@@ -125,7 +125,7 @@ public:
     void invalidate();
     
     void add_track();
-    void new_pattern(const TrackCursor &cursor);
+    void new_pattern(const SongCursor &cursor);
     void edit_pattern(Song::iterator event);
     void erase_events();
     

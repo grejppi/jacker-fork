@@ -95,9 +95,9 @@ public:
     MeasureView *pattern_measure;
     Gtk::Entry *play_frames;
 
-    TrackView *track_view;
-    MeasureView *track_measure;
-    Gtk::Menu *trackview_menu;
+    SongView *song_view;
+    MeasureView *song_measure;
+    Gtk::Menu *song_view_menu;
 
     Gtk::Notebook *view_notebook;
 
@@ -114,11 +114,11 @@ public:
         : kit(argc,argv) {
         player = NULL;
         pattern_view = NULL;
-        track_view = NULL;
-        track_measure = NULL;
+        song_view = NULL;
+        song_measure = NULL;
         pattern_measure = NULL;
         play_frames = NULL;
-        trackview_menu = NULL;
+        song_view_menu = NULL;
         view_notebook = NULL;
     }
     
@@ -200,17 +200,17 @@ public:
     void load_song(const std::string &filename) {
         read_jsong(model, filename);
         
-        track_view->invalidate();
+        song_view->invalidate();
         pattern_view->set_song_event(model.song.end());
-        track_view->set_loop(model.loop);
+        song_view->set_loop(model.loop);
         update_measures();
         all_views_changed();
     }
     
     void all_views_changed() {
         pattern_view->invalidate();
-        track_view->invalidate();
-        track_measure->invalidate();
+        song_view->invalidate();
+        song_measure->invalidate();
         pattern_measure->invalidate();
     }
     
@@ -250,8 +250,8 @@ public:
         show_pattern_view();
     }
     
-    void on_show_tracks_action() {
-        show_track_view();
+    void on_show_song_action() {
+        show_song_view();
     }
     
     void init_menu() {
@@ -262,8 +262,8 @@ public:
         connect_action("show_pattern_action", 
             sigc::mem_fun(*this, &App::on_show_pattern_action),
             AccelPathPatternView);
-        connect_action("show_tracks_action", 
-            sigc::mem_fun(*this, &App::on_show_tracks_action),
+        connect_action("show_song_action", 
+            sigc::mem_fun(*this, &App::on_show_song_action),
             AccelPathTrackView);
     
     }
@@ -331,7 +331,7 @@ public:
     }
     
     void on_pattern_return_request() {
-        show_track_view();
+        show_song_view();
     }
     
     void init_pattern_view() {
@@ -369,18 +369,18 @@ public:
         pattern_view->grab_focus();
     }
     
-    void show_track_view() {
+    void show_song_view() {
         view_notebook->set_current_page(PageTrackView);
-        track_view->grab_focus();
+        song_view->grab_focus();
     }
     
-    void on_track_view_edit_pattern(Song::iterator event) {
+    void on_song_view_edit_pattern(Song::iterator event) {
         pattern_view->set_song_event(event);
         show_pattern_view();
     }
     
-    void on_track_view_context_menu(TrackView *view, GdkEventButton* event) {
-        trackview_menu->popup(event->button, event->time);
+    void on_song_view_context_menu(SongView *view, GdkEventButton* event) {
+        song_view_menu->popup(event->button, event->time);
     }
     
     void on_seek_request(int frame) {
@@ -390,56 +390,56 @@ public:
     }
     
     void on_measure_loop_changed() {
-        track_view->set_loop(model.loop);
+        song_view->set_loop(model.loop);
     }
     
-    void on_track_view_loop_changed() {
-        track_measure->invalidate();
+    void on_song_view_loop_changed() {
+        song_measure->invalidate();
     }
     
-    void on_track_view_pattern_erased(Song::iterator event) {
+    void on_song_view_pattern_erased(Song::iterator event) {
         if (pattern_view->get_song_event() == event) {
             pattern_view->set_song_event(model.song.end());
         }
     }
     
-    void init_track_view() {
-        builder->get_widget_derived("track_view", track_view);
-        assert(track_view);
+    void init_song_view() {
+        builder->get_widget_derived("song_view", song_view);
+        assert(song_view);
         
-        Gtk::HScrollbar *track_hscroll;
-        builder->get_widget("track_hscroll", track_hscroll);
-        Gtk::VScrollbar *track_vscroll;
-        builder->get_widget("track_vscroll", track_vscroll);
-        track_view->set_scroll_adjustments(
-            track_hscroll->get_adjustment(), 
-            track_vscroll->get_adjustment());
+        Gtk::HScrollbar *song_hscroll;
+        builder->get_widget("song_hscroll", song_hscroll);
+        Gtk::VScrollbar *song_vscroll;
+        builder->get_widget("song_vscroll", song_vscroll);
+        song_view->set_scroll_adjustments(
+            song_hscroll->get_adjustment(), 
+            song_vscroll->get_adjustment());
         
-        track_view->set_model(model);
-        track_view->signal_pattern_edit_request().connect(
-            sigc::mem_fun(*this, &App::on_track_view_edit_pattern));
-        track_view->signal_context_menu().connect(
-            sigc::mem_fun(*this, &App::on_track_view_context_menu));
-        track_view->signal_loop_changed().connect(
-            sigc::mem_fun(*this, &App::on_track_view_loop_changed));
-        track_view->signal_play_request().connect(
+        song_view->set_model(model);
+        song_view->signal_pattern_edit_request().connect(
+            sigc::mem_fun(*this, &App::on_song_view_edit_pattern));
+        song_view->signal_context_menu().connect(
+            sigc::mem_fun(*this, &App::on_song_view_context_menu));
+        song_view->signal_loop_changed().connect(
+            sigc::mem_fun(*this, &App::on_song_view_loop_changed));
+        song_view->signal_play_request().connect(
             sigc::mem_fun(*this, &App::on_play_request));
-        track_view->signal_pattern_erased().connect(
-            sigc::mem_fun(*this, &App::on_track_view_pattern_erased));
+        song_view->signal_pattern_erased().connect(
+            sigc::mem_fun(*this, &App::on_song_view_pattern_erased));
         
-        builder->get_widget("trackview_menu", trackview_menu);
-        assert(trackview_menu);
+        builder->get_widget("song_view_menu", song_view_menu);
+        assert(song_view_menu);
         
         connect_action("add_track_action", 
-            sigc::mem_fun(*track_view, &TrackView::add_track));
+            sigc::mem_fun(*song_view, &SongView::add_track));
             
-        builder->get_widget_derived("track_measure", track_measure);
-        assert(track_measure);
-        track_measure->set_model(model);
-        track_measure->set_adjustment(track_hscroll->get_adjustment());
-        track_measure->signal_seek_request().connect(
+        builder->get_widget_derived("song_measure", song_measure);
+        assert(song_measure);
+        song_measure->set_model(model);
+        song_measure->set_adjustment(song_hscroll->get_adjustment());
+        song_measure->signal_seek_request().connect(
             sigc::mem_fun(*this, &App::on_seek_request));
-        track_measure->signal_loop_changed().connect(
+        song_measure->signal_loop_changed().connect(
             sigc::mem_fun(*this, &App::on_measure_loop_changed));
     }
     
@@ -495,13 +495,13 @@ public:
         init_transport();
         init_model();
         init_pattern_view();
-        init_track_view();
+        init_song_view();
         init_timer();
 
         load_song("demo.jsong");
         
         window->show_all();
-        show_track_view();
+        show_song_view();
         
         if (player)
             player->activate();
@@ -529,7 +529,7 @@ public:
         measure.set_frame(model, frame);
         play_frames->set_text(measure.get_string());
         
-        track_view->set_play_position(frame);
+        song_view->set_play_position(frame);
         
         // find out if our pattern is currently playing
         bool found = false;

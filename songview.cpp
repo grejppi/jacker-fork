@@ -23,55 +23,55 @@ enum {
 
 //=============================================================================
 
-TrackCursor::TrackCursor() {
+SongCursor::SongCursor() {
     view = NULL;
     track = 0;
     frame = 0;
 }
 
-TrackCursor::TrackCursor(TrackView &view) {
+SongCursor::SongCursor(SongView &view) {
     this->view = &view;
     track = 0;
     frame = 0;
 }
 
-void TrackCursor::set_view(TrackView &view) {
+void SongCursor::set_view(SongView &view) {
     this->view = &view;
 }
 
-TrackView *TrackCursor::get_view() const {
+SongView *SongCursor::get_view() const {
     return view;
 }
 
-void TrackCursor::set_track(int track) {
+void SongCursor::set_track(int track) {
     this->track = track;
 }
 
-int TrackCursor::get_track() const {
+int SongCursor::get_track() const {
     return track;
 }
 
-void TrackCursor::set_frame(int frame) {
+void SongCursor::set_frame(int frame) {
     this->frame = frame;
 }
 
-int TrackCursor::get_frame() const {
+int SongCursor::get_frame() const {
     return frame;
 }
 
-void TrackCursor::get_pos(int &x, int &y) const {
+void SongCursor::get_pos(int &x, int &y) const {
     assert(view);
     view->get_event_pos(frame, track, x, y);
 }
 
-void TrackCursor::set_pos(int x, int y) {
+void SongCursor::set_pos(int x, int y) {
     assert(view);
     view->get_event_location(x, y, frame, track);
 }
 
 //=============================================================================
 
-TrackView::TrackView(BaseObjectType* cobject, 
+SongView::SongView(BaseObjectType* cobject, 
                  const Glib::RefPtr<Gtk::Builder>& builder)
     : Gtk::Widget(cobject) {
     origin_x = 0;
@@ -90,11 +90,11 @@ TrackView::TrackView(BaseObjectType* cobject,
     play_position = 0;
 }
 
-void TrackView::set_model(class Model &model) {
+void SongView::set_model(class Model &model) {
     this->model = &model;
 }
 
-void TrackView::on_realize() {
+void SongView::on_realize() {
     Gtk::Widget::on_realize();
     
     window = get_window();    
@@ -126,39 +126,39 @@ void TrackView::on_realize() {
     update_adjustments();
 }
 
-void TrackView::set_origin(int x, int y) {
+void SongView::set_origin(int x, int y) {
     origin_x = x;
     origin_y = y;
 }
 
-void TrackView::get_origin(int &x, int &y) const {
+void SongView::get_origin(int &x, int &y) const {
     x = origin_x;
     y = origin_y;
 }
 
-void TrackView::get_event_pos(int frame, int track,
+void SongView::get_event_pos(int frame, int track,
                             int &x, int &y) const {
     x = origin_x + (frame>>zoomlevel);
     y = origin_y + track*TrackHeight;
 }
 
 
-void TrackView::get_event_size(int length, int &w, int &h) const {
+void SongView::get_event_size(int length, int &w, int &h) const {
     w = length>>zoomlevel;
     h = TrackHeight;
 }
 
-void TrackView::get_event_length(int w, int h, int &length, int &track) const {
+void SongView::get_event_length(int w, int h, int &length, int &track) const {
     length = w<<zoomlevel;
     track = h/TrackHeight;
 }
 
-void TrackView::get_event_location(int x, int y, int &frame, int &track) const {
+void SongView::get_event_location(int x, int y, int &frame, int &track) const {
     frame = (x - origin_x)<<zoomlevel;
     track = (y - origin_y)/TrackHeight;
 }
 
-bool TrackView::find_event(const TrackCursor &cur, Song::iterator &event) {
+bool SongView::find_event(const SongCursor &cur, Song::iterator &event) {
     if (cur.get_track() >= model->get_track_count())
         return false;
     Song::IterList events;
@@ -175,7 +175,7 @@ bool TrackView::find_event(const TrackCursor &cur, Song::iterator &event) {
     return false;
 }
 
-void TrackView::render_event(Song::iterator event) {
+void SongView::render_event(Song::iterator event) {
     bool selected = is_event_selected(event);
     int x,y,w,h;
     get_event_rect(event, x, y, w, h);
@@ -206,7 +206,7 @@ void TrackView::render_event(Song::iterator event) {
     }
 }
 
-void TrackView::render_track(int track) {
+void SongView::render_track(int track) {
     int width = 0;
     int height = 0;
     window->get_size(width, height);
@@ -218,7 +218,7 @@ void TrackView::render_track(int track) {
     window->draw_rectangle(gc, true, 0, y, width, TrackHeight);
 }
 
-bool TrackView::on_expose_event(GdkEventExpose* event) {
+bool SongView::on_expose_event(GdkEventExpose* event) {
     int width = 0;
     int height = 0;
     window->get_size(width, height);
@@ -253,7 +253,7 @@ bool TrackView::on_expose_event(GdkEventExpose* event) {
     return true;
 }
 
-void TrackView::invalidate_play_position() {
+void SongView::invalidate_play_position() {
     int width = 0;
     int height = 0;
     window->get_size(width, height);
@@ -263,37 +263,37 @@ void TrackView::invalidate_play_position() {
     window->invalidate_rect(rect, true);
 }
 
-bool TrackView::is_event_selected(Song::iterator event) {
+bool SongView::is_event_selected(Song::iterator event) {
     return (std::find(selection.begin(), selection.end(), 
         event) != selection.end());
 }
 
-void TrackView::clear_selection() {
+void SongView::clear_selection() {
     invalidate_selection();
     selection.clear();
 }
 
-void TrackView::select_event(Song::iterator event) {
+void SongView::select_event(Song::iterator event) {
     if (is_event_selected(event))
         return;
     selection.push_back(event);
     invalidate_selection();
 }
 
-void TrackView::deselect_event(Song::iterator event) {
+void SongView::deselect_event(Song::iterator event) {
     if (!is_event_selected(event))
         return;
     invalidate_selection();
     selection.remove(event);
 }
 
-void TrackView::add_track() {
+void SongView::add_track() {
     // TODO
     //model->new_track();
     invalidate();
 }
 
-void TrackView::new_pattern(const TrackCursor &cur) {
+void SongView::new_pattern(const SongCursor &cur) {
     if (cur.get_track() < model->get_track_count()) {
         Pattern &pattern = model->new_pattern();
         Song::iterator event = model->song.add_event(cur.get_frame(), cur.get_track(), pattern);
@@ -303,28 +303,28 @@ void TrackView::new_pattern(const TrackCursor &cur) {
     
 }
 
-void TrackView::edit_pattern(Song::iterator iter) {
+void SongView::edit_pattern(Song::iterator iter) {
     _pattern_edit_request(iter);
 }
 
 
-bool TrackView::dragging() const {
+bool SongView::dragging() const {
     return (interact_mode == InteractDrag);
 }
 
-bool TrackView::moving() const {
+bool SongView::moving() const {
     return (interact_mode == InteractMove);
 }
 
-bool TrackView::resizing() const {
+bool SongView::resizing() const {
     return (interact_mode == InteractResize);
 }
 
-bool TrackView::selecting() const {
+bool SongView::selecting() const {
     return (interact_mode == InteractSelect);
 }
 
-bool TrackView::on_button_press_event(GdkEventButton* event) {
+bool SongView::on_button_press_event(GdkEventButton* event) {
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     /*
     bool shift_down = event->state & Gdk::SHIFT_MASK;
@@ -336,7 +336,7 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
     grab_focus();
     
     if (event->button == 1) {
-        TrackCursor cur(*this);
+        SongCursor cur(*this);
         cur.set_pos(event->x, event->y);
         Song::iterator evt;
 
@@ -370,19 +370,19 @@ bool TrackView::on_button_press_event(GdkEventButton* event) {
     return true;
 }
 
-bool TrackView::can_resize_event(Song::iterator event, int x) {
+bool SongView::can_resize_event(Song::iterator event, int x) {
     int ex, ey, ew, eh;
     get_event_rect(event,ex,ey,ew,eh);
     return std::abs(x - (ex+ew)) < ResizeThreshold;
 }
 
-void TrackView::set_loop(const Loop &loop) {
+void SongView::set_loop(const Loop &loop) {
     invalidate_loop();
     this->loop = loop;
     invalidate_loop();
 }
 
-void TrackView::render_loop() {
+void SongView::render_loop() {
     if (!model->enable_loop)
         return;
     int width = 0;
@@ -397,7 +397,7 @@ void TrackView::render_loop() {
     window->draw_rectangle(gc, true, x, 0, 1, height);
 }
 
-void TrackView::invalidate_loop() {
+void SongView::invalidate_loop() {
     if (!window)
         return;
     int width = 0;
@@ -410,7 +410,7 @@ void TrackView::invalidate_loop() {
     window->invalidate_rect(Gdk::Rectangle(x,0,1,height), true);
 }
 
-void TrackView::render_select_box() {
+void SongView::render_select_box() {
     int x,y,w,h;
     drag.get_rect(x,y,w,h);
     if (w <= 1)
@@ -421,7 +421,7 @@ void TrackView::render_select_box() {
         x,y,w-1,h-1);
 }
 
-void TrackView::invalidate_select_box() {
+void SongView::invalidate_select_box() {
     int x,y,w,h;
     drag.get_rect(x,y,w,h);
     if (w <= 1)
@@ -432,7 +432,7 @@ void TrackView::invalidate_select_box() {
     window->invalidate_rect(rect, true);
 }
     
-void TrackView::select_from_box() {
+void SongView::select_from_box() {
     int x0,y0,w,h;
     drag.get_rect(x0,y0,w,h);
     if (w <= 1)
@@ -460,7 +460,7 @@ void TrackView::select_from_box() {
     }
 }
 
-void TrackView::clone_selection(bool references/*=false*/) {
+void SongView::clone_selection(bool references/*=false*/) {
     Song::IterList new_selection;
     
     Song::IterList::iterator iter;
@@ -475,12 +475,12 @@ void TrackView::clone_selection(bool references/*=false*/) {
     selection = new_selection;
 }
 
-bool TrackView::on_motion_notify_event(GdkEventMotion *event) {    
+bool SongView::on_motion_notify_event(GdkEventMotion *event) {    
     bool shift_down = event->state & Gdk::SHIFT_MASK;
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     
     if (interact_mode == InteractNone) {
-        TrackCursor cur(*this);
+        SongCursor cur(*this);
         cur.set_pos(event->x, event->y);
         Song::iterator evt;
         if (find_event(cur, evt)) {
@@ -496,7 +496,7 @@ bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
         drag.update(event->x, event->y);
         if (drag.threshold_reached()) {
             invalidate_selection();
-            TrackCursor cur(*this);
+            SongCursor cur(*this);
             cur.set_pos(drag.start_x, drag.start_y);
             Song::iterator evt;
             if (find_event(cur, evt) && can_resize_event(evt,drag.start_x)) {
@@ -523,7 +523,7 @@ bool TrackView::on_motion_notify_event(GdkEventMotion *event) {
     return true;
 }
 
-void TrackView::apply_move() {
+void SongView::apply_move() {
     invalidate_selection();
     
     int ofs_frame,ofs_track;
@@ -563,7 +563,7 @@ void TrackView::apply_move() {
     }
 }
 
-void TrackView::apply_resize() {
+void SongView::apply_resize() {
     
     int ofs_frame,ofs_track;
     get_drag_offset(ofs_frame, ofs_track);
@@ -581,7 +581,7 @@ void TrackView::apply_resize() {
     invalidate();
 }
 
-bool TrackView::on_button_release_event(GdkEventButton* event) {
+bool SongView::on_button_release_event(GdkEventButton* event) {
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     if (moving()) {
         apply_move();
@@ -600,14 +600,14 @@ bool TrackView::on_button_release_event(GdkEventButton* event) {
     return false;
 }
 
-void TrackView::select_first() {
+void SongView::select_first() {
     if (model->song.empty())
         return;
     clear_selection();
     select_event(model->song.begin());
 }
 
-void TrackView::select_last() {
+void SongView::select_last() {
     if (model->song.empty())
         return;
     Song::iterator iter = model->song.end();
@@ -616,7 +616,7 @@ void TrackView::select_last() {
     select_event(iter);
 }
 
-Song::iterator TrackView::get_left_event(Song::iterator start) {
+Song::iterator SongView::get_left_event(Song::iterator start) {
     Song::iterator not_found = model->song.end();
     if (start == model->song.begin())
         return not_found;
@@ -633,7 +633,7 @@ Song::iterator TrackView::get_left_event(Song::iterator start) {
     return not_found;
 }
 
-Song::iterator TrackView::get_right_event(Song::iterator start) {
+Song::iterator SongView::get_right_event(Song::iterator start) {
     Song::iterator not_found = model->song.end();
 
     Song::iterator iter = start;
@@ -650,7 +650,7 @@ Song::iterator TrackView::get_right_event(Song::iterator start) {
 }
 
 
-Song::iterator TrackView::nearest_y_event(Song::iterator start, int direction) {
+Song::iterator SongView::nearest_y_event(Song::iterator start, int direction) {
     Song::iterator not_found = model->song.end();
     
     int best_delta_x = 9999999;
@@ -679,7 +679,7 @@ Song::iterator TrackView::nearest_y_event(Song::iterator start, int direction) {
     return best_iter;
 }
 
-void TrackView::navigate(int dir_x, int dir_y) {
+void SongView::navigate(int dir_x, int dir_y) {
     if (selection.empty()) {
         select_first();
         return;
@@ -699,7 +699,7 @@ void TrackView::navigate(int dir_x, int dir_y) {
     }
 }
 
-int TrackView::get_selection_begin() {
+int SongView::get_selection_begin() {
     if (selection.empty())
         return -1;
     int best = selection.front()->first;
@@ -710,7 +710,7 @@ int TrackView::get_selection_begin() {
     return best;
 }
 
-int TrackView::get_selection_end() {
+int SongView::get_selection_end() {
     if (selection.empty())
         return -1;
     int best = selection.front()->second.get_end();
@@ -721,7 +721,7 @@ int TrackView::get_selection_end() {
     return best;
 }
 
-void TrackView::set_loop_begin() {
+void SongView::set_loop_begin() {
     int frame = get_selection_begin();
     if (frame == -1)
         return;
@@ -732,7 +732,7 @@ void TrackView::set_loop_begin() {
     invalidate_loop();
 }
 
-void TrackView::set_loop_end() {
+void SongView::set_loop_end() {
     int frame = get_selection_end();
     if (frame == -1)
         return;
@@ -743,14 +743,14 @@ void TrackView::set_loop_end() {
     invalidate_loop();
 }
 
-void TrackView::play_from_selection() {
+void SongView::play_from_selection() {
     int frame = get_selection_begin();
     if (frame == -1)
         return;
     _play_request(frame);
 }
 
-bool TrackView::on_key_press_event(GdkEventKey* event) {
+bool SongView::on_key_press_event(GdkEventKey* event) {
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
 
     if (ctrl_down) {
@@ -780,11 +780,11 @@ bool TrackView::on_key_press_event(GdkEventKey* event) {
     return false;
 }
 
-bool TrackView::on_key_release_event(GdkEventKey* event) {
+bool SongView::on_key_release_event(GdkEventKey* event) {
     return false;
 }
 
-void TrackView::on_size_allocate(Gtk::Allocation& allocation) {
+void SongView::on_size_allocate(Gtk::Allocation& allocation) {
     set_allocation(allocation);
     
     if (window) {
@@ -798,14 +798,14 @@ int absmod(int x, int m) {
     return (x >= 0)?(x%m):((m-x)%m);
 }
 
-void TrackView::get_drag_offset(int &frame, int &track) {
+void SongView::get_drag_offset(int &frame, int &track) {
     int dx,dy;
     drag.get_delta(dx,dy);
     get_event_length(dx, dy, frame, track);
     frame = quantize_frame(frame);
 }
 
-int TrackView::get_step_size() {
+int SongView::get_step_size() {
     switch(snap_mode) {
         case SnapBar: return model->get_frames_per_bar();
         default: break;
@@ -813,11 +813,11 @@ int TrackView::get_step_size() {
     return 1;
 }
 
-int TrackView::quantize_frame(int frame) {
+int SongView::quantize_frame(int frame) {
     return frame - (frame%get_step_size());
 }
 
-void TrackView::get_event_rect(Song::iterator iter, int &x, int &y, int &w, int &h) {
+void SongView::get_event_rect(Song::iterator iter, int &x, int &y, int &w, int &h) {
     Song::Event &event = iter->second;
     int frame = event.frame;
     int track = event.track;
@@ -836,13 +836,13 @@ void TrackView::get_event_rect(Song::iterator iter, int &x, int &y, int &w, int 
     get_event_size(length, w, h);
 }
 
-void TrackView::invalidate() {
+void SongView::invalidate() {
     if (!window)
         return;
     window->invalidate(true);
 }
 
-void TrackView::invalidate_selection() {
+void SongView::invalidate_selection() {
     Song::IterList::iterator iter;
     for (iter = selection.begin(); iter != selection.end(); ++iter) {
         int x,y,w,h;
@@ -853,7 +853,7 @@ void TrackView::invalidate_selection() {
     }
 }
 
-void TrackView::erase_events() {
+void SongView::erase_events() {
     invalidate_selection();
     Song::IterList::iterator iter;
     for (iter = selection.begin(); iter != selection.end(); ++iter) {
@@ -864,7 +864,7 @@ void TrackView::erase_events() {
     selection.clear();
 }
 
-void TrackView::set_play_position(int pos) {
+void SongView::set_play_position(int pos) {
     if (!window)
         return;
     if (pos == play_position)
@@ -874,7 +874,7 @@ void TrackView::set_play_position(int pos) {
     invalidate_play_position();
 }
 
-void TrackView::update_adjustments() {
+void SongView::update_adjustments() {
     if (!window)
         return;
     Gtk::Allocation allocation = get_allocation();
@@ -896,7 +896,7 @@ void TrackView::update_adjustments() {
     
 }
 
-void TrackView::on_adjustment_value_changed() {
+void SongView::on_adjustment_value_changed() {
     if (hadjustment) {
         int w,h;
         get_event_size((int)(hadjustment->get_value()+0.5),w,h);
@@ -906,37 +906,37 @@ void TrackView::on_adjustment_value_changed() {
     invalidate();
 }
 
-void TrackView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
+void SongView::set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                      Gtk::Adjustment *vadjustment) {
     this->hadjustment = hadjustment;
     this->vadjustment = vadjustment;
     if (hadjustment) {
         hadjustment->signal_value_changed().connect(sigc::mem_fun(*this,
-            &TrackView::on_adjustment_value_changed));
+            &SongView::on_adjustment_value_changed));
     }
     if (vadjustment) {
         vadjustment->signal_value_changed().connect(sigc::mem_fun(*this,
-            &TrackView::on_adjustment_value_changed));
+            &SongView::on_adjustment_value_changed));
     }                                         
 }
 
-TrackView::type_pattern_edit_request TrackView::signal_pattern_edit_request() {
+SongView::type_pattern_edit_request SongView::signal_pattern_edit_request() {
     return _pattern_edit_request;
 }
 
-TrackView::type_context_menu TrackView::signal_context_menu() {
+SongView::type_context_menu SongView::signal_context_menu() {
     return _signal_context_menu;
 }
 
-TrackView::type_loop_changed TrackView::signal_loop_changed() {
+SongView::type_loop_changed SongView::signal_loop_changed() {
     return _loop_changed;
 }
 
-TrackView::type_play_request TrackView::signal_play_request() {
+SongView::type_play_request SongView::signal_play_request() {
     return _play_request;
 }
 
-TrackView::type_pattern_erased TrackView::signal_pattern_erased() {
+SongView::type_pattern_erased SongView::signal_pattern_erased() {
     return _pattern_erased;
 }
 

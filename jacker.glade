@@ -129,16 +129,18 @@
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem11">
                         <property name="visible">True</property>
+                        <property name="related_action">show_song_action</property>
                         <property name="use_action_appearance">True</property>
-                        <property name="related_action">show_tracks_action</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem12">
                         <property name="visible">True</property>
-                        <property name="use_action_appearance">True</property>
                         <property name="related_action">show_pattern_action</property>
+                        <property name="use_action_appearance">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
                     </child>
@@ -180,8 +182,8 @@
             <child>
               <object class="GtkToolButton" id="toolbutton1">
                 <property name="visible">True</property>
-                <property name="use_action_appearance">True</property>
                 <property name="related_action">play_action</property>
+                <property name="use_action_appearance">True</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
               </object>
@@ -193,8 +195,8 @@
             <child>
               <object class="GtkToolButton" id="toolbutton2">
                 <property name="visible">True</property>
-                <property name="use_action_appearance">True</property>
                 <property name="related_action">stop_action</property>
+                <property name="use_action_appearance">True</property>
                 <property name="label" translatable="yes">toolbutton2</property>
                 <property name="use_underline">True</property>
               </object>
@@ -362,7 +364,7 @@
                 <property name="n_rows">3</property>
                 <property name="n_columns">3</property>
                 <child>
-                  <object class="GtkDrawingArea" id="track_view">
+                  <object class="GtkDrawingArea" id="song_view">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON2_MOTION_MASK | GDK_BUTTON3_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_FOCUS_CHANGE_MASK | GDK_STRUCTURE_MASK | GDK_PROPERTY_CHANGE_MASK | GDK_VISIBILITY_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK | GDK_PROXIMITY_OUT_MASK | GDK_SUBSTRUCTURE_MASK | GDK_SCROLL_MASK</property>
@@ -375,7 +377,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkVScrollbar" id="track_vscroll">
+                  <object class="GtkVScrollbar" id="song_vscroll">
                     <property name="visible">True</property>
                     <property name="orientation">vertical</property>
                   </object>
@@ -389,7 +391,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHScrollbar" id="track_hscroll">
+                  <object class="GtkHScrollbar" id="song_hscroll">
                     <property name="visible">True</property>
                   </object>
                   <packing>
@@ -426,7 +428,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkDrawingArea" id="track_measure">
+                  <object class="GtkDrawingArea" id="song_measure">
                     <property name="height_request">28</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -647,13 +649,13 @@
   <object class="GtkAction" id="about_action">
     <property name="stock_id">gtk-about</property>
   </object>
-  <object class="GtkMenu" id="trackview_menu">
+  <object class="GtkMenu" id="song_view_menu">
     <property name="visible">True</property>
     <child>
       <object class="GtkImageMenuItem" id="menuitem5">
         <property name="visible">True</property>
-        <property name="use_action_appearance">True</property>
         <property name="related_action">add_track_action</property>
+        <property name="use_action_appearance">True</property>
         <property name="use_underline">True</property>
         <property name="use_stock">True</property>
       </object>
@@ -685,8 +687,8 @@
     <property name="label">Pattern</property>
     <property name="short_label">Pattern</property>
   </object>
-  <object class="GtkAction" id="show_tracks_action">
-    <property name="label">Tracks</property>
-    <property name="short_label">Tracks</property>
+  <object class="GtkAction" id="show_song_action">
+    <property name="label">Song</property>
+    <property name="short_label">Song</property>
   </object>
 </interface>
