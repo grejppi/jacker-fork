@@ -553,6 +553,7 @@ void TrackView::apply_move() {
             event.frame += ofs_frame;
             event.track += ofs_track;
             
+            _pattern_erased(*iter);
             model->song.erase(*iter);
             Song::iterator new_event = model->song.add_event(event);
             new_selection.push_back(new_event);
@@ -856,6 +857,7 @@ void TrackView::erase_events() {
     invalidate_selection();
     Song::IterList::iterator iter;
     for (iter = selection.begin(); iter != selection.end(); ++iter) {
+        _pattern_erased(*iter);
         model->song.erase(*iter);
     }
     
@@ -932,6 +934,10 @@ TrackView::type_loop_changed TrackView::signal_loop_changed() {
 
 TrackView::type_play_request TrackView::signal_play_request() {
     return _play_request;
+}
+
+TrackView::type_pattern_erased TrackView::signal_pattern_erased() {
+    return _pattern_erased;
 }
 
 //=============================================================================

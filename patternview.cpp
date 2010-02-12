@@ -801,6 +801,10 @@ void PatternView::set_song_event(Song::iterator event) {
     update_adjustments();
 }
 
+Song::iterator PatternView::get_song_event() {
+    return song_event;
+}
+
 void PatternView::on_realize() {
     Gtk::Widget::on_realize();
     

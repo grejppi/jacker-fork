@@ -378,6 +378,12 @@ public:
         track_measure->invalidate();
     }
     
+    void on_track_view_pattern_erased(Song::iterator event) {
+        if (pattern_view->get_song_event() == event) {
+            pattern_view->set_song_event(model.song.end());
+        }
+    }
+    
     void init_track_view() {
         builder->get_widget_derived("track_view", track_view);
         assert(track_view);
@@ -399,6 +405,8 @@ public:
             sigc::mem_fun(*this, &App::on_track_view_loop_changed));
         track_view->signal_play_request().connect(
             sigc::mem_fun(*this, &App::on_play_request));
+        track_view->signal_pattern_erased().connect(
+            sigc::mem_fun(*this, &App::on_track_view_pattern_erased));
         
         builder->get_widget("trackview_menu", trackview_menu);
         assert(trackview_menu);

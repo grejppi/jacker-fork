@@ -213,6 +213,7 @@ public:
 
     void set_model(class Model &model);
     void set_song_event(Song::iterator event);
+    Song::iterator get_song_event();
     Pattern *get_pattern() const;
 
     virtual void on_realize();

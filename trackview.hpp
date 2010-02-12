@@ -74,6 +74,7 @@ public:
     typedef sigc::signal<void, TrackView *, GdkEventButton*> type_context_menu;
     typedef sigc::signal<void> type_loop_changed;
     typedef sigc::signal<void, int> type_play_request;
+    typedef sigc::signal<void, Song::iterator> type_pattern_erased;
     
     TrackView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
@@ -136,6 +137,7 @@ public:
     type_context_menu signal_context_menu();
     type_loop_changed signal_loop_changed();
     type_play_request signal_play_request();
+    type_pattern_erased signal_pattern_erased();
 protected:
     void invalidate_selection();
     void invalidate_play_position();
@@ -190,6 +192,7 @@ protected:
     type_context_menu _signal_context_menu;
     type_loop_changed _loop_changed;
     type_play_request _play_request;
+    type_pattern_erased _pattern_erased;
     
     Gtk::Adjustment *hadjustment;
     Gtk::Adjustment *vadjustment;
