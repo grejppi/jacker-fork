@@ -9,7 +9,7 @@
 
 #include "model.hpp"
 #include "patternview.hpp"
-#include "trackview.hpp"
+#include "songview.hpp"
 #include "measure.hpp"
 #include "player.hpp"
 

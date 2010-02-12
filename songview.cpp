@@ -1,4 +1,4 @@
-#include "trackview.hpp"
+#include "songview.hpp"
 #include "model.hpp"
 
 #include <cassert>
