@@ -32,6 +32,11 @@ MessageQueue::MessageQueue()
     write_samples = 0;
     position = 0;
     read_samples = 0;
+    model = NULL;
+}
+
+void MessageQueue::set_model(Model &model) {
+    this->model = &model;
 }
 
 void MessageQueue::init_message(Message &msg) {
@@ -146,6 +151,10 @@ void Player::flip() {
 
 void Player::set_model(class Model &model) {
     this->model = &model;
+    rt_messages.set_model(model);
+    for (int i = 0; i < QueueCount; ++i) {
+        messages[i].set_model(model);
+    }    
 }
 
 void Player::set_sample_rate(int sample_rate) {

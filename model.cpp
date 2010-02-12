@@ -368,6 +368,13 @@ int Loop::get_end() const {
 
 //=============================================================================
 
+Track::Track() {
+    midi_port = 0;
+    midi_channel = 0;
+}
+
+//=============================================================================
+
 Model::Model() {
     reset();
 }
@@ -381,6 +388,8 @@ void Model::reset() {
     loop.set(get_frames_per_bar()*4,get_frames_per_bar()*8);
     patterns.clear();
     song.clear();
+    tracks.clear();
+    tracks.resize(8);
 }
 
 Pattern &Model::new_pattern(const Pattern *template_pattern) {
@@ -398,7 +407,7 @@ Pattern &Model::new_pattern(const Pattern *template_pattern) {
 }
 
 int Model::get_track_count() const {
-    return 8;
+    return tracks.size();
 }
 
 int Model::get_frames_per_bar() const {

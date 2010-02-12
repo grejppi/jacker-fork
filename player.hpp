@@ -41,6 +41,9 @@ public:
 
     void init_message(Message &msg);
 
+    void set_model(class Model &model);
+protected:
+    class Model *model;
 };
     
 class Player {

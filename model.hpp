@@ -225,7 +225,19 @@ protected:
 
 //=============================================================================
 
+class Track {
+public:
+    int midi_port;
+    int midi_channel;
+
+    Track();
+};
+
+
+//=============================================================================
+
 typedef std::list<Pattern*> PatternList;
+typedef std::list<Track> TrackArray;
 
 class Model {
 public:
@@ -234,6 +246,9 @@ public:
 
     // contains all song events
     Song song;
+
+    // track infos
+    TrackArray tracks;
 
     // describes the loop
     Loop loop;
