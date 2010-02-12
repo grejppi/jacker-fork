@@ -1,0 +1,13306 @@
+
+{
+	"beats_per_bar" : 4,
+	"beats_per_minute" : 140,
+	"enable_loop" : true,
+	"end_cue" : 0,
+	"format" : "jacker-song",
+	"frames_per_beat" : 4,
+	"loop" : 
+	{
+		"begin" : 64,
+		"end" : 704
+	},
+	"patterns" : 
+	[
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 5,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 9,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 13,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 17,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 19,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 21,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 23,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 29,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 31,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 33,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 35,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 51
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 37,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 39,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 41,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 51
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 45,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 47,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 43
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 49,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 43
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 51,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 47
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 53,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 50
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 55,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 43
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 57,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 43
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 50
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 64,
+			"name" : ""
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 63
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 63
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 63
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 62
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 63
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 62
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 63
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 63
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 63
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 62
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 51,
+					"param" : 0,
+					"value" : 59
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 55
+				}
+			],
+			"length" : 64,
+			"name" : ""
+		},
+		
+		{
+			"channel_count" : 2,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 75
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 75
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 75
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 75
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 75
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 75
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 83
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 49,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 51,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 71
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 53,
+					"param" : 0,
+					"value" : 68
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 55,
+					"param" : 0,
+					"value" : 62
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 59
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 57,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 50
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 47
+				}
+			],
+			"length" : 64,
+			"name" : ""
+		},
+		
+		{
+			"channel_count" : 1,
+			"length" : 128,
+			"name" : "Pattern 4"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 79
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 45,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 94
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 92
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 79
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 45,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 94
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 92
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 62
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 19,
+					"param" : 0,
+					"value" : 69
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 2,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 80
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 54"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 62
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 19,
+					"param" : 0,
+					"value" : 69
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 62
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 19,
+					"param" : 0,
+					"value" : 69
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 2,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 80
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 54"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 2,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 80
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 54"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 77
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 77
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 91
+				}
+			],
+			"length" : 48,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 91
+				}
+			],
+			"length" : 48,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 45,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 94
+				}
+			],
+			"length" : 48,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 79
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 79
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 45,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 94
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 92
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 62
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 19,
+					"param" : 0,
+					"value" : 69
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 25,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 2,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 80
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 54"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 77
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 74
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 76
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 72
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 43,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 91
+				}
+			],
+			"length" : 48,
+			"name" : "Pattern 8"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 3,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 58
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 67
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 57
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 56
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 65
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 60
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 56
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 7"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 2,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 79
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 91
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 82
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 81
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 89
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 88
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 84
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 80
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 86
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 80
+				}
+			],
+			"length" : 32,
+			"name" : "Pattern 54"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 1,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 24
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 5"
+		},
+		
+		{
+			"channel_count" : 1,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 3,
+					"param" : 0,
+					"value" : 48
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 7,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 11,
+					"param" : 0,
+					"value" : 255
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 15,
+					"param" : 0,
+					"value" : 255
+				}
+			],
+			"length" : 16,
+			"name" : "Pattern 6"
+		}
+	],
+	"song" : 
+	{
+		"events" : 
+		[
+			
+			{
+				"frame" : 0,
+				"pattern" : 4,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 16,
+				"pattern" : 4,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 32,
+				"pattern" : 4,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 48,
+				"pattern" : 4,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 64,
+				"pattern" : 9,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 64,
+				"pattern" : 5,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 80,
+				"pattern" : 10,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 80,
+				"pattern" : 5,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 96,
+				"pattern" : 11,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 96,
+				"pattern" : 5,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 112,
+				"pattern" : 12,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 112,
+				"pattern" : 5,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 128,
+				"pattern" : 6,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 128,
+				"pattern" : 13,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 128,
+				"pattern" : 14,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 144,
+				"pattern" : 15,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 144,
+				"pattern" : 16,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 160,
+				"pattern" : 6,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 160,
+				"pattern" : 17,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 160,
+				"pattern" : 18,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 176,
+				"pattern" : 19,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 176,
+				"pattern" : 20,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 192,
+				"pattern" : 24,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 192,
+				"pattern" : 25,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 192,
+				"pattern" : 23,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 208,
+				"pattern" : 26,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 208,
+				"pattern" : 27,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 224,
+				"pattern" : 28,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 224,
+				"pattern" : 29,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 224,
+				"pattern" : 30,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 240,
+				"pattern" : 31,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 240,
+				"pattern" : 32,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 256,
+				"pattern" : 7,
+				"track" : 3
+			},
+			
+			{
+				"frame" : 256,
+				"pattern" : 33,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 256,
+				"pattern" : 34,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 256,
+				"pattern" : 35,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 272,
+				"pattern" : 36,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 272,
+				"pattern" : 37,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 288,
+				"pattern" : 38,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 288,
+				"pattern" : 39,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 288,
+				"pattern" : 40,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 304,
+				"pattern" : 41,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 304,
+				"pattern" : 42,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 320,
+				"pattern" : 21,
+				"track" : 3
+			},
+			
+			{
+				"frame" : 320,
+				"pattern" : 22,
+				"track" : 4
+			},
+			
+			{
+				"frame" : 320,
+				"pattern" : 43,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 320,
+				"pattern" : 44,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 320,
+				"pattern" : 45,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 336,
+				"pattern" : 46,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 336,
+				"pattern" : 47,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 352,
+				"pattern" : 48,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 352,
+				"pattern" : 49,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 352,
+				"pattern" : 50,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 368,
+				"pattern" : 51,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 368,
+				"pattern" : 52,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 384,
+				"pattern" : 85,
+				"track" : 3
+			},
+			
+			{
+				"frame" : 384,
+				"pattern" : 86,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 384,
+				"pattern" : 87,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 384,
+				"pattern" : 88,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 400,
+				"pattern" : 89,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 400,
+				"pattern" : 90,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 416,
+				"pattern" : 91,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 416,
+				"pattern" : 92,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 416,
+				"pattern" : 93,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 432,
+				"pattern" : 94,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 432,
+				"pattern" : 95,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 448,
+				"pattern" : 96,
+				"track" : 3
+			},
+			
+			{
+				"frame" : 448,
+				"pattern" : 97,
+				"track" : 4
+			},
+			
+			{
+				"frame" : 448,
+				"pattern" : 98,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 448,
+				"pattern" : 99,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 448,
+				"pattern" : 100,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 464,
+				"pattern" : 101,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 464,
+				"pattern" : 102,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 480,
+				"pattern" : 103,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 480,
+				"pattern" : 104,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 480,
+				"pattern" : 105,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 496,
+				"pattern" : 106,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 496,
+				"pattern" : 107,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 512,
+				"pattern" : 108,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 512,
+				"pattern" : 109,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 512,
+				"pattern" : 110,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 512,
+				"pattern" : 111,
+				"track" : 5
+			},
+			
+			{
+				"frame" : 528,
+				"pattern" : 113,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 528,
+				"pattern" : 114,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 544,
+				"pattern" : 115,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 544,
+				"pattern" : 116,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 544,
+				"pattern" : 117,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 544,
+				"pattern" : 118,
+				"track" : 5
+			},
+			
+			{
+				"frame" : 560,
+				"pattern" : 119,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 560,
+				"pattern" : 120,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 576,
+				"pattern" : 54,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 576,
+				"pattern" : 55,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 576,
+				"pattern" : 56,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 576,
+				"pattern" : 53,
+				"track" : 5
+			},
+			
+			{
+				"frame" : 576,
+				"pattern" : 82,
+				"track" : 3
+			},
+			
+			{
+				"frame" : 592,
+				"pattern" : 57,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 592,
+				"pattern" : 58,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 608,
+				"pattern" : 59,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 608,
+				"pattern" : 60,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 608,
+				"pattern" : 61,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 608,
+				"pattern" : 53,
+				"track" : 5
+			},
+			
+			{
+				"frame" : 624,
+				"pattern" : 62,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 624,
+				"pattern" : 63,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 640,
+				"pattern" : 64,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 640,
+				"pattern" : 65,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 640,
+				"pattern" : 66,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 640,
+				"pattern" : 67,
+				"track" : 5
+			},
+			
+			{
+				"frame" : 640,
+				"pattern" : 83,
+				"track" : 3
+			},
+			
+			{
+				"frame" : 640,
+				"pattern" : 84,
+				"track" : 4
+			},
+			
+			{
+				"frame" : 656,
+				"pattern" : 68,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 656,
+				"pattern" : 69,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 672,
+				"pattern" : 70,
+				"track" : 2
+			},
+			
+			{
+				"frame" : 672,
+				"pattern" : 71,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 672,
+				"pattern" : 72,
+				"track" : 1
+			},
+			
+			{
+				"frame" : 672,
+				"pattern" : 73,
+				"track" : 5
+			},
+			
+			{
+				"frame" : 688,
+				"pattern" : 74,
+				"track" : 0
+			},
+			
+			{
+				"frame" : 688,
+				"pattern" : 75,
+				"track" : 1
+			}
+		]
+	},
+	"version" : 2
+}

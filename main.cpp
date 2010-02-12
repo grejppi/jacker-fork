@@ -302,10 +302,10 @@ public:
         player->play();
     }
     
-    void on_pattern_view_play_event(const Pattern::Event &event) {
+    void on_pattern_view_play_event(int track, const Pattern::Event &event) {
         if (!player)
             return;
-        player->play_event(event);
+        player->play_event(track, event);
     }
     
     void on_pattern_seek_request(int frame) {
@@ -479,7 +479,7 @@ public:
         init_track_view();
         init_timer();
 
-        load_song("dump.jsong");
+        load_song("demo.jsong");
         
         window->show_all();
         show_track_view();

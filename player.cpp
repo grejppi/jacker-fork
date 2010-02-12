@@ -206,13 +206,13 @@ long long Player::get_frame_size() {
            (model->frames_per_beat * model->beats_per_minute);    
 }
 
-void Player::play_event(const class PatternEvent &event) {
+void Player::play_event(int track, const class PatternEvent &event) {
     if (event.param != ParamNote)
         return;
     int note = event.value;
     if (note == ValueNone)
         return;
-    rt_messages.on_note(0, event.channel, note);
+    rt_messages.on_note(track, event.channel, note);
 }
 
 void Player::mix_events(MessageQueue &queue, int samples) {

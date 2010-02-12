@@ -87,7 +87,7 @@ public:
         
     bool is_playing() const;
     
-    void play_event(const class PatternEvent &event);
+    void play_event(int track, const class PatternEvent &event);
     
 protected:
     void premix();

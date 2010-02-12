@@ -204,7 +204,7 @@ public:
         InteractSelect,
     };
     
-    typedef sigc::signal<void, const Pattern::Event &> type_play_event_request;
+    typedef sigc::signal<void, int, const Pattern::Event &> type_play_event_request;
     typedef sigc::signal<void> type_return_request;
     typedef sigc::signal<void, int> type_play_request;
     

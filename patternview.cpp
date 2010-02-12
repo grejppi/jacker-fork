@@ -1465,7 +1465,9 @@ void PatternView::play_from_cursor() {
 }
 
 void PatternView::play_event(const Pattern::Event &event) {
-    _play_event_request(event);
+    if (!get_pattern())
+        return;
+    _play_event_request(song_event->second.track, event);
 }
 
 void PatternView::set_font_size(int width, int height) {
