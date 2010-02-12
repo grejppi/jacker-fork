@@ -23,6 +23,7 @@ Message::Message() {
     frame = 0;
     bus = 0;
     bus_channel = 0;
+    port = 0;
 }
 
 //=============================================================================
@@ -39,9 +40,11 @@ void MessageQueue::set_model(Model &model) {
     this->model = &model;
 }
 
-void MessageQueue::init_message(Message &msg) {
+void MessageQueue::init_message(int bus, Message &msg) {
+    assert(model);
     msg.timestamp = write_samples;
     msg.frame = position;
+    msg.port = model->tracks[bus].midi_port;
 }
 
 void MessageQueue::on_cc(int bus, int ccindex, int ccvalue) {
@@ -49,12 +52,13 @@ void MessageQueue::on_cc(int bus, int ccindex, int ccvalue) {
         return;
     if (ccvalue == ValueNone)
         return;
+    assert(model);
     Message msg;
-    init_message(msg);
+    init_message(bus,msg);
     msg.type = Message::TypeMIDI;
     msg.bus = bus;
     msg.command = MIDI::CommandControlChange;
-    msg.channel = 0;
+    msg.channel = model->tracks[bus].midi_channel;
     msg.data1 = ccindex;
     msg.data2 = ccvalue;
     push(msg);
@@ -63,13 +67,14 @@ void MessageQueue::on_cc(int bus, int ccindex, int ccvalue) {
 void MessageQueue::on_volume(int bus, int channel, int volume) {
     if (volume == ValueNone)
         return;
+    assert(model);
     Message msg;
-    init_message(msg);
+    init_message(bus,msg);
     msg.type = Message::TypeMIDI;
     msg.bus = bus;
     msg.bus_channel = channel;
     msg.command = MIDI::CommandControlChange;
-    msg.channel = 0;
+    msg.channel = model->tracks[bus].midi_channel;
     msg.data1 = CCVolume;
     msg.data2 = volume;
     push(msg);    
@@ -78,32 +83,32 @@ void MessageQueue::on_volume(int bus, int channel, int volume) {
 void MessageQueue::on_note(int bus, int channel, int note) {
     if (note == ValueNone)
         return;
+    assert(model);
     Message msg;
-    init_message(msg);
+    init_message(bus,msg);
     msg.type = Message::TypeMIDI;
     msg.bus = bus;
     msg.bus_channel = channel;
+    msg.channel = model->tracks[bus].midi_channel;
     if (note == NoteOff) {
         msg.command = MIDI::CommandNoteOff;
-        msg.channel = 0;
         msg.data1 = 0;
         msg.data2 = 0;
     } else {
         msg.command = MIDI::CommandNoteOn;
-        msg.channel = 0;
         msg.data1 = note;
         msg.data2 = 0;
     }
     push(msg);
 }
 
-void MessageQueue::all_notes_off() {
-    on_cc(0, MIDI::ControllerAllNotesOff, 0);
+void MessageQueue::all_notes_off(int bus) {
+    on_cc(bus, MIDI::ControllerAllNotesOff, 0);
 }
 
 void MessageQueue::status_msg() {
     Message msg;
-    init_message(msg);
+    init_message(0,msg);
     msg.type = Message::TypeEmpty;
     push(msg);
 }
@@ -166,7 +171,7 @@ void Player::stop() {
         return;
     playing = false;
     seek(read_position);
-    rt_messages.all_notes_off();
+    rt_messages.all_notes_off(0);
 }
 
 void Player::play() {

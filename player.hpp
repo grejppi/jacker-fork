@@ -21,6 +21,7 @@ struct Message : MIDI::Message {
     int frame;
     int bus;
     int bus_channel;
+    int port;
     
     Message();
 };
@@ -35,11 +36,11 @@ public:
     void on_note(int bus, int channel, int value);
     void on_volume(int bus, int channel, int value);
     void on_cc(int bus, int ccindex, int ccvalue);
-    void all_notes_off();
+    void all_notes_off(int bus);
 
     void status_msg();
 
-    void init_message(Message &msg);
+    void init_message(int  bus, Message &msg);
 
     void set_model(class Model &model);
 protected:

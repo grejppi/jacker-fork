@@ -25,16 +25,30 @@ const char AccelPathTrackView[] = "<Jacker>/View/Tracks";
 class JackPlayer : public Jack::Client,
                    public Player {
 public:
+   
     Jack::MIDIPort *midi_omni_out;
+    typedef std::vector<Jack::MIDIPort *> MIDIPortArray;
+
+    MIDIPortArray midi_ports;
     bool defunct;
 
     JackPlayer() : Jack::Client("jacker") {
         defunct = false;
         midi_omni_out = new Jack::MIDIPort(
             *this, "omni", Jack::MIDIPort::IsOutput);
+        for (int i = 0; i < MaxPorts; ++i) {
+            char name[32];
+            sprintf(name, "port-%i", i);
+            midi_ports.push_back(new Jack::MIDIPort(
+                *this, name, Jack::MIDIPort::IsOutput));
+        }
     }
     
     ~JackPlayer() {
+        for (size_t i = 0; i < midi_ports.size(); ++i) {
+            delete midi_ports[i];
+        }
+        midi_ports.clear();
         delete midi_omni_out;
     }
     
@@ -46,10 +60,15 @@ public:
     virtual void on_message(const Message &msg) {
         int offset = (int)(msg.timestamp>>32);
         midi_omni_out->write_event(offset, msg);
+        midi_ports[msg.port]->write_event(offset, msg);
     }
     
     virtual void on_process(Jack::NFrames size) {
         midi_omni_out->clear_buffer();
+        for (MIDIPortArray::iterator iter = midi_ports.begin();
+            iter != midi_ports.end(); ++iter) {
+            (*iter)->clear_buffer();
+        }
         process_messages((int)size);
     }
     

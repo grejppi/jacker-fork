@@ -87,6 +87,7 @@ enum {
 enum {
     MaxTracks = 32,
     MaxChannels = 256,
+    MaxPorts = 8,
 };
 
 //=============================================================================
@@ -237,7 +238,7 @@ public:
 //=============================================================================
 
 typedef std::list<Pattern*> PatternList;
-typedef std::list<Track> TrackArray;
+typedef std::vector<Track> TrackArray;
 
 class Model {
 public:
