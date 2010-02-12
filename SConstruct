@@ -143,5 +143,6 @@ objects = env.Object(['jack.cpp',
 gtk_objects = gtk_env.Object(['main.cpp',
      'songview.cpp',
      'patternview.cpp',
+     'trackview.cpp',
      'measure.cpp'])
 gtk_env.Program('jacker', objects + gtk_objects)

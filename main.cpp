@@ -11,6 +11,7 @@
 #include "patternview.hpp"
 #include "songview.hpp"
 #include "measure.hpp"
+#include "trackview.hpp"
 #include "player.hpp"
 
 #include "jsong.hpp"
@@ -98,6 +99,7 @@ public:
     SongView *song_view;
     MeasureView *song_measure;
     Gtk::Menu *song_view_menu;
+    TrackView *track_view;
 
     Gtk::Notebook *view_notebook;
 
@@ -120,6 +122,7 @@ public:
         play_frames = NULL;
         song_view_menu = NULL;
         view_notebook = NULL;
+        track_view = NULL;
     }
     
     ~App() {
@@ -204,6 +207,7 @@ public:
         pattern_view->set_song_event(model.song.end());
         song_view->set_loop(model.loop);
         update_measures();
+        track_view->update_tracks();
         all_views_changed();
     }
     
@@ -441,6 +445,10 @@ public:
             sigc::mem_fun(*this, &App::on_seek_request));
         song_measure->signal_loop_changed().connect(
             sigc::mem_fun(*this, &App::on_measure_loop_changed));
+            
+        builder->get_widget_derived("track_view", track_view);
+        assert(track_view);
+        track_view->set_model(model);
     }
     
     void init_timer() {
