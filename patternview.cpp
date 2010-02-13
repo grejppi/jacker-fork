@@ -1,5 +1,6 @@
 #include "patternview.hpp"
 #include "model.hpp"
+#include "jsong.hpp"
 
 #include <cassert>
 #include <cmath>
@@ -34,6 +35,8 @@ static const guint16 piano_scancodes[] = {
     0x1f, 0x12, 0x20, 0x13, 0x21,                                           // +2
 #endif
 };
+
+static const char TargetFormatPattern[] = "jacker_pattern_block";
 
 //=============================================================================
 
@@ -1222,9 +1225,26 @@ void PatternView::move_frames(int step, bool all_channels/*=false*/) {
 }
 
 void PatternView::on_clipboard_get(Gtk::SelectionData &data, guint info) {
+    const std::string target = data.get_target();
+    if (target != TargetFormatPattern) {
+        printf("can't provide target %s\n", target.c_str());
+        return;
+    }
+    data.set(TargetFormatPattern, clipboard_jsong);
 }
 
 void PatternView::on_clipboard_clear() {
+    printf ("clear\n");
+}
+
+void PatternView::on_clipboard_received(const Gtk::SelectionData &data) {
+    const std::string target = data.get_target();
+    if (target != TargetFormatPattern) {
+        printf("can't receive target %s\n", target.c_str());
+        return;
+    }
+    std::string text = data.get_data_as_string();
+    printf ("received! '%s'\n", text.c_str());
 }
 
 void PatternView::cut_block() {
@@ -1233,15 +1253,31 @@ void PatternView::cut_block() {
 }
 
 void PatternView::copy_block() {
+    if (!get_pattern())
+        return;
+    clipboard_jsong = "";
+    Pattern block;
+    block.copy_from(*get_pattern());
+    JSongWriter jsong_writer;
+    Json::Value root;
+    jsong_writer.collect(root,block);
+    if (root.empty())
+        return;
+    Json::StyledWriter writer;
+    clipboard_jsong = writer.write(root);
+    
     Glib::RefPtr<Gtk::Clipboard> clipboard = Gtk::Clipboard::get();
     std::list<Gtk::TargetEntry> list_targets;
-    list_targets.push_back(Gtk::TargetEntry("jacker_pattern_block"));
+    list_targets.push_back(Gtk::TargetEntry(TargetFormatPattern));
     clipboard->set(list_targets,
         sigc::mem_fun(*this, &PatternView::on_clipboard_get),
         sigc::mem_fun(*this, &PatternView::on_clipboard_clear));
 }
 
 void PatternView::paste_block() {
+    Glib::RefPtr<Gtk::Clipboard> clipboard = Gtk::Clipboard::get();
+    clipboard->request_contents(TargetFormatPattern,
+        sigc::mem_fun(*this, &PatternView::on_clipboard_received));
 }
 
 void PatternView::clear_block() {

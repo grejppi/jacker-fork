@@ -294,6 +294,7 @@ public:
     void clear_block();
     void on_clipboard_get(Gtk::SelectionData &data, guint info);
     void on_clipboard_clear();
+    void on_clipboard_received(const Gtk::SelectionData &data);
     
     void move_frames(int step, bool all_channels=false);
     
@@ -316,6 +317,7 @@ protected:
     Gtk::Adjustment *vadjustment;
     PatternCursor cursor;
     PatternSelection selection;
+    std::string clipboard_jsong;
 
     typedef std::vector<CellRenderer *> CellRendererArray;
 

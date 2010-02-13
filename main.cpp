@@ -586,10 +586,12 @@ public:
         fix_menuitem_accelerator("menuitem_save_as");
         fix_menuitem_accelerator("menuitem_quit");
         
+        /*
         fix_menuitem_accelerator("menuitem_cut");
         fix_menuitem_accelerator("menuitem_copy");
         fix_menuitem_accelerator("menuitem_paste");
         fix_menuitem_accelerator("menuitem_delete");
+        */
         
         fix_menuitem_accelerator("menuitem_song");
         fix_menuitem_accelerator("menuitem_pattern");

@@ -153,9 +153,9 @@ public:
     
     void update_keys();
     void copy_from(const Pattern &pattern);
-protected:
-    Pattern();
     
+    Pattern();
+protected:
     // length in frames
     int length;
     // number of channels
