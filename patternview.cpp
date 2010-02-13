@@ -1225,6 +1225,7 @@ void PatternView::move_frames(int step, bool all_channels/*=false*/) {
 }
 
 void PatternView::on_clipboard_get(Gtk::SelectionData &data, guint info) {
+    printf("get!\n");
     const std::string target = data.get_target();
     if (target != TargetFormatPattern) {
         printf("can't provide target %s\n", target.c_str());
@@ -1238,13 +1239,44 @@ void PatternView::on_clipboard_clear() {
 }
 
 void PatternView::on_clipboard_received(const Gtk::SelectionData &data) {
+    Pattern *pattern = get_pattern();
+    if (!pattern)
+        return;
     const std::string target = data.get_target();
     if (target != TargetFormatPattern) {
         printf("can't receive target %s\n", target.c_str());
         return;
     }
     std::string text = data.get_data_as_string();
-    printf ("received! '%s'\n", text.c_str());
+    printf ("received!\n");
+    if (text.empty())
+        return;
+    
+    Json::Reader reader;
+    Json::Value root;
+    if (!reader.parse(text, root)) {
+        std::cout << "Error parsing JSong: " << reader.getFormatedErrorMessages();
+        return;
+    }
+    
+    JSongReader jsong_reader;
+    Pattern block;
+    jsong_reader.build(root, block);
+    if (root.empty())
+        return;
+    
+    for (Pattern::iterator iter = block.begin(); iter != block.end();
+         iter++) {
+        Pattern::Event event = iter->second;
+        event.frame += cursor.get_row();
+        event.channel += cursor.get_channel();
+        if (event.channel >= pattern->get_channel_count())
+            continue; // skip
+        if (event.frame >= pattern->get_length())
+            continue; // skip
+        pattern->add_event(event);
+    }
+    invalidate();
 }
 
 void PatternView::cut_block() {
@@ -1258,6 +1290,24 @@ void PatternView::copy_block() {
     clipboard_jsong = "";
     Pattern block;
     block.copy_from(*get_pattern());
+    // clip everything that's not in range
+    for (Pattern::iterator iter = block.begin(); iter != block.end();
+         iter++) {
+        PatternCursor cur(cursor);
+        cur.set_row(iter->second.frame);
+        cur.set_channel(iter->second.channel);
+        cur.set_param(iter->second.param);
+        if (!selection.in_range(cur)) {
+            iter->second.frame = -1; // clip
+        } else {
+            iter->second.frame -= selection.p0.get_row();
+            iter->second.channel -= selection.p0.get_channel();
+        }
+    }
+    block.update_keys(); // remove clipped keys
+    int length = selection.p1.get_row() - selection.p0.get_row() + 1;
+    block.set_length(length);
+    
     JSongWriter jsong_writer;
     Json::Value root;
     jsong_writer.collect(root,block);
