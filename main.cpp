@@ -149,7 +149,13 @@ public:
         if (filepath.empty()) {
             sprintf(title, "(Untitled) - Jacker");
         } else {
-            sprintf(title, "%s - Jacker", filepath.c_str());
+            std::string name = 
+            #if defined(WIN32)
+                filepath.substr(filepath.find_last_of("\\") + 1);
+            #else // unix
+                filepath.substr(filepath.find_last_of("/") + 1);
+            #endif
+            sprintf(title, "%s - Jacker", name.c_str());
         }
         window->set_title(title);
     }
@@ -199,6 +205,8 @@ public:
     }
     
     void on_new_action() {
+        if (player)
+            player->stop();
         set_filepath("");
         model.reset();
         model_changed();
@@ -268,6 +276,8 @@ public:
     }
     
     void load_song(const std::string &filename) {
+        if (player)
+            player->stop();
         set_filepath(filename);
         read_jsong(model, filename);
     }
