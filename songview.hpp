@@ -75,6 +75,7 @@ public:
     typedef sigc::signal<void> type_loop_changed;
     typedef sigc::signal<void, int> type_play_request;
     typedef sigc::signal<void, Song::iterator> type_pattern_erased;
+    typedef sigc::signal<void> type_tracks_changed;
     
     SongView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
@@ -138,6 +139,7 @@ public:
     type_loop_changed signal_loop_changed();
     type_play_request signal_play_request();
     type_pattern_erased signal_pattern_erased();
+    type_tracks_changed signal_tracks_changed();
 protected:
     void invalidate_selection();
     void invalidate_play_position();
@@ -193,6 +195,7 @@ protected:
     type_loop_changed _loop_changed;
     type_play_request _play_request;
     type_pattern_erased _pattern_erased;
+    type_tracks_changed _tracks_changed;
     
     Gtk::Adjustment *hadjustment;
     Gtk::Adjustment *vadjustment;

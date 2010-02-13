@@ -16,38 +16,30 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - reposition play cursor on measure click
     - set loop begin/end in measure
     - status bar: display row, channel, param, value
+    - split pattern at cursor (split into two)
 
 - track header view:
-    - track name
-    - jack port
-    - midi channel
     - mute/solo track
     - midi channel volume
     - midi bank/instrument
     
-- track view:
+- song:
     - copy/paste
     - duplicate pattern (make non-reference copy)
     - zooming controls
     - rename pattern
+    - merge patterns (melt into one)
 
 - global keyboard commands:
-    - F3: go to pattern editor
-    - F4: go to sequencer
-    - F5: play song
-    - F7: play from pattern row
-    - F8: stop song
+    -
 
-- track view: keyboard commands:
-    - left/right: select prev/next pattern
+- song:
     - shift+left/right: multiselect prev/next pattern
-    - up/down: select prev/next track
     - shift+up/down: multiselect patterns across tracks
     - ctrl+left/right: expand/contract pattern
     - ctrl+up/down: move track up/down
     - ctrl+plus: add pattern after current one and select
     - alt+left/right/up/down: move pattern
-    - return: edit pattern in pattern editor
     - F2: rename pattern
 
 - new major features:

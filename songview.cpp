@@ -290,9 +290,10 @@ void SongView::deselect_event(Song::iterator event) {
 }
 
 void SongView::add_track() {
-    // TODO
-    //model->new_track();
+    Track track;
+    model->tracks.push_back(track);
     invalidate();
+    _tracks_changed();
 }
 
 void SongView::new_pattern(const SongCursor &cur) {
@@ -775,7 +776,7 @@ bool SongView::on_key_press_event(GdkEventKey* event) {
             case GDK_Down: navigate(0,1); return true;
             case GDK_Home: select_first(); return true;
             case GDK_End: select_last(); return true;
-            case GDK_F7: play_from_selection(); return true;
+            case GDK_F6: play_from_selection(); return true;
             default: break;
         }
     }
@@ -940,6 +941,10 @@ SongView::type_play_request SongView::signal_play_request() {
 
 SongView::type_pattern_erased SongView::signal_pattern_erased() {
     return _pattern_erased;
+}
+
+SongView::type_tracks_changed SongView::signal_tracks_changed() {
+    return _tracks_changed;
 }
 
 //=============================================================================

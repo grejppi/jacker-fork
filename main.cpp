@@ -407,6 +407,10 @@ public:
         }
     }
     
+    void on_song_view_tracks_changed() {
+        track_view->update_tracks();
+    }
+    
     void init_song_view() {
         builder->get_widget_derived("song_view", song_view);
         assert(song_view);
@@ -430,6 +434,8 @@ public:
             sigc::mem_fun(*this, &App::on_play_request));
         song_view->signal_pattern_erased().connect(
             sigc::mem_fun(*this, &App::on_song_view_pattern_erased));
+        song_view->signal_tracks_changed().connect(
+            sigc::mem_fun(*this, &App::on_song_view_tracks_changed));
         
         builder->get_widget("song_view_menu", song_view_menu);
         assert(song_view_menu);

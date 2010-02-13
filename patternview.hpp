@@ -286,6 +286,7 @@ public:
     
     void play_event(const Pattern::Event &event);
     void play_from_cursor();
+    void play_pattern();
     
     void clear_block();
     void move_frames(int step, bool all_channels=false);

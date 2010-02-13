@@ -8,7 +8,7 @@
 	"frames_per_beat" : 4,
 	"loop" : 
 	{
-		"begin" : 64,
+		"begin" : 128,
 		"end" : 704
 	},
 	"patterns" : 
@@ -12592,6 +12592,6217 @@
 			],
 			"length" : 16,
 			"name" : "Pattern 6"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 1,
+					"value" : 32
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 50,
+					"param" : 1,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 54,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 38
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 1,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 44
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 46
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 1,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
+		},
+		
+		{
+			"channel_count" : 4,
+			"events" : 
+			[
+				
+				{
+					"channel" : 1,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 2,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 55
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 0,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 2,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 4,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 6,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 8,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 10,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 12,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 14,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 16,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 18,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 20,
+					"param" : 1,
+					"value" : 127
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 22,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 24,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 26,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 27,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 28,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 30,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 32,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 34,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 36,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 38,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 40,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 42,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 44,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 46,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 48,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 50,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 52,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 54,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 56,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 58,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 59,
+					"param" : 1,
+					"value" : 64
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 60,
+					"param" : 1,
+					"value" : 96
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 61,
+					"param" : 0,
+					"value" : 38
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 36
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 0,
+					"value" : 53
+				},
+				
+				{
+					"channel" : 0,
+					"frame" : 62,
+					"param" : 1,
+					"value" : 112
+				},
+				
+				{
+					"channel" : 1,
+					"frame" : 63,
+					"param" : 0,
+					"value" : 36
+				}
+			],
+			"length" : 64,
+			"name" : "Pattern 122"
 		}
 	],
 	"song" : 
@@ -12603,6 +18814,12 @@
 				"frame" : 0,
 				"pattern" : 4,
 				"track" : 0
+			},
+			
+			{
+				"frame" : 0,
+				"pattern" : 129,
+				"track" : 7
 			},
 			
 			{
@@ -12633,6 +18850,12 @@
 				"frame" : 64,
 				"pattern" : 5,
 				"track" : 1
+			},
+			
+			{
+				"frame" : 64,
+				"pattern" : 130,
+				"track" : 7
 			},
 			
 			{
@@ -12687,6 +18910,12 @@
 				"frame" : 128,
 				"pattern" : 14,
 				"track" : 1
+			},
+			
+			{
+				"frame" : 128,
+				"pattern" : 131,
+				"track" : 7
 			},
 			
 			{
@@ -12747,6 +18976,12 @@
 				"frame" : 192,
 				"pattern" : 23,
 				"track" : 2
+			},
+			
+			{
+				"frame" : 192,
+				"pattern" : 121,
+				"track" : 7
 			},
 			
 			{
@@ -12813,6 +19048,12 @@
 				"frame" : 256,
 				"pattern" : 35,
 				"track" : 1
+			},
+			
+			{
+				"frame" : 256,
+				"pattern" : 122,
+				"track" : 7
 			},
 			
 			{
@@ -12888,6 +19129,12 @@
 			},
 			
 			{
+				"frame" : 320,
+				"pattern" : 123,
+				"track" : 7
+			},
+			
+			{
 				"frame" : 336,
 				"pattern" : 46,
 				"track" : 0
@@ -12951,6 +19198,12 @@
 				"frame" : 384,
 				"pattern" : 88,
 				"track" : 1
+			},
+			
+			{
+				"frame" : 384,
+				"pattern" : 124,
+				"track" : 7
 			},
 			
 			{
@@ -13026,6 +19279,12 @@
 			},
 			
 			{
+				"frame" : 448,
+				"pattern" : 125,
+				"track" : 7
+			},
+			
+			{
 				"frame" : 464,
 				"pattern" : 101,
 				"track" : 0
@@ -13089,6 +19348,12 @@
 				"frame" : 512,
 				"pattern" : 111,
 				"track" : 5
+			},
+			
+			{
+				"frame" : 512,
+				"pattern" : 132,
+				"track" : 7
 			},
 			
 			{
@@ -13167,6 +19432,12 @@
 				"frame" : 576,
 				"pattern" : 82,
 				"track" : 3
+			},
+			
+			{
+				"frame" : 576,
+				"pattern" : 134,
+				"track" : 7
 			},
 			
 			{
@@ -13254,6 +19525,12 @@
 			},
 			
 			{
+				"frame" : 640,
+				"pattern" : 135,
+				"track" : 7
+			},
+			
+			{
 				"frame" : 656,
 				"pattern" : 68,
 				"track" : 0
@@ -13311,37 +19588,37 @@
 		},
 		
 		{
+			"midi_channel" : 0,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 0,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 0,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 0,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 0,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 0,
+			"midi_port" : 0
+		},
+		
+		{
 			"midi_channel" : 1,
-			"midi_port" : 0
-		},
-		
-		{
-			"midi_channel" : 2,
-			"midi_port" : 0
-		},
-		
-		{
-			"midi_channel" : 3,
-			"midi_port" : 0
-		},
-		
-		{
-			"midi_channel" : 4,
-			"midi_port" : 0
-		},
-		
-		{
-			"midi_channel" : 5,
-			"midi_port" : 0
-		},
-		
-		{
-			"midi_channel" : 6,
-			"midi_port" : 0
-		},
-		
-		{
-			"midi_channel" : 7,
 			"midi_port" : 0
 		}
 	],
