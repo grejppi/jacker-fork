@@ -207,8 +207,10 @@ public:
     }
     
     void on_new_action() {
-        if (player)
+        if (player) {
             player->stop();
+            player->seek(0);
+        }
         set_filepath("");
         model.reset();
         model_changed();
@@ -278,8 +280,10 @@ public:
     }
     
     void load_song(const std::string &filename) {
-        if (player)
+        if (player) {
             player->stop();
+            player->seek(0);
+        }
         set_filepath(filename);
         read_jsong(model, filename);
     }
