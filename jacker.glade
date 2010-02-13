@@ -8,12 +8,15 @@
     <property name="default_width">800</property>
     <property name="default_height">600</property>
     <property name="icon">jacker.png</property>
+    <accel-groups>
+      <group name="accel_group"/>
+    </accel-groups>
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkMenuBar" id="menubar1">
+          <object class="GtkMenuBar" id="menubar">
             <property name="visible">True</property>
             <child>
               <object class="GtkMenuItem" id="menuitem1">
@@ -23,6 +26,7 @@
                 <child type="submenu">
                   <object class="GtkMenu" id="menu1">
                     <property name="visible">True</property>
+                    <property name="accel_group">accel_group</property>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem1">
                         <property name="label">gtk-new</property>
@@ -46,7 +50,6 @@
                         <property name="label">gtk-save</property>
                         <property name="visible">True</property>
                         <property name="related_action">save_action</property>
-                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
                     </child>
@@ -129,6 +132,7 @@
                 <child type="submenu">
                   <object class="GtkMenu" id="menu4">
                     <property name="visible">True</property>
+                    <property name="accel_group">accel_group</property>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem11">
                         <property name="visible">True</property>
@@ -720,4 +724,5 @@
   <object class="GtkAction" id="quit_action">
     <property name="stock_id">gtk-quit</property>
   </object>
+  <object class="GtkAccelGroup" id="accel_group"/>
 </interface>

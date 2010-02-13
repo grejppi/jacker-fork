@@ -23,7 +23,7 @@ namespace Jacker {
 const char AccelPathPlay[] = "<Jacker>/Transport/Play";
 const char AccelPathStop[] = "<Jacker>/Transport/Stop";
 const char AccelPathPatternView[] = "<Jacker>/View/Pattern";
-const char AccelPathTrackView[] = "<Jacker>/View/Tracks";
+const char AccelPathTrackView[] = "<Jacker>/View/Song";
 const char AccelPathSave[] = "<Jacker>/File/Save";
 const char AccelPathOpen[] = "<Jacker>/File/Open";
     
@@ -583,10 +583,11 @@ public:
         Gtk::AccelMap::add_entry(AccelPathOpen, GDK_o, Gdk::CONTROL_MASK);
         Gtk::AccelMap::add_entry(AccelPathSave, GDK_s, Gdk::CONTROL_MASK);
         
-
-        accel_group = Gtk::AccelGroup::create();
-        window->add_accel_group(accel_group);
-                
+        accel_group =
+            Glib::RefPtr<Gtk::AccelGroup>::cast_static(
+                builder->get_object("accel_group"));
+        assert(accel_group);
+        
         builder->get_widget("view_notebook", view_notebook);
         assert(view_notebook);
         
