@@ -8,21 +8,54 @@
 
 #include "model.hpp"
 
+#include <vector>
+
 namespace Jacker {
 
 //=============================================================================
+
+class TrackBar : public Gtk::HBox {
+public:
+    TrackBar(int index, class TrackView &view);
+    
+    Gtk::Label name;
+    
+    Gtk::EventBox channel_eventbox;
+    Gtk::Menu channel_menu;
+    Gtk::Label channel;
+    
+    Gtk::EventBox port_eventbox;
+    Gtk::Menu port_menu;
+    Gtk::Label port;
+
+    Model *model;
+    int index;
+
+    void update();
+    bool on_channel_button_press_event(GdkEventButton *event);
+    bool on_port_button_press_event(GdkEventButton *event);
+
+    void on_channel(int channel);
+    void on_port(int port);
+};
 
 //=============================================================================
 
 class TrackView : public Gtk::VBox {
 public:
-    enum {
-        TrackHeight = 22,
-    };
-    
+    typedef std::vector<TrackBar *> TrackBarArray;
+
     TrackView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
 
+    Glib::RefPtr<Gtk::SizeGroup> group_names;
+    Glib::RefPtr<Gtk::SizeGroup> group_channels;
+    Glib::RefPtr<Gtk::SizeGroup> group_ports;
+
+    Model *model;
+    TrackBarArray bars;
+
+    void destroy_bars();
     void set_model(class Model &model);
     void update_tracks();
 };

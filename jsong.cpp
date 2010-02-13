@@ -73,6 +73,11 @@ public:
         root["begin"] = loop.get_begin();
         root["end"] = loop.get_end();
     }
+    
+    void collect(Json::Value &root, Track &track) {
+        root["midi_channel"] = track.midi_channel;
+        root["midi_port"] = track.midi_port;
+    }
 
     void collect(Json::Value &root, Model &model) {
         root["format"] = "jacker-song";
@@ -87,6 +92,19 @@ public:
         collect(loop, model.loop);
         if (!loop.empty()) {
             root["loop"] = loop;
+        }
+        
+        Json::Value tracks;
+        for (TrackArray::iterator iter = model.tracks.begin();
+             iter != model.tracks.end(); ++iter) {
+            Json::Value track;
+            collect(track, *iter);
+            if (!track.empty()) {
+                tracks.append(track);
+            }
+        }
+        if (!tracks.empty()) {
+            root["tracks"] = tracks;
         }
         
         Json::Value patterns;
@@ -204,6 +222,11 @@ public:
         extract(root["end"], end);
         loop.set(begin, end);
     }
+    
+    void build(const Json::Value &root, Track &track) {
+        extract(root["midi_channel"], track.midi_channel);
+        extract(root["midi_port"], track.midi_port);
+    }
 
     void build(const Json::Value &root, Model &model) {
         model.reset();
@@ -216,6 +239,15 @@ public:
         const Json::Value loop = root["loop"];
         if (!loop.empty()) {
             build(loop, model.loop);
+        }
+        
+        const Json::Value tracks = root["tracks"];
+        if (!tracks.empty())
+            model.tracks.clear();
+        for (size_t i = 0; i < tracks.size(); ++i) {
+            Track track;
+            build(tracks[i], track);
+            model.tracks.push_back(track);
         }
         
         const Json::Value patterns = root["patterns"];

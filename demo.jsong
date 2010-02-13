@@ -13302,5 +13302,48 @@
 			}
 		]
 	},
+	"tracks" : 
+	[
+		
+		{
+			"midi_channel" : 0,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 1,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 2,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 3,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 4,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 5,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 6,
+			"midi_port" : 0
+		},
+		
+		{
+			"midi_channel" : 7,
+			"midi_port" : 0
+		}
+	],
 	"version" : 2
 }

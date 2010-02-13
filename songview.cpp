@@ -195,14 +195,16 @@ void SongView::render_event(Song::iterator event) {
         gc->set_foreground(colors[ColorWhite]);
         window->draw_rectangle(gc, false, x+1, y+2, w-2, h-5);
         // label
-        //window->draw_layout(gc, x+3, y+5, pango_layout);
+        // TODO: make this fast
+        window->draw_layout(gc, x+3, y+5, pango_layout);
     } else {
         // fill
         gc->set_foreground(colors[ColorWhite]);
         window->draw_rectangle(gc, true, x+1, y+2, w-1, h-4);
         // label
         gc->set_foreground(colors[ColorBlack]);
-        //window->draw_layout(gc, x+3, y+5, pango_layout);
+        // TODO: make this fast
+        window->draw_layout(gc, x+3, y+5, pango_layout);
     }
 }
 
