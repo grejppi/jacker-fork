@@ -1,278 +1,271 @@
 
-#include "model.hpp"
-
-#include "json/json.h"
+#include "jsong.hpp"
 #include <iostream>
 #include <fstream>
 #include <cassert>
 
 namespace Jacker {
-    
+
+//=============================================================================
+
 enum {
     JSongVersion = 2,
 };
-    
-class JSongWriter {
-public:
-    typedef std::map<Pattern *, int> Pattern2IdMap;
-    Pattern2IdMap pattern2id;
 
-    void collect(Json::Value &root, PatternEvent &event) {
-        root["frame"] = event.frame;
-        root["channel"] = event.channel;
-        root["param"] = event.param;
-        root["value"] = event.value;
-    }
+//=============================================================================
 
-    void collect(Json::Value &root, Pattern &pattern) {
-        root["name"] = pattern.name;
-        root["length"] = pattern.get_length();
-        root["channel_count"] = pattern.get_channel_count();
-        
-        Json::Value events;
-        
-        for (Pattern::iterator iter = pattern.begin(); 
-             iter != pattern.end(); ++iter) {
-            Json::Value event;
-            collect(event, iter->second);
-            if (!event.empty())
-                events.append(event);
-        }
-        
-        if (!events.empty()) {
-            root["events"] = events;
-        }
-    }
-    
-    void collect(Json::Value &root, Song::Event &event) {
-        Pattern2IdMap::iterator iter = pattern2id.find(event.pattern);
-        if (iter == pattern2id.end())
-            return;
-        root["frame"] = event.frame;
-        root["track"] = event.track;
-        root["pattern"] = iter->second;
-    }
-    
-    void collect(Json::Value &root, Song &song) {
-        Json::Value events;
-        
-        for (Song::iterator iter = song.begin();
-            iter != song.end(); ++iter) {
-            Json::Value event;
-            collect(event, iter->second);
-            if (!event.empty())
-                events.append(event);
-        }
-        
-        if (!events.empty()) {
-            root["events"] = events;
-        }
-    }
-    
-    void collect(Json::Value &root, Loop &loop) {
-        root["begin"] = loop.get_begin();
-        root["end"] = loop.get_end();
-    }
-    
-    void collect(Json::Value &root, Track &track) {
-        root["midi_channel"] = track.midi_channel;
-        root["midi_port"] = track.midi_port;
-    }
+void JSongWriter::collect(Json::Value &root, PatternEvent &event) {
+    root["frame"] = event.frame;
+    root["channel"] = event.channel;
+    root["param"] = event.param;
+    root["value"] = event.value;
+}
 
-    void collect(Json::Value &root, Model &model) {
-        root["format"] = "jacker-song";
-        root["version"] = JSongVersion;
-        root["end_cue"] = model.end_cue;
-        root["frames_per_beat"] = model.frames_per_beat;
-        root["beats_per_bar"] = model.beats_per_bar;
-        root["beats_per_minute"] = model.beats_per_minute;
-        root["enable_loop"] = model.enable_loop;
-        
-        Json::Value loop;
-        collect(loop, model.loop);
-        if (!loop.empty()) {
-            root["loop"] = loop;
-        }
-        
-        Json::Value tracks;
-        for (TrackArray::iterator iter = model.tracks.begin();
-             iter != model.tracks.end(); ++iter) {
-            Json::Value track;
-            collect(track, *iter);
-            if (!track.empty()) {
-                tracks.append(track);
-            }
-        }
-        if (!tracks.empty()) {
-            root["tracks"] = tracks;
-        }
-        
-        Json::Value patterns;
-        
-        int index = 0;
-        for (PatternList::iterator iter = model.patterns.begin(); 
-             iter != model.patterns.end(); ++iter) {
-            Json::Value pattern;
-            collect(pattern, *(*iter));
-            if (!pattern.empty()) {
-                patterns.append(pattern);
-                pattern2id.insert(Pattern2IdMap::value_type(*iter,index));
-                index++;
-            }
-        }
-        
-        if (!patterns.empty()) {
-            root["patterns"] = patterns;
-        }
-        
-        Json::Value song;
-        collect(song, model.song);
-        if (!song.empty()) {
-            root["song"] = song;
-        }
-    }
-
-    void write(Json::Value &root, const std::string &filepath) {
-        assert(!root.empty());            
-        std::ofstream out(filepath.c_str());
-        assert(out);
-        out << root;
-        out.close();
+void JSongWriter::collect(Json::Value &root, Pattern &pattern) {
+    root["name"] = pattern.name;
+    root["length"] = pattern.get_length();
+    root["channel_count"] = pattern.get_channel_count();
+    
+    Json::Value events;
+    
+    for (Pattern::iterator iter = pattern.begin(); 
+         iter != pattern.end(); ++iter) {
+        Json::Value event;
+        collect(event, iter->second);
+        if (!event.empty())
+            events.append(event);
     }
     
-};
-
-class JSongReader {
-public:
-    // so we can resolve by index
-    std::vector<Pattern *> patterns;
-
-    bool extract(const Json::Value &value, std::string &target) {
-        if (!value.isString())
-            return false;
-        target = value.asString();
-        return true;
+    if (!events.empty()) {
+        root["events"] = events;
     }
+}
 
-    bool extract(const Json::Value &value, int &target) {
-        if (!value.isInt())
-            return false;
-        target = value.asInt();
-        return true;
-    }
+void JSongWriter::collect(Json::Value &root, Song::Event &event) {
+    Pattern2IdMap::iterator iter = pattern2id.find(event.pattern);
+    if (iter == pattern2id.end())
+        return;
+    root["frame"] = event.frame;
+    root["track"] = event.track;
+    root["pattern"] = iter->second;
+}
 
-    bool extract(const Json::Value &value, bool &target) {
-        if (!value.isBool())
-            return false;
-        target = value.asBool();
-        return true;
+void JSongWriter::collect(Json::Value &root, Song &song) {
+    Json::Value events;
+    
+    for (Song::iterator iter = song.begin();
+        iter != song.end(); ++iter) {
+        Json::Value event;
+        collect(event, iter->second);
+        if (!event.empty())
+            events.append(event);
     }
     
-    void build(const Json::Value &root, Pattern::Event &event) {
-        extract(root["frame"], event.frame);
-        extract(root["channel"], event.channel);
-        extract(root["param"], event.param);
-        extract(root["value"], event.value);        
+    if (!events.empty()) {
+        root["events"] = events;
+    }
+}
+
+void JSongWriter::collect(Json::Value &root, Loop &loop) {
+    root["begin"] = loop.get_begin();
+    root["end"] = loop.get_end();
+}
+
+void JSongWriter::collect(Json::Value &root, Track &track) {
+    root["midi_channel"] = track.midi_channel;
+    root["midi_port"] = track.midi_port;
+}
+
+void JSongWriter::collect(Json::Value &root, Model &model) {
+    root["format"] = "jacker-song";
+    root["version"] = JSongVersion;
+    root["end_cue"] = model.end_cue;
+    root["frames_per_beat"] = model.frames_per_beat;
+    root["beats_per_bar"] = model.beats_per_bar;
+    root["beats_per_minute"] = model.beats_per_minute;
+    root["enable_loop"] = model.enable_loop;
+    
+    Json::Value loop;
+    collect(loop, model.loop);
+    if (!loop.empty()) {
+        root["loop"] = loop;
     }
     
-    void build(const Json::Value &root, Pattern &pattern) {
-        extract(root["name"], pattern.name);
-        int length = 64;
-        if (extract(root["length"], length))
-            pattern.set_length(length);
-        int channel_count = 1;
-        if (extract(root["channel_count"], channel_count))
-            pattern.set_channel_count(channel_count);
-        
-        const Json::Value events = root["events"];
-        for (size_t i = 0; i < events.size(); ++i) {
-            Pattern::Event event;
-            build(events[i], event);
-            pattern.add_event(event);
+    Json::Value tracks;
+    for (TrackArray::iterator iter = model.tracks.begin();
+         iter != model.tracks.end(); ++iter) {
+        Json::Value track;
+        collect(track, *iter);
+        if (!track.empty()) {
+            tracks.append(track);
         }
-        
-        patterns.push_back(&pattern);
+    }
+    if (!tracks.empty()) {
+        root["tracks"] = tracks;
     }
     
-    bool build(const Json::Value &root, Song::Event &event) {
-        extract(root["frame"], event.frame);
-        extract(root["track"], event.track);
-        int pattern_index = -1;
-        if (!extract(root["pattern"], pattern_index))
-            return false;
-        if ((pattern_index < 0)||(pattern_index >= (int)patterns.size()))
-            return false;
-        event.pattern = patterns[pattern_index];
-        return true;
-    }
+    Json::Value patterns;
     
-    void build(const Json::Value &root, Song &song) {
-        const Json::Value events = root["events"];
-        for (size_t i = 0; i < events.size(); ++i) {
-            Song::Event event;
-            if (build(events[i], event))
-                song.add_event(event);
+    int index = 0;
+    for (PatternList::iterator iter = model.patterns.begin(); 
+         iter != model.patterns.end(); ++iter) {
+        Json::Value pattern;
+        collect(pattern, *(*iter));
+        if (!pattern.empty()) {
+            patterns.append(pattern);
+            pattern2id.insert(Pattern2IdMap::value_type(*iter,index));
+            index++;
         }
     }
     
-    void build(const Json::Value &root, Loop &loop) {
-        int begin = 0;
-        int end = 0;
-        extract(root["begin"], begin);
-        extract(root["end"], end);
-        loop.set(begin, end);
+    if (!patterns.empty()) {
+        root["patterns"] = patterns;
     }
     
-    void build(const Json::Value &root, Track &track) {
-        extract(root["midi_channel"], track.midi_channel);
-        extract(root["midi_port"], track.midi_port);
+    Json::Value song;
+    collect(song, model.song);
+    if (!song.empty()) {
+        root["song"] = song;
     }
+}
 
-    void build(const Json::Value &root, Model &model) {
-        model.reset();
-        extract(root["end_cue"], model.end_cue);
-        extract(root["frames_per_beat"], model.frames_per_beat);
-        extract(root["beats_per_bar"], model.beats_per_bar);
-        extract(root["beats_per_minute"], model.beats_per_minute);
-        extract(root["enable_loop"], model.enable_loop);
-        
-        const Json::Value loop = root["loop"];
-        if (!loop.empty()) {
-            build(loop, model.loop);
-        }
-        
-        const Json::Value tracks = root["tracks"];
-        if (!tracks.empty())
-            model.tracks.clear();
-        for (size_t i = 0; i < tracks.size(); ++i) {
-            Track track;
-            build(tracks[i], track);
-            model.tracks.push_back(track);
-        }
-        
-        const Json::Value patterns = root["patterns"];
-        for (size_t i = 0; i < patterns.size(); ++i) {
-            Pattern &pattern = model.new_pattern();
-            build(patterns[i], pattern);
-        }
-        
-        const Json::Value song = root["song"];
-        build(song, model.song);
-    }
+void JSongWriter::write(Json::Value &root, const std::string &filepath) {
+    assert(!root.empty());            
+    std::ofstream out(filepath.c_str());
+    assert(out);
+    out << root;
+    out.close();
+}
 
-    bool read(Json::Value &root, const std::string &filepath) {
-        Json::Reader reader;
-        std::ifstream inp(filepath.c_str());
-        bool result = reader.parse(inp, root);
-        if (!result) {
-            std::cout << "Error parsing JSong: " << reader.getFormatedErrorMessages();
-        }
-        inp.close();
-        if (root["format"] != "jacker-song")
-            return false;
-        return result;
+//=============================================================================
+
+bool JSongReader::extract(const Json::Value &value, std::string &target) {
+    if (!value.isString())
+        return false;
+    target = value.asString();
+    return true;
+}
+
+bool JSongReader::extract(const Json::Value &value, int &target) {
+    if (!value.isInt())
+        return false;
+    target = value.asInt();
+    return true;
+}
+
+bool JSongReader::extract(const Json::Value &value, bool &target) {
+    if (!value.isBool())
+        return false;
+    target = value.asBool();
+    return true;
+}
+
+void JSongReader::build(const Json::Value &root, Pattern::Event &event) {
+    extract(root["frame"], event.frame);
+    extract(root["channel"], event.channel);
+    extract(root["param"], event.param);
+    extract(root["value"], event.value);        
+}
+
+void JSongReader::build(const Json::Value &root, Pattern &pattern) {
+    extract(root["name"], pattern.name);
+    int length = 64;
+    if (extract(root["length"], length))
+        pattern.set_length(length);
+    int channel_count = 1;
+    if (extract(root["channel_count"], channel_count))
+        pattern.set_channel_count(channel_count);
+    
+    const Json::Value events = root["events"];
+    for (size_t i = 0; i < events.size(); ++i) {
+        Pattern::Event event;
+        build(events[i], event);
+        pattern.add_event(event);
     }
-};
+    
+    patterns.push_back(&pattern);
+}
+
+bool JSongReader::build(const Json::Value &root, Song::Event &event) {
+    extract(root["frame"], event.frame);
+    extract(root["track"], event.track);
+    int pattern_index = -1;
+    if (!extract(root["pattern"], pattern_index))
+        return false;
+    if ((pattern_index < 0)||(pattern_index >= (int)patterns.size()))
+        return false;
+    event.pattern = patterns[pattern_index];
+    return true;
+}
+
+void JSongReader::build(const Json::Value &root, Song &song) {
+    const Json::Value events = root["events"];
+    for (size_t i = 0; i < events.size(); ++i) {
+        Song::Event event;
+        if (build(events[i], event))
+            song.add_event(event);
+    }
+}
+
+void JSongReader::build(const Json::Value &root, Loop &loop) {
+    int begin = 0;
+    int end = 0;
+    extract(root["begin"], begin);
+    extract(root["end"], end);
+    loop.set(begin, end);
+}
+
+void JSongReader::build(const Json::Value &root, Track &track) {
+    extract(root["midi_channel"], track.midi_channel);
+    extract(root["midi_port"], track.midi_port);
+}
+
+void JSongReader::build(const Json::Value &root, Model &model) {
+    model.reset();
+    extract(root["end_cue"], model.end_cue);
+    extract(root["frames_per_beat"], model.frames_per_beat);
+    extract(root["beats_per_bar"], model.beats_per_bar);
+    extract(root["beats_per_minute"], model.beats_per_minute);
+    extract(root["enable_loop"], model.enable_loop);
+    
+    const Json::Value loop = root["loop"];
+    if (!loop.empty()) {
+        build(loop, model.loop);
+    }
+    
+    const Json::Value tracks = root["tracks"];
+    if (!tracks.empty())
+        model.tracks.clear();
+    for (size_t i = 0; i < tracks.size(); ++i) {
+        Track track;
+        build(tracks[i], track);
+        model.tracks.push_back(track);
+    }
+    
+    const Json::Value patterns = root["patterns"];
+    for (size_t i = 0; i < patterns.size(); ++i) {
+        Pattern &pattern = model.new_pattern();
+        build(patterns[i], pattern);
+    }
+    
+    const Json::Value song = root["song"];
+    build(song, model.song);
+}
+
+bool JSongReader::read(Json::Value &root, const std::string &filepath) {
+    Json::Reader reader;
+    std::ifstream inp(filepath.c_str());
+    bool result = reader.parse(inp, root);
+    if (!result) {
+        std::cout << "Error parsing JSong: " << reader.getFormatedErrorMessages();
+    }
+    inp.close();
+    if (root["format"] != "jacker-song")
+        return false;
+    return result;
+}
+
+//=============================================================================
 
 bool read_jsong(Model &model, const std::string &filepath) {
     JSongReader reader;
@@ -289,5 +282,7 @@ void write_jsong(Model &model, const std::string &filepath) {
     writer.collect(root,model);
     writer.write(root,filepath);
 }
-    
+
+//=============================================================================
+
 } // namespace Jacker
