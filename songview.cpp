@@ -297,13 +297,19 @@ void SongView::add_track() {
 }
 
 void SongView::new_pattern(const SongCursor &cur) {
-    if (cur.get_track() < model->get_track_count()) {
-        Pattern &pattern = model->new_pattern();
-        Song::iterator event = model->song.add_event(cur.get_frame(), cur.get_track(), pattern);
-        clear_selection();
-        select_event(event);
+    if (cur.get_track() >= model->get_track_count())
+        return;
+    int frame = cur.get_frame();
+    int track = cur.get_track();
+    Pattern &pattern = model->new_pattern();
+    if (model->enable_loop && (frame >= model->loop.get_begin()) &&
+        (frame < model->loop.get_end())) {
+        frame = model->loop.get_begin();
+        pattern.set_length(model->loop.get_end() - model->loop.get_begin());
     }
-    
+    Song::iterator event = model->song.add_event(frame, track, pattern);
+    clear_selection();
+    select_event(event);    
 }
 
 void SongView::edit_pattern(Song::iterator iter) {
@@ -329,8 +335,8 @@ bool SongView::selecting() const {
 
 bool SongView::on_button_press_event(GdkEventButton* event) {
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
-    /*
     bool shift_down = event->state & Gdk::SHIFT_MASK;
+    /*
     bool alt_down = event->state & Gdk::MOD1_MASK;
     bool super_down = event->state & (Gdk::SUPER_MASK|Gdk::MOD4_MASK);
     */
@@ -343,21 +349,20 @@ bool SongView::on_button_press_event(GdkEventButton* event) {
         cur.set_pos(event->x, event->y);
         Song::iterator evt;
 
-        if (!ctrl_down && (selection.size() == 1))
-            clear_selection();
-        
         if (find_event(cur, evt)) {
-            if (ctrl_down && is_event_selected(evt)) {
-                deselect_event(evt);
-            } else {
+            if (!is_event_selected(evt)) {
+                if (!ctrl_down)
+                    clear_selection();
                 select_event(evt);
-                if (double_click) {
-                    interact_mode = InteractNone;
-                    edit_pattern(evt);
-                } else {
-                    interact_mode = InteractDrag;
-                    drag.start(event->x, event->y);
-                }
+            } else if (ctrl_down && !shift_down) {
+                deselect_event(evt);
+            }
+            if (double_click) {
+                interact_mode = InteractNone;
+                edit_pattern(evt);
+            } else {
+                interact_mode = InteractDrag;
+                drag.start(event->x, event->y);
             }
         } else if (double_click) {
             cur.set_frame(quantize_frame(cur.get_frame()));

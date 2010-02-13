@@ -9,7 +9,6 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - status bar
 
 - pattern view:
-    - copy/paste
     - fix borked measure
     - measure shows actual position of pattern in song
     - reposition play cursor on measure click
@@ -24,7 +23,6 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     
 - song:
     - copy/paste
-    - duplicate pattern (make non-reference copy)
     - zooming controls
     - rename pattern
     - merge patterns (melt into one)
