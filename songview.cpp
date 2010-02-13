@@ -365,6 +365,7 @@ bool SongView::on_button_press_event(GdkEventButton* event) {
                 drag.start(event->x, event->y);
             }
         } else if (double_click) {
+            interact_mode = InteractNone;
             cur.set_frame(quantize_frame(cur.get_frame()));
             new_pattern(cur);
         } else {
