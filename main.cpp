@@ -24,6 +24,8 @@ const char AccelPathPlay[] = "<Jacker>/Transport/Play";
 const char AccelPathStop[] = "<Jacker>/Transport/Stop";
 const char AccelPathPatternView[] = "<Jacker>/View/Pattern";
 const char AccelPathTrackView[] = "<Jacker>/View/Tracks";
+const char AccelPathSave[] = "<Jacker>/File/Save";
+const char AccelPathOpen[] = "<Jacker>/File/Open";
     
 class JackPlayer : public Jack::Client,
                    public Player {
@@ -331,8 +333,10 @@ public:
     
     void init_menu() {
         connect_action("new_action", sigc::mem_fun(*this, &App::on_new_action));
-        connect_action("open_action", sigc::mem_fun(*this, &App::on_open_action));
-        connect_action("save_action", sigc::mem_fun(*this, &App::on_save_action));
+        connect_action("open_action", sigc::mem_fun(*this, &App::on_open_action),
+            AccelPathOpen);
+        connect_action("save_action", sigc::mem_fun(*this, &App::on_save_action),
+            AccelPathSave);
         connect_action("save_as_action", sigc::mem_fun(*this, &App::on_save_as_action));
         connect_action("quit_action", sigc::mem_fun(*this, &App::on_quit_action));
         connect_action("about_action", sigc::mem_fun(*this, &App::on_about_action));
@@ -572,6 +576,9 @@ public:
         Gtk::AccelMap::add_entry(AccelPathTrackView, GDK_F3, Gdk::ModifierType());
         Gtk::AccelMap::add_entry(AccelPathPlay, GDK_F5, Gdk::ModifierType());
         Gtk::AccelMap::add_entry(AccelPathStop, GDK_F8, Gdk::ModifierType());
+        Gtk::AccelMap::add_entry(AccelPathOpen, GDK_o, Gdk::CONTROL_MASK);
+        Gtk::AccelMap::add_entry(AccelPathSave, GDK_s, Gdk::CONTROL_MASK);
+        
 
         accel_group = Gtk::AccelGroup::create();
         window->add_accel_group(accel_group);

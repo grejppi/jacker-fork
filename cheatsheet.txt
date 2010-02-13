@@ -5,14 +5,21 @@ Jacker Mouse & Keyboard Commands
 Global
 ------
 
-F3: Go to song view.
-F4: Go to pattern view.
+            -- Navigation --
 
-F5: Play Song from current position.
-    * Play Song from beginning of loop, if enabled.
-F8: Pause Song.
-    * Jump to beginning of loop, if enabled.
-    ** Jump to beginning of song.
+    F3: Go to song view.
+    F4: Go to pattern view.
+
+    F5: Play Song from current position.
+        * Play Song from beginning of loop, if enabled.
+    F8: Pause Song.
+        * Jump to beginning of loop, if enabled.
+        ** Jump to beginning of song.
+
+            -- Editing --
+
+        Ctrl+O: Open file.
+        Ctrl+S: Save file.
 
 Pattern
 -------
