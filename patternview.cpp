@@ -1225,7 +1225,6 @@ void PatternView::move_frames(int step, bool all_channels/*=false*/) {
 }
 
 void PatternView::on_clipboard_get(Gtk::SelectionData &data, guint info) {
-    printf("get!\n");
     const std::string target = data.get_target();
     if (target != TargetFormatPattern) {
         printf("can't provide target %s\n", target.c_str());
@@ -1235,7 +1234,6 @@ void PatternView::on_clipboard_get(Gtk::SelectionData &data, guint info) {
 }
 
 void PatternView::on_clipboard_clear() {
-    printf ("clear\n");
 }
 
 void PatternView::on_clipboard_received(const Gtk::SelectionData &data) {
@@ -1248,7 +1246,6 @@ void PatternView::on_clipboard_received(const Gtk::SelectionData &data) {
         return;
     }
     std::string text = data.get_data_as_string();
-    printf ("received!\n");
     if (text.empty())
         return;
     
@@ -1322,6 +1319,7 @@ void PatternView::copy_block() {
     clipboard->set(list_targets,
         sigc::mem_fun(*this, &PatternView::on_clipboard_get),
         sigc::mem_fun(*this, &PatternView::on_clipboard_clear));
+    clipboard->store();
 }
 
 void PatternView::paste_block() {
