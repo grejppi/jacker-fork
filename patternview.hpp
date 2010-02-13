@@ -288,8 +288,15 @@ public:
     void play_from_cursor();
     void play_pattern();
     
+    void cut_block();
+    void copy_block();
+    void paste_block();
     void clear_block();
+    void on_clipboard_get(Gtk::SelectionData &data, guint info);
+    void on_clipboard_clear();
+    
     void move_frames(int step, bool all_channels=false);
+    
 
     type_play_event_request signal_play_event_request();
     type_return_request signal_return_request();

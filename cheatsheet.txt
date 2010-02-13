@@ -61,8 +61,10 @@ Q2W3ER5T6Y7U: Set notes in note columns (Octave +1).
      Alt+Del: Move all values below cursor up
               by one row in all channels.
 
-      Ctrl+X: Delete events in selection.
-
+      Ctrl+C: Copy events in selection to clipboard.
+      Ctrl+V: Paste events from clipboard at cursor.
+      Ctrl+D: Delete events in selection.
+      Ctrl+X: Cut events from selection to clipboard.
 
 Song
 ----

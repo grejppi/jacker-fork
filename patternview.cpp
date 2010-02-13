@@ -1221,6 +1221,29 @@ void PatternView::move_frames(int step, bool all_channels/*=false*/) {
     invalidate();
 }
 
+void PatternView::on_clipboard_get(Gtk::SelectionData &data, guint info) {
+}
+
+void PatternView::on_clipboard_clear() {
+}
+
+void PatternView::cut_block() {
+    copy_block();
+    clear_block();
+}
+
+void PatternView::copy_block() {
+    Glib::RefPtr<Gtk::Clipboard> clipboard = Gtk::Clipboard::get();
+    std::list<Gtk::TargetEntry> list_targets;
+    list_targets.push_back(Gtk::TargetEntry("jacker_pattern_block"));
+    clipboard->set(list_targets,
+        sigc::mem_fun(*this, &PatternView::on_clipboard_get),
+        sigc::mem_fun(*this, &PatternView::on_clipboard_clear));
+}
+
+void PatternView::paste_block() {
+}
+
 void PatternView::clear_block() {
     Pattern::iterator iter;
     for (Pattern::iterator iter = get_pattern()->begin(); 
@@ -1251,7 +1274,10 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
     
     if (ctrl_down) {
         switch (event->keyval) {
-            case GDK_x: clear_block(); return true;
+            case GDK_x: cut_block(); return true;
+            case GDK_c: copy_block(); return true;
+            case GDK_v: paste_block(); return true;
+            case GDK_d: clear_block(); return true;
             case GDK_plus:
             case GDK_KP_Add:
             {
