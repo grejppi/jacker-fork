@@ -28,7 +28,7 @@
                     <property name="visible">True</property>
                     <property name="accel_group">accel_group</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem1">
+                      <object class="GtkImageMenuItem" id="menuitem_new">
                         <property name="label">gtk-new</property>
                         <property name="visible">True</property>
                         <property name="related_action">new_action</property>
@@ -37,7 +37,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem2">
+                      <object class="GtkImageMenuItem" id="menuitem_open">
                         <property name="label">gtk-open</property>
                         <property name="visible">True</property>
                         <property name="related_action">open_action</property>
@@ -46,15 +46,16 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem3">
+                      <object class="GtkImageMenuItem" id="menuitem_save">
                         <property name="label">gtk-save</property>
                         <property name="visible">True</property>
                         <property name="related_action">save_action</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem4">
+                      <object class="GtkImageMenuItem" id="menuitem_save_as">
                         <property name="label">gtk-save-as</property>
                         <property name="visible">True</property>
                         <property name="related_action">save_as_action</property>
@@ -68,7 +69,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem5">
+                      <object class="GtkImageMenuItem" id="menuitem_quit">
                         <property name="label">gtk-quit</property>
                         <property name="visible">True</property>
                         <property name="related_action">quit_action</property>
@@ -88,8 +89,9 @@
                 <child type="submenu">
                   <object class="GtkMenu" id="menu2">
                     <property name="visible">True</property>
+                    <property name="accel_group">accel_group</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem6">
+                      <object class="GtkImageMenuItem" id="menuitem_cut">
                         <property name="label">gtk-cut</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
@@ -97,7 +99,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem7">
+                      <object class="GtkImageMenuItem" id="menuitem_copy">
                         <property name="label">gtk-copy</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
@@ -105,7 +107,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem8">
+                      <object class="GtkImageMenuItem" id="menuitem_paste">
                         <property name="label">gtk-paste</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
@@ -113,7 +115,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem9">
+                      <object class="GtkImageMenuItem" id="menuitem_delete">
                         <property name="label">gtk-delete</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
@@ -134,7 +136,7 @@
                     <property name="visible">True</property>
                     <property name="accel_group">accel_group</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem11">
+                      <object class="GtkImageMenuItem" id="menuitem_song">
                         <property name="visible">True</property>
                         <property name="related_action">show_song_action</property>
                         <property name="use_action_appearance">True</property>
@@ -143,7 +145,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem12">
+                      <object class="GtkImageMenuItem" id="menuitem_pattern">
                         <property name="visible">True</property>
                         <property name="related_action">show_pattern_action</property>
                         <property name="use_action_appearance">True</property>
@@ -163,8 +165,9 @@
                 <child type="submenu">
                   <object class="GtkMenu" id="menu3">
                     <property name="visible">True</property>
+                    <property name="accel_group">accel_group</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem10">
+                      <object class="GtkImageMenuItem" id="menuitem_about">
                         <property name="label">gtk-about</property>
                         <property name="visible">True</property>
                         <property name="related_action">about_action</property>

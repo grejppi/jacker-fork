@@ -567,6 +567,36 @@ public:
         }
     }
     
+    void fix_menuitem_accelerator(const std::string &name) {
+        Gtk::MenuItem *item;
+        builder->get_widget(name, item);
+        assert(item);
+        Glib::RefPtr<Gtk::Action> action = item->get_action();
+        if (!action)
+            return;
+        if (action->get_accel_path().empty())
+            return;
+        item->set_accel_path(action->get_accel_path());
+    }
+    
+    void fix_accelerators() {
+        fix_menuitem_accelerator("menuitem_new");
+        fix_menuitem_accelerator("menuitem_open");
+        fix_menuitem_accelerator("menuitem_save");
+        fix_menuitem_accelerator("menuitem_save_as");
+        fix_menuitem_accelerator("menuitem_quit");
+        
+        fix_menuitem_accelerator("menuitem_cut");
+        fix_menuitem_accelerator("menuitem_copy");
+        fix_menuitem_accelerator("menuitem_paste");
+        fix_menuitem_accelerator("menuitem_delete");
+        
+        fix_menuitem_accelerator("menuitem_song");
+        fix_menuitem_accelerator("menuitem_pattern");
+        
+        fix_menuitem_accelerator("menuitem_about");
+    }
+    
     void run() {
         init_player();       
         
@@ -597,12 +627,13 @@ public:
         init_pattern_view();
         init_song_view();
         init_timer();
-        update_title();
         
+        fix_accelerators();
+        
+        update_title();        
         window->show_all();
-        show_song_view();
-        
-        on_new_action();
+        show_song_view();        
+        on_new_action();       
         
         if (player)
             player->activate();
