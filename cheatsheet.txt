@@ -44,6 +44,10 @@ Page Up/Down: Move cursor to previous/next bar.
    Shift+Up/Down: Expand selection across rows.
 Shift+Left/Right: Expand selection across columns.
       Click+Drag: Expand selection across pattern.
+          Ctrl+B: Set start of selection block
+                  * Cycle selection mode (param > channel > row).
+          Ctrl+E: Set end of selection block
+                  * Cycle selection mode (param > channel > row).
 
             -- Editing --
 

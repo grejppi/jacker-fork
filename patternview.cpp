@@ -1355,7 +1355,6 @@ void PatternView::cycle_block_selection() {
             selection.p0.set_channel(0);
             selection.p1.set_last_channel();
         } else { // not whole channel selected, so select whole channel
-            printf("selecting full channel\n");
             selection.p0.set_param(0);
             selection.p1.set_last_param();
         }
