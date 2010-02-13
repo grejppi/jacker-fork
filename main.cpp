@@ -205,6 +205,7 @@ public:
     }
     
     void on_quit_action() {
+        kit.quit();
     }
     
     void on_save_as_action() {
