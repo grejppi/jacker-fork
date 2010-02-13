@@ -1351,7 +1351,6 @@ void PatternView::cycle_block_selection() {
     if (selection.p1.get_channel() == selection.p0.get_channel()) {
         // whole channel selected?
         if ((selection.p0.get_param() == 0) && (selection.p1.is_last_param())) {
-            printf("selecting all channels\n");
             // select all channels
             selection.p0.set_channel(0);
             selection.p1.set_last_channel();
@@ -1362,14 +1361,12 @@ void PatternView::cycle_block_selection() {
         }
     // all channels selected?
     } else if ((selection.p0.get_channel() == 0) && selection.p1.is_last_channel()) {
-        printf("selecting single param\n");
         // select single param
         selection.p0.set_channel(cursor.get_channel());
         selection.p0.set_param(cursor.get_param());
         selection.p1.set_channel(cursor.get_channel());
         selection.p1.set_param(cursor.get_param());
     } else { // some channels selected
-        printf("selecting all channels (2)\n");
         // select all channels
         selection.p0.set_param(0);
         selection.p0.set_channel(0);
