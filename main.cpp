@@ -4,8 +4,10 @@
 
 #include <gtkmm.h>
 #include <gtkmm/accelmap.h>
-#include <assert.h>
+#include <cassert>
 #include <stdio.h>
+#include <iostream>
+#include <string>
 
 #include "model.hpp"
 #include "patternview.hpp"
@@ -105,6 +107,7 @@ public:
 
     sigc::connection mix_timer;
 
+    std::string filepath;
     JackPlayer *player;
 
     enum NotebookPages {
@@ -127,6 +130,28 @@ public:
     
     ~App() {
         assert(!player);
+    }
+    
+    std::string get_filepath() {
+        return this->filepath;
+    }
+    
+    void set_filepath(const std::string &filepath) {
+        if (this->filepath == filepath)
+            return;
+        this->filepath = filepath;
+        update_title();
+    }
+    
+    void update_title() {
+        assert(window);
+        char title[256];
+        if (filepath.empty()) {
+            sprintf(title, "(Untitled) - Jacker");
+        } else {
+            sprintf(title, "%s - Jacker", filepath.c_str());
+        }
+        window->set_title(title);
     }
     
     void on_play_action() {
@@ -165,7 +190,24 @@ public:
         dialog.add_filter(filter_any);
     }
     
-    void on_save_action() {
+    void model_changed() {
+        pattern_view->set_song_event(model.song.end());
+        song_view->set_loop(model.loop);
+        update_measures();
+        track_view->update_tracks();
+        all_views_changed();
+    }
+    
+    void on_new_action() {
+        set_filepath("");
+        model.reset();
+        model_changed();
+    }
+    
+    void on_quit_action() {
+    }
+    
+    void on_save_as_action() {
         Gtk::FileChooserDialog dialog("Save Song",
             Gtk::FILE_CHOOSER_ACTION_SAVE);
         dialog.set_transient_for(*window);
@@ -176,11 +218,27 @@ public:
 
         add_dialog_filters(dialog);
 
+        dialog.set_filename(get_filepath());
+        
         int result = dialog.run();
         if (result != Gtk::RESPONSE_OK)
             return;
         
-        write_jsong(model, dialog.get_filename());
+        std::string filename = dialog.get_filename();
+        if (filename.substr(filename.find_last_of(".") + 1) != "jsong") {
+            filename += ".jsong";
+        }
+        
+        save_song(filename);
+    }
+    
+    void on_save_action() {
+        if (get_filepath().empty()) {
+            on_save_as_action();
+            return;
+        }
+        
+        save_song(get_filepath());
     }
     
     void on_open_action() {
@@ -192,23 +250,25 @@ public:
         dialog.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
 
         add_dialog_filters(dialog);
+        
+        dialog.set_filename(get_filepath());
 
         int result = dialog.run();
         if (result != Gtk::RESPONSE_OK)
             return;
         
         load_song(dialog.get_filename());
+        model_changed();
+    }
+    
+    void save_song(const std::string &filename) {
+        set_filepath(filename);
+        write_jsong(model, filename);
     }
     
     void load_song(const std::string &filename) {
+        set_filepath(filename);
         read_jsong(model, filename);
-        
-        song_view->invalidate();
-        pattern_view->set_song_event(model.song.end());
-        song_view->set_loop(model.loop);
-        update_measures();
-        track_view->update_tracks();
-        all_views_changed();
     }
     
     void all_views_changed() {
@@ -259,8 +319,11 @@ public:
     }
     
     void init_menu() {
-        connect_action("save_action", sigc::mem_fun(*this, &App::on_save_action));
+        connect_action("new_action", sigc::mem_fun(*this, &App::on_new_action));
         connect_action("open_action", sigc::mem_fun(*this, &App::on_open_action));
+        connect_action("save_action", sigc::mem_fun(*this, &App::on_save_action));
+        connect_action("save_as_action", sigc::mem_fun(*this, &App::on_save_as_action));
+        connect_action("quit_action", sigc::mem_fun(*this, &App::on_quit_action));
         connect_action("about_action", sigc::mem_fun(*this, &App::on_about_action));
     
         connect_action("show_pattern_action", 
@@ -511,11 +574,12 @@ public:
         init_pattern_view();
         init_song_view();
         init_timer();
-
-        load_song("demo.jsong");
+        update_title();
         
         window->show_all();
         show_song_view();
+        
+        on_new_action();
         
         if (player)
             player->activate();
