@@ -295,6 +295,9 @@ public:
     void on_clipboard_get(Gtk::SelectionData &data, guint info);
     void on_clipboard_clear();
     void on_clipboard_received(const Gtk::SelectionData &data);
+    void begin_block();
+    void end_block();
+    void cycle_block_selection();
     
     void move_frames(int step, bool all_channels=false);
     

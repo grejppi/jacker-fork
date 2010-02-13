@@ -1344,6 +1344,68 @@ void PatternView::clear_block() {
     invalidate_selection();
 }
 
+void PatternView::cycle_block_selection() {
+    invalidate_selection();
+    selection.sort();
+    // single channel selected?
+    if (selection.p1.get_channel() == selection.p0.get_channel()) {
+        // whole channel selected?
+        if ((selection.p0.get_param() == 0) && (selection.p1.is_last_param())) {
+            printf("selecting all channels\n");
+            // select all channels
+            selection.p0.set_channel(0);
+            selection.p1.set_last_channel();
+        } else { // not whole channel selected, so select whole channel
+            printf("selecting full channel\n");
+            selection.p0.set_param(0);
+            selection.p1.set_last_param();
+        }
+    // all channels selected?
+    } else if ((selection.p0.get_channel() == 0) && selection.p1.is_last_channel()) {
+        printf("selecting single param\n");
+        // select single param
+        selection.p0.set_channel(cursor.get_channel());
+        selection.p0.set_param(cursor.get_param());
+        selection.p1.set_channel(cursor.get_channel());
+        selection.p1.set_param(cursor.get_param());
+    } else { // some channels selected
+        printf("selecting all channels (2)\n");
+        // select all channels
+        selection.p0.set_param(0);
+        selection.p0.set_channel(0);
+        selection.p1.set_last_channel();
+        selection.p1.set_last_param();
+    }
+    invalidate_selection();
+}
+
+void PatternView::begin_block() {
+    invalidate_selection();
+    if (!selection.get_active()) {
+        selection.p0 = selection.p1 = cursor;
+        selection.set_active(true);
+    } else if (cursor.get_row() == selection.p0.get_row()) {
+        cycle_block_selection();
+    } else {
+        selection.p0 = cursor;
+    }
+    invalidate_selection();
+}
+
+void PatternView::end_block() {
+    invalidate_selection();
+    if (!selection.get_active()) {
+        selection.p0 = selection.p1 = cursor;
+        selection.set_active(true);
+    } else if (cursor.get_row() == selection.p1.get_row()) {
+        cycle_block_selection();
+    } else {
+        selection.p1 = cursor;
+    }
+    invalidate_selection();
+}
+
+
 bool PatternView::on_key_press_event(GdkEventKey* event) {
     bool shift_down = event->state & Gdk::SHIFT_MASK;
     bool alt_down = event->state & Gdk::MOD1_MASK;
@@ -1358,6 +1420,8 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
     
     if (ctrl_down) {
         switch (event->keyval) {
+            case GDK_b: begin_block(); return true;
+            case GDK_e: end_block(); return true;
             case GDK_x: cut_block(); return true;
             case GDK_c: copy_block(); return true;
             case GDK_v: paste_block(); return true;
