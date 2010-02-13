@@ -13,6 +13,7 @@ enum {
 TrackBar::TrackBar(int index, TrackView &view) {
     this->model = view.model;
     this->index = index;
+    this->view = &view;
     set_spacing(5);
     set_size_request(-1, TrackHeight);
     
@@ -24,7 +25,7 @@ TrackBar::TrackBar(int index, TrackView &view) {
         char buffer[64];
         sprintf(buffer, "Channel %i", i+1);
         channel_menu.items().push_back(
-            Gtk::Menu_Helpers::MenuElem(buffer, 
+            Gtk::Menu_Helpers::RadioMenuElem(channel_radio_group, buffer, 
                 sigc::bind<int>(
                     sigc::mem_fun(*this, &TrackBar::on_channel), i)                    
             )
@@ -35,7 +36,7 @@ TrackBar::TrackBar(int index, TrackView &view) {
         char buffer[64];
         sprintf(buffer, "port-%i", i);
         port_menu.items().push_back(
-            Gtk::Menu_Helpers::MenuElem(buffer, 
+            Gtk::Menu_Helpers::RadioMenuElem(port_radio_group, buffer, 
                 sigc::bind<int>(
                     sigc::mem_fun(*this, &TrackBar::on_port), i)                    
             )
@@ -61,6 +62,15 @@ TrackBar::TrackBar(int index, TrackView &view) {
     pack_start(port_eventbox, false, true);
     
     update();
+    
+    view.pack_start(*this, false, false);
+}
+
+TrackBar::~TrackBar() {
+    view->group_names->remove_widget(name);
+    view->group_channels->remove_widget(channel);
+    view->group_ports->remove_widget(port);
+    view->remove(*this);
 }
 
 void TrackBar::on_channel(int channel) {
@@ -76,6 +86,10 @@ void TrackBar::on_port(int port) {
 bool TrackBar::on_channel_button_press_event(GdkEventButton *event) {
     if ((event->type == GDK_BUTTON_PRESS) &&
         (event->button == 1)) {
+        int channel = model->tracks[index].midi_channel;
+        Gtk::CheckMenuItem &item = (Gtk::CheckMenuItem &)
+            channel_menu.items()[channel];
+        item.set_active();
         channel_menu.popup(event->button, event->time);
         return true;
     }
@@ -85,6 +99,10 @@ bool TrackBar::on_channel_button_press_event(GdkEventButton *event) {
 bool TrackBar::on_port_button_press_event(GdkEventButton *event) {
     if ((event->type == GDK_BUTTON_PRESS) &&
         (event->button == 1)) {
+        int port = model->tracks[index].midi_port;
+        Gtk::CheckMenuItem &item = (Gtk::CheckMenuItem &)
+            port_menu.items()[port];
+        item.set_active();
         port_menu.popup(event->button, event->time);
         return true;
     }
@@ -116,6 +134,9 @@ TrackView::TrackView(BaseObjectType* cobject,
     group_ports = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
 }
 
+TrackView::~TrackView() {
+}
+
 void TrackView::destroy_bars() {
     TrackBarArray::iterator iter;
     for (iter = bars.begin(); iter != bars.end(); ++iter) {
@@ -136,8 +157,9 @@ void TrackView::update_tracks() {
     for (size_t i = 0; i < model->tracks.size(); i++) {
         TrackBar *bar = new TrackBar((int)i, *this);
         bars.push_back(bar);
-        pack_start(*bar, false, false);
     }
+    
+    show_all();
 }
 
 //=============================================================================

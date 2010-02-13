@@ -17,18 +17,22 @@ namespace Jacker {
 class TrackBar : public Gtk::HBox {
 public:
     TrackBar(int index, class TrackView &view);
+    ~TrackBar();
     
     Gtk::Label name;
     
     Gtk::EventBox channel_eventbox;
     Gtk::Menu channel_menu;
     Gtk::Label channel;
+    Gtk::RadioButtonGroup channel_radio_group;
     
     Gtk::EventBox port_eventbox;
     Gtk::Menu port_menu;
     Gtk::Label port;
+    Gtk::RadioButtonGroup port_radio_group;
 
     Model *model;
+    class TrackView *view;
     int index;
 
     void update();
@@ -47,6 +51,7 @@ public:
 
     TrackView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
+    ~TrackView();
 
     Glib::RefPtr<Gtk::SizeGroup> group_names;
     Glib::RefPtr<Gtk::SizeGroup> group_channels;
