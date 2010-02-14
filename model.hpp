@@ -138,6 +138,8 @@ public:
     
     // name of pattern (non-unique)
     std::string name;
+    // usage count of pattern
+    int refcount;
     
     iterator add_event(const Event &event);
     iterator add_event(int frame, int channel, int param, int value);
@@ -186,6 +188,7 @@ public:
     iterator add_event(int frame, int track, Pattern &pattern);
 
     iterator get_event(int frame);
+    void erase(iterator iter);
 
     void find_events(int frame, IterList &events);
 
@@ -273,6 +276,9 @@ public:
     int get_track_count() const;
         
     int get_frames_per_bar() const;
+    
+    void update_pattern_refcount();
+    void delete_unused_patterns();
 };
 
 //=============================================================================

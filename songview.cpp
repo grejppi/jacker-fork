@@ -12,6 +12,7 @@ enum {
     ColorWhite,
     ColorBackground,
     ColorTrack,
+    ColorGhost,
 
     ColorCount,
 };
@@ -87,6 +88,7 @@ SongView::SongView(BaseObjectType* cobject,
     colors[ColorWhite].set("#FFFFFF");
     colors[ColorBackground].set("#e0e0e0");
     colors[ColorTrack].set("#ffffff");
+    colors[ColorGhost].set("606060");
     play_position = 0;
 }
 
@@ -179,8 +181,14 @@ void SongView::render_event(Song::iterator event) {
     bool selected = is_event_selected(event);
     int x,y,w,h;
     get_event_rect(event, x, y, w, h);
+    Gdk::Color color;
+    if (event->second.pattern->refcount > 1) {
+        color = colors[ColorGhost];
+    } else {
+        color = colors[ColorBlack];
+    }
     // main border
-    gc->set_foreground(colors[ColorBlack]);
+    gc->set_foreground(color);
     window->draw_rectangle(gc, false, x, y+1, w, h-3);
     // bottom shadow
     window->draw_rectangle(gc, true, x+1, y+h-1, w, 1);
@@ -202,7 +210,7 @@ void SongView::render_event(Song::iterator event) {
         gc->set_foreground(colors[ColorWhite]);
         window->draw_rectangle(gc, true, x+1, y+2, w-1, h-4);
         // label
-        gc->set_foreground(colors[ColorBlack]);
+        gc->set_foreground(color);
         // TODO: make this fast
         window->draw_layout(gc, x+3, y+5, pango_layout);
     }
@@ -473,6 +481,69 @@ void SongView::select_from_box(bool toggle) {
     }
 }
 
+void SongView::join_selection() {
+    int frame_begin,frame_end,track_begin,track_end;
+    if (!get_selection_range(frame_begin, frame_end,
+        track_begin, track_end))
+        return;
+    
+    Pattern &pattern = model->new_pattern();
+    pattern.set_length(frame_end - frame_begin);
+    
+    // find out how many channels we are going to need
+    int track_channels[MaxTracks];
+    memset(track_channels, 0, sizeof(track_channels));
+    
+    for (Song::IterList::iterator iter = selection.begin(); 
+         iter != selection.end(); ++iter) {
+        Song::Event &song_event = (*iter)->second;
+        Pattern &old_pattern = *song_event.pattern;
+             
+        assert ((song_event.track >= 0) && (song_event.track < MaxTracks));
+        track_channels[song_event.track] = std::max(
+            track_channels[song_event.track], 
+             old_pattern.get_channel_count());
+    }
+    
+    int channel_offset = 0;
+    // setup offsets
+    for (int track = 0; track < MaxTracks; ++track) {
+        int count = track_channels[track];
+        track_channels[track] = channel_offset;
+        channel_offset += count;
+    }
+    
+    // setup channels
+    printf("%i channels in total\n", channel_offset);
+    pattern.set_channel_count(channel_offset);
+    
+    // now do the actual joining
+    for (Song::IterList::iterator iter = selection.begin(); 
+         iter != selection.end(); ++iter) {
+        Song::Event &song_event = (*iter)->second;
+        Pattern &old_pattern = *song_event.pattern;
+        
+        int frame_offset = song_event.frame - frame_begin;
+        
+        // merge pattern events
+        for (Pattern::iterator jter = old_pattern.begin();
+             jter != old_pattern.end(); ++jter) {
+            Pattern::Event pattern_event = jter->second;
+            pattern_event.channel += track_channels[song_event.track];
+            pattern_event.frame += frame_offset;
+            pattern.add_event(pattern_event);
+        }
+    }
+    
+    pattern.update_keys();
+    
+    // delete old events
+    erase_events();
+    // select new event
+    select_event(model->song.add_event(frame_begin, track_begin, 
+        pattern));
+}
+
 void SongView::clone_selection(bool references/*=false*/) {
     Song::IterList new_selection;
     
@@ -712,26 +783,39 @@ void SongView::navigate(int dir_x, int dir_y) {
     }
 }
 
-int SongView::get_selection_begin() {
+bool SongView::get_selection_range(int &frame_begin, int &frame_end,
+    int &track_begin, int &track_end) {
     if (selection.empty())
-        return -1;
-    int best = selection.front()->first;
+        return false;
+    
+    frame_begin = selection.front()->first;
+    frame_end = selection.front()->second.get_end();
+    track_begin = selection.front()->second.track;
+    track_end = selection.front()->second.track;
+    
     for (Song::IterList::iterator iter = selection.begin();
-      iter != selection.end(); ++iter) {
-        best = std::min(best, (*iter)->first);
+         iter != selection.end(); ++iter) {
+        frame_begin = std::min(frame_begin, (*iter)->first);
+        frame_end = std::max(frame_end, (*iter)->second.get_end());
+        track_begin = std::min(track_begin, (*iter)->second.track);
+        track_end = std::max(track_end, (*iter)->second.track);
     }
-    return best;
+    
+    return true;
+}
+
+int SongView::get_selection_begin() {
+    int begin, end, tb, te;
+    if (!get_selection_range(begin, end, tb, te))
+        return -1;
+    return begin;
 }
 
 int SongView::get_selection_end() {
-    if (selection.empty())
+    int begin, end, tb, te;
+    if (!get_selection_range(begin, end, tb, te))
         return -1;
-    int best = selection.front()->second.get_end();
-    for (Song::IterList::iterator iter = selection.begin();
-      iter != selection.end(); ++iter) {
-        best = std::max(best, (*iter)->second.get_end());
-    }
-    return best;
+    return end;
 }
 
 void SongView::set_loop_begin() {
@@ -770,6 +854,7 @@ bool SongView::on_key_press_event(GdkEventKey* event) {
         switch (event->keyval) {
             case GDK_b: set_loop_begin(); return true;
             case GDK_e: set_loop_end(); return true;
+            case GDK_j: join_selection(); return true;
             default: break;
         }
     } else {
@@ -875,6 +960,8 @@ void SongView::erase_events() {
     }
     
     selection.clear();
+    // cleanup
+    model->delete_unused_patterns();
 }
 
 void SongView::set_play_position(int pos) {

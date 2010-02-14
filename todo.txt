@@ -25,7 +25,6 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - copy/paste
     - zooming controls
     - rename pattern
-    - merge patterns (melt into one)
     - when creating new pattern & loop is enabled, make pattern span loop.
     - snap track to position, not delta (change measure, track position is borked)
 

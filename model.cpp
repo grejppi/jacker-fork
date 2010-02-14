@@ -109,6 +109,7 @@ int Pattern::Row::get_value(int channel, int param) const {
 Pattern::Pattern() {
     length = 1;
     channel_count = 1;
+    refcount = 0;
 }
 
 Pattern::iterator Pattern::add_event(const Event &event) {
@@ -258,11 +259,20 @@ Song::Song() {
 }
 
 Song::iterator Song::add_event(const Event &event) {
+    assert(event.pattern);
+    event.pattern->refcount++;
     return BaseClass::add_event(event);
 }
 
 Song::iterator Song::add_event(int frame, int track, Pattern &pattern) {
     return add_event(Event(frame, track, pattern));
+}
+
+void Song::erase(iterator iter) {
+    if (iter->second.pattern) {
+        iter->second.pattern->refcount--;
+    }
+    BaseClass::erase(iter);
 }
 
 Song::iterator Song::get_event(int frame) {
@@ -386,9 +396,10 @@ void Model::reset() {
     beats_per_bar = 4;
     enable_loop = true;
     loop.set(get_frames_per_bar()*4,get_frames_per_bar()*8);
-    patterns.clear();
     song.clear();
     tracks.clear();
+    patterns.clear();
+    
     tracks.resize(8);
 }
 
@@ -413,6 +424,45 @@ int Model::get_track_count() const {
 int Model::get_frames_per_bar() const {
     return frames_per_beat * beats_per_bar;
 }
+
+void Model::update_pattern_refcount() {
+    // reset refcounts
+    for (PatternList::iterator iter = patterns.begin(); 
+         iter != patterns.end(); ++iter) {
+        (*iter)->refcount = 0;
+    }
+    
+    // recount references
+    for (Song::iterator iter = song.begin(); iter != song.end(); ++iter) {
+        iter->second.pattern->refcount++;
+    }
+}
+
+void Model::delete_unused_patterns() {
+    update_pattern_refcount();
+    
+    typedef std::list<PatternList::iterator> PatternIterList;
+    PatternIterList dead_iters;
+    
+    for (PatternList::iterator iter = patterns.begin(); 
+         iter != patterns.end(); ++iter) {
+        if (!(*iter)->refcount) {
+            dead_iters.push_back(iter);
+        }
+    }
+    
+    if (dead_iters.empty())
+        return;
+    printf("deleting %i unused patterns.\n", dead_iters.size());
+    /*
+    for (PatternIterList::iterator iter = dead_iters.begin(); 
+         iter != dead_iters.end(); ++iter) {
+        delete *(*iter);
+        patterns.erase(*iter);
+    }    
+    */
+}
+
 
 //=============================================================================
 

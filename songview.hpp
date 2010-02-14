@@ -150,6 +150,8 @@ protected:
     void select_from_box(bool toggle);
     void render_loop();
     void invalidate_loop();
+    bool get_selection_range(int &frame_begin, int &frame_end,
+        int &track_begin, int &track_end);
     int get_selection_begin();
     int get_selection_end();
     void play_from_selection();
@@ -171,6 +173,7 @@ protected:
     void on_adjustment_value_changed();
     
     void clone_selection(bool references=false);
+    void join_selection();
 
     // zoomlevel (0=1:1, 1=1:2, 2=1:4, etc.)
     int zoomlevel;

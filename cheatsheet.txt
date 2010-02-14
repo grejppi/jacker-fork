@@ -105,4 +105,5 @@ Song
 Shift+Click+Drag: Move copy of pattern(s) at cursor.
       Ctrl+Shift
      +Click+Drag: Move pattern link(s) at cursor.
-          Delete: Remove selected tracks.
+          Delete: Remove selected patterns.
+          Ctrl+J: Join patterns across tracks into one.
