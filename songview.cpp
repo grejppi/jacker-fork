@@ -369,7 +369,8 @@ bool SongView::on_button_press_event(GdkEventButton* event) {
             cur.set_frame(quantize_frame(cur.get_frame()));
             new_pattern(cur);
         } else {
-            clear_selection();
+            if (!ctrl_down)
+                clear_selection();
             interact_mode = InteractSelect;
             drag.start(event->x, event->y);
         }
@@ -441,7 +442,7 @@ void SongView::invalidate_select_box() {
     window->invalidate_rect(rect, true);
 }
     
-void SongView::select_from_box() {
+void SongView::select_from_box(bool toggle) {
     int x0,y0,w,h;
     drag.get_rect(x0,y0,w,h);
     if (w <= 1)
@@ -465,7 +466,10 @@ void SongView::select_from_box() {
             continue;
         if (ey1 < y0)
             continue;
-        selection.push_back(iter);
+        if (toggle && is_event_selected(iter)) {
+            deselect_event(iter);
+        } else
+            select_event(iter);
     }
 }
 
@@ -600,9 +604,9 @@ bool SongView::on_button_release_event(GdkEventButton* event) {
         invalidate_select_box();
         if (!ctrl_down) {
             invalidate_selection();
-            selection.clear();
+            clear_selection();
         }
-        select_from_box();
+        select_from_box(ctrl_down);
     }
     interact_mode = InteractNone;
     invalidate_selection();

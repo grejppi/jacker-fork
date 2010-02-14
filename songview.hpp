@@ -147,7 +147,7 @@ protected:
     void render_track(int track);
     void render_select_box();
     void invalidate_select_box();
-    void select_from_box();
+    void select_from_box(bool toggle);
     void render_loop();
     void invalidate_loop();
     int get_selection_begin();
