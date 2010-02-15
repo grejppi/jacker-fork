@@ -13,7 +13,6 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - measure shows actual position of pattern in song
     - reposition play cursor on measure click
     - set loop begin/end in measure
-    - status bar: display row, channel, param, value
     - split pattern at cursor (split into two)
 
 - track header view:
@@ -25,19 +24,13 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - copy/paste
     - zooming controls
     - rename pattern
-    - when creating new pattern & loop is enabled, make pattern span loop.
     - snap track to position, not delta (change measure, track position is borked)
 
 - global keyboard commands:
-    -
+    - 
 
 - song:
-    - shift+left/right: multiselect prev/next pattern
-    - shift+up/down: multiselect patterns across tracks
-    - ctrl+left/right: expand/contract pattern
-    - ctrl+up/down: move track up/down
-    - ctrl+plus: add pattern after current one and select
-    - alt+left/right/up/down: move pattern
+    - follow cursor
     - F2: rename pattern
 
 - new major features:
