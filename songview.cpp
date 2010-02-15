@@ -88,7 +88,7 @@ SongView::SongView(BaseObjectType* cobject,
     colors[ColorWhite].set("#FFFFFF");
     colors[ColorBackground].set("#e0e0e0");
     colors[ColorTrack].set("#ffffff");
-    colors[ColorGhost].set("606060");
+    colors[ColorGhost].set("#606060");
     play_position = 0;
 }
 
@@ -537,11 +537,13 @@ void SongView::join_selection() {
     
     pattern.update_keys();
     
+    Song::iterator new_event = model->song.add_event(frame_begin, track_begin, 
+        pattern);
+    
     // delete old events
     erase_events();
     // select new event
-    select_event(model->song.add_event(frame_begin, track_begin, 
-        pattern));
+    select_event(new_event);
 }
 
 void SongView::clone_selection(bool references/*=false*/) {

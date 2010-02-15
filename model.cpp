@@ -446,7 +446,8 @@ void Model::delete_unused_patterns() {
     
     for (PatternList::iterator iter = patterns.begin(); 
          iter != patterns.end(); ++iter) {
-        if (!(*iter)->refcount) {
+        //printf("pattern %s (%i)\n", (*iter)->name.c_str(), (*iter)->refcount);
+        if ((*iter)->refcount <= 0) {
             dead_iters.push_back(iter);
         }
     }
@@ -454,13 +455,11 @@ void Model::delete_unused_patterns() {
     if (dead_iters.empty())
         return;
     printf("deleting %i unused patterns.\n", dead_iters.size());
-    /*
     for (PatternIterList::iterator iter = dead_iters.begin(); 
          iter != dead_iters.end(); ++iter) {
         delete *(*iter);
         patterns.erase(*iter);
-    }    
-    */
+    } 
 }
 
 
