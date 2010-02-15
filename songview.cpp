@@ -304,7 +304,7 @@ void SongView::add_track() {
     _tracks_changed();
 }
 
-void SongView::new_pattern(const SongCursor &cur) {
+void SongView::new_pattern(const SongCursor &cur, int size) {
     if (cur.get_track() >= model->get_track_count())
         return;
     int frame = cur.get_frame();
@@ -314,10 +314,27 @@ void SongView::new_pattern(const SongCursor &cur) {
         (frame < model->loop.get_end())) {
         frame = model->loop.get_begin();
         pattern.set_length(model->loop.get_end() - model->loop.get_begin());
+    } else if (size) {
+        pattern.set_length(size);
     }
     Song::iterator event = model->song.add_event(frame, track, pattern);
     clear_selection();
     select_event(event);    
+}
+
+void SongView::new_pattern(int size) {
+    SongCursor cur(*this);
+    cur.set_track(0);
+    cur.set_frame(0);
+    int frame_begin, frame_end, track_begin, track_end;
+    if (get_selection_range(frame_begin, frame_end, 
+        track_begin, track_end)) {
+        cur.set_frame(frame_end);
+        cur.set_track(track_begin);
+    } else if (model->enable_loop) {
+        cur.set_frame(model->loop.get_begin());
+    }
+    new_pattern(cur, size);
 }
 
 void SongView::edit_pattern(Song::iterator iter) {
@@ -375,7 +392,7 @@ bool SongView::on_button_press_event(GdkEventButton* event) {
         } else if (double_click) {
             interact_mode = InteractNone;
             cur.set_frame(quantize_frame(cur.get_frame()));
-            new_pattern(cur);
+            new_pattern(cur, get_step_size());
         } else {
             if (!ctrl_down)
                 clear_selection();
@@ -547,6 +564,8 @@ void SongView::join_selection() {
 }
 
 void SongView::clone_selection(bool references/*=false*/) {
+    invalidate_selection();
+    
     Song::IterList new_selection;
     
     Song::IterList::iterator iter;
@@ -559,6 +578,7 @@ void SongView::clone_selection(bool references/*=false*/) {
     }
     
     selection = new_selection;
+    invalidate_selection();
 }
 
 bool SongView::on_motion_notify_event(GdkEventMotion *event) {    
@@ -609,11 +629,8 @@ bool SongView::on_motion_notify_event(GdkEventMotion *event) {
     return true;
 }
 
-void SongView::apply_move() {
+void SongView::do_move(int ofs_frame, int ofs_track) {
     invalidate_selection();
-    
-    int ofs_frame,ofs_track;
-    get_drag_offset(ofs_frame, ofs_track);
     
     bool can_move = true;        
     // verify that we can move
@@ -646,14 +663,19 @@ void SongView::apply_move() {
         }
         
         selection = new_selection;
-    }
+        invalidate_selection();    
+    }    
 }
 
-void SongView::apply_resize() {
+void SongView::apply_move() {
+    invalidate_selection();
     
     int ofs_frame,ofs_track;
     get_drag_offset(ofs_frame, ofs_track);
-    
+    do_move(ofs_frame, ofs_track);
+}
+
+void SongView::do_resize(int ofs_frame) {
     // verify that we can move
     for (Song::IterList::iterator iter = selection.begin();
         iter != selection.end(); ++iter) {
@@ -665,6 +687,13 @@ void SongView::apply_resize() {
     }
     
     invalidate();
+}
+
+void SongView::apply_resize() {
+    
+    int ofs_frame,ofs_track;
+    get_drag_offset(ofs_frame, ofs_track);
+    do_resize(ofs_frame);
 }
 
 bool SongView::on_button_release_event(GdkEventButton* event) {
@@ -855,12 +884,72 @@ void SongView::play_from_selection() {
 bool SongView::on_key_press_event(GdkEventKey* event) {
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     bool shift_down = event->state & Gdk::SHIFT_MASK;
+    bool alt_down = event->state & Gdk::MOD1_MASK;
 
-    if (ctrl_down) {
+    if (shift_down) {
         switch (event->keyval) {
+            case GDK_Return: {
+                int f0,f1,t0,t1;
+                if (get_selection_range(f0,f1,t0,t1)) {
+                    new_pattern((f1-f0));
+                } else {
+                    new_pattern(get_step_size()); 
+                }
+                return true;
+            } break; 
+            case GDK_D: if (ctrl_down) {
+                clone_selection(true); 
+                return true;
+            } break;
+            case GDK_Left: {
+                if (alt_down)
+                    do_resize(-get_step_size());
+                else
+                    do_move(-get_step_size(),0); 
+                return true;
+            } break;
+            case GDK_Right: {
+                if (alt_down)
+                    do_resize(get_step_size());
+                else
+                    do_move(get_step_size(),0); 
+                return true;
+            } break;
+            case GDK_Page_Down: {
+                int f0,f1,t0,t1;
+                if (get_selection_range(f0,f1,t0,t1)) {
+                    if (alt_down)
+                        do_resize((f1-f0));
+                    else
+                        do_move((f1-f0),0);
+                }
+                return true;
+            } break;
+            case GDK_Page_Up: {
+                int f0,f1,t0,t1;
+                if (get_selection_range(f0,f1,t0,t1)) {
+                    if (alt_down)
+                        do_resize(-((f1-f0)/2));
+                    else
+                        do_move(-(f1-f0),0);
+                }
+                return true;
+            } break;
+            case GDK_Up: do_move(0,-1); return true;
+            case GDK_Down: do_move(0, 1); return true;
+        }
+    } else if (ctrl_down) {
+        switch (event->keyval) {
+            case GDK_d: clone_selection(); return true;
             case GDK_b: set_loop_begin(); return true;
             case GDK_e: set_loop_end(); return true;
             case GDK_j: join_selection(); return true;
+            case GDK_Left: navigate(-1,0,true); return true;
+            case GDK_Right: navigate(1,0,true); return true;
+            case GDK_Up: navigate(0,-1,true); return true;
+            case GDK_Down: navigate(0,1,true); return true;
+            case GDK_Home: select_first(true); return true;
+            case GDK_End: select_last(true); return true;
             default: break;
         }
     } else {
@@ -871,12 +960,12 @@ bool SongView::on_key_press_event(GdkEventKey* event) {
                     edit_pattern(selection.front());
                 return true;
             } break;
-            case GDK_Left: navigate(-1,0,shift_down); return true;
-            case GDK_Right: navigate(1,0,shift_down); return true;
-            case GDK_Up: navigate(0,-1,shift_down); return true;
-            case GDK_Down: navigate(0,1,shift_down); return true;
-            case GDK_Home: select_first(shift_down); return true;
-            case GDK_End: select_last(shift_down); return true;
+            case GDK_Left: navigate(-1,0); return true;
+            case GDK_Right: navigate(1,0); return true;
+            case GDK_Up: navigate(0,-1); return true;
+            case GDK_Down: navigate(0,1); return true;
+            case GDK_Home: select_first(); return true;
+            case GDK_End: select_last(); return true;
             case GDK_F6: play_from_selection(); return true;
             default: break;
         }

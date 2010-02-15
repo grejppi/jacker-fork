@@ -126,7 +126,8 @@ public:
     void invalidate();
     
     void add_track();
-    void new_pattern(const SongCursor &cursor);
+    void new_pattern(const SongCursor &cursor, int length);
+    void new_pattern(int length);
     void edit_pattern(Song::iterator event);
     void erase_events();
     
@@ -168,6 +169,8 @@ protected:
 
     void apply_move();
     void apply_resize();
+    void do_move(int frame_ofs, int track_ofs);
+    void do_resize(int frame_ofs);
 
     void update_adjustments();
     void on_adjustment_value_changed();
