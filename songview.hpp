@@ -94,9 +94,9 @@ public:
     Song::iterator get_left_event(Song::iterator start);
     Song::iterator get_right_event(Song::iterator start);
     Song::iterator nearest_y_event(Song::iterator start, int direction);
-    void navigate(int dir_x, int dir_y);
-    void select_first();
-    void select_last();
+    void navigate(int dir_x, int dir_y, bool increment=false);
+    void select_first(bool increment=false);
+    void select_last(bool increment=false);
     void set_scroll_adjustments(Gtk::Adjustment *hadjustment, 
                                 Gtk::Adjustment *vadjustment);
 

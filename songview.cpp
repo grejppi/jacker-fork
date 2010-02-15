@@ -686,19 +686,21 @@ bool SongView::on_button_release_event(GdkEventButton* event) {
     return false;
 }
 
-void SongView::select_first() {
+void SongView::select_first(bool increment) {
     if (model->song.empty())
         return;
-    clear_selection();
+    if (!increment)
+        clear_selection();
     select_event(model->song.begin());
 }
 
-void SongView::select_last() {
+void SongView::select_last(bool increment) {
     if (model->song.empty())
         return;
     Song::iterator iter = model->song.end();
     iter--;
-    clear_selection();
+    if (!increment)
+        clear_selection();
     select_event(iter);
 }
 
@@ -765,7 +767,7 @@ Song::iterator SongView::nearest_y_event(Song::iterator start, int direction) {
     return best_iter;
 }
 
-void SongView::navigate(int dir_x, int dir_y) {
+void SongView::navigate(int dir_x, int dir_y, bool increment) {
     if (selection.empty()) {
         select_first();
         return;
@@ -780,7 +782,8 @@ void SongView::navigate(int dir_x, int dir_y) {
         iter = nearest_y_event(iter, dir_y);
     
     if (iter != model->song.end()) {
-        clear_selection();
+        if (!increment)
+            clear_selection();
         select_event(iter);
     }
 }
@@ -851,6 +854,7 @@ void SongView::play_from_selection() {
 
 bool SongView::on_key_press_event(GdkEventKey* event) {
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
+    bool shift_down = event->state & Gdk::SHIFT_MASK;
 
     if (ctrl_down) {
         switch (event->keyval) {
@@ -867,12 +871,12 @@ bool SongView::on_key_press_event(GdkEventKey* event) {
                     edit_pattern(selection.front());
                 return true;
             } break;
-            case GDK_Left: navigate(-1,0); return true;
-            case GDK_Right: navigate(1,0); return true;
-            case GDK_Up: navigate(0,-1); return true;
-            case GDK_Down: navigate(0,1); return true;
-            case GDK_Home: select_first(); return true;
-            case GDK_End: select_last(); return true;
+            case GDK_Left: navigate(-1,0,shift_down); return true;
+            case GDK_Right: navigate(1,0,shift_down); return true;
+            case GDK_Up: navigate(0,-1,shift_down); return true;
+            case GDK_Down: navigate(0,1,shift_down); return true;
+            case GDK_Home: select_first(shift_down); return true;
+            case GDK_End: select_last(shift_down); return true;
             case GDK_F6: play_from_selection(); return true;
             default: break;
         }
