@@ -92,6 +92,10 @@ enum {
 
 //=============================================================================
 
+int sprint_note(char *buffer, int value);
+
+//=============================================================================
+
 // describes a parameter
 struct Param {
     int min_value;
@@ -279,6 +283,9 @@ public:
     
     void update_pattern_refcount();
     void delete_unused_patterns();
+    
+    std::string get_param_name(int param) const;
+    std::string format_param_value(int param, int value) const;
 };
 
 //=============================================================================

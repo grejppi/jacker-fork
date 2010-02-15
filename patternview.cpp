@@ -110,36 +110,6 @@ bool CellRenderer::on_key_press_event(GdkEventKey* event_key,
 
 //=============================================================================
 
-static const char *note_strings[] = {
-    "C-",
-    "C#",
-    "D-",
-    "D#",
-    "E-",
-    "F-",
-    "F#",
-    "G-",
-    "G#",
-    "A-",
-    "A#",
-    "B-",
-};
-
-static int sprint_note(char *buffer, int value) {
-    if (value == ValueNone) {
-        sprintf(buffer, "...");
-    } else if (value == NoteOff) {
-        sprintf(buffer, "===");
-    } else {
-        int note = value % 12;
-        int octave = value / 12;
-        
-        assert((size_t)note < (sizeof(note_strings)/sizeof(const char *)));
-        sprintf(buffer, "%s%i", note_strings[note], octave);
-    }
-    return 3;
-}
-
 void CellRendererNote::render_cell(PatternCursor &cursor, Pattern::Event *event, 
                                    bool draw_cursor, bool selected) {
                                        
@@ -304,11 +274,14 @@ bool CellRendererHex::on_key_press_event(GdkEventKey* event_key,
         else
             event.value = 0;
         event.value |= value<<bit;
+        /*
         if (item < (value_length-1))
             view->navigate(1,0);
         else {
             view->navigate(-item,1);
         }
+        */
+        view->navigate(0,1);
         return true;
     }
     return CellRenderer::on_key_press_event(event_key, event, item);
@@ -1124,6 +1097,7 @@ void PatternView::set_cursor(const PatternCursor &new_cursor, bool select/*=fals
     }
     invalidate_cursor();
     show_cursor();
+    update_navigation_status();
 }
 
 void PatternView::show_cursor(const PatternCursor &cur, bool page_jump/*=false*/) {
@@ -1678,6 +1652,26 @@ void PatternView::invalidate() {
     window->invalidate(true);
 }
 
+void PatternView::update_navigation_status() {
+    if (!get_pattern()) {
+        _navigation_status_request("","","");
+        return;
+    }
+    Measure measure;
+    measure.set_frame(*model, cursor.get_row()); 
+    int param = cursor.get_param();
+    int value = ValueNone;
+    Pattern::iterator event = get_pattern()->get_event(
+        cursor.get_row(), cursor.get_channel(), cursor.get_param());
+    if (event != get_pattern()->end()) {
+        value = event->second.value;
+    }
+    
+    _navigation_status_request(measure.get_string(), 
+        model->get_param_name(param), 
+        model->format_param_value(param,value));
+}
+
 PatternView::type_play_event_request PatternView::signal_play_event_request() {
     return _play_event_request;
 }
@@ -1688,6 +1682,11 @@ PatternView::type_return_request PatternView::signal_return_request() {
 
 PatternView::type_play_request PatternView::signal_play_request() {
     return _play_request;
+}
+
+PatternView::type_navigation_status_request 
+    PatternView::signal_navigation_status_request() {
+    return _navigation_status_request;
 }
 
 //=============================================================================

@@ -105,6 +105,12 @@ public:
     Gtk::Menu *song_view_menu;
     TrackView *track_view;
 
+    Gtk::Statusbar *statusbar;
+    Gtk::HBox *pattern_navigation;
+    Gtk::Label *pattern_frame;
+    Gtk::Label *pattern_column;
+    Gtk::Label *pattern_value;
+
     Gtk::Notebook *view_notebook;
 
     sigc::connection mix_timer;
@@ -113,7 +119,7 @@ public:
     JackPlayer *player;
 
     enum NotebookPages {
-        PageTrackView = 0,
+        PageSongView = 0,
         PagePatternView,
     };
 
@@ -128,6 +134,11 @@ public:
         song_view_menu = NULL;
         view_notebook = NULL;
         track_view = NULL;
+        statusbar = NULL;
+        pattern_navigation = NULL;
+        pattern_frame = NULL;
+        pattern_column = NULL;
+        pattern_value = NULL;
     }
     
     ~App() {
@@ -420,6 +431,13 @@ public:
         show_song_view();
     }
     
+    void on_pattern_view_navi_status_request(const std::string &pos,
+        const std::string &column, const std::string &value) {
+        pattern_frame->set_text(pos);
+        pattern_column->set_text(column);
+        pattern_value->set_text(value);
+    }
+    
     void init_pattern_view() {
         builder->get_widget_derived("pattern_view", pattern_view);
         assert(pattern_view);
@@ -440,6 +458,8 @@ public:
             sigc::mem_fun(*this, &App::on_pattern_return_request));
         pattern_view->signal_play_request().connect(
             sigc::mem_fun(*this, &App::on_play_request));
+        pattern_view->signal_navigation_status_request().connect(
+            sigc::mem_fun(*this, &App::on_pattern_view_navi_status_request));
         
         builder->get_widget_derived("pattern_measure", pattern_measure);
         assert(pattern_measure);
@@ -448,15 +468,27 @@ public:
         pattern_measure->signal_seek_request().connect(
             sigc::mem_fun(*this, &App::on_pattern_seek_request));
         pattern_measure->set_orientation(MeasureView::OrientationVertical);
+        
+        
+        builder->get_widget("pattern_navigation", pattern_navigation);
+        assert(pattern_navigation);
+        builder->get_widget("pattern_frame", pattern_frame);
+        assert(pattern_frame);
+        builder->get_widget("pattern_column", pattern_column);
+        assert(pattern_column);
+        builder->get_widget("pattern_value", pattern_value);
+        assert(pattern_value);
     }
     
     void show_pattern_view() {
+        pattern_navigation->show_all();
         view_notebook->set_current_page(PagePatternView);
         pattern_view->grab_focus();
     }
     
     void show_song_view() {
-        view_notebook->set_current_page(PageTrackView);
+        pattern_navigation->hide_all();
+        view_notebook->set_current_page(PageSongView);
         song_view->grab_focus();
     }
     
@@ -599,6 +631,14 @@ public:
         fix_menuitem_accelerator("menuitem_about");
     }
     
+    void on_view_notebook_switch_page(GtkNotebookPage *page, guint index) {
+        if (index == PagePatternView) {
+            pattern_navigation->show_all();
+        } else {
+            pattern_navigation->hide_all();
+        }
+    }
+    
     void run() {
         init_player();       
         
@@ -622,6 +662,11 @@ public:
         
         builder->get_widget("view_notebook", view_notebook);
         assert(view_notebook);
+        view_notebook->signal_switch_page().connect(sigc::mem_fun(
+            *this, &App::on_view_notebook_switch_page));
+        
+        builder->get_widget("statusbar", statusbar);
+        assert(statusbar);
         
         init_menu();
         init_transport();

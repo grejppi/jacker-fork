@@ -207,6 +207,8 @@ public:
     typedef sigc::signal<void, int, const Pattern::Event &> type_play_event_request;
     typedef sigc::signal<void> type_return_request;
     typedef sigc::signal<void, int> type_play_request;
+    typedef sigc::signal<void, const std::string &, 
+        const std::string &, const std::string &> type_navigation_status_request;
     
     PatternView(BaseObjectType* cobject, 
                 const Glib::RefPtr<Gtk::Builder>& builder);
@@ -305,6 +307,7 @@ public:
     type_play_event_request signal_play_event_request();
     type_return_request signal_return_request();
     type_play_request signal_play_request();
+    type_navigation_status_request signal_navigation_status_request();
 protected:
     void invalidate_play_position();
     void invalidate_cursor();
@@ -312,6 +315,7 @@ protected:
     void invalidate_range(const PatternSelection &range);
     void clip_cursor(PatternCursor &c);
     void update_adjustments();
+    void update_navigation_status();
         
     InteractMode interact_mode;
 
@@ -347,6 +351,7 @@ protected:
     type_play_event_request _play_event_request;
     type_return_request _return_request;
     type_play_request _play_request;
+    type_navigation_status_request _navigation_status_request;
 };
 
 //=============================================================================

@@ -6,6 +6,38 @@ namespace Jacker {
 
 //=============================================================================
 
+static const char *note_strings[] = {
+    "C-",
+    "C#",
+    "D-",
+    "D#",
+    "E-",
+    "F-",
+    "F#",
+    "G-",
+    "G#",
+    "A-",
+    "A#",
+    "B-",
+};
+
+int sprint_note(char *buffer, int value) {
+    if (value == ValueNone) {
+        sprintf(buffer, "...");
+    } else if (value == NoteOff) {
+        sprintf(buffer, "===");
+    } else {
+        int note = value % 12;
+        int octave = value / 12;
+        
+        assert((size_t)note < (sizeof(note_strings)/sizeof(const char *)));
+        sprintf(buffer, "%s%i", note_strings[note], octave);
+    }
+    return 3;
+}
+
+//=============================================================================
+
 Param::Param() {
     min_value = ValueNone;
     max_value = ValueNone;
@@ -462,6 +494,40 @@ void Model::delete_unused_patterns() {
     } 
 }
 
+std::string Model::get_param_name(int param) const {
+    switch(param) {
+        case ParamNote: return "Note";
+        case ParamVolume: return "Velocity";
+        case ParamCommand: return "Command";
+        case ParamValue: return "Argument";
+        case ParamCCIndex: return "Control Id";
+        case ParamCCValue: return "Control Value";
+        default: break;
+    };
+    
+    return "?";
+}
+
+std::string Model::format_param_value(int param, int value) const {
+    if (value == ValueNone) {
+        return "";
+    }
+    
+    char text[64];    
+    switch(param) {
+        case ParamNote: {
+            sprint_note(text, value);
+        } break;
+        case ParamCommand: {
+            sprintf(text, "(Unknown)");
+        } break;
+        default: {
+            sprintf(text, "%i", value);
+        } break;
+    };
+    
+    return text;
+}
 
 //=============================================================================
 
