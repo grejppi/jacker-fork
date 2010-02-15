@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
-<!-- interface-naming-policy project-wide -->
+  <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="main">
     <property name="title" translatable="yes">Jacker</property>
     <property name="window_position">center</property>
@@ -93,8 +93,8 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menuitem_song">
                         <property name="visible">True</property>
-                        <property name="related_action">show_song_action</property>
                         <property name="use_action_appearance">True</property>
+                        <property name="related_action">show_song_action</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -102,8 +102,8 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menuitem_pattern">
                         <property name="visible">True</property>
-                        <property name="related_action">show_pattern_action</property>
                         <property name="use_action_appearance">True</property>
+                        <property name="related_action">show_pattern_action</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -147,8 +147,8 @@
             <child>
               <object class="GtkToolButton" id="toolbutton1">
                 <property name="visible">True</property>
-                <property name="related_action">play_action</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">play_action</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
               </object>
@@ -160,8 +160,8 @@
             <child>
               <object class="GtkToolButton" id="toolbutton2">
                 <property name="visible">True</property>
-                <property name="related_action">stop_action</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">stop_action</property>
                 <property name="label" translatable="yes">toolbutton2</property>
                 <property name="use_underline">True</property>
               </object>
@@ -578,7 +578,10 @@
                     <property name="shadow_type">in</property>
                     <child>
                       <object class="GtkLabel" id="pattern_frame">
+                        <property name="width_request">80</property>
                         <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="single_line_mode">True</property>
                       </object>
                     </child>
                     <child type="label_item">
@@ -596,7 +599,9 @@
                     <property name="shadow_type">in</property>
                     <child>
                       <object class="GtkLabel" id="pattern_column">
+                        <property name="width_request">80</property>
                         <property name="visible">True</property>
+                        <property name="xalign">0</property>
                       </object>
                     </child>
                     <child type="label_item">
@@ -614,7 +619,9 @@
                     <property name="shadow_type">in</property>
                     <child>
                       <object class="GtkLabel" id="pattern_value">
+                        <property name="width_request">80</property>
                         <property name="visible">True</property>
+                        <property name="xalign">0</property>
                       </object>
                     </child>
                     <child type="label_item">
@@ -699,8 +706,8 @@
     <child>
       <object class="GtkImageMenuItem" id="menuitem5">
         <property name="visible">True</property>
-        <property name="related_action">add_track_action</property>
         <property name="use_action_appearance">True</property>
+        <property name="related_action">add_track_action</property>
         <property name="use_underline">True</property>
         <property name="use_stock">True</property>
       </object>

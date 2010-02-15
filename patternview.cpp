@@ -36,6 +36,14 @@ static const guint16 piano_scancodes[] = {
 #endif
 };
 
+enum {
+#if defined(WIN32)
+#else
+    ScanOctaveDown = 0x14,
+    ScanOctaveUp = 0x15,
+#endif
+};
+
 static const char TargetFormatPattern[] = "jacker_pattern_block";
 
 //=============================================================================
@@ -186,6 +194,7 @@ bool CellRendererNote::on_key_press_event(GdkEventKey* event_key,
         if ((event_key->keyval >= GDK_0) && (event_key->keyval <= GDK_9)) {
             int octave = event_key->keyval - GDK_0;
             event.value = 12*octave + note;
+            view->set_octave(octave);
             view->navigate(0,1);
             return true;
         }
@@ -1474,8 +1483,15 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
                 }            
             } break;
         }
+        switch (event->hardware_keycode) {
+            case ScanOctaveUp: set_octave(get_octave()+1); return true;
+            case ScanOctaveDown: set_octave(get_octave()-1); return true;
+            default:
+                break;
+        }
     }
-    fprintf(stderr, "No handler for %s\n", gdk_keyval_name(event->keyval));
+    fprintf(stderr, "No handler for %s (0x%02x)\n", 
+        gdk_keyval_name(event->keyval), event->hardware_keycode);
     return true;
 }
 
@@ -1667,7 +1683,11 @@ void PatternView::update_navigation_status() {
         value = event->second.value;
     }
     
-    _navigation_status_request(measure.get_string(), 
+    char timestr[64];
+    sprintf(timestr, "%s #%i", 
+        measure.get_string().c_str(), cursor.get_channel()); 
+    
+    _navigation_status_request(timestr, 
         model->get_param_name(param), 
         model->format_param_value(param,value));
 }
