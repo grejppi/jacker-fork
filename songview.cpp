@@ -665,6 +665,8 @@ void SongView::do_move(int ofs_frame, int ofs_track) {
         selection = new_selection;
         invalidate_selection();    
     }    
+    
+    show_selection();    
 }
 
 void SongView::apply_move() {
@@ -687,6 +689,7 @@ void SongView::do_resize(int ofs_frame) {
     }
     
     invalidate();
+    show_selection();
 }
 
 void SongView::apply_resize() {
@@ -721,6 +724,7 @@ void SongView::select_first(bool increment) {
     if (!increment)
         clear_selection();
     select_event(model->song.begin());
+    show_selection();
 }
 
 void SongView::select_last(bool increment) {
@@ -731,6 +735,12 @@ void SongView::select_last(bool increment) {
     if (!increment)
         clear_selection();
     select_event(iter);
+    show_selection();
+}
+
+void SongView::reset() {
+    selection.clear();
+    invalidate();
 }
 
 Song::iterator SongView::get_left_event(Song::iterator start) {
@@ -815,6 +825,8 @@ void SongView::navigate(int dir_x, int dir_y, bool increment) {
             clear_selection();
         select_event(iter);
     }
+    
+    show_selection();
 }
 
 bool SongView::get_selection_range(int &frame_begin, int &frame_end,
@@ -985,6 +997,21 @@ void SongView::on_size_allocate(Gtk::Allocation& allocation) {
             allocation.get_width(), allocation.get_height());
         update_adjustments();
     }
+}
+
+void SongView::show_selection() {
+    int f0,f1,t0,t1;
+    if (!get_selection_range(f0,f1,t0,t1))
+        return;
+    int step = model->get_frames_per_bar()*4;
+    if (hadjustment) {
+        int value = hadjustment->get_value();
+        int page_size = hadjustment->get_page_size();
+        if (f0 < value)
+            hadjustment->clamp_page(f0-step,f1);
+        else if (f1 >= (value+page_size))
+            hadjustment->clamp_page(f0,f1+step);
+    }    
 }
 
 int absmod(int x, int m) {

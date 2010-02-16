@@ -135,6 +135,8 @@ public:
     void set_loop_begin();
     void set_loop_end();
     
+    void reset();
+    
     type_pattern_edit_request signal_pattern_edit_request();
     type_context_menu signal_context_menu();
     type_loop_changed signal_loop_changed();
@@ -177,6 +179,8 @@ protected:
     
     void clone_selection(bool references=false);
     void join_selection();
+    
+    void show_selection();
 
     // zoomlevel (0=1:1, 1=1:2, 2=1:4, etc.)
     int zoomlevel;

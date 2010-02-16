@@ -302,7 +302,7 @@ public:
     void cycle_block_selection();
     
     void move_frames(int step, bool all_channels=false);
-    
+    void reset();
 
     type_play_event_request signal_play_event_request();
     type_return_request signal_return_request();

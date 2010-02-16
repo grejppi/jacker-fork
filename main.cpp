@@ -210,6 +210,8 @@ public:
     }
     
     void model_changed() {
+        pattern_view->reset();
+        song_view->reset();
         pattern_view->set_song_event(model.song.end());
         song_view->set_loop(model.loop);
         update_measures();

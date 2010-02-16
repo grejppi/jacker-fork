@@ -1109,6 +1109,10 @@ void PatternView::set_cursor(const PatternCursor &new_cursor, bool select/*=fals
     update_navigation_status();
 }
 
+void PatternView::reset() {
+    song_event = model->song.end();
+}
+
 void PatternView::show_cursor(const PatternCursor &cur, bool page_jump/*=false*/) {
     if (hadjustment) {
         int channel = cur.get_channel();
