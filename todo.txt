@@ -30,7 +30,6 @@ This is an assorted, unmaintained, always outdated TODO list that I use to write
     - 
 
 - song:
-    - follow cursor
     - F2: rename pattern
 
 - new major features:
