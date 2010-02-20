@@ -171,7 +171,7 @@ void Player::stop() {
         return;
     playing = false;
     seek(read_position);
-    for (int bus = 0; bus < MaxTracks; ++bus) {
+    for (int bus = 0; bus < model->tracks.size(); ++bus) {
 	rt_messages.all_notes_off(bus);
     }    
 }
