@@ -5,65 +5,67 @@ Jacker Mouse & Keyboard Commands
 Global
 ------
 
-            -- Navigation --
+	    -- Navigation --
 
     F3: Go to song view.
     F4: Go to pattern view.
 
     F5: Play Song from current position.
-        * Play Song from beginning of loop, if enabled.
+	* Play Song from beginning of loop, if enabled.
     F8: Pause Song.
-        * Jump to beginning of loop, if enabled.
-        ** Jump to beginning of song.
+	* Jump to beginning of loop, if enabled.
+	** Jump to beginning of song.
 
-            -- Editing --
+	    -- Editing --
 
-        Ctrl+O: Open file.
-        Ctrl+S: Save file.
+	Ctrl+O: Open file.
+	Ctrl+S: Save file.
 
 Pattern
 -------
 
-            -- Navigation --
-            
+	    -- Navigation --
+	    
      Up/Down: Move cursor to previous/next row.
   Left/Right: Move cursor to previous/next column.
-        Home: Move cursor to first parameter.
-              * Move cursor to first channel.
-              ** Move cursor to first row.
-         End: Move cursor to last parameter.
-              * Move cursor to last channel.
-              ** Move cursor to last row.
+	Home: Move cursor to first parameter.
+	      * Move cursor to first channel.
+	      ** Move cursor to first row.
+	 End: Move cursor to last parameter.
+	      * Move cursor to last channel.
+	      ** Move cursor to last row.
 Page Up/Down: Move cursor to previous/next bar.
       Return: Go to song view.
-          F6: Play song starting at first row.
-          F7: Play song starting at cursor row.
+	  F6: Play song starting at first row.
+	  F7: Play song starting at cursor row.
 
-            -- Selection --
+	    -- Selection --
    
    Shift+Up/Down: Expand selection across rows.
 Shift+Left/Right: Expand selection across columns.
       Click+Drag: Expand selection across pattern.
-          Ctrl+B: Set start of selection block
-                  * Cycle selection mode (param > channel > row).
-          Ctrl+E: Set end of selection block
-                  * Cycle selection mode (param > channel > row).
+	  Ctrl+B: Set start of selection block
+		  * Cycle selection mode (param > channel > row).
+	  Ctrl+E: Set end of selection block
+		  * Cycle selection mode (param > channel > row).
 
-            -- Editing --
+	    -- Editing --
 
      0-9,A-F: Set values in value columns.
 ZSXDCVGBHNJM: Set notes in note columns (Octave +0).
 Q2W3ER5T6Y7U: Set notes in note columns (Octave +1).
        I9O0P: Set notes in note columns (Octave +2).
-          . : Wipe value at cursor.
+	  . : Wipe value at cursor.
       Insert: Move all values below cursor down 
-              by one row in current channel.
-         Del: Move all values below cursor up
-              by one row in current channel.
+	      by one row in current channel.
+	 Del: Move all values below cursor up
+	      by one row in current channel.
   Alt+Insert: Move all values below cursor down
-              by one row in all channels.
+	      by one row in all channels.
      Alt+Del: Move all values below cursor up
-              by one row in all channels.
+	      by one row in all channels.
+Shift+NumPad
+  Plus/Minus: Transpose Notes Up/Down
 
       Ctrl+C: Copy events in selection to clipboard.
       Ctrl+V: Paste events from clipboard at cursor.
@@ -73,18 +75,18 @@ Q2W3ER5T6Y7U: Set notes in note columns (Octave +1).
 Song
 ----
 
-            -- Navigation --
-            
+	    -- Navigation --
+	    
       Left/Right: Select previous/next pattern.
-         Up/Down: Select previous/next track.
-            Home: Move to first pattern.
-             End: Move to last pattern.
-          Return: Edit selected pattern.
+	 Up/Down: Select previous/next track.
+	    Home: Move to first pattern.
+	     End: Move to last pattern.
+	  Return: Edit selected pattern.
     Double-Click: Edit pattern at cursor.
-                  (or) Create pattern at cursor.
-              F6: Play song starting at selection.
-            
-            -- Measure --
+		  (or) Create pattern at cursor.
+	      F6: Play song starting at selection.
+	    
+	    -- Measure --
 
        Click: Set song position.
   Ctrl+Click: Set beginning of loop.
@@ -93,34 +95,34 @@ Song
       Ctrl+B: Set beginning of loop at selection.
       Ctrl+E: Set end of loop at selection.
 
-            -- Selection --
+	    -- Selection --
 
       Ctrl+Click: Add pattern to selection,
-                  remove pattern from selection.
+		  remove pattern from selection.
       Click+Drag: Box select.
  Ctrl+Left/Right: Add previous/next pattern to selection.
     Ctrl+Up/Down: Add pattern on previous/next track.
 
-            -- Editing --
+	    -- Editing --
 
       Click+Drag: Move selected pattern(s) at cursor
-                  Resize pattern(s) at cursor.
+		  Resize pattern(s) at cursor.
 Shift+Click+Drag: Move copy of pattern(s) at cursor.
       Ctrl+Shift
      +Click+Drag: Move pattern link(s) at cursor.
-          Delete: Remove selected patterns.
-          Ctrl+J: Join patterns across tracks into one.
-          Ctrl+D: Duplicate selection.
+	  Delete: Remove selected patterns.
+	  Ctrl+J: Join patterns across tracks into one.
+	  Ctrl+D: Duplicate selection.
     Ctrl+Shift+D: Duplicate selection as link.
 Shift+Left/Right: Move patterns along track (+-step).
    Shift+Up/Down: Move patterns along frame.
-          Shift+
+	  Shift+
  PageUp/PageDown: Move patterns along track (+-selection size).
       Shift+Alt+
       Left/Right: Resize selected patterns (+-step).
       Shift+Alt+
  PageUp/PageDown: Resize selected patterns (/2, *2).
     Shift+Return: Add new pattern after selection.
-                  (or) Add new pattern to loop.
-                  (or) Add new pattern at beginning.
-                  -- pattern will have selection size.
+		  (or) Add new pattern to loop.
+		  (or) Add new pattern at beginning.
+		  -- pattern will have selection size.

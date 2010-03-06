@@ -1186,6 +1186,25 @@ bool PatternView::on_button_release_event(GdkEventButton* event) {
     return false;
 }
 
+void PatternView::transpose(int step) {
+    Pattern::iterator iter;
+    for (Pattern::iterator iter = get_pattern()->begin(); 
+         iter != get_pattern()->end(); ++iter) {
+        PatternCursor cur(cursor);
+        cur = iter->second;
+        if (!selection.in_range(cur))
+            continue;
+	if (iter->second.param != ParamNote)
+	    continue;
+	if (iter->second.value == NoteOff)
+	    continue;
+	iter->second.value += step;
+	iter->second.sanitize_value();
+    }    
+    
+    invalidate_selection();
+}
+
 void PatternView::move_frames(int step, bool all_channels/*=false*/) {
     int row = cursor.get_row();
     int channel = cursor.get_channel();
@@ -1462,6 +1481,20 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
                 else
                     new_cursor.next_channel();
                 set_cursor(new_cursor);
+                return true;
+            } break;
+            case GDK_plus:
+            case GDK_KP_Add:
+            {
+		if (shift_down)
+		    transpose(1);
+                return true;
+            } break;
+            case GDK_minus:
+            case GDK_KP_Subtract:
+            {
+		if (shift_down)
+		    transpose(-1);
                 return true;
             } break;
             default: {
