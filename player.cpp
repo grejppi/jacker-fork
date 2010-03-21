@@ -79,10 +79,6 @@ void MessageQueue::on_command(int bus, Message::Type command, int value, int val
 }
 
 void MessageQueue::on_note(int bus, int channel, int note, int velocity) {
-    if (note == ValueNone)
-        return;
-    if (velocity == ValueNone)
-	velocity = 0x7f;
     assert(model);
     Message msg;
     init_message(bus,msg);
@@ -94,7 +90,16 @@ void MessageQueue::on_note(int bus, int channel, int note, int velocity) {
         msg.command = MIDI::CommandNoteOff;
         msg.data1 = 0;
         msg.data2 = 0;
+    } else if (note == ValueNone) {
+	if (velocity == ValueNone)
+	    return;
+	// aftertouch
+	msg.command = MIDI::CommandAftertouch;
+	msg.data1 = 0;
+	msg.data2 = velocity;
     } else {
+	if (velocity == ValueNone)
+	    velocity = 0x7f;
         msg.command = MIDI::CommandNoteOn;
         msg.data1 = note;
         msg.data2 = velocity;
@@ -323,6 +328,18 @@ void Player::handle_message(Message msg) {
 		{
 		    on_message(msg);
 		} break;
+	    }
+	    return;
+	} else if (msg.command == MIDI::CommandAftertouch) {
+	    if (values.note != ValueNone) {
+		// insert note and pass on
+		msg.data1 = values.note;
+		on_message(msg);
+	    } else {
+		msg.command = MIDI::CommandChannelPressure;
+		msg.data1 = msg.data2;
+		msg.data2 = 0;
+		on_message(msg);
 	    }
 	    return;
 	} else if (msg.command == MIDI::CommandNoteOff) {
