@@ -60,7 +60,7 @@ void MessageQueue::on_cc(int bus, int ccindex, int ccvalue) {
     push(msg);
 }
 
-void MessageQueue::on_command(int bus, Message::Type command, int value, int value2, int value3) {
+void MessageQueue::on_command(int bus, int channel, Message::Type command, int value, int value2, int value3) {
     if (value == ValueNone)
         return;
     if (value2 == ValueNone)
@@ -72,6 +72,7 @@ void MessageQueue::on_command(int bus, Message::Type command, int value, int val
     init_message(bus,msg);
     msg.type = command;
     msg.bus = bus;
+    msg.bus_channel = channel;
     msg.status = value;
     msg.data1 = value2;
     msg.data2 = value3;
@@ -287,7 +288,7 @@ void Player::mix_frame(MessageQueue &queue) {
 		    if (value != ValueNone)
 			model->beats_per_minute = std::max(1,value);
 		} else {
-		    queue.on_command(event.track, (Message::Type)command, 
+		    queue.on_command(event.track, channel, (Message::Type)command, 
 			value, ccindex, ccvalue);
 		}
 	    }

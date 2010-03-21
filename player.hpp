@@ -39,7 +39,7 @@ public:
 
     void on_note(int bus, int channel, int value, int velocity);
     void on_cc(int bus, int ccindex, int ccvalue);
-    void on_command(int bus, Message::Type command, int value, int value2, int value3);
+    void on_command(int bus, int channel, Message::Type command, int value, int value2, int value3);
     void all_notes_off(int bus);
 
     void status_msg();
