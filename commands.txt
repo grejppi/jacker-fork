@@ -1,0 +1,5 @@
+
+Jacker Pattern Channel Commands
+===============================
+
+	V xx: change channel volume to xx

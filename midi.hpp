@@ -57,7 +57,7 @@ struct Message {
 			};
 			unsigned char data1;
 			unsigned char data2;
-			unsigned char rest;
+			unsigned char data3; // usually unused
 		};
 		long data;
 		unsigned char bytes[4];

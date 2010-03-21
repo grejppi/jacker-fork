@@ -60,7 +60,25 @@ void MessageQueue::on_cc(int bus, int ccindex, int ccvalue) {
     push(msg);
 }
 
-void MessageQueue::on_note(int bus, int channel, int note, int velocity/*=0x7f*/) {
+void MessageQueue::on_command(int bus, Message::Type command, int value, int value2, int value3) {
+    if (value == ValueNone)
+        return;
+    if (value2 == ValueNone)
+	value2 = 0;
+    if (value3 == ValueNone)
+	value3 = 0;
+    assert(model);
+    Message msg;
+    init_message(bus,msg);
+    msg.type = command;
+    msg.bus = bus;
+    msg.status = value;
+    msg.data1 = value2;
+    msg.data2 = value3;
+    push(msg);
+}
+
+void MessageQueue::on_note(int bus, int channel, int note, int velocity) {
     if (note == ValueNone)
         return;
     if (velocity == ValueNone)
@@ -99,7 +117,7 @@ void MessageQueue::status_msg() {
 
 Player::Channel::Channel() {
     note = ValueNone;
-    volume = 0x7f;
+    volume = 1.0f;
 }
 
 //=============================================================================
@@ -210,7 +228,7 @@ void Player::play_event(int track, const class PatternEvent &event) {
     int note = event.value;
     if (note == ValueNone)
         return;
-    rt_messages.on_note(track, event.channel, note);
+    rt_messages.on_note(track, event.channel, note, ValueNone);
 }
 
 void Player::mix_events(MessageQueue &queue, int samples) {
@@ -256,8 +274,14 @@ void Player::mix_frame(MessageQueue &queue) {
         
         // first run: process all cc events
         for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-            queue.on_cc(event.track, row.get_value(channel, ParamCCIndex), 
-                row.get_value(channel, ParamCCValue));
+	    int command = row.get_value(channel, ParamCommand);
+	    int ccindex = row.get_value(channel, ParamCCIndex);
+	    int ccvalue = row.get_value(channel, ParamCCValue);
+	    if (command != ValueNone) {
+		queue.on_command(event.track, (Message::Type)command, 
+		    row.get_value(channel, ParamValue), ccindex, ccvalue);
+	    }
+            queue.on_cc(event.track, ccindex, ccvalue);
         }
         
         // second run: process volume and notes
@@ -279,52 +303,58 @@ void Player::handle_message(Message msg) {
     Bus &bus = buses[msg.bus];
     Channel &values = bus.channels[msg.bus_channel];
     
-    if (msg.command == MIDI::CommandControlChange) {
-        switch(msg.data1) {
-            case MIDI::ControllerAllNotesOff:
-            {
-                for (NoteArray::iterator iter = bus.notes.begin();
-                     iter != bus.notes.end(); ++iter) {
-                    *iter = -1;
-                }
-                on_message(msg);
-            } break;
-            default:
-            {
-		on_message(msg);
-            } break;
-        }
-        return;
-    } else if (msg.command == MIDI::CommandNoteOff) {
-        if (values.note != ValueNone) {
-            int note = values.note;
-            values.note = ValueNone;
-            // see if that note is actually being played
-            // on our channel, if yes, kill it.
-            if (bus.notes[note] == msg.bus_channel) {
-                bus.notes[note] = -1;
-                msg.data1 = note;
-                msg.data2 = 0;
-                on_message(msg);
-            }
-        }
-        return;
-    } else if (msg.command == MIDI::CommandNoteOn) {
-        if (values.note != ValueNone) {
-            int note = values.note;
-            values.note = ValueNone;
-            // no matter where the note is played, kill it.
-            bus.notes[note] = -1;
-            Message off_msg(msg);
-            off_msg.command = MIDI::CommandNoteOff;
-            off_msg.data1 = note;
-            off_msg.data2 = 0;
-            on_message(off_msg);
-        }
-        values.note = msg.data1;
-        bus.notes[values.note] = msg.bus_channel;
-        on_message(msg);
-        return;
+    if (msg.type == Message::TypeMIDI) {
+	if (msg.command == MIDI::CommandControlChange) {
+	    switch(msg.data1) {
+		case MIDI::ControllerAllNotesOff:
+		{
+		    for (NoteArray::iterator iter = bus.notes.begin();
+			 iter != bus.notes.end(); ++iter) {
+			*iter = -1;
+		    }
+		    on_message(msg);
+		} break;
+		default:
+		{
+		    on_message(msg);
+		} break;
+	    }
+	    return;
+	} else if (msg.command == MIDI::CommandNoteOff) {
+	    if (values.note != ValueNone) {
+		int note = values.note;
+		values.note = ValueNone;
+		// see if that note is actually being played
+		// on our channel, if yes, kill it.
+		if (bus.notes[note] == msg.bus_channel) {
+		    bus.notes[note] = -1;
+		    msg.data1 = note;
+		    msg.data2 = 0;
+		    on_message(msg);
+		}
+	    }
+	    return;
+	} else if (msg.command == MIDI::CommandNoteOn) {
+	    if (values.note != ValueNone) {
+		int note = values.note;
+		values.note = ValueNone;
+		// no matter where the note is played, kill it.
+		bus.notes[note] = -1;
+		Message off_msg(msg);
+		off_msg.command = MIDI::CommandNoteOff;
+		off_msg.data1 = note;
+		off_msg.data2 = 0;
+		on_message(off_msg);
+	    }
+	    values.note = msg.data1;
+	    int volume = std::min((int)((float)(msg.data2) * values.volume), 0x7f);
+	    msg.data2 = volume;
+	    bus.notes[values.note] = msg.bus_channel;
+	    on_message(msg);
+	    return;
+	}
+    } else if (msg.type == Message::TypeCommandChannelVolume) {
+	values.volume = std::min((float)(msg.status) / 0x7f, 1.0f);
     }
 }
 

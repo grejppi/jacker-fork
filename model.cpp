@@ -99,6 +99,9 @@ void PatternEvent::sanitize_value() {
             value = std::min(std::max(value,0x21),0x7f);
         } break;
         case ParamValue:
+	{
+	    value = std::min(std::max(value,0),0xff);
+	} break;
         case ParamVolume:
         case ParamCCIndex:
         case ParamCCValue:        
