@@ -2,4 +2,5 @@
 Jacker Pattern Channel Commands
 ===============================
 
-	V xx: change channel volume to xx
+	V xx: change channel volume to xx (00-7F)
+	T xx: change tempo to xx BPM (01-FF)

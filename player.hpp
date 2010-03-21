@@ -17,6 +17,7 @@ struct Message : MIDI::Message {
 	
 	// command
 	TypeCommandChannelVolume = 'V',
+	TypeCommandTempo = 'T',
     };
     
     Type type;

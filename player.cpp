@@ -235,13 +235,12 @@ void Player::mix_events(MessageQueue &queue, int samples) {
     assert(model);
     
     long long target = queue.read_samples + ((long long)samples<<32);
-    long long framesize = get_frame_size();
-    
     while (queue.write_samples < target)
     {
         // send status package
         queue.status_msg();
         mix_frame(queue);
+	long long framesize = get_frame_size();
         queue.write_samples += framesize;
         queue.position++;
         if (model->enable_loop && (queue.position == model->loop.get_end())) {
@@ -278,8 +277,14 @@ void Player::mix_frame(MessageQueue &queue) {
 	    int ccindex = row.get_value(channel, ParamCCIndex);
 	    int ccvalue = row.get_value(channel, ParamCCValue);
 	    if (command != ValueNone) {
-		queue.on_command(event.track, (Message::Type)command, 
-		    row.get_value(channel, ParamValue), ccindex, ccvalue);
+		int value = row.get_value(channel, ParamValue);
+		if (command == Message::TypeCommandTempo) {
+		    if (value != ValueNone)
+			model->beats_per_minute = std::max(1,value);
+		} else {
+		    queue.on_command(event.track, (Message::Type)command, 
+			value, ccindex, ccvalue);
+		}
 	    }
             queue.on_cc(event.track, ccindex, ccvalue);
         }
