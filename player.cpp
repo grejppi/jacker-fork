@@ -11,10 +11,6 @@ enum {
     PreMixSize = 44100,
 };
 
-enum {
-    CCVolume = 255,
-};
-
 //=============================================================================
 
 Message::Message() {
@@ -64,25 +60,11 @@ void MessageQueue::on_cc(int bus, int ccindex, int ccvalue) {
     push(msg);
 }
 
-void MessageQueue::on_volume(int bus, int channel, int volume) {
-    if (volume == ValueNone)
-        return;
-    assert(model);
-    Message msg;
-    init_message(bus,msg);
-    msg.type = Message::TypeMIDI;
-    msg.bus = bus;
-    msg.bus_channel = channel;
-    msg.command = MIDI::CommandControlChange;
-    msg.channel = model->tracks[bus].midi_channel;
-    msg.data1 = CCVolume;
-    msg.data2 = volume;
-    push(msg);    
-}
-
-void MessageQueue::on_note(int bus, int channel, int note) {
+void MessageQueue::on_note(int bus, int channel, int note, int velocity/*=0x7f*/) {
     if (note == ValueNone)
         return;
+    if (velocity == ValueNone)
+	velocity = 0x7f;
     assert(model);
     Message msg;
     init_message(bus,msg);
@@ -97,7 +79,7 @@ void MessageQueue::on_note(int bus, int channel, int note) {
     } else {
         msg.command = MIDI::CommandNoteOn;
         msg.data1 = note;
-        msg.data2 = 0;
+        msg.data2 = velocity;
     }
     push(msg);
 }
@@ -171,7 +153,7 @@ void Player::stop() {
         return;
     playing = false;
     seek(read_position);
-    for (int bus = 0; bus < model->tracks.size(); ++bus) {
+    for (size_t bus = 0; bus < model->tracks.size(); ++bus) {
 	rt_messages.all_notes_off(bus);
     }    
 }
@@ -280,10 +262,9 @@ void Player::mix_frame(MessageQueue &queue) {
         
         // second run: process volume and notes
         for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-            queue.on_volume(event.track, channel, 
-                row.get_value(channel, ParamVolume));
             queue.on_note(event.track, channel, 
-                row.get_value(channel, ParamNote));
+                row.get_value(channel, ParamNote),
+		row.get_value(channel, ParamVolume));
         }
     }
     
@@ -310,11 +291,7 @@ void Player::handle_message(Message msg) {
             } break;
             default:
             {
-                if (msg.data1 == CCVolume) {
-                    values.volume = msg.data2;
-                } else {
-                    on_message(msg);
-                }
+		on_message(msg);
             } break;
         }
         return;
@@ -345,7 +322,6 @@ void Player::handle_message(Message msg) {
             on_message(off_msg);
         }
         values.note = msg.data1;
-        msg.data2 = values.volume;
         bus.notes[values.note] = msg.bus_channel;
         on_message(msg);
         return;

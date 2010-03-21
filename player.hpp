@@ -33,8 +33,7 @@ public:
     volatile int position; // in frames
     volatile long long read_samples;
 
-    void on_note(int bus, int channel, int value);
-    void on_volume(int bus, int channel, int value);
+    void on_note(int bus, int channel, int value, int velocity=0x7f);
     void on_cc(int bus, int ccindex, int ccvalue);
     void all_notes_off(int bus);
 
