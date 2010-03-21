@@ -432,7 +432,10 @@ void Model::reset() {
     tracks.clear();
     patterns.clear();
     
-    tracks.resize(8);
+    tracks.resize(16);
+    for (int i = 0; i < tracks.size(); ++i) {
+	tracks[i].midi_channel = std::min(i,15);
+    }
 }
 
 Pattern &Model::new_pattern(const Pattern *template_pattern) {
