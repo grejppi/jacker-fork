@@ -38,6 +38,8 @@ static const guint16 piano_scancodes[] = {
 
 enum {
 #if defined(WIN32)
+    ScanOctaveDown = 0xdb,
+    ScanOctaveUp = 0xdd,
 #else
     ScanOctaveDown = 0x14,
     ScanOctaveUp = 0x15,
