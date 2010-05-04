@@ -1,0 +1,31 @@
+Quick Build Instructions (Ubuntu Linux)
+=======================================
+
+
+Prerequisites
+-------------
+
+ * gtkmm-2.4
+ * sigc++-2.0
+ * libjack
+ * SCons
+
+Build
+-----
+
+ 1. From the source root directory, 
+    enter into a terminal:
+ 
+    $ scons
+    
+ 2. The project will build.
+ 
+
+
+Run
+---
+
+ 1. After the build a "jacker" binary will be
+    available in the root folder. Run it with:
+    
+    $ ./jacker
