@@ -17,6 +17,7 @@
 #include "player.hpp"
 
 #include "jsong.hpp"
+#include "ring_buffer.hpp"
 
 namespace Jacker {
 
@@ -26,10 +27,22 @@ const char AccelPathPatternView[] = "<Jacker>/View/Pattern";
 const char AccelPathTrackView[] = "<Jacker>/View/Song";
 const char AccelPathSave[] = "<Jacker>/File/Save";
 const char AccelPathOpen[] = "<Jacker>/File/Open";
-    
+
 class JackPlayer : public Jack::Client,
                    public Player {
 public:
+    enum ThreadMessageType {
+        MsgPlay = 0,
+        MsgStop = 1,
+        MsgSeek = 2,
+    };
+        
+    struct ThreadMessage {
+        ThreadMessageType type;
+        int position;
+    };
+    
+    RingBuffer<ThreadMessage> thread_messages;
    
     Jack::MIDIPort *midi_omni_out;
     typedef std::vector<Jack::MIDIPort *> MIDIPortArray;
@@ -37,7 +50,15 @@ public:
     MIDIPortArray midi_ports;
     bool defunct;
 
+    bool enable_sync;
+    bool waiting_for_sync;
+
     JackPlayer() : Jack::Client("jacker") {
+        
+        thread_messages.resize(100);
+        
+        enable_sync = false;
+        waiting_for_sync = false;
         defunct = false;
         midi_omni_out = new Jack::MIDIPort(
             *this, "omni", Jack::MIDIPort::IsOutput);
@@ -57,6 +78,61 @@ public:
         delete midi_omni_out;
     }
     
+    void play() {
+        if (enable_sync) {
+            transport_start();
+            return;
+        }
+        Player::play();
+    }
+    
+    void seek(int frame) {
+        if (enable_sync) {
+            double samples = 
+                (double)frame * (sample_rate * 60.0) / (double)(model->beats_per_minute * model->frames_per_beat);
+            transport_locate((int)(samples+0.5));
+            return;
+        }
+        Player::seek(frame);
+    }
+    
+    void stop() {
+        if (enable_sync) {
+            transport_stop();
+            return;
+        }
+        Player::stop();
+    }
+    
+    void handle_thread_message(ThreadMessage &msg) {
+        switch(msg.type) {
+            case MsgPlay : {
+                printf("SYNC: play\n");
+                Player::play();
+            } break;
+            case MsgStop : {
+                printf("SYNC: stop\n");
+                Player::stop();
+            } break;
+            case MsgSeek : {
+                printf("SYNC: seek to %i\n", msg.position);
+                Player::seek(msg.position);
+            } break;
+            default: break;
+        }
+    }
+    
+    void mix() {
+        ThreadMessage msg;
+        while (!thread_messages.empty()) {
+            msg = thread_messages.peek();
+            handle_thread_message(msg);
+            thread_messages.pop();
+        }
+
+        Player::mix();
+    }
+    
     virtual void on_sample_rate(Jack::NFrames nframes) {
         set_sample_rate((int)nframes);
         reset();
@@ -68,7 +144,86 @@ public:
         midi_ports[msg.port]->write_event(offset, msg);
     }
     
+    int get_frame_from_position(const Jack::Position &pos) {
+        /*
+        if (pos.valid & JackPositionBBT) {
+            int result = model->beats_per_bar * model->frames_per_beat * (pos.bar-1);
+            result += model->frames_per_beat * (pos.beat-1);
+            result += pos.tick * model->frames_per_beat / pos.ticks_per_beat;
+            return result;
+        }
+        */
+        return (int)(((double)model->beats_per_minute * pos.frame / (sample_rate * 60.0))+0.5) * 
+            model->frames_per_beat;
+        //return -1;
+    }
+    
+    virtual bool on_sync(Jack::TransportState state, const Jack::Position &pos) {
+        if (!enable_sync) {
+            waiting_for_sync = false;
+            return true;
+        }
+        
+        bool r_playing = false;
+        
+        switch(state) {
+            case JackTransportStarting:
+            {
+                if (waiting_for_sync) {
+                    if (thread_messages.empty()) {
+                        printf("finished waiting for sync\n");
+                        waiting_for_sync = false;
+                        return true;
+                    } else {
+                        //printf("waiting for sync\n");
+                        return false;
+                    }
+                }
+                waiting_for_sync = true;
+                r_playing = true;
+            } break;
+            case JackTransportStopped:
+            {
+                waiting_for_sync = false;
+                r_playing = false;
+            } break;
+            default: break;
+        }
+        
+        int r_position = get_frame_from_position(pos);
+        if (r_position != get_position()) {
+            ThreadMessage msg;
+            msg.type = MsgSeek;
+            msg.position = r_position;
+            thread_messages.push(msg);
+        }
+        
+        if (r_playing != is_playing()) {
+            ThreadMessage msg;
+            msg.type = (r_playing?MsgPlay:MsgStop);
+            thread_messages.push(msg);            
+        }
+        return false;
+    }
+    
     virtual void on_process(Jack::NFrames size) {
+        if (enable_sync) {
+            Jack::Position tpos;
+            memset(&tpos, 0, sizeof(tpos));
+            Jack::TransportState tstate = transport_query(&tpos);
+            switch(tstate) {
+                case JackTransportStopped: {
+                    if (is_playing() && thread_messages.empty()) {
+                        ThreadMessage msg;
+                        msg.type = MsgStop;
+                        thread_messages.push(msg);
+                    }
+                } break;
+                default:
+                    break;
+            }
+        }
+
         midi_omni_out->clear_buffer();
         for (MIDIPortArray::iterator iter = midi_ports.begin();
             iter != midi_ports.end(); ++iter) {
@@ -94,6 +249,7 @@ public:
     Glib::RefPtr<Gtk::Adjustment> fpb_range;
 
     Glib::RefPtr<Gtk::AccelGroup> accel_group;
+    Glib::RefPtr<Gtk::ToggleAction> sync_action;
 
     Gtk::Window* window;
     PatternView *pattern_view;
@@ -323,6 +479,23 @@ public:
         assert(adjustment);
         return adjustment;
     }
+
+    template<typename T>
+    Glib::RefPtr<Gtk::ToggleAction> connect_toggle_action(const std::string &name, 
+                        const T &signal,
+                        const Glib::ustring& accel_path="") {
+        Glib::RefPtr<Gtk::ToggleAction> action =
+            Glib::RefPtr<Gtk::ToggleAction>::cast_static(
+                builder->get_object(name));
+        assert(action);
+        if (!accel_path.empty()) {
+            action->set_accel_path(accel_path);
+            action->set_accel_group(accel_group);       
+            action->connect_accelerator();
+        }
+        action->signal_toggled().connect(signal);
+        return action;
+    }
     
     template<typename T>
     void connect_action(const std::string &name, 
@@ -348,6 +521,10 @@ public:
         show_song_view();
     }
     
+    void on_sync_action() {
+        player->enable_sync = sync_action->get_active();
+    }
+    
     void init_menu() {
         connect_action("new_action", sigc::mem_fun(*this, &App::on_new_action));
         connect_action("open_action", sigc::mem_fun(*this, &App::on_open_action),
@@ -365,6 +542,7 @@ public:
             sigc::mem_fun(*this, &App::on_show_song_action),
             AccelPathTrackView);
     
+        sync_action = connect_toggle_action("sync_action", sigc::mem_fun(*this, &App::on_sync_action));
     }
 
     void on_bpm_changed() {

@@ -100,6 +100,9 @@ protected:
 
 //=============================================================================
 
+typedef jack_transport_state_t TransportState;
+typedef jack_position_t Position;
+
 class Client {
     friend class Port;
 
@@ -115,9 +118,15 @@ public:
 
     bool is_created();
 
+    TransportState transport_query(Position *pos);
+    void transport_locate(NFrames frame);
+    void transport_start();
+    void transport_stop();
+
     virtual void on_process(NFrames size) {}
     virtual void on_sample_rate(NFrames nframes) {}
     virtual void on_shutdown() {}
+    virtual bool on_sync(TransportState state, const Position &pos) { return true; }
         
 protected:
     void add_port(Port *port);
@@ -132,6 +141,7 @@ protected:
     static int process_callback(jack_nframes_t size, void *arg);
     static int sample_rate_callback(jack_nframes_t nframes, void *arg);
     static void shutdown_callback(void *arg);
+    static int sync_callback(jack_transport_state_t state, jack_position_t *pos, void *arg);
 };
 
 //=============================================================================

@@ -64,6 +64,16 @@ void Client::shutdown_callback(void *arg) {
     client->on_shutdown();
 }
 
+int Client::sync_callback(jack_transport_state_t state, jack_position_t *pos, void *arg) {
+    Client *client = (Client *)arg;
+    /*
+    printf("sync_callback: %i, BBT: %i|%i|%i, BPM: %f, frame: %i\n", 
+        state, pos->bar, pos->beat, pos->tick, (float)pos->beats_per_minute, pos->frame);
+    */
+    assert(pos);
+    return client->on_sync(state, *pos)?1:0;
+}
+
 Client::Client(const char *name) {
     this->name = name;
     handle = NULL;
@@ -93,6 +103,9 @@ bool Client::init() {
 
 		handle_status(jack_set_sample_rate_callback(
 				handle, &sample_rate_callback, this));
+
+        handle_status(jack_set_sync_callback(
+				handle, &sync_callback, this));
 
 		jack_on_shutdown(handle, &shutdown_callback, this);
         
@@ -125,6 +138,11 @@ void Client::shutdown() {
     
 }
 
+TransportState Client::transport_query(Position *pos) {
+    assert(handle);
+    return jack_transport_query(handle, pos);
+}
+
 void Client::add_port(Port *port) {
     ports.push_back(port);
     if (handle) // port came after init, so post-init it
@@ -136,6 +154,22 @@ void Client::remove_port(Port *port) {
         port->shutdown();
     ports.remove(port);
 }
+
+void Client::transport_locate(NFrames frame) {
+    assert(handle);
+    jack_transport_locate(handle, frame);
+}
+
+void Client::transport_start() {
+    assert(handle);
+    jack_transport_start(handle);
+}
+
+void Client::transport_stop() {
+    assert(handle);
+    jack_transport_stop(handle);
+}
+
 
 //=============================================================================
 

@@ -92,8 +92,8 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menuitem_song">
                         <property name="visible">True</property>
-                        <property name="related_action">show_song_action</property>
                         <property name="use_action_appearance">True</property>
+                        <property name="related_action">show_song_action</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -101,8 +101,8 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menuitem_pattern">
                         <property name="visible">True</property>
-                        <property name="related_action">show_pattern_action</property>
                         <property name="use_action_appearance">True</property>
+                        <property name="related_action">show_pattern_action</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -146,8 +146,8 @@
             <child>
               <object class="GtkToolButton" id="toolbutton1">
                 <property name="visible">True</property>
-                <property name="related_action">play_action</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">play_action</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
               </object>
@@ -159,8 +159,8 @@
             <child>
               <object class="GtkToolButton" id="toolbutton2">
                 <property name="visible">True</property>
-                <property name="related_action">stop_action</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">stop_action</property>
                 <property name="label" translatable="yes">toolbutton2</property>
                 <property name="use_underline">True</property>
               </object>
@@ -304,6 +304,19 @@
                     </child>
                   </object>
                 </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToggleToolButton" id="toolbutton7">
+                <property name="visible">True</property>
+                <property name="use_action_appearance">True</property>
+                <property name="related_action">sync_action</property>
+                <property name="label" translatable="yes">toolbutton7</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -702,8 +715,8 @@
     <child>
       <object class="GtkImageMenuItem" id="menuitem5">
         <property name="visible">True</property>
-        <property name="related_action">add_track_action</property>
         <property name="use_action_appearance">True</property>
+        <property name="related_action">add_track_action</property>
         <property name="use_underline">True</property>
         <property name="use_stock">True</property>
       </object>
@@ -749,4 +762,9 @@
     <property name="stock_id">gtk-quit</property>
   </object>
   <object class="GtkAccelGroup" id="accel_group"/>
+  <object class="GtkToggleAction" id="sync_action">
+    <property name="label">Sync</property>
+    <property name="short_label">Sync</property>
+    <property name="tooltip">Sync to JACK Transport</property>
+  </object>
 </interface>

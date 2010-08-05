@@ -50,7 +50,7 @@ public:
 protected:
     class Model *model;
 };
-    
+
 class Player {
 public:
     enum {
@@ -96,7 +96,7 @@ public:
     bool is_playing() const;
     
     void play_event(int track, const class PatternEvent &event);
-    
+        
 protected:
     void premix();
     void mix_events(MessageQueue &queue, int samples);
@@ -117,7 +117,6 @@ protected:
     
     volatile int read_position; // last read position, in frames
     volatile bool playing;
-
 };
 
 //=============================================================================
