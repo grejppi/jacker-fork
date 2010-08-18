@@ -44,6 +44,7 @@ public:
     
     RingBuffer<ThreadMessage> thread_messages;
    
+    Jack::MIDIPort *midi_inp;
     Jack::MIDIPort *midi_omni_out;
     typedef std::vector<Jack::MIDIPort *> MIDIPortArray;
 
@@ -60,6 +61,8 @@ public:
         enable_sync = false;
         waiting_for_sync = false;
         defunct = false;
+        midi_inp = new Jack::MIDIPort(
+            *this, "control", Jack::MIDIPort::IsInput);
         midi_omni_out = new Jack::MIDIPort(
             *this, "omni", Jack::MIDIPort::IsOutput);
         for (int i = 0; i < MaxPorts; ++i) {
@@ -76,6 +79,7 @@ public:
         }
         midi_ports.clear();
         delete midi_omni_out;
+        delete midi_inp;
     }
     
     void play() {
@@ -223,12 +227,21 @@ public:
                     break;
             }
         }
-
+        
         midi_omni_out->clear_buffer();
         for (MIDIPortArray::iterator iter = midi_ports.begin();
             iter != midi_ports.end(); ++iter) {
             (*iter)->clear_buffer();
         }
+        
+        for (Jack::NFrames i = 0; i < midi_inp->get_event_count(); ++i) {
+            MIDI::Message ctrl_msg;
+            if (midi_inp->get_event(ctrl_msg, NULL, i)) {
+                midi_omni_out->write_event(0, ctrl_msg);
+                midi_ports[model->midi_control_port]->write_event(0, ctrl_msg);
+            }
+        }
+
         process_messages((int)size);
     }
     

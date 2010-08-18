@@ -426,6 +426,7 @@ Model::Model() {
 
 void Model::reset() {
     end_cue = 0;
+    midi_control_port = 0;
     beats_per_minute = 120;
     frames_per_beat = 4;
     beats_per_bar = 4;

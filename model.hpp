@@ -271,6 +271,9 @@ public:
     int beats_per_bar;
     // how many beats are in one minute
     int beats_per_minute;
+    
+    // what port to use for the midi control
+    int midi_control_port;
 
     void reset();
     

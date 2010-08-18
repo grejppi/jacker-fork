@@ -20,6 +20,7 @@ public:
     ~TrackBar();
     
     Gtk::Label name;
+    Gtk::EventBox name_eventbox;
     
     Gtk::EventBox channel_eventbox;
     Gtk::Menu channel_menu;
@@ -38,6 +39,7 @@ public:
     void update();
     bool on_channel_button_press_event(GdkEventButton *event);
     bool on_port_button_press_event(GdkEventButton *event);
+    bool on_name_button_press_event(GdkEventButton *event);
 
     void on_channel(int channel);
     void on_port(int port);

@@ -18,8 +18,15 @@ TrackBar::TrackBar(int index, TrackView &view) {
     set_size_request(-1, TrackHeight);
     
     name.set_alignment(0,0.5);
-    pack_start(name, true, true);
     view.group_names->add_widget(name);
+
+    name_eventbox.add(name);
+    name_eventbox.set_visible_window(false);
+    name_eventbox.set_events(Gdk::BUTTON_PRESS_MASK);
+    name_eventbox.signal_button_press_event().connect(
+        sigc::mem_fun(*this, &TrackBar::on_name_button_press_event));
+
+    pack_start(name_eventbox, true, true);
     
     for (int i = 0; i < 16; ++i) {
         char buffer[64];
@@ -81,6 +88,16 @@ void TrackBar::on_channel(int channel) {
 void TrackBar::on_port(int port) {
     model->tracks[index].midi_port = port;
     update();
+}
+
+bool TrackBar::on_name_button_press_event(GdkEventButton *event) {
+    if ((event->type == GDK_BUTTON_PRESS) &&
+        (event->button == 1)) {
+        Track &track = model->tracks[index];
+        model->midi_control_port = track.midi_port;
+        return true;
+    }
+    return false;
 }
 
 bool TrackBar::on_channel_button_press_event(GdkEventButton *event) {
