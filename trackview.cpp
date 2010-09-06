@@ -67,6 +67,12 @@ TrackBar::TrackBar(int index, TrackView &view) {
     port_eventbox.signal_button_press_event().connect(
         sigc::mem_fun(*this, &TrackBar::on_port_button_press_event));
     pack_start(port_eventbox, false, true);
+
+    mute.set_label("M");
+    mute.signal_toggled().connect(
+        sigc::mem_fun(*this, &TrackBar::on_mute_toggled));
+    view.group_mutes->add_widget(mute);
+    pack_start(mute, false, true);
     
     update();
     
@@ -78,6 +84,15 @@ TrackBar::~TrackBar() {
     view->group_channels->remove_widget(channel);
     view->group_ports->remove_widget(port);
     view->remove(*this);
+}
+
+void TrackBar::on_mute_toggled() {
+    bool active = mute.get_active();
+    if (model->tracks[index].mute == active)
+        return;
+    model->tracks[index].mute = active;
+    update();
+    view->_mute_toggled(index, active);
 }
 
 void TrackBar::on_channel(int channel) {
@@ -138,6 +153,8 @@ void TrackBar::update() {
     
     sprintf(buffer, "port-%i", track.midi_port);
     port.set_text(buffer);
+    
+    mute.set_active(track.mute);
 }
 
 //=============================================================================
@@ -149,6 +166,7 @@ TrackView::TrackView(BaseObjectType* cobject,
     group_names = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
     group_channels = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
     group_ports = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
+    group_mutes = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
 }
 
 TrackView::~TrackView() {
@@ -161,6 +179,10 @@ void TrackView::destroy_bars() {
     }
     bars.clear();
 
+}
+
+TrackView::type_mute_toggled TrackView::signal_mute_toggled() {
+    return _mute_toggled;
 }
 
 void TrackView::set_model(class Model &model) {

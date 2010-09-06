@@ -96,6 +96,7 @@ public:
     bool is_playing() const;
     
     void play_event(int track, const class PatternEvent &event);
+    void stop_events(int track);
         
 protected:
     void premix();

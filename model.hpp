@@ -237,6 +237,7 @@ class Track {
 public:
     int midi_port;
     int midi_channel;
+    bool mute;
 
     Track();
 };

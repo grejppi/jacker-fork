@@ -416,6 +416,7 @@ int Loop::get_end() const {
 Track::Track() {
     midi_port = 0;
     midi_channel = 0;
+    mute = false;
 }
 
 //=============================================================================

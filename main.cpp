@@ -761,7 +761,18 @@ public:
             
         builder->get_widget_derived("track_view", track_view);
         assert(track_view);
-        track_view->set_model(model);
+        track_view->set_model(model);        
+        track_view->signal_mute_toggled().connect(
+            sigc::mem_fun(*this, &App::on_track_view_mute_toggled));
+
+    }
+    
+    void on_track_view_mute_toggled(int index, bool mute) {
+        if (!player)
+            return;
+        if (mute) {
+            player->stop_events(index);
+        }
     }
     
     void init_timer() {

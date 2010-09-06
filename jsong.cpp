@@ -74,6 +74,7 @@ void JSongWriter::collect(Json::Value &root, Loop &loop) {
 void JSongWriter::collect(Json::Value &root, Track &track) {
     root["midi_channel"] = track.midi_channel;
     root["midi_port"] = track.midi_port;
+    root["mute"] = track.mute;
 }
 
 void JSongWriter::collect(Json::Value &root, Model &model) {
@@ -218,6 +219,7 @@ void JSongReader::build(const Json::Value &root, Loop &loop) {
 void JSongReader::build(const Json::Value &root, Track &track) {
     extract(root["midi_channel"], track.midi_channel);
     extract(root["midi_port"], track.midi_port);
+    extract(root["mute"], track.mute);
 }
 
 void JSongReader::build(const Json::Value &root, Model &model) {

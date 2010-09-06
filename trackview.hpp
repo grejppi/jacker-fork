@@ -31,6 +31,7 @@ public:
     Gtk::Menu port_menu;
     Gtk::Label port;
     Gtk::RadioButtonGroup port_radio_group;
+    Gtk::ToggleButton mute;
 
     Model *model;
     class TrackView *view;
@@ -40,6 +41,7 @@ public:
     bool on_channel_button_press_event(GdkEventButton *event);
     bool on_port_button_press_event(GdkEventButton *event);
     bool on_name_button_press_event(GdkEventButton *event);
+    void on_mute_toggled();
 
     void on_channel(int channel);
     void on_port(int port);
@@ -48,8 +50,10 @@ public:
 //=============================================================================
 
 class TrackView : public Gtk::VBox {
+    friend class TrackBar;
 public:
-    typedef std::vector<TrackBar *> TrackBarArray;
+    typedef std::vector<TrackBar *> TrackBarArray;    
+    typedef sigc::signal<void, int, bool> type_mute_toggled;
 
     TrackView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
@@ -58,6 +62,7 @@ public:
     Glib::RefPtr<Gtk::SizeGroup> group_names;
     Glib::RefPtr<Gtk::SizeGroup> group_channels;
     Glib::RefPtr<Gtk::SizeGroup> group_ports;
+    Glib::RefPtr<Gtk::SizeGroup> group_mutes;
 
     Model *model;
     TrackBarArray bars;
@@ -65,6 +70,11 @@ public:
     void destroy_bars();
     void set_model(class Model &model);
     void update_tracks();
+
+    type_mute_toggled signal_mute_toggled();
+
+protected:
+    type_mute_toggled _mute_toggled;
 };
 
 //=============================================================================

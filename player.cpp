@@ -178,7 +178,7 @@ void Player::stop() {
     playing = false;
     seek(read_position);
     for (size_t bus = 0; bus < model->tracks.size(); ++bus) {
-	rt_messages.all_notes_off(bus);
+        rt_messages.all_notes_off(bus);
     }    
 }
 
@@ -237,6 +237,10 @@ void Player::play_event(int track, const class PatternEvent &event) {
     rt_messages.on_note(track, event.channel, note, ValueNone);
 }
 
+void Player::stop_events(int track) {
+    rt_messages.all_notes_off(track);
+}
+
 void Player::mix_events(MessageQueue &queue, int samples) {
     assert(model);
     
@@ -246,7 +250,7 @@ void Player::mix_events(MessageQueue &queue, int samples) {
         // send status package
         queue.status_msg();
         mix_frame(queue);
-	long long framesize = get_frame_size();
+        long long framesize = get_frame_size();
         queue.write_samples += framesize;
         queue.position++;
         if (model->enable_loop && (queue.position == model->loop.get_end())) {
@@ -273,25 +277,29 @@ void Player::mix_frame(MessageQueue &queue) {
     for (iter = events.begin(); iter != events.end(); ++iter) {
         Song::Event &event = (*iter)->second;
         Pattern &pattern = *event.pattern;
+        
+        if (model->tracks[event.track].mute)
+            continue; // ignore event
+        
         Pattern::iterator row_iter = pattern.begin();
         Pattern::Row row;
         pattern.collect_events(queue.position - event.frame, row_iter, row);
         
         // first run: process all cc events
         for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
-	    int command = row.get_value(channel, ParamCommand);
-	    int ccindex = row.get_value(channel, ParamCCIndex);
-	    int ccvalue = row.get_value(channel, ParamCCValue);
-	    if (command != ValueNone) {
-		int value = row.get_value(channel, ParamValue);
-		if (command == Message::TypeCommandTempo) {
-		    if (value != ValueNone)
-			model->beats_per_minute = std::max(1,value);
-		} else {
-		    queue.on_command(event.track, channel, (Message::Type)command, 
-			value, ccindex, ccvalue);
-		}
-	    }
+            int command = row.get_value(channel, ParamCommand);
+            int ccindex = row.get_value(channel, ParamCCIndex);
+            int ccvalue = row.get_value(channel, ParamCCValue);
+            if (command != ValueNone) {
+                int value = row.get_value(channel, ParamValue);
+                if (command == Message::TypeCommandTempo) {
+                    if (value != ValueNone)
+                        model->beats_per_minute = std::max(1,value);
+                } else {
+                    queue.on_command(event.track, channel, (Message::Type)command, 
+                    value, ccindex, ccvalue);
+                }
+            }
             queue.on_cc(event.track, ccindex, ccvalue);
         }
         
@@ -299,7 +307,7 @@ void Player::mix_frame(MessageQueue &queue) {
         for (int channel = 0; channel < pattern.get_channel_count(); ++channel) {
             queue.on_note(event.track, channel, 
                 row.get_value(channel, ParamNote),
-		row.get_value(channel, ParamVolume));
+            row.get_value(channel, ParamVolume));
         }
     }
     
