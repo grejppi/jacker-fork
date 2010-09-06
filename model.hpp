@@ -235,6 +235,7 @@ protected:
 
 class Track {
 public:
+    std::string name;
     int midi_port;
     int midi_channel;
     bool mute;

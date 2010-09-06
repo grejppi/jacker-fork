@@ -111,6 +111,23 @@ bool TrackBar::on_name_button_press_event(GdkEventButton *event) {
         Track &track = model->tracks[index];
         model->midi_control_port = track.midi_port;
         return true;
+    } else if ((event->type == GDK_2BUTTON_PRESS) &&
+        (event->button == 1)) {
+        Track &track = model->tracks[index];
+        Gtk::Dialog dialog("Rename Track", true, false);
+        Gtk::Entry text_entry;
+        dialog.get_vbox()->pack_start(text_entry);
+        text_entry.set_text(track.name);
+        text_entry.show();
+        dialog.add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
+        dialog.set_default_response(Gtk::RESPONSE_OK);
+        text_entry.set_activates_default(true);
+        int response = dialog.run();
+        if (response == Gtk::RESPONSE_OK) {
+            track.name = text_entry.get_text();
+            update();
+        }
+        return true;
     }
     return false;
 }
@@ -142,11 +159,16 @@ bool TrackBar::on_port_button_press_event(GdkEventButton *event) {
 }
 
 void TrackBar::update() {
-    char buffer[64];
-    sprintf(buffer, "Track %i", index+1);
-    name.set_text(buffer);
-    
     Track &track = model->tracks[index];
+    
+    char buffer[64];
+    
+    if (track.name.empty()) {
+        sprintf(buffer, "Track %i", index+1);
+        name.set_text(buffer);
+    } else {
+        name.set_text(track.name);
+    }
     
     sprintf(buffer, "CH%i", track.midi_channel+1);
     channel.set_text(buffer);
