@@ -110,6 +110,7 @@ bool TrackBar::on_name_button_press_event(GdkEventButton *event) {
         (event->button == 1)) {
         Track &track = model->tracks[index];
         model->midi_control_port = track.midi_port;
+        model->midi_control_channel = track.midi_channel;
         return true;
     } else if ((event->type == GDK_2BUTTON_PRESS) &&
         (event->button == 1)) {

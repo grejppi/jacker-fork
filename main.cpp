@@ -237,6 +237,7 @@ public:
         for (Jack::NFrames i = 0; i < midi_inp->get_event_count(); ++i) {
             MIDI::Message ctrl_msg;
             if (midi_inp->get_event(ctrl_msg, NULL, i)) {
+                ctrl_msg.channel = model->midi_control_channel;
                 midi_omni_out->write_event(0, ctrl_msg);
                 midi_ports[model->midi_control_port]->write_event(0, ctrl_msg);
             }

@@ -276,6 +276,8 @@ public:
     
     // what port to use for the midi control
     int midi_control_port;
+    // what channel to use for the midi control
+    int midi_control_channel;
 
     void reset();
     
