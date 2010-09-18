@@ -143,6 +143,7 @@ public:
     }
     
     virtual void on_message(const Message &msg) {
+        //printf("msg: CH%i 0x%x %i %i\n", msg.channel+1, msg.command, msg.data1, msg.data2);
         int offset = (int)(msg.timestamp>>32);
         midi_omni_out->write_event(offset, msg);
         midi_ports[msg.port]->write_event(offset, msg);
