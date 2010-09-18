@@ -55,7 +55,6 @@ public:
     bool waiting_for_sync;
 
     JackPlayer() : Jack::Client("jacker") {
-        
         thread_messages.resize(100);
         
         enable_sync = false;
@@ -144,7 +143,7 @@ public:
     
     virtual void on_message(const Message &msg) {
         //printf("msg: CH%i 0x%x %i %i\n", msg.channel+1, msg.command, msg.data1, msg.data2);
-        int offset = (int)(msg.timestamp>>32);
+        int offset = (int)(msg.timestamp>>32L);
         midi_omni_out->write_event(offset, msg);
         midi_ports[msg.port]->write_event(offset, msg);
     }

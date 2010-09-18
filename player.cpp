@@ -64,9 +64,9 @@ void MessageQueue::on_command(int bus, int channel, Message::Type command, int v
     if (value == ValueNone)
         return;
     if (value2 == ValueNone)
-	value2 = 0;
+        value2 = 0;
     if (value3 == ValueNone)
-	value3 = 0;
+        value3 = 0;
     assert(model);
     Message msg;
     init_message(bus,msg);
@@ -92,15 +92,15 @@ void MessageQueue::on_note(int bus, int channel, int note, int velocity) {
         msg.data1 = 0;
         msg.data2 = 0;
     } else if (note == ValueNone) {
-	if (velocity == ValueNone)
-	    return;
-	// aftertouch
-	msg.command = MIDI::CommandAftertouch;
-	msg.data1 = 0;
-	msg.data2 = velocity;
+        if (velocity == ValueNone)
+            return;
+        // aftertouch
+        msg.command = MIDI::CommandAftertouch;
+        msg.data1 = 0;
+        msg.data2 = velocity;
     } else {
-	if (velocity == ValueNone)
-	    velocity = 0x7f;
+        if (velocity == ValueNone)
+            velocity = 0x7f;
         msg.command = MIDI::CommandNoteOn;
         msg.data1 = note;
         msg.data2 = velocity;
@@ -323,69 +323,69 @@ void Player::handle_message(Message msg) {
     Channel &values = bus.channels[msg.bus_channel];
     
     if (msg.type == Message::TypeMIDI) {
-	if (msg.command == MIDI::CommandControlChange) {
-	    switch(msg.data1) {
-		case MIDI::ControllerAllNotesOff:
-		{
-		    for (NoteArray::iterator iter = bus.notes.begin();
-			 iter != bus.notes.end(); ++iter) {
-			*iter = -1;
-		    }
-		    on_message(msg);
-		} break;
-		default:
-		{
-		    on_message(msg);
-		} break;
-	    }
-	    return;
-	} else if (msg.command == MIDI::CommandAftertouch) {
-	    if (values.note != ValueNone) {
-		// insert note and pass on
-		msg.data1 = values.note;
-		on_message(msg);
-	    } else {
-		msg.command = MIDI::CommandChannelPressure;
-		msg.data1 = msg.data2;
-		msg.data2 = 0;
-		on_message(msg);
-	    }
-	    return;
-	} else if (msg.command == MIDI::CommandNoteOff) {
-	    if (values.note != ValueNone) {
-		int note = values.note;
-		values.note = ValueNone;
-		// see if that note is actually being played
-		// on our channel, if yes, kill it.
-		if (bus.notes[note] == msg.bus_channel) {
-		    bus.notes[note] = -1;
-		    msg.data1 = note;
-		    msg.data2 = 0;
-		    on_message(msg);
-		}
-	    }
-	    return;
-	} else if (msg.command == MIDI::CommandNoteOn) {
-	    if (values.note != ValueNone) {
-		int note = values.note;
-		values.note = ValueNone;
-		// no matter where the note is played, kill it.
-		bus.notes[note] = -1;
-		Message off_msg(msg);
-		off_msg.command = MIDI::CommandNoteOff;
-		off_msg.data1 = note;
-		off_msg.data2 = 0;
-		on_message(off_msg);
-	    }
-	    values.note = msg.data1;
-	    int volume = std::min((int)((float)(msg.data2) * values.volume), 0x7f);
-	    msg.data2 = volume;
-	    bus.notes[values.note] = msg.bus_channel;
-	    on_message(msg);
-	    return;
-	}
+        if (msg.command == MIDI::CommandControlChange) {
+            switch(msg.data1) {
+                case MIDI::ControllerAllNotesOff:
+                {
+                    for (NoteArray::iterator iter = bus.notes.begin();
+                         iter != bus.notes.end(); ++iter) {
+                        *iter = -1;
+                    }
+                    on_message(msg);
+                } break;
+                default:
+                {
+                    on_message(msg);
+                } break;
+            }
+            return;
+        } else if (msg.command == MIDI::CommandAftertouch) {
+            if (values.note != ValueNone) {
+                // insert note and pass on
+                msg.data1 = values.note;
+                on_message(msg);
+            } else {
+                msg.command = MIDI::CommandChannelPressure;
+                msg.data1 = msg.data2;
+                msg.data2 = 0;
+                on_message(msg);
+            }
+            return;
+        } else if (msg.command == MIDI::CommandNoteOff) {
+            if (values.note != ValueNone) {
+                int note = values.note;
+                values.note = ValueNone;
+                // see if that note is actually being played
+                // on our channel, if yes, kill it.
+                if (bus.notes[note] == msg.bus_channel) {
+                    bus.notes[note] = -1;
+                    msg.data1 = note;
+                    msg.data2 = 0;
+                    on_message(msg);
+                }
+            }
+            return;
+        } else if (msg.command == MIDI::CommandNoteOn) {
+            if (values.note != ValueNone) {
+                int note = values.note;
+                values.note = ValueNone;
+                // no matter where the note is played, kill it.
+                bus.notes[note] = -1;
+                Message off_msg(msg);
+                off_msg.command = MIDI::CommandNoteOff;
+                off_msg.data1 = note;
+                off_msg.data2 = 0;
+                on_message(off_msg);
+            }
+            values.note = msg.data1;
+            int volume = std::min((int)((float)(msg.data2) * values.volume), 0x7f);
+            msg.data2 = volume;
+            bus.notes[values.note] = msg.bus_channel;
+            on_message(msg);
+            return;
+        }
     } else if (msg.type == Message::TypeCommandChannelVolume) {
-	values.volume = std::min((float)(msg.status) / 0x7f, 1.0f);
+        values.volume = std::min((float)(msg.status) / 0x7f, 1.0f);
     }
 }
 
@@ -414,8 +414,7 @@ void Player::process_messages(int _size) {
         
         if (!queue.empty()) {
             next_msg = queue.peek();
-            long long offset = next_msg.timestamp - queue.read_samples;
-            delta = std::min(offset, size);
+            delta = std::min(next_msg.timestamp - queue.read_samples, size);
             if (delta < 0) {
                 // drop
                 queue.pop();
