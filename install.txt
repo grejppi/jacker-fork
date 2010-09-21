@@ -20,12 +20,16 @@ Build
     
  2. The project will build.
  
+Install
+-------
 
+ 1. To install jacker in your system, use
+ 
+    $ sudo scons install
 
 Run
 ---
 
- 1. After the build a "jacker" binary will be
-    available in the root folder. Run it with:
+ 1. After installing, just run:
     
-    $ ./jacker
+    $ jacker
