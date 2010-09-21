@@ -4,6 +4,7 @@
 
 #include <gtkmm.h>
 #include <gtkmm/accelmap.h>
+#include <glibmm/optioncontext.h>
 #include <cassert>
 #include <stdio.h>
 #include <iostream>
@@ -284,12 +285,13 @@ public:
     Gtk::Label *pattern_value;
 
     Gtk::Notebook *view_notebook;
+    Glib::OptionContext options;
 
     sigc::connection mix_timer;
 
     std::string filepath;
     JackPlayer *player;
-
+    
     enum NotebookPages {
         PageSongView = 0,
         PagePatternView,
@@ -313,8 +315,45 @@ public:
         pattern_value = NULL;
     }
     
+    bool parse_options(int argc, char **argv) {
+        options.set_help_enabled(true);
+        
+        bool result = false;
+        try {
+            result = options.parse(argc, argv);
+        } catch (Glib::OptionError) {
+            printf("Unrecognized option.\n");
+        }
+        
+        if (result) {
+            // find filename
+            for (int i = 0; i < argc; ++i) {
+                if (!i)
+                    continue;
+                if (argv[i][0] == '-') // skip option
+                    continue;
+                // schedule a file to be loaded
+                sigc::slot<bool> load_file_slot = sigc::bind(
+                    sigc::mem_fun(*this, &App::load_startup_file), argv[i]);
+                Glib::signal_idle().connect(load_file_slot);
+                return true;
+            }
+        }
+        
+        return result;
+    }
+    
     ~App() {
         assert(!player);
+    }
+    
+    bool load_startup_file(const std::string &path) {
+        if (!load_song(path.c_str())) {
+            printf("Error loading %s.\n", path.c_str());
+            return false;
+        }
+        model_changed();
+        return false;
     }
     
     std::string get_filepath() {
@@ -464,13 +503,19 @@ public:
         write_jsong(model, filename);
     }
     
-    void load_song(const std::string &filename) {
+    bool load_song(const std::string &filename) {
         if (player) {
             player->stop();
             player->seek(0);
         }
-        set_filepath(filename);
-        read_jsong(model, filename);
+        try {
+            if (!read_jsong(model, filename))
+                return false;
+            set_filepath(filename);
+        } catch(...) {
+            return false;
+        }
+        return true;
     }
     
     void all_views_changed() {
@@ -945,7 +990,9 @@ public:
 
 int main(int argc, char **argv) {
     Jacker::App app(argc, argv);
-    app.run();
+    if (app.parse_options(argc, argv)) {
+        app.run();
+    }
     
     return 0;
 }
