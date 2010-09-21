@@ -256,6 +256,8 @@ public:
     void show_cursor();
     void show_cursor(const PatternCursor &cur, bool page_jump=false);
     
+    int get_page_scroll_size() const;
+    int get_page_step_size() const;
     int get_frames_per_bar() const;
     void set_row_height(int height);
     int get_row_height() const;

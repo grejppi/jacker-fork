@@ -1123,7 +1123,7 @@ void PatternView::show_cursor(const PatternCursor &cur, bool page_jump/*=false*/
     if (vadjustment) {
         int row = cur.get_row();
         if (page_jump) {
-            int fpb = get_frames_per_bar();
+            int fpb = get_page_scroll_size();
             int value = vadjustment->get_value();
             int page_size = vadjustment->get_page_size();
             if (row < value)
@@ -1470,8 +1470,8 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
             case GDK_Right: navigate(1,0,shift_down); return true;
             case GDK_Up: navigate(0,-1,shift_down); return true;
             case GDK_Down: navigate(0,1,shift_down); return true;
-            case GDK_Page_Up: navigate(0,-get_frames_per_bar(),shift_down); return true;
-            case GDK_Page_Down: navigate(0,get_frames_per_bar(),shift_down); return true;
+            case GDK_Page_Up: navigate(0,-get_page_step_size(),shift_down); return true;
+            case GDK_Page_Down: navigate(0,get_page_step_size(),shift_down); return true;
             case GDK_KP_Divide: set_octave(get_octave()-1); return true;
             case GDK_KP_Multiply: set_octave(get_octave()+1); return true;
             case GDK_Home: new_cursor.home(); set_cursor(new_cursor,shift_down); return true;
@@ -1685,6 +1685,18 @@ void PatternView::set_font_size(int width, int height) {
 void PatternView::get_font_size(int &width, int &height) const {
     width = font_width;
     height = font_height;
+}
+
+int PatternView::get_page_scroll_size() const {
+    return model->frames_per_beat;
+}
+
+int PatternView::get_page_step_size() const {
+    if (vadjustment) {
+        int page_size = vadjustment->get_page_size();
+        return std::min(page_size,get_frames_per_bar());
+    }
+    return get_frames_per_bar();
 }
 
 int PatternView::get_frames_per_bar() const {
