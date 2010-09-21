@@ -14,7 +14,7 @@
    height="16"
    id="svg2"
    version="1.1"
-   inkscape:version="0.47pre4 r22446"
+   inkscape:version="0.47 r22583"
    sodipodi:docname="jacker.svg"
    style="display:inline"
    enable-background="new"
@@ -36,14 +36,13 @@
          id="stop4122" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient4048">
       <stop
-         style="stop-color:#004ef8;stop-opacity:1"
+         style="stop-color:#515151;stop-opacity:1;"
          offset="0"
          id="stop4050" />
       <stop
-         style="stop-color:#140074;stop-opacity:1"
+         style="stop-color:#000000;stop-opacity:1;"
          offset="1"
          id="stop4052" />
     </linearGradient>
@@ -151,7 +150,7 @@
        fy="8.5234003"
        r="8"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.5359405,0,0,1.5359405,-4.019554,-5.0914351)" />
+       gradientTransform="matrix(1.4399442,0,0,1.4399442,-3.2683318,-4.2732204)" />
     <filter
        inkscape:collect="always"
        id="filter4105"
@@ -190,17 +189,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16.130873"
-     inkscape:cx="-0.90785953"
-     inkscape:cy="3.9730663"
+     inkscape:zoom="31.156893"
+     inkscape:cx="2.7648391"
+     inkscape:cy="7.4312642"
      inkscape:document-units="px"
-     inkscape:current-layer="layer4"
-     showgrid="false"
+     inkscape:current-layer="layer3"
+     showgrid="true"
      borderlayer="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1008"
-     inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-width="1872"
+     inkscape:window-height="999"
+     inkscape:window-x="48"
+     inkscape:window-y="24"
      inkscape:window-maximized="1"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -229,7 +228,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -237,25 +236,23 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Layer#1"
-     style="display:inline"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <rect
        style="color:#000000;fill:url(#radialGradient4056);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect4046"
-       width="16"
-       height="16"
-       x="0"
-       y="0"
-       rx="3"
-       ry="3" />
+       width="15"
+       height="15"
+       x="0.5"
+       y="0.5"
+       rx="1.5"
+       ry="1.5" />
   </g>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1036.3622)"
-     style="display:inline"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <path
        sodipodi:nodetypes="ccsscccccsccc"
        id="path4079"
@@ -291,13 +288,5 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Layer"
-     style="opacity:0.61224491000000003;display:inline;">
-    <path
-       sodipodi:type="inkscape:offset"
-       inkscape:radius="-1.0672287"
-       inkscape:original="M 3 0 C 1.338 0 0 1.338 0 3 L 0 6 C 5.0702658 3.6699736 10.352097 3.2138121 16 6 L 16 3 C 16 1.338 14.662 0 13 0 L 3 0 z "
-       style="color:#000000;fill:url(#linearGradient4164);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="path4162"
-       d="M 3,1.0625 C 1.9107846,1.0625 1.0625,1.9107846 1.0625,3 l 0,1.5 c 4.3946995,-1.6834537 9.044906,-1.9226193 13.875,0 l 0,-1.5 C 14.9375,1.9107846 14.089215,1.0625 13,1.0625 l -10,0 z" />
-  </g>
+     style="opacity:0.61224491;display:inline" />
 </svg>
