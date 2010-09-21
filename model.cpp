@@ -439,8 +439,8 @@ void Model::reset() {
     patterns.clear();
     
     tracks.resize(16);
-    for (int i = 0; i < tracks.size(); ++i) {
-	tracks[i].midi_channel = std::min(i,15);
+    for (int i = 0; i < (int)tracks.size(); ++i) {
+        tracks[i].midi_channel = std::min(i,15);
     }
 }
 

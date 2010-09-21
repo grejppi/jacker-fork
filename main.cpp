@@ -19,6 +19,8 @@
 #include "jsong.hpp"
 #include "ring_buffer.hpp"
 
+#include "jacker_config.hpp"
+
 namespace Jacker {
 
 const char AccelPathPlay[] = "<Jacker>/Transport/Play";
@@ -847,7 +849,7 @@ public:
     void run() {
         init_player();       
         
-        builder = Gtk::Builder::create_from_file("jacker.glade");
+        builder = Gtk::Builder::create_from_file(JACKER_SHARE_DIR"/jacker.glade");
         assert(builder);
         
         builder->get_widget("main", window);

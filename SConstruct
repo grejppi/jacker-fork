@@ -1,148 +1,217 @@
+import os, sys
+import distutils.sysconfig
 
-import os
-import sys
+root_dir = Dir('#').abspath
 
-win32 = sys.platform == 'win32'
+######################################
+# install paths
+######################################
 
-if win32:
-    LINKFLAGS = [
-        #"/SUBSYSTEM:WINDOWS",
-        "/NOLOGO",
-        "/SUBSYSTEM:CONSOLE",
-    ]
+try:
+	umask = os.umask(022)
+	#print 'setting umask to 022 (was 0%o)' % umask
+except OSError:     # ignore on systems that don't support umask
+	pass
+
+import SCons
+from SCons.Script.SConscript import SConsEnvironment
+SConsEnvironment.Chmod = SCons.Action.ActionFactory(os.chmod,
+		lambda dest, mode: 'Chmod: "%s" with 0%o' % (dest, mode))
+
+# 755 = rwxr-xr-x
+def InstallPerm(env, dir, source, perm):
+	obj = env.Install(dir, source)
+	for i in obj:
+		env.AddPostAction(i, env.Chmod(str(i), perm))
+	return dir
+
+SConsEnvironment.InstallPerm = InstallPerm
+
+def win32():
+    return sys.platform == 'win32'
     
-    if 1:
-        # debug
-        GTKMM_LIBS = "glademm-vc90-d-2_4.lib xml++-vc90-d-2_6.lib gtkmm-vc90-d-2_4.lib glade-2.0.lib gdkmm-vc90-d-2_4.lib atkmm-vc90-d-1_6.lib pangomm-vc90-d-1_4.lib giomm-vc90-d-2_4.lib glibmm-vc90-d-2_4.lib cairomm-vc90-d-1_0.lib sigc-vc90-d-2_0.lib gtk-win32-2.0.lib libxml2.lib gdk-win32-2.0.lib atk-1.0.lib gdk_pixbuf-2.0.lib pangowin32-1.0.lib pangocairo-1.0.lib pango-1.0.lib cairo.lib gio-2.0.lib gobject-2.0.lib gmodule-2.0.lib glib-2.0.lib intl.lib iconv.lib".split(' ')
-        CXXFLAGS = [
-            "/EHsc",
-            "/arch:SSE",
-            "/MTd",
-            "/DWIN32",
-            "/DDEBUG",
-            "/D_DEBUG",
-            "/D",        
-            "/vd2",
-            "/fp:fast",
-            "/Zi",
-        ]
-        LINKFLAGS += [
-            "/DEBUG",
-        ]
-    else:
-        # release
-        GTKMM_LIBS = "glademm-vc90-2_4.lib xml++-vc90-2_6.lib gtkmm-vc90-2_4.lib glade-2.0.lib gdkmm-vc90-2_4.lib atkmm-vc90-1_6.lib pangomm-vc90-1_4.lib giomm-vc90-2_4.lib glibmm-vc90-2_4.lib cairomm-vc90-1_0.lib sigc-vc90-2_0.lib gtk-win32-2.0.lib libxml2.lib gdk-win32-2.0.lib atk-1.0.lib gdk_pixbuf-2.0.lib pangowin32-1.0.lib pangocairo-1.0.lib pango-1.0.lib cairo.lib gio-2.0.lib gobject-2.0.lib gmodule-2.0.lib glib-2.0.lib intl.lib iconv.lib".split(' ')
-        CXXFLAGS = [
-            "/EHsc",
-            "/arch:SSE",
-            "/Ox",
-            "/Oy",
-            "/Oi",
-            "/Ob2",
-            "/fp:fast",
-            "/MT",
-            "/DWIN32",
-            "/vd2",
-        ]
-
-    env = Environment(
-        ENV = os.environ,
-        CXXFLAGS = CXXFLAGS,
-        LINKFLAGS = LINKFLAGS,
-        CPPPATH = [
-            "win32/include",
-            ".",
-        ],
-        LIBPATH = [
-            "win32/lib",
-        ],
-        LIBS = [
-            'libjack',
-        ],
+def make_symlink(target, source, env):
+    os.symlink(os.path.abspath(str(source[0])), str(target[0]))
+    
+class LocalEnvironment(Environment):
+    def __init__(self, **kargs):
+        Environment.__init__(self,
+            ENV=os.environ,
+            variables=opts,
+            **kargs)
+        self['BUILDERS'].update(dict(
+            Symlink = Builder(action = make_symlink)
+        ))
+        self.Append(
+            LINKFLAGS = "-z defs" # warn for missing symbols
         )
-    
-    gtk_env = env.Clone()
-    gtk_env.Append(
-        CPPPATH = [
-            r'${GTKMM_BASEPATH}\include\libglademm-2.4',
-            r'${GTKMM_BASEPATH}\lib\libglademm-2.4\include',
-            r'${GTKMM_BASEPATH}\lib\gtkmm-2.4\include',
-            r'${GTKMM_BASEPATH}\include\gtkmm-2.4',
-            r'${GTKMM_BASEPATH}\lib\gdkmm-2.4\include',
-            r'${GTKMM_BASEPATH}\include\gdkmm-2.4',
-            r'${GTKMM_BASEPATH}\include\pangomm-1.4',
-            r'${GTKMM_BASEPATH}\include\atkmm-1.6',
-            r'${GTKMM_BASEPATH}\lib\libxml++-2.6\include',
-            r'${GTKMM_BASEPATH}\include\libxml++-2.6',
-            r'${GTKMM_BASEPATH}\lib\giomm-2.4\include',
-            r'${GTKMM_BASEPATH}\include\giomm-2.4',
-            r'${GTKMM_BASEPATH}\lib\glibmm-2.4\include',
-            r'${GTKMM_BASEPATH}\include\glibmm-2.4',
-            r'${GTKMM_BASEPATH}\include\cairomm-1.0',
-            r'${GTKMM_BASEPATH}\lib\sigc++-2.0\include',
-            r'${GTKMM_BASEPATH}\include\sigc++-2.0',
-            r'${GTKMM_BASEPATH}\include\libglade-2.0',
-            r'${GTKMM_BASEPATH}\lib\gtk-2.0\include',
-            r'${GTKMM_BASEPATH}\include\gtk-2.0',
-            r'${GTKMM_BASEPATH}\include\pango-1.0',
-            r'${GTKMM_BASEPATH}\include\atk-1.0',
-            r'${GTKMM_BASEPATH}\lib\glib-2.0\include',
-            r'${GTKMM_BASEPATH}\include\glib-2.0',
-            r'${GTKMM_BASEPATH}\include\libxml2',
-            r'${GTKMM_BASEPATH}\include\cairo',
-            r'${GTKMM_BASEPATH}\include',
-        ],
-        LIBPATH = [
-            r'${GTKMM_BASEPATH}\lib',
-        ],
-        LIBS = GTKMM_LIBS,
-    )
+        if not self['VERBOSE']:
+            self.Append(
+                SHCXXCOMSTR = "$SOURCE",
+                SHLINKCOMSTR = "Linking $TARGET",
+                CXXCOMSTR = "$SOURCE",
+                LINKCOMSTR = "Linking $TARGET",
+            )
+        if self['DEBUG']:
+            self.debug()
+        else:
+            self.release()
+
+        self.Alias(target='install', source="${DESTDIR}${PREFIX}")
+        self['PYTHON_SITE_PACKAGES'] = distutils.sysconfig.get_python_lib(prefix="${DESTDIR}${PREFIX}")
         
-    gtk_env['GTKMM_BASEPATH'] = os.environ['GTKMM_BASEPATH']
-else:
-    env = Environment(
-        ENV = os.environ,
-        CXXFLAGS = [
-            "-g",
-            "-DDEBUG",
-            "-fno-strict-aliasing",
-            "-fwrapv",
-            "-Wall",
-            "-Wno-deprecated",
-            '-march=core2', #x86_64: we need to take this out
-            '-mfpmath=sse',
-            '-msse',
-            '-ffast-math',
-        ],
-        CPPPATH = [
-            '.',
-        ],
-        LIBS = [
-            'stdc++',
-        ],
-        )
-    #env.ParseConfig("pkg-config sdl --cflags --libs")
-    env.ParseConfig("pkg-config jack --cflags --libs")
+    def debug(self):
+        if win32():
+            self.Append(
+                CXXFLAGS=[
+                    "/EHsc",
+                    "/arch:SSE",
+                    "/MTd",
+                    "/D",
+                ],
+            )
+        else:
+            self.Append(
+                CXXFLAGS=[
+                    "-g",
+                    "-DDEBUG",
+                    "-fno-strict-aliasing",
+                    "-fwrapv",
+                    "-Wall",
+                    "-Wno-deprecated",
+                    '-march=core2', #x86_64: we need to take this out
+                    '-mfpmath=sse',
+                    '-msse',
+                    '-ffast-math',
+                ],
+            )
     
-    gtk_env = env.Clone()
-    gtk_env.ParseConfig("pkg-config gtkmm-2.4 --cflags --libs")
-    gtk_env.ParseConfig("pkg-config sigc++-2.0 --cflags --libs")
+    def release(self):
+        if win32():
+            self.Append(
+                CXXFLAGS=[
+                    "/EHsc",
+                    "/arch:SSE",
+                    "/Ox",
+                    "/Oy",
+                    "/Oi",
+                    "/Ob2",
+                    "/fp:fast",
+                    "/MT",
+                ],
+            )
+        else:
+            self.Append(
+                CXXFLAGS=[
+                    "-fno-strict-aliasing",
+                    "-fwrapv",
+                    "-Wall",
+                    "-Wno-deprecated",
+                    '-march=core2', #x86_64: we need to take this out
+                    '-mfpmath=sse',
+                    '-msse',
+                    '-O3',
+                    '-funroll-loops',
+                    '-fomit-frame-pointer',
+                    '-ffast-math',
+                    '-DNDEBUG',
+                ],
+            )
 
-json_files = [
-    'json/json_reader.cpp',
-    'json/json_value.cpp',
-    'json/json_writer.cpp',
-]
+    def install(self, target, source, perm=None):
+        if self['IDDQD']:
+            target_dir = self.Dir(target)
+            if not hasattr(source, '__iter__'):
+                source = [source]
+            for s in source:
+                target = os.path.join(str(target_dir), os.path.basename(str(s)))
+                i = self.Symlink(target=target, source=source)
+        elif not perm:
+            self.Install(dir=self.Dir(target), source=source)
+        else:
+            self.InstallPerm(dir=self.Dir(target), source=source, perm=perm)
 
-objects = env.Object(['jack.cpp',
-     'player.cpp',
-     'jsong.cpp',
-     'model.cpp',
-     'drag.cpp',
-     ] + json_files)
-gtk_objects = gtk_env.Object(['main.cpp',
-     'songview.cpp',
-     'patternview.cpp',
-     'trackview.cpp',
-     'measure.cpp'])
-gtk_env.Program('jacker', objects + gtk_objects)
+class PyExtEnvironment(LocalEnvironment):
+    def __init__(self, **kargs):
+        LocalEnvironment.__init__(self, **kargs)
+        if win32():
+            python_inc = distutils.sysconfig.get_python_inc(False)
+            # not beautiful but rare
+            python_lib = os.path.join(distutils.sysconfig.get_python_lib(False, True),'..','libs')
+            self.Append(
+                CPPPATH=[
+                    python_inc,
+                    '../../../include',
+                    '#/include',
+                ],
+                CXXFLAGS=[
+                    "/DBOOST_PYTHON_STATIC_LIB",
+                    "/DWIN32",
+                ],
+                LIBPATH=[
+                    python_lib,
+                    '../../../lib',
+                ],
+                LIBS=[
+                ]
+            )
+            self['SHLIBPREFIX'] = "" #gets rid of lib prefix
+            self['SHLIBSUFFIX'] = ".pyd"
+        else:
+            python_inc = distutils.sysconfig.get_python_inc(False)
+            python_lib = distutils.sysconfig.get_python_lib(False, True)
+
+            self.Append(
+                CPPPATH=[
+                    python_inc,
+                    '#/include',
+                ],
+                LIBPATH=[
+                    python_lib,
+                ],
+                LIBS=[
+                    'stdc++', # possible fix for __cxa_allocate_exception segfault
+                    'boost_python-mt-py26',
+                ],
+            )
+            self['SHLIBPREFIX'] = "" #gets rid of lib prefix
+            self.ParseConfig("python-config --libs")
+    
+######################################
+
+#VariantDir('build', 'src', duplicate=0)
+
+def bool_converter(value):
+	value = value.lower()
+	if value in ('true','enabled','on','yes','1'):
+		return True
+	elif value in ('false','disabled','off','no','0'):
+		return False
+	return bool(value)
+
+######################################
+
+opts = Variables( root_dir + '/options.conf', ARGUMENTS )
+opts.Add("PREFIX", 'Set the install "prefix" ( /path/to/PREFIX )', "/usr/local")
+opts.Add("DESTDIR", 'Set the root directory to install into ( /path/to/DESTDIR )', "")
+opts.Add("DEBUG", "Compile in debug mode if true", False, None, bool_converter)
+opts.Add("VERBOSE", "Print command lines while building", False, None, bool_converter)
+opts.Add("IDDQD", "Enables god mode (installs symlinks)", False, None, bool_converter)
+
+env = LocalEnvironment()
+env.SConsignFile()
+
+assert not env['DESTDIR'] or os.path.isabs(env['DESTDIR']), "%s must be an absolute path." % env['DESTDIR']
+assert not env['PREFIX'] or os.path.isabs(env['PREFIX']), "%s must be an absolute path." % env['PREFIX']
+
+opts.Save(root_dir + '/options.conf', env)
+Help( opts.GenerateHelpText( env ) )
+
+######################################
+
+Export('LocalEnvironment', 
+       'PyExtEnvironment', 
+       'win32')
+SConscript([
+    'SConscript',
+])
