@@ -310,13 +310,7 @@ void SongView::new_pattern(const SongCursor &cur, int size) {
     int frame = cur.get_frame();
     int track = cur.get_track();
     Pattern &pattern = model->new_pattern();
-    if (model->enable_loop && (frame >= model->loop.get_begin()) &&
-        (frame < model->loop.get_end())) {
-        frame = model->loop.get_begin();
-        pattern.set_length(model->loop.get_end() - model->loop.get_begin());
-    } else if (size) {
-        pattern.set_length(size);
-    }
+    pattern.set_length(size);
     Song::iterator event = model->song.add_event(frame, track, pattern);
     clear_selection();
     select_event(event);    
@@ -637,7 +631,7 @@ void SongView::do_move(int ofs_frame, int ofs_track) {
     for (Song::IterList::iterator iter = selection.begin();
         iter != selection.end(); ++iter) {
         Song::Event &event = (*iter)->second;
-        int frame = event.frame + ofs_frame;
+        int frame = quantize_frame(event.frame + ofs_frame);
         int track = event.track + ofs_track;
         if ((frame < 0)||(track < 0)||(track >= model->get_track_count())) {
             can_move = false;
@@ -653,7 +647,7 @@ void SongView::do_move(int ofs_frame, int ofs_track) {
             iter != selection.end(); ++iter) {
             Song::Event event = (*iter)->second;
             
-            event.frame += ofs_frame;
+            event.frame = quantize_frame(event.frame + ofs_frame);
             event.track += ofs_track;
             
             _pattern_erased(*iter);
@@ -682,8 +676,8 @@ void SongView::do_resize(int ofs_frame) {
     for (Song::IterList::iterator iter = selection.begin();
         iter != selection.end(); ++iter) {
         Song::Event &event = (*iter)->second;
-        int length = std::max(event.pattern->get_length() + ofs_frame, 
-            get_step_size());
+        int length = std::max(quantize_frame(event.pattern->get_length() 
+            + ofs_frame), get_step_size());
             
         event.pattern->set_length(length);
     }
@@ -1022,7 +1016,7 @@ void SongView::get_drag_offset(int &frame, int &track) {
     int dx,dy;
     drag.get_delta(dx,dy);
     get_event_length(dx, dy, frame, track);
-    frame = quantize_frame(frame);
+    //frame = quantize_frame(frame);
 }
 
 int SongView::get_step_size() {
@@ -1045,12 +1039,12 @@ void SongView::get_event_rect(Song::iterator iter, int &x, int &y, int &w, int &
     if (moving() && is_event_selected(iter)) {
         int ofs_frame,ofs_track;
         get_drag_offset(ofs_frame, ofs_track);
-        frame += ofs_frame;
+        frame = quantize_frame(frame + ofs_frame);
         track += ofs_track;
     } else if (resizing() && is_event_selected(iter)) {
         int ofs_frame,ofs_track;
         get_drag_offset(ofs_frame, ofs_track);
-        length = std::max(length + ofs_frame, get_step_size());
+        length = std::max(quantize_frame(length + ofs_frame), get_step_size());
     }
     get_event_pos(frame, track, x, y);
     get_event_size(length, w, h);
