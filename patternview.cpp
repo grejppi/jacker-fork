@@ -717,6 +717,8 @@ PatternView::PatternView(BaseObjectType* cobject,
     font_width = 0;
     font_height = 0;
     octave = 4;
+    cursor_x = 0;
+    cursor_y = 0;
     play_position = -1;
     renderers.resize(ParamCount);
     for (size_t i = 0; i < renderers.size(); ++i) {
@@ -1196,12 +1198,12 @@ void PatternView::transpose(int step) {
         cur = iter->second;
         if (!selection.in_range(cur))
             continue;
-	if (iter->second.param != ParamNote)
-	    continue;
-	if (iter->second.value == NoteOff)
-	    continue;
-	iter->second.value += step;
-	iter->second.sanitize_value();
+        if (iter->second.param != ParamNote)
+            continue;
+        if (iter->second.value == NoteOff)
+            continue;
+        iter->second.value += step;
+        iter->second.sanitize_value();
     }    
     
     invalidate_selection();
@@ -1488,15 +1490,15 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
             case GDK_plus:
             case GDK_KP_Add:
             {
-		if (shift_down)
-		    transpose(1);
+                if (shift_down)
+                    transpose(1);
                 return true;
             } break;
             case GDK_minus:
             case GDK_KP_Subtract:
             {
-		if (shift_down)
-		    transpose(-1);
+                if (shift_down)
+                    transpose(-1);
                 return true;
             } break;
             default: {
@@ -1661,6 +1663,15 @@ void PatternView::play_pattern() {
     if (!get_pattern())
         return;
     int frame = song_event->second.frame;
+    _play_request(frame);
+}
+
+void PatternView::play_from_mouse_cursor() {
+    if (!get_pattern())
+        return;
+    PatternCursor new_cursor(cursor);
+    new_cursor.set_pos(cursor_x,cursor_y);
+    int frame = song_event->second.frame + new_cursor.get_row();
     _play_request(frame);
 }
 

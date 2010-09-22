@@ -90,6 +90,8 @@ SongView::SongView(BaseObjectType* cobject,
     colors[ColorTrack].set("#ffffff");
     colors[ColorGhost].set("#606060");
     play_position = 0;
+    cursor_x = 0;
+    cursor_y = 0;
 }
 
 void SongView::set_model(class Model &model) {
@@ -579,6 +581,9 @@ bool SongView::on_motion_notify_event(GdkEventMotion *event) {
     bool shift_down = event->state & Gdk::SHIFT_MASK;
     bool ctrl_down = event->state & Gdk::CONTROL_MASK;
     
+    cursor_x = event->x;
+    cursor_y = event->y;
+    
     if (interact_mode == InteractNone) {
         SongCursor cur(*this);
         cur.set_pos(event->x, event->y);
@@ -880,6 +885,16 @@ void SongView::set_loop_end() {
     invalidate_loop();
 }
 
+void SongView::seek_to_mouse_cursor() {
+    SongCursor cur(*this);
+    cur.set_pos(cursor_x, cursor_y);
+    
+    int frame = cur.get_frame();
+    if (frame < 0)
+        return;
+    _seek_request(quantize_frame(frame));
+}
+
 void SongView::play_from_selection() {
     int frame = get_selection_begin();
     if (frame == -1)
@@ -966,6 +981,7 @@ bool SongView::on_key_press_event(GdkEventKey* event) {
                     edit_pattern(selection.front());
                 return true;
             } break;
+            case GDK_p: seek_to_mouse_cursor(); return true;
             case GDK_Left: navigate(-1,0); return true;
             case GDK_Right: navigate(1,0); return true;
             case GDK_Up: navigate(0,-1); return true;
@@ -1134,6 +1150,10 @@ void SongView::set_scroll_adjustments(Gtk::Adjustment *hadjustment,
         vadjustment->signal_value_changed().connect(sigc::mem_fun(*this,
             &SongView::on_adjustment_value_changed));
     }                                         
+}
+
+SongView::type_seek_request SongView::signal_seek_request() {
+    return _seek_request;
 }
 
 SongView::type_pattern_edit_request SongView::signal_pattern_edit_request() {

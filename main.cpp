@@ -26,6 +26,7 @@ namespace Jacker {
 
 const char AccelPathPlay[] = "<Jacker>/Transport/Play";
 const char AccelPathStop[] = "<Jacker>/Transport/Stop";
+const char AccelPathTogglePlay[] = "<Jacker>/Transport/TogglePlay";
 const char AccelPathPatternView[] = "<Jacker>/View/Pattern";
 const char AccelPathTrackView[] = "<Jacker>/View/Song";
 const char AccelPathSave[] = "<Jacker>/File/Save";
@@ -395,6 +396,16 @@ public:
         }
     }
     
+    void on_toggle_play_action() {
+        init_player();
+        if (!player)
+            return;
+        if (player->is_playing())
+            player->stop();
+        else
+            player->play();
+    }
+    
     void on_stop_action() {
         if (!player)
             return;
@@ -629,6 +640,9 @@ public:
     }
     
     void init_transport() {
+        connect_action("toggle_play_action", 
+            sigc::mem_fun(*this, &App::on_toggle_play_action),
+            AccelPathTogglePlay);
         connect_action("play_action", 
             sigc::mem_fun(*this, &App::on_play_action),
             AccelPathPlay);
@@ -791,6 +805,8 @@ public:
             sigc::mem_fun(*this, &App::on_song_view_pattern_erased));
         song_view->signal_tracks_changed().connect(
             sigc::mem_fun(*this, &App::on_song_view_tracks_changed));
+        song_view->signal_seek_request().connect(
+            sigc::mem_fun(*this, &App::on_seek_request));
         
         builder->get_widget("song_view_menu", song_view_menu);
         assert(song_view_menu);
@@ -904,6 +920,8 @@ public:
         Gtk::AccelMap::add_entry(AccelPathTrackView, GDK_F3, Gdk::ModifierType());
         Gtk::AccelMap::add_entry(AccelPathPlay, GDK_F5, Gdk::ModifierType());
         Gtk::AccelMap::add_entry(AccelPathStop, GDK_F8, Gdk::ModifierType());
+        Gtk::AccelMap::add_entry(AccelPathTogglePlay, GDK_space, 
+            Gdk::ModifierType());
         Gtk::AccelMap::add_entry(AccelPathOpen, GDK_o, Gdk::CONTROL_MASK);
         Gtk::AccelMap::add_entry(AccelPathSave, GDK_s, Gdk::CONTROL_MASK);
         

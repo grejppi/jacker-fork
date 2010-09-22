@@ -76,6 +76,7 @@ public:
     typedef sigc::signal<void, int> type_play_request;
     typedef sigc::signal<void, Song::iterator> type_pattern_erased;
     typedef sigc::signal<void> type_tracks_changed;
+    typedef sigc::signal<void, int> type_seek_request;
     
     SongView(BaseObjectType* cobject, 
             const Glib::RefPtr<Gtk::Builder>& builder);
@@ -143,6 +144,7 @@ public:
     type_play_request signal_play_request();
     type_pattern_erased signal_pattern_erased();
     type_tracks_changed signal_tracks_changed();
+    type_seek_request signal_seek_request();
 protected:
     void invalidate_selection();
     void invalidate_play_position();
@@ -158,6 +160,7 @@ protected:
     int get_selection_begin();
     int get_selection_end();
     void play_from_selection();
+    void seek_to_mouse_cursor();
 
     bool can_resize_event(Song::iterator event, int x);
     void get_drag_offset(int &frame, int &track);
@@ -186,6 +189,9 @@ protected:
     int zoomlevel;
     int snap_frames;
     
+    // last cursor position
+    int cursor_x, cursor_y;
+    
     // start x and y position
     int origin_x, origin_y;
 
@@ -206,6 +212,7 @@ protected:
     type_play_request _play_request;
     type_pattern_erased _pattern_erased;
     type_tracks_changed _tracks_changed;
+    type_seek_request _seek_request;
     
     Gtk::Adjustment *hadjustment;
     Gtk::Adjustment *vadjustment;

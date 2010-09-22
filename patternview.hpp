@@ -242,6 +242,8 @@ public:
     CellRendererNote note_renderer;
     CellRendererHex byte_renderer;
     CellRendererCommand command_renderer;
+    
+    int cursor_x, cursor_y;
     //CellRendererHex word_renderer;
     class Model *model;
     
@@ -290,6 +292,7 @@ public:
     
     void play_event(const Pattern::Event &event);
     void play_from_cursor();
+    void play_from_mouse_cursor();
     void play_pattern();
     
     void cut_block();
