@@ -13,6 +13,7 @@ enum {
     ColorBackground,
     ColorTrack,
     ColorGhost,
+    ColorMuted,
 
     ColorCount,
 };
@@ -89,6 +90,7 @@ SongView::SongView(BaseObjectType* cobject,
     colors[ColorBackground].set("#e0e0e0");
     colors[ColorTrack].set("#ffffff");
     colors[ColorGhost].set("#606060");
+    colors[ColorMuted].set("#A0A0A0");
     play_position = 0;
     cursor_x = 0;
     cursor_y = 0;
@@ -183,8 +185,15 @@ void SongView::render_event(Song::iterator event) {
     bool selected = is_event_selected(event);
     int x,y,w,h;
     get_event_rect(event, x, y, w, h);
+    
+    bool mute = event->second.mute;
+    
     Gdk::Color color;
-    if (event->second.pattern->refcount > 1) {
+    if (mute) {
+        x += 1;
+        y += 1;
+        color = colors[ColorMuted];
+    } else if (event->second.pattern->refcount > 1) {
         color = colors[ColorGhost];
     } else {
         color = colors[ColorBlack];
@@ -192,10 +201,12 @@ void SongView::render_event(Song::iterator event) {
     // main border
     gc->set_foreground(color);
     window->draw_rectangle(gc, false, x, y+1, w, h-3);
-    // bottom shadow
-    window->draw_rectangle(gc, true, x+1, y+h-1, w, 1);
-    // right shadow
-    window->draw_rectangle(gc, true, x+w+1, y+2, 1, h-2);
+    if (!mute) {
+        // bottom shadow
+        window->draw_rectangle(gc, true, x+1, y+h-1, w, 1);
+        // right shadow
+        window->draw_rectangle(gc, true, x+w+1, y+2, 1, h-2);
+    }
     pango_layout->set_width((w-4)*Pango::SCALE);
     pango_layout->set_text(event->second.pattern->name.c_str());
     if (selected) {
@@ -676,6 +687,17 @@ void SongView::apply_move() {
     do_move(ofs_frame, ofs_track);
 }
 
+void SongView::toggle_mute_selection() {
+    for (Song::IterList::iterator iter = selection.begin();
+        iter != selection.end(); ++iter) {
+        Song::Event &event = (*iter)->second;
+        event.mute = !event.mute;
+    }
+    
+    invalidate();
+}
+
+
 void SongView::do_resize(int ofs_frame) {
     // verify that we can move
     for (Song::IterList::iterator iter = selection.begin();
@@ -982,6 +1004,7 @@ bool SongView::on_key_press_event(GdkEventKey* event) {
                 return true;
             } break;
             case GDK_p: seek_to_mouse_cursor(); return true;
+            case GDK_m: toggle_mute_selection(); return true;
             case GDK_Left: navigate(-1,0); return true;
             case GDK_Right: navigate(1,0); return true;
             case GDK_Up: navigate(0,-1); return true;

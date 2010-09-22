@@ -47,6 +47,7 @@ void JSongWriter::collect(Json::Value &root, Song::Event &event) {
         return;
     root["frame"] = event.frame;
     root["track"] = event.track;
+    root["mute"] = event.mute;
     root["pattern"] = iter->second;
 }
 
@@ -191,6 +192,7 @@ void JSongReader::build(const Json::Value &root, Pattern &pattern) {
 bool JSongReader::build(const Json::Value &root, Song::Event &event) {
     extract(root["frame"], event.frame);
     extract(root["track"], event.track);
+    extract(root["mute"], event.mute);
     int pattern_index = -1;
     if (!extract(root["pattern"], pattern_index))
         return false;

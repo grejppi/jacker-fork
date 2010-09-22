@@ -173,6 +173,7 @@ protected:
 struct SongEvent {
     int frame;
     int track;
+    bool mute;
     Pattern *pattern;
     
     SongEvent();

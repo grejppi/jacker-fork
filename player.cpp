@@ -278,6 +278,8 @@ void Player::mix_frame(MessageQueue &queue) {
         Song::Event &event = (*iter)->second;
         Pattern &pattern = *event.pattern;
         
+        if (event.mute)
+            continue; // ignore event
         if (model->tracks[event.track].mute)
             continue; // ignore event
         

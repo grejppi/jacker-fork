@@ -268,6 +268,7 @@ SongEvent::SongEvent() {
     frame = ValueNone;
     pattern = NULL;
     track = 0;
+    mute = false;
 }
 
 SongEvent::SongEvent(int frame, int track, Pattern &pattern) {

@@ -182,6 +182,7 @@ protected:
     
     void clone_selection(bool references=false);
     void join_selection();
+    void toggle_mute_selection();
     
     void show_selection();
 
