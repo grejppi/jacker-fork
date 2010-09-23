@@ -1255,6 +1255,22 @@ void PatternView::on_clipboard_received(const Gtk::SelectionData &data) {
     jsong_reader.build(root, block);
     if (root.empty())
         return;
+
+    int range_begin = cursor.get_row();
+    int range_end = range_begin + block.get_length();
+    
+    // clear pattern at paste position
+    Pattern::iterator iter;
+    for (Pattern::iterator iter = pattern->begin(); 
+         iter != pattern->end(); ++iter) {
+        Pattern::Event &event = iter->second;
+        if ((event.frame >= range_begin) && (event.frame < range_end)) {
+            event.frame = -1; // will be deleted
+        }
+    }
+    
+    pattern->update_keys();
+    
     
     for (Pattern::iterator iter = block.begin(); iter != block.end();
          iter++) {
