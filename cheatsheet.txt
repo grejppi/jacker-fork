@@ -118,6 +118,7 @@ Shift+Click+Drag: Move copy of pattern(s) at cursor.
      +Click+Drag: Move pattern link(s) at cursor.
           Delete: Remove selected patterns.
           Ctrl+J: Join patterns across tracks into one.
+               S: Split patterns at cursor.
           Ctrl+D: Duplicate selection.
     Ctrl+Shift+D: Duplicate selection as link.
 Shift+Left/Right: Move patterns along track (+-step).

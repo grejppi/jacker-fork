@@ -907,6 +907,44 @@ void SongView::set_loop_end() {
     invalidate_loop();
 }
 
+void SongView::split_at_mouse_cursor() {
+    SongCursor cur(*this);
+    cur.set_pos(cursor_x, cursor_y);
+    
+    int frame = quantize_frame(cur.get_frame());
+    
+    invalidate_selection();
+    Song::IterList new_selection;
+    
+    Song::IterList::iterator iter;
+    for (iter = selection.begin(); iter != selection.end(); ++iter) {
+        Song::Event &event = (*iter)->second;
+        if ((frame > event.frame) && (frame < event.get_last_frame())) {
+            // create two new events
+            Song::Event left_event = event;
+            Song::Event right_event = event;
+            left_event.pattern = &model->new_pattern(event.pattern);
+            left_event.pattern->set_length(frame - event.frame);
+            right_event.pattern = &model->new_pattern(event.pattern);
+            right_event.pattern->move_frames(0, event.frame - frame, -1);
+            right_event.pattern->set_length(event.get_end() - frame);
+            right_event.frame = frame;
+            
+            new_selection.push_back(model->song.add_event(left_event));
+            new_selection.push_back(model->song.add_event(right_event));
+            
+            _pattern_erased(*iter);
+            model->song.erase(*iter);
+        }
+    }
+    
+    selection = new_selection;
+    invalidate_selection();    
+    
+    // cleanup
+    model->delete_unused_patterns();    
+}
+
 void SongView::seek_to_mouse_cursor() {
     SongCursor cur(*this);
     cur.set_pos(cursor_x, cursor_y);
@@ -1003,6 +1041,7 @@ bool SongView::on_key_press_event(GdkEventKey* event) {
                     edit_pattern(selection.front());
                 return true;
             } break;
+            case GDK_s: split_at_mouse_cursor(); return true;
             case GDK_p: seek_to_mouse_cursor(); return true;
             case GDK_m: toggle_mute_selection(); return true;
             case GDK_Left: navigate(-1,0); return true;

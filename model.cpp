@@ -262,6 +262,28 @@ void Pattern::copy_from(const Pattern &pattern) {
     }
 }
 
+void Pattern::move_frames(int row, int step, int channel) {
+    int length = get_length();
+    
+    Pattern::iterator iter;
+    for (Pattern::iterator iter = begin(); 
+         iter != end(); ++iter) {
+        int frame = iter->second.frame;
+        if (frame < row)
+            continue;
+        if ((channel >= 0) && (iter->second.channel != channel))
+            continue;
+        int newframe = frame + step;
+        if ((newframe < row) || (newframe >= length)) {
+            iter->second.frame = -1; // will be deleted
+        } else {
+            iter->second.frame = newframe;
+        }
+    }
+    
+    update_keys();    
+}
+
 //=============================================================================
 
 SongEvent::SongEvent() {

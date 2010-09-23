@@ -161,6 +161,7 @@ protected:
     int get_selection_end();
     void play_from_selection();
     void seek_to_mouse_cursor();
+    void split_at_mouse_cursor();
 
     bool can_resize_event(Song::iterator event, int x);
     void get_drag_offset(int &frame, int &track);

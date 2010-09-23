@@ -160,6 +160,8 @@ public:
     void update_keys();
     void copy_from(const Pattern &pattern);
     
+    void move_frames(int row, int step, int channel);
+    
     Pattern();
 protected:
     // length in frames

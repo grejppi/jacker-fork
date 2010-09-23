@@ -1212,25 +1212,9 @@ void PatternView::transpose(int step) {
 void PatternView::move_frames(int step, bool all_channels/*=false*/) {
     int row = cursor.get_row();
     int channel = cursor.get_channel();
-    int length = get_pattern()->get_length();
     
-    Pattern::iterator iter;
-    for (Pattern::iterator iter = get_pattern()->begin(); 
-         iter != get_pattern()->end(); ++iter) {
-        int frame = iter->second.frame;
-        if (frame < row)
-            continue;
-        if (!all_channels && (iter->second.channel != channel))
-            continue;
-        int newframe = frame + step;
-        if ((newframe < row) || (newframe >= length)) {
-            iter->second.frame = -1; // will be deleted
-        } else {
-            iter->second.frame = newframe;
-        }
-    }
+    get_pattern()->move_frames(row, step, (all_channels?-1:channel));
     
-    get_pattern()->update_keys();
     invalidate();
 }
 
