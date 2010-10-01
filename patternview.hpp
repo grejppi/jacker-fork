@@ -306,6 +306,7 @@ public:
     void end_block();
     void cycle_block_selection();
     void transpose(int step);
+    void interpolate();
     
     void move_frames(int step, bool all_channels=false);
     void reset();

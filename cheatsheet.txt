@@ -65,10 +65,15 @@ Q2W3ER5T6Y7U: Set notes in note columns (Octave +1).
      Alt+Del: Move all values below cursor up
               by one row in all channels.
 Shift+NumPad
-  Plus/Minus: Transpose Notes Up/Down
+  Plus/Minus: Transpose notes up/down by a semitone.
+Shift+Alt+
+NumPad Plus/
+       Minus: Transpose notes up/down by an octave.
+       
+      Ctrl+I: Interpolate values.
   
  Ctrl+NumPad
-  Plus/Minus: Add/Remove Voice Channel
+  Plus/Minus: Add/remove voice channel.
 
       Ctrl+C: Copy events in selection to clipboard.
       Ctrl+V: Paste events from clipboard at cursor.

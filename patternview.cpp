@@ -1190,6 +1190,42 @@ bool PatternView::on_button_release_event(GdkEventButton* event) {
     return false;
 }
 
+void PatternView::interpolate() {
+    if (!selection.get_active())
+        return;
+    selection.sort();
+    if (selection.p0.get_channel() != selection.p1.get_channel())
+        return;
+    if (selection.p0.get_param() != selection.p1.get_param())
+        return;
+    Pattern::iterator iter;
+    iter = get_event(selection.p0);
+    if (iter == get_pattern()->end())
+        return;
+    int v0 = iter->second.value;
+    iter = get_event(selection.p1);
+    if (iter == get_pattern()->end())
+        return;
+    int v1 = iter->second.value;
+    
+    int start_row = selection.p0.get_row();
+    int end_row = selection.p1.get_row();
+    double scale = (double)(v1 - v0) / (double)(end_row - start_row);
+    
+    clear_block();
+    
+    for (int i = start_row; i <= end_row; ++i) {
+        Pattern::Event event;
+        event.frame = i;
+        event.channel = selection.p0.get_channel();
+        event.param = selection.p0.get_param();
+        event.value = int((double)v0 + scale * (double)(i - start_row) + 0.5);
+        get_pattern()->add_event(event);
+    }
+    
+    invalidate_selection();
+}
+
 void PatternView::transpose(int step) {
     Pattern::iterator iter;
     for (Pattern::iterator iter = get_pattern()->begin(); 
@@ -1460,6 +1496,7 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
             case GDK_c: copy_block(); return true;
             case GDK_v: paste_block(); return true;
             case GDK_d: clear_block(); return true;
+            case GDK_i: interpolate(); return true;
             case GDK_plus:
             case GDK_KP_Add:
             {
@@ -1486,6 +1523,19 @@ bool PatternView::on_key_press_event(GdkEventKey* event) {
             case GDK_End: set_octave(get_octave()+1); return true;
             case GDK_Insert: move_frames(1,true); return true;
             case GDK_Delete: move_frames(-1,true); return true;
+            case GDK_KP_Add:
+            {
+                if (shift_down)
+                    transpose(12);
+                return true;
+            } break;
+            case GDK_minus:
+            case GDK_KP_Subtract:
+            {
+                if (shift_down)
+                    transpose(-12);
+                return true;
+            } break;            
             default: break;
         }
     }
