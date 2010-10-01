@@ -1257,14 +1257,36 @@ void PatternView::on_clipboard_received(const Gtk::SelectionData &data) {
         return;
 
     int range_begin = cursor.get_row();
-    int range_end = range_begin + block.get_length();
+    int range_end = range_begin + block.get_length()-1;
+    
+    int channel_begin = cursor.get_channel();
+    int channel_end = channel_begin + block.get_channel_count()-1;
+    
+    int param_begin = 0;
+    int param_end = 0;
+    JSongReader::extract(root["first_param"], param_begin);
+    JSongReader::extract(root["last_param"], param_end);
+    
+    // paste selection
+    PatternSelection paste_sel(selection);
+    paste_sel.p0.set_row(range_begin);
+    paste_sel.p0.set_channel(channel_begin);
+    paste_sel.p0.set_param(param_begin);
+    paste_sel.p1.set_row(range_end);
+    paste_sel.p1.set_channel(channel_end);
+    paste_sel.p1.set_param(param_end);
+    paste_sel.set_active(true);
     
     // clear pattern at paste position
     Pattern::iterator iter;
     for (Pattern::iterator iter = pattern->begin(); 
          iter != pattern->end(); ++iter) {
         Pattern::Event &event = iter->second;
-        if ((event.frame >= range_begin) && (event.frame < range_end)) {
+        PatternCursor cur(cursor);
+        cur.set_row(event.frame);
+        cur.set_channel(event.channel);
+        cur.set_param(event.param);
+        if (paste_sel.in_range(cur)) {
             event.frame = -1; // will be deleted
         }
     }
@@ -1314,10 +1336,16 @@ void PatternView::copy_block() {
     block.update_keys(); // remove clipped keys
     int length = selection.p1.get_row() - selection.p0.get_row() + 1;
     block.set_length(length);
+    int channel_count = selection.p1.get_channel() - 
+                        selection.p0.get_channel() + 1;
+    block.set_channel_count(channel_count);
     
     JSongWriter jsong_writer;
     Json::Value root;
     jsong_writer.collect(root,block);
+    root["first_param"] = selection.p0.get_param();
+    root["last_param"] = selection.p1.get_param();
+    
     if (root.empty())
         return;
     Json::StyledWriter writer;

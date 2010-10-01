@@ -30,9 +30,9 @@ public:
     // so we can resolve by index
     std::vector<Pattern *> patterns;
 
-    bool extract(const Json::Value &value, std::string &target);
-    bool extract(const Json::Value &value, int &target);
-    bool extract(const Json::Value &value, bool &target);
+    static bool extract(const Json::Value &value, std::string &target);
+    static bool extract(const Json::Value &value, int &target);
+    static bool extract(const Json::Value &value, bool &target);
 
     void build(const Json::Value &root, Pattern::Event &event);    
     void build(const Json::Value &root, Pattern &pattern);    
