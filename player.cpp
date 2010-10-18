@@ -223,6 +223,14 @@ void Player::reset() {
     stop();
 }
 
+double Player::get_time() const {
+    int real_position = get_position();
+    if (model->enable_loop)
+        real_position -= model->loop.get_begin();
+    return ((double)real_position * 60.0) / 
+        (double)(model->frames_per_beat * model->beats_per_minute);
+}
+
 long long Player::get_frame_size() {
     return ((long long)(sample_rate*60)<<32)/
            (model->frames_per_beat * model->beats_per_minute);    

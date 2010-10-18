@@ -273,6 +273,7 @@ public:
     PatternView *pattern_view;
     MeasureView *pattern_measure;
     Gtk::Entry *play_frames;
+    Gtk::Entry *play_time;
 
     SongView *song_view;
     MeasureView *song_measure;
@@ -306,6 +307,7 @@ public:
         song_measure = NULL;
         pattern_measure = NULL;
         play_frames = NULL;
+        play_time = NULL;
         song_view_menu = NULL;
         view_notebook = NULL;
         track_view = NULL;
@@ -651,6 +653,7 @@ public:
             AccelPathStop);
         
         builder->get_widget("play_frames", play_frames);
+        builder->get_widget("play_time", play_time);
         
         bpm_range = get_adjustment("bpm_range");
         bpm_range->signal_value_changed().connect(sigc::mem_fun(*this,
@@ -969,14 +972,35 @@ public:
         }
         
         int frame = 0;
+        
+        double time = 0;
+        int minutes = 0;
+        int secs = 0;
+        int hundreds = 0;
+        const char *time_sign = "";
+        
         if (player) {
             player->mix();
             frame = player->get_position();
+            time = player->get_time();
         }
         
         Measure measure;
         measure.set_frame(model, frame);
         play_frames->set_text(measure.get_string());
+        
+        if (time < 0) {
+            time_sign = "-";
+            time = -time;
+        }
+        
+        minutes = (int)time / 60;
+        secs = (int)time % 60;
+        hundreds = ((int)(time*100)%100)/10;
+        
+        char timestr[64];
+        sprintf(timestr, "%s%i:%02i.%i", time_sign, minutes, secs, hundreds);
+        play_time->set_text(timestr);
         
         song_view->set_play_position(frame);
         

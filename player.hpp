@@ -92,6 +92,7 @@ public:
     void seek(int position);
     void flush();
     int get_position() const;
+    double get_time() const;
         
     bool is_playing() const;
     
