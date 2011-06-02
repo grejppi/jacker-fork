@@ -1,0 +1,189 @@
+{
+    "$schema" : "http://json-schema.org/draft-03/schema#",
+    "name" : "Song",
+    "type" : "object",
+    "description" : "A Jacker song",
+    "id" : "largemind.com/schema/jacker-song-1#",
+    
+    "properties" : {
+        
+        "beats_per_bar" : {
+            "type" : "integer",
+            "required" : true
+        },
+        
+        "beats_per_minute" : {
+            "type" : "integer",
+            "required" : true
+        },
+        
+        "enable_loop" : {
+            "type" : "boolean",
+            "required" : true
+        },
+        
+        "end_cue" : {
+            "type" : "integer",
+            "required" : true
+        },
+        
+        "format" : {
+            "type" : "string",
+            "required" : true
+        },
+        
+        "frames_per_beat" : {
+            "type" : "integer",
+            "required" : true
+        },
+        
+        "loop" : {
+            "type" : "object",
+            "id" : "#range",
+            "required" : true,
+            "properties" : {
+                
+                "begin" : {
+                    "type" : "integer",
+                    "required" : true
+                },
+                
+                "end" : {
+                    "type" : "integer",
+                    "required" : true
+                }
+            }
+        },
+        
+        "patterns" : {
+            "type" : "array",
+            "required" : true,
+            
+            "items" : {
+                "type" : "object",
+                "id" : "#pattern",
+                "properties" : {
+                    
+                    "channel_count" : {
+                        "type" : "integer",
+                        "required" : true
+                    },
+                    
+                    "events" : {
+                        "type" : "array",
+                        "required" : true,
+                        
+                        "items" : {
+                            "type" : "object",
+                            "id" : "#pattern_event",
+                            "properties" : {
+                                
+                                "channel" : {
+                                    "type" : "integer",
+                                    "required" : true
+                                },
+                                
+                                "frame" : {
+                                    "type" : "integer",
+                                    "required" : true
+                                },
+                                
+                                "param" : {
+                                    "type" : "integer",
+                                    "required" : true
+                                },
+                                
+                                "value" : {
+                                    "type" : "integer",
+                                    "required" : true
+                                }
+                            }
+                        }
+                    },
+                    
+                    "length" : {
+                        "type" : "integer",
+                        "required" : true
+                    },
+                    
+                    "name" : {
+                        "type" : "string",
+                        "required" : true
+                    }
+                }
+            }
+            
+        },
+        
+        "song" : {
+            "type" : "object",
+            "id" : "#song",
+            "required" : true,
+            "properties" : {
+                
+                "events" : {
+                    "type" : "array",
+                    "required" : true,
+                    
+                    "items" : {
+                        "type" : "object",
+                        "id" : "#song_event",
+                        "properties" : {
+                            
+                            "frame" : {
+                                "type" : "integer",
+                                "required" : true
+                            },
+                            
+                            "pattern" : {
+                                "type" : "integer",
+                                "required" : true
+                            },
+                            
+                            "track" : {
+                                "type" : "integer",
+                                "required" : true
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        
+        "tracks" : {
+            "type" : "array",
+            "required" : true,
+            
+            "items" : {
+                "type" : "object",
+                "id" : "#track",
+                "properties" : {
+                    
+                    "midi_channel" : {
+                        "type" : "integer",
+                        "required" : true
+                    },
+                    
+                    "midi_port" : {
+                        "type" : "integer",
+                        "required" : true
+                    },
+                    "mute" : {
+                        "type" : "boolean",
+                        "required" : true
+                    },
+                    
+                    "name" : {
+                        "type" : "string",
+                        "required" : true
+                    }
+                }
+            }
+        },
+        
+        "version" : {
+            "type" : "integer",
+            "required" : true
+        }
+    }
+}
