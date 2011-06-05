@@ -1,9 +1,10 @@
 {
     "$schema" : "http://json-schema.org/draft-03/schema#",
-    "name" : "Song",
+    "name" : "Document",
     "type" : "object",
     "description" : "A Jacker song",
-    "id" : "largemind.com/schema/jacker-song-1#",
+    "id" : "http://largemind.com/schema/jacker-song-1#",
+    "namespace" : "jacker",
     
     "properties" : {
         
